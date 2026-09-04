@@ -153,7 +153,6 @@ section {
   margin-top: clamp(96px, 11vw, 144px);
   padding: clamp(34px, 4vw, 52px) 0 40px;
   border-top: 1px solid var(--rule-strong);
-  border-bottom: 1px solid var(--rule-strong);
 }
 
 .automotive-showcase-head {
@@ -212,20 +211,24 @@ section {
   grid-auto-columns: clamp(220px, 24vw, 300px);
   gap: clamp(16px, 2vw, 24px);
   overflow-x: auto;
-  padding: 0 0 6px;
+  padding: 0 0 14px;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: 1px;
   overscroll-behavior-inline: contain;
-  scrollbar-width: none;
-  cursor: grab;
-}
-
-.automotive-reel:active {
-  cursor: grabbing;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
 }
 
 .automotive-reel::-webkit-scrollbar {
-  display: none;
+  height: 6px;
+}
+
+.automotive-reel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.automotive-reel::-webkit-scrollbar-thumb {
+  background: var(--rule-strong);
 }
 
 .automotive-reel-card {
