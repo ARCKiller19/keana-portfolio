@@ -4,6 +4,13 @@ function ProjectCard({ project, index, onOpen }) {
     ? 'project-image project-image-contain'
     : 'project-image'
 
+  const handleImageError = (event) => {
+    if (!project.fallbackImage) return
+
+    event.currentTarget.onerror = null
+    event.currentTarget.src = project.fallbackImage
+  }
+
   return (
     <article className="project-card">
       <span className="project-index">
@@ -20,6 +27,7 @@ function ProjectCard({ project, index, onOpen }) {
           className={imageClassName}
           src={project.image}
           alt={project.imageAlt ?? `${project.title} preview`}
+          onError={handleImageError}
         />
         <span className="project-frame-hint" aria-hidden="true">
           View details
