@@ -7,6 +7,7 @@ function Navbar() {
   
         <nav className="nav-links" aria-label="Primary">
           <a href="#work">Work</a>
+          <a href="#motion">Motion</a>
           <a href="#about">About</a>
           <a href="#playground">Playground</a>
           <a href="#contact">Contact</a>

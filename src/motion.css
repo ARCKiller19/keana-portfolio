@@ -1,0 +1,192 @@
+/* ---------- Motion & Video ---------- */
+
+.motion-intro {
+  max-width: 56ch;
+  margin: -24px auto 56px;
+  color: var(--cream-dim);
+  font-weight: 300;
+}
+
+.motion-featured,
+.motion-collection {
+  max-width: var(--container);
+  margin-inline: auto;
+}
+
+.motion-featured {
+  display: grid;
+  gap: 72px;
+}
+
+.motion-piece {
+  width: min(78%, 900px);
+}
+
+.motion-piece-offset {
+  margin-left: auto;
+}
+
+.motion-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.motion-index {
+  color: var(--moss);
+}
+
+.motion-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--rule-strong);
+  background: var(--bg-raised);
+  aspect-ratio: 16 / 9;
+}
+
+.motion-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #050604;
+}
+
+.motion-piece h3,
+.automotive-piece h3 {
+  margin-top: 16px;
+  font-size: clamp(20px, 2.4vw, 30px);
+  font-weight: 400;
+}
+
+.motion-collection {
+  margin-top: 96px;
+  border-top: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.motion-collection-summary {
+  display: grid;
+  grid-template-columns: 48px minmax(180px, 1fr) minmax(220px, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.motion-collection-summary::-webkit-details-marker {
+  display: none;
+}
+
+.motion-collection-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 34px);
+}
+
+.motion-collection-meta,
+.motion-collection-action {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.motion-collection-action {
+  color: var(--moss);
+  text-align: right;
+}
+
+.motion-collection[open] .motion-collection-action {
+  font-size: 0;
+}
+
+.motion-collection[open] .motion-collection-action::after {
+  content: 'Close Collection ↑';
+  font-size: 11px;
+}
+
+.automotive-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px 28px;
+  padding: 24px 0 56px;
+}
+
+.automotive-piece:nth-child(5) {
+  grid-column: 1 / -1;
+  width: calc(50% - 14px);
+}
+
+.motion-frame-small {
+  aspect-ratio: 16 / 9;
+}
+
+@media (max-width: 900px) {
+  .motion-piece {
+    width: 100%;
+  }
+
+  .motion-collection-summary {
+    grid-template-columns: 40px 1fr auto;
+  }
+
+  .motion-collection-meta {
+    grid-column: 2 / -1;
+    grid-row: 2;
+  }
+
+  .automotive-piece:nth-child(5) {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .motion-intro {
+    margin-bottom: 40px;
+  }
+
+  .motion-featured {
+    gap: 48px;
+  }
+
+  .motion-meta {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .motion-collection {
+    margin-top: 64px;
+  }
+
+  .motion-collection-summary {
+    grid-template-columns: 32px 1fr;
+    gap: 10px 16px;
+  }
+
+  .motion-collection-action,
+  .motion-collection-meta {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .motion-collection-action {
+    grid-row: 3;
+  }
+
+  .automotive-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .automotive-piece:nth-child(5) {
+    grid-column: auto;
+  }
+}
