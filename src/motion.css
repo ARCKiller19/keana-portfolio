@@ -47,8 +47,8 @@ section {
 
 .motion-piece {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
-  gap: clamp(40px, 6vw, 72px);
+  grid-template-columns: minmax(0, 1.05fr) minmax(270px, 0.75fr);
+  gap: clamp(36px, 5.5vw, 68px);
   align-items: start;
   width: 100%;
 }
@@ -114,15 +114,15 @@ section {
 }
 
 .motion-piece-copy {
-  width: min(100%, 390px);
+  width: min(100%, 400px);
   min-width: 0;
-  padding-top: 22px;
+  padding-top: 20px;
   border-top: 1px solid var(--rule);
 }
 
 .motion-piece-label {
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: 0.08em;
@@ -131,18 +131,18 @@ section {
 }
 
 .motion-piece-copy h3 {
-  max-width: 13ch;
+  max-width: 14ch;
   margin: 0 0 16px;
-  font-size: clamp(28px, 3.6vw, 42px);
+  font-size: clamp(26px, 3.2vw, 40px);
   font-weight: 400;
   line-height: 1.02;
 }
 
 .motion-piece-copy p {
-  max-width: 44ch;
+  max-width: 46ch;
   margin: 0;
   color: var(--cream-dim);
-  font-size: 14px;
+  font-size: clamp(13px, 1.15vw, 14px);
   font-weight: 300;
   line-height: 1.68;
 }
@@ -158,18 +158,52 @@ section {
 
 .automotive-showcase-head {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 18px;
-  align-items: start;
+  grid-template-columns: minmax(360px, 0.92fr) minmax(420px, 1.08fr);
+  gap: clamp(36px, 7vw, 92px);
+  align-items: end;
   margin-bottom: 38px;
 }
 
+.automotive-showcase-title-block {
+  min-width: 0;
+}
+
+.automotive-showcase-title-block .motion-index {
+  display: block;
+  margin-bottom: 10px;
+}
+
 .automotive-showcase-head h3 {
-  max-width: 12ch;
   margin: 0;
-  font-size: clamp(34px, 4.8vw, 54px);
+  font-size: clamp(34px, 4vw, 50px);
   font-weight: 400;
   line-height: 1;
+  white-space: nowrap;
+}
+
+.automotive-showcase-copy {
+  width: min(100%, 650px);
+  justify-self: end;
+}
+
+.automotive-showcase-copy p {
+  max-width: 66ch;
+  margin: 0;
+  color: var(--cream-dim);
+  font-size: clamp(13px, 1.2vw, 14px);
+  font-weight: 300;
+  line-height: 1.62;
+}
+
+.automotive-showcase-copy span {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  white-space: nowrap;
 }
 
 .automotive-reel {
@@ -178,24 +212,20 @@ section {
   grid-auto-columns: clamp(220px, 24vw, 300px);
   gap: clamp(16px, 2vw, 24px);
   overflow-x: auto;
-  padding: 0 0 20px;
+  padding: 0 0 6px;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: 1px;
   overscroll-behavior-inline: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--rule-strong) transparent;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.automotive-reel:active {
+  cursor: grabbing;
 }
 
 .automotive-reel::-webkit-scrollbar {
-  height: 6px;
-}
-
-.automotive-reel::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.automotive-reel::-webkit-scrollbar-thumb {
-  background: var(--rule-strong);
+  display: none;
 }
 
 .automotive-reel-card {
@@ -225,88 +255,33 @@ section {
   object-fit: cover;
 }
 
-.automotive-cover {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  background: rgba(5, 6, 4, 0.56);
-  color: var(--cream);
-  cursor: pointer;
-  transition: background-color 0.22s ease;
-}
-
-.automotive-cover:hover,
-.automotive-cover:focus-visible {
-  background: rgba(5, 6, 4, 0.22);
-}
-
-.automotive-play {
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  border: 1px solid rgba(239, 233, 219, 0.58);
-  border-radius: 50%;
-  background: rgba(10, 11, 9, 0.5);
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.automotive-play span {
-  margin-left: 3px;
-  font-size: 14px;
-}
-
-.automotive-cover:hover .automotive-play,
-.automotive-cover:focus-visible .automotive-play {
-  transform: scale(1.08);
-  background: rgba(10, 11, 9, 0.76);
-}
-
 .automotive-reel-card h4 {
   margin: 13px 0 0;
   font-family: var(--font-display);
-  font-size: 19px;
+  font-size: clamp(17px, 1.8vw, 20px);
   font-weight: 400;
   line-height: 1.15;
 }
 
-.automotive-showcase-foot {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: clamp(28px, 6vw, 80px);
-  align-items: end;
-  margin-top: 30px;
-  padding-top: 24px;
-  border-top: 1px solid var(--rule);
-}
+@media (max-width: 1040px) {
+  .automotive-showcase-head {
+    grid-template-columns: minmax(310px, 0.9fr) minmax(340px, 1.1fr);
+    gap: 40px;
+  }
 
-.automotive-showcase-foot p {
-  max-width: 56ch;
-  margin: 0;
-  color: var(--cream-dim);
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.68;
-}
+  .automotive-showcase-head h3 {
+    font-size: clamp(30px, 4vw, 42px);
+  }
 
-.automotive-showcase-foot span {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-  white-space: nowrap;
+  .automotive-showcase-copy span {
+    white-space: normal;
+  }
 }
 
 @media (max-width: 900px) {
   .motion-piece {
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.68fr);
-    gap: 38px;
+    grid-template-columns: minmax(0, 1fr) minmax(230px, 0.72fr);
+    gap: 34px;
   }
 
   .motion-piece-media {
@@ -321,21 +296,21 @@ section {
     width: 100%;
   }
 
+  .automotive-showcase-head {
+    grid-template-columns: minmax(280px, 0.9fr) minmax(300px, 1.1fr);
+    gap: 28px;
+  }
+
+  .automotive-showcase-copy {
+    width: 100%;
+  }
+
   .automotive-reel {
     grid-auto-columns: clamp(220px, 36vw, 286px);
   }
-
-  .automotive-showcase-foot {
-    grid-template-columns: 1fr;
-    align-items: start;
-  }
-
-  .automotive-showcase-foot span {
-    white-space: normal;
-  }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 720px) {
   .motion-intro {
     margin-bottom: 44px;
   }
@@ -373,6 +348,11 @@ section {
     padding-top: 18px;
   }
 
+  .motion-piece-copy h3 {
+    max-width: 16ch;
+    font-size: clamp(26px, 8vw, 36px);
+  }
+
   .automotive-showcase {
     margin-top: 80px;
     padding-top: 30px;
@@ -380,23 +360,25 @@ section {
 
   .automotive-showcase-head {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 18px;
     margin-bottom: 28px;
+  }
+
+  .automotive-showcase-head h3 {
+    font-size: clamp(27px, 8vw, 36px);
+  }
+
+  .automotive-showcase-copy {
+    justify-self: start;
+  }
+
+  .automotive-showcase-copy p {
+    max-width: 58ch;
   }
 
   .automotive-reel {
     grid-auto-columns: min(72vw, 272px);
     gap: 15px;
-  }
-
-  .automotive-play {
-    width: 48px;
-    height: 48px;
-  }
-
-  .automotive-showcase-foot {
-    margin-top: 24px;
-    padding-top: 20px;
   }
 }
 
@@ -407,9 +389,7 @@ section {
 
   .project-frame img,
   .motion-frame,
-  .automotive-reel-frame,
-  .automotive-cover,
-  .automotive-play {
+  .automotive-reel-frame {
     transition: none;
   }
 }
