@@ -1,8 +1,5 @@
 function ProjectCard({ project, index, onOpen }) {
   const openProject = () => onOpen(project)
-  const imageClassName = project.imageFit === 'contain'
-    ? 'project-image project-image-contain'
-    : 'project-image'
 
   const handleImageError = (event) => {
     if (!project.fallbackImage) return
@@ -22,12 +19,17 @@ function ProjectCard({ project, index, onOpen }) {
         type="button"
         onClick={openProject}
         aria-label={`Open ${project.title} project details`}
+        style={{ aspectRatio: '16 / 10' }}
       >
         <img
-          className={imageClassName}
+          className="project-image"
           src={project.image}
           alt={project.imageAlt ?? `${project.title} preview`}
           onError={handleImageError}
+          style={{
+            objectFit: 'cover',
+            objectPosition: project.imagePosition ?? 'center top',
+          }}
         />
         <span className="project-frame-hint" aria-hidden="true">
           View details
