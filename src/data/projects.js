@@ -51,8 +51,7 @@ const projects = [
     year: '2026',
     link: 'https://orange-engineer.vercel.app/',
     linkLabel: 'View Live Site',
-    image: '/images/projects/orange-engineers.jpg',
-    fallbackImage: '/images/projects/orange-engineers.webp',
+    image: '/images/projects/orange-engineers.webp',
     imageAlt:
       'Orange Engineers homepage with a dark engineering-themed hero and orange accents',
     imageFit: 'contain',
@@ -66,8 +65,7 @@ const projects = [
     title: 'Wordoria',
     category: 'Game Concept · Character Design · Visual Design',
     year: '2026',
-    image: '/images/projects/wordoria.jpg',
-    fallbackImage: '/images/projects/wordoria.webp',
+    image: '/images/projects/wordoria.webp',
     imageAlt:
       'Pixel-art Wordoria game scene with a grammar question and two characters',
     imageFit: 'contain',
