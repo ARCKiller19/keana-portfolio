@@ -5,6 +5,7 @@ import Projects from './components/Projects.jsx'
 import Motion from './components/Motion.jsx'
 import Playground from './components/Playground.jsx'
 import Footer from './components/Footer.jsx'
+import './editorial.css'
 
 function App() {
   return (

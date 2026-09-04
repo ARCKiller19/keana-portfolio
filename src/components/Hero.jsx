@@ -1,20 +1,26 @@
 function Hero() {
-    return (
-      <section className="hero" aria-label="Introduction">
-        <div className="hero-text">
-          <p className="eyebrow">
-            UI/UX Designer · Graphic Designer · Multimedia Creative
+  return (
+    <section className="hero" aria-label="Introduction">
+      <div className="hero-copy">
+        <p className="hero-kicker">
+          UI/UX Designer · Graphic Designer · Multimedia Creative
+        </p>
+
+        <h1 className="hero-mark">KEANA</h1>
+
+        <p className="hero-statement">
+          Design that <em>grows</em>
+          <br />
+          with meaning.
+        </p>
+
+        <div className="hero-details">
+          <p className="hero-summary">
+            Thoughtful visual worlds across interfaces, identity, motion, and
+            digital experiences.
           </p>
-          <h1 className="hero-mark">KEANA</h1>
-          <p className="hero-tagline">
-            Multidisciplinary designer working across UI/UX, graphic design,
-            multimedia, and digital experience.
-          </p>
-          <a className="btn" href="#work">
-            View Selected Work <span aria-hidden="true">↗</span>
-          </a>
-  
-          <dl className="hero-meta">
+
+          <dl className="hero-facts">
             <div>
               <dt>Based in</dt>
               <dd>Davao City, Philippines</dd>
@@ -25,20 +31,33 @@ function Hero() {
             </div>
           </dl>
         </div>
-  
-        <div className="hero-frames" aria-hidden="true">
-          <div className="frame frame-a">
-            <img src="/images/hero/botanical-01.jpg" alt="" />
-          </div>
-          <div className="frame frame-b">
-            <img src="/images/hero/botanical-02.jpg" alt="" />
-          </div>
-          <div className="frame frame-c">
-            <img src="/images/hero/botanical-03.jpg" alt="" />
-          </div>
+      </div>
+
+      <div className="hero-art" aria-hidden="true">
+        <figure className="hero-botanical">
+          <img src="/images/hero/botanical-01.jpg" alt="" />
+        </figure>
+
+        <div className="hero-annotation hero-annotation-growth">
+          <span className="hero-annotation-label">Growth</span>
+          <span className="hero-annotation-line" />
+          <span className="hero-annotation-dot" />
         </div>
-      </section>
-    )
-  }
-  
-  export default Hero
+
+        <div className="hero-annotation hero-annotation-structure">
+          <span className="hero-annotation-label">Structure</span>
+          <span className="hero-annotation-line" />
+          <span className="hero-annotation-dot" />
+        </div>
+
+        <div className="hero-annotation hero-annotation-essence">
+          <span className="hero-annotation-label">Essence</span>
+          <span className="hero-annotation-line" />
+          <span className="hero-annotation-dot" />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default Hero
