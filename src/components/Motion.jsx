@@ -149,6 +149,7 @@ function Motion() {
           className="automotive-reel"
           role="list"
           aria-label="Automotive video reel"
+          style={{ paddingBottom: '24px' }}
         >
           {automotiveMotion.map((piece, index) => (
             <AutomotiveReelCard piece={piece} index={index} key={piece.id} />
