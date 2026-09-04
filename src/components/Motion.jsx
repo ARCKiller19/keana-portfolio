@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
 import '../motion.css'
 
@@ -77,34 +77,6 @@ function AutomotiveReelCard({ piece, index }) {
 }
 
 function Motion() {
-  const reelRef = useRef(null)
-
-  useEffect(() => {
-    const reel = reelRef.current
-    if (!reel) return undefined
-
-    const handleWheel = (event) => {
-      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return
-
-      const maxScrollLeft = reel.scrollWidth - reel.clientWidth
-      if (maxScrollLeft <= 0) return
-
-      const atStart = reel.scrollLeft <= 1
-      const atEnd = reel.scrollLeft >= maxScrollLeft - 1
-      const movingBackward = event.deltaY < 0
-      const movingForward = event.deltaY > 0
-
-      if ((movingBackward && atStart) || (movingForward && atEnd)) return
-
-      event.preventDefault()
-      reel.scrollLeft += event.deltaY
-    }
-
-    reel.addEventListener('wheel', handleWheel, { passive: false })
-
-    return () => reel.removeEventListener('wheel', handleWheel)
-  }, [])
-
   return (
     <section className="motion" id="motion" aria-label="Motion and video work">
       <div className="section-head">
@@ -175,7 +147,6 @@ function Motion() {
 
         <div
           className="automotive-reel"
-          ref={reelRef}
           role="list"
           aria-label="Automotive video reel"
         >
