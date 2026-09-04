@@ -25,6 +25,8 @@ function ProjectCard({ project, index, onOpen }) {
           className="project-image"
           src={project.image}
           alt={project.imageAlt ?? `${project.title} preview`}
+          loading="lazy"
+          decoding="async"
           onError={handleImageError}
           style={{
             objectFit: 'cover',
