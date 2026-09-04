@@ -1,3 +1,5 @@
+import useReveal from '../hooks/useReveal.js'
+
 const focusAreas = [
   'Brand Identity',
   'UI/UX Design',
@@ -8,8 +10,15 @@ const focusAreas = [
 ]
 
 function About() {
+  const revealRef = useReveal()
+
   return (
-    <section className="about" id="about" aria-label="About">
+    <section
+      className="about reveal-stagger"
+      id="about"
+      aria-label="About"
+      ref={revealRef}
+    >
       <div className="about-portrait">
         <img
           src="/images/about/portrait.jpg"
