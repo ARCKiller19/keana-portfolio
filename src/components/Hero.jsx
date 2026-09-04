@@ -1,3 +1,5 @@
+import { handleSectionNavigation } from '../utils/sectionNavigation.js'
+
 function Hero() {
   return (
     <section className="hero" aria-label="Introduction">
@@ -10,7 +12,7 @@ function Hero() {
           Multidisciplinary designer working across UI/UX, graphic design,
           multimedia, and digital experience.
         </p>
-        <a className="btn" href="#work">
+        <a className="btn" href="#work" onClick={handleSectionNavigation}>
           View Selected Work <span aria-hidden="true">↗</span>
         </a>
 
