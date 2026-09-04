@@ -26,6 +26,13 @@ function ProjectModal({ project, onClose }) {
     }
   }
 
+  const handleImageError = (event) => {
+    if (!project?.fallbackImage) return
+
+    event.currentTarget.onerror = null
+    event.currentTarget.src = project.fallbackImage
+  }
+
   return (
     <dialog
       className="project-modal"
@@ -61,6 +68,7 @@ function ProjectModal({ project, onClose }) {
               <img
                 src={project.image}
                 alt={project.imageAlt ?? `${project.title} project preview`}
+                onError={handleImageError}
               />
             </figure>
 
