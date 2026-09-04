@@ -1,10 +1,11 @@
+import { useRef, useState } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
 import '../motion.css'
 
-function VideoPlayer({ src, title }) {
+function VideoPlayer({ src, title, className = '' }) {
   return (
     <video
-      className="motion-video"
+      className={`motion-video ${className}`.trim()}
       controls
       playsInline
       preload="metadata"
@@ -13,6 +14,81 @@ function VideoPlayer({ src, title }) {
       <source src={src} type="video/mp4" />
       Your browser does not support HTML video.
     </video>
+  )
+}
+
+function AutomotiveReelCard({ piece, index }) {
+  const videoRef = useRef(null)
+  const [hasStarted, setHasStarted] = useState(false)
+
+  const prepareVideo = () => {
+    const video = videoRef.current
+    if (!video || video.readyState >= 2) return
+
+    video.preload = 'auto'
+    video.load()
+  }
+
+  const playVideo = async () => {
+    const video = videoRef.current
+    if (!video) return
+
+    setHasStarted(true)
+
+    try {
+      await video.play()
+    } catch {
+      setHasStarted(false)
+    }
+  }
+
+  return (
+    <article className="automotive-reel-card" role="listitem">
+      <div className="motion-meta automotive-reel-meta">
+        <span className="motion-index">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <span>Automotive · Video Edit</span>
+      </div>
+
+      <div
+        className={`automotive-reel-frame ${hasStarted ? 'is-playing' : ''}`}
+        onMouseEnter={prepareVideo}
+        onFocus={prepareVideo}
+      >
+        <video
+          ref={videoRef}
+          className="motion-video automotive-reel-video"
+          controls={hasStarted}
+          playsInline
+          preload="metadata"
+          poster={piece.cover}
+          aria-label={piece.title}
+        >
+          <source src={piece.src} type="video/mp4" />
+          Your browser does not support HTML video.
+        </video>
+
+        {!hasStarted && (
+          <button
+            className="automotive-cover"
+            type="button"
+            onClick={playVideo}
+            onMouseEnter={prepareVideo}
+            onFocus={prepareVideo}
+            aria-label={`Play ${piece.title}`}
+          >
+            <span className="automotive-cover-label">Selected edit</span>
+            <span className="automotive-cover-title">{piece.title}</span>
+            <span className="automotive-play" aria-hidden="true">
+              <span>▶</span>
+            </span>
+          </button>
+        )}
+      </div>
+
+      <h4>{piece.title}</h4>
+    </article>
   )
 }
 
@@ -32,59 +108,66 @@ function Motion() {
         {featuredMotion.map((piece, index) => (
           <article
             className={`motion-piece ${
-              piece.layout === 'portrait'
-                ? 'motion-piece-portrait'
-                : index % 2 === 1
-                  ? 'motion-piece-offset'
-                  : ''
-            }`}
+              index % 2 === 1 ? 'motion-piece-reverse' : ''
+            } ${piece.layout === 'portrait' ? 'motion-piece-portrait' : ''}`}
             key={piece.id}
           >
-            <div className="motion-meta">
-              <span className="motion-index">{piece.number}</span>
-              <span>{piece.category}</span>
+            <div className="motion-piece-media">
+              <div className="motion-meta">
+                <span className="motion-index">{piece.number}</span>
+                <span>{piece.category}</span>
+              </div>
+
+              <div
+                className={`motion-frame ${
+                  piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
+                }`}
+              >
+                <VideoPlayer src={piece.src} title={piece.title} />
+              </div>
             </div>
 
-            <div
-              className={`motion-frame ${
-                piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
-              }`}
-            >
-              <VideoPlayer src={piece.src} title={piece.title} />
+            <div className="motion-piece-copy">
+              <span className="motion-piece-label">Behind the edit</span>
+              <h3>{piece.title}</h3>
+              <p>{piece.reflection}</p>
             </div>
-
-            <h3>{piece.title}</h3>
           </article>
         ))}
       </div>
 
-      <details className="motion-collection">
-        <summary className="motion-collection-summary">
-          <span className="motion-index">03</span>
-          <span className="motion-collection-title">Automotive Video Edits</span>
-          <span className="motion-collection-meta">
-            Commercial · Social Media · {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
-          </span>
-          <span className="motion-collection-action">View Collection ↓</span>
-        </summary>
+      <section
+        className="automotive-showcase"
+        aria-labelledby="automotive-showcase-title"
+      >
+        <div className="automotive-showcase-head">
+          <div>
+            <span className="motion-index">03</span>
+            <h3 id="automotive-showcase-title">Automotive Video Edits</h3>
+          </div>
 
-        <div className="automotive-grid">
+          <div className="automotive-showcase-copy">
+            <p>
+              These edits were made for social media, so I was thinking about
+              pace, strong openings, and how to make each car feel distinct in
+              a short vertical format.
+            </p>
+            <span>
+              Commercial · Social Media · {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
+            </span>
+          </div>
+        </div>
+
+        <div className="automotive-reel" role="list" aria-label="Automotive video reel">
           {automotiveMotion.map((piece, index) => (
-            <article className="automotive-piece" key={piece.id}>
-              <div className="motion-meta">
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <span>Automotive · Video Edit</span>
-              </div>
-
-              <div className="motion-frame motion-frame-small">
-                <VideoPlayer src={piece.src} title={piece.title} />
-              </div>
-
-              <h3>{piece.title}</h3>
-            </article>
+            <AutomotiveReelCard piece={piece} index={index} key={piece.id} />
           ))}
         </div>
-      </details>
+
+        <p className="automotive-reel-hint">
+          Scroll sideways to browse every edit. Hover a cover to reveal the video, then press play.
+        </p>
+      </section>
     </section>
   )
 }
