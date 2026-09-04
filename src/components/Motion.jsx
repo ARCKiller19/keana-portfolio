@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
 import '../motion.css'
 
@@ -19,26 +19,20 @@ function VideoPlayer({ src, title, className = '' }) {
 
 function AutomotiveReelCard({ piece, index }) {
   const videoRef = useRef(null)
+  const [hasStarted, setHasStarted] = useState(false)
 
-  useEffect(() => {
+  const playVideo = async () => {
     const video = videoRef.current
-    if (!video) return undefined
+    if (!video) return
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          video.play().catch(() => {})
-        } else {
-          video.pause()
-        }
-      },
-      { threshold: 0.45 },
-    )
+    setHasStarted(true)
 
-    observer.observe(video)
-
-    return () => observer.disconnect()
-  }, [])
+    try {
+      await video.play()
+    } catch {
+      setHasStarted(false)
+    }
+  }
 
   return (
     <article className="automotive-reel-card" role="listitem">
@@ -49,14 +43,11 @@ function AutomotiveReelCard({ piece, index }) {
         <span>Automotive · Video Edit</span>
       </div>
 
-      <div className="automotive-reel-frame">
+      <div className={`automotive-reel-frame ${hasStarted ? 'is-playing' : ''}`}>
         <video
           ref={videoRef}
           className="motion-video automotive-reel-video"
-          autoPlay
-          muted
-          loop
-          controls
+          controls={hasStarted}
           playsInline
           preload="metadata"
           poster={piece.cover}
@@ -65,6 +56,19 @@ function AutomotiveReelCard({ piece, index }) {
           <source src={piece.src} type="video/mp4" />
           Your browser does not support HTML video.
         </video>
+
+        {!hasStarted && (
+          <button
+            className="automotive-cover"
+            type="button"
+            onClick={playVideo}
+            aria-label={`Play ${piece.title}`}
+          >
+            <span className="automotive-play" aria-hidden="true">
+              <span>▶</span>
+            </span>
+          </button>
+        )}
       </div>
 
       <h4>{piece.title}</h4>
@@ -159,13 +163,13 @@ function Motion() {
           </div>
 
           <div className="automotive-showcase-copy">
+            <span>
+              Commercial · Social Media · {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
+            </span>
             <p>
               These social edits focus on quick pacing, strong openings, and
               giving each car its own presence within a short vertical format.
             </p>
-            <span>
-              Commercial · Social Media · {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
-            </span>
           </div>
         </div>
 
