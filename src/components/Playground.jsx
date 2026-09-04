@@ -1,3 +1,5 @@
+import useReveal from '../hooks/useReveal.js'
+
 const pieces = [
   {
     src: '/images/playground/pixel-keana.png',
@@ -19,18 +21,22 @@ const pieces = [
 ]
 
 function Playground() {
+  const headingRevealRef = useReveal()
+  const introRevealRef = useReveal()
+  const gridRevealRef = useReveal()
+
   return (
     <section className="playground" id="playground" aria-label="Playground">
-      <div className="section-head">
+      <div className="section-head reveal-pair" ref={headingRevealRef}>
         <h2>Playground</h2>
         <span className="count">Creative Archive</span>
       </div>
 
-      <p className="playground-intro">
+      <p className="playground-intro reveal-block" ref={introRevealRef}>
         Small visual experiments, pixel work, and things I make outside larger projects.
       </p>
 
-      <div className="playground-grid">
+      <div className="playground-grid reveal-stagger" ref={gridRevealRef}>
         {pieces.map((piece, index) => (
           <figure
             className={`playground-tile ${piece.wide ? 'playground-tile-wide' : ''}`}
