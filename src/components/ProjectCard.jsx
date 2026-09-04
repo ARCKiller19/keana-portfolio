@@ -1,43 +1,51 @@
-function ProjectCard({ project, index }) {
-    return (
-      <article className="project-card">
-        <span className="project-index">
-          {String(index + 1).padStart(2, '0')}
+function ProjectCard({ project, index, onOpen }) {
+  const openProject = () => onOpen(project)
+  const imageClassName = project.imageFit === 'contain'
+    ? 'project-image project-image-contain'
+    : 'project-image'
+
+  return (
+    <article className="project-card">
+      <span className="project-index">
+        {String(index + 1).padStart(2, '0')}
+      </span>
+
+      <button
+        className="project-frame project-trigger"
+        type="button"
+        onClick={openProject}
+        aria-label={`Open ${project.title} project details`}
+      >
+        <img
+          className={imageClassName}
+          src={project.image}
+          alt={project.imageAlt ?? `${project.title} preview`}
+        />
+        <span className="project-frame-hint" aria-hidden="true">
+          View details
         </span>
-  
-        <a
-          className="project-frame"
-          href={project.link}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img src={project.image} alt={`${project.title} preview`} />
-        </a>
-  
-        <div className="project-info">
-          <h3>{project.title}</h3>
-  
-          <p className="project-category">
-            {project.category}
-          </p>
-  
-          <div className="project-foot">
-            <span className="project-year">
-              {project.year}
-            </span>
-  
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {project.linkLabel}
-              <span aria-hidden="true"> ↗</span>
-            </a>
-          </div>
+      </button>
+
+      <div className="project-info">
+        <h3>{project.title}</h3>
+
+        <p className="project-category">{project.category}</p>
+
+        <div className="project-foot">
+          <span className="project-year">{project.year}</span>
+
+          <button
+            className="project-details-link"
+            type="button"
+            onClick={openProject}
+          >
+            View details
+            <span aria-hidden="true"> ↗</span>
+          </button>
         </div>
-      </article>
-    )
-  }
-  
-  export default ProjectCard
+      </div>
+    </article>
+  )
+}
+
+export default ProjectCard
