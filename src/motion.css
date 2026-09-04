@@ -16,17 +16,6 @@ section {
   background: var(--bg);
 }
 
-.project-frame img {
-  transition:
-    opacity var(--motion-fast) var(--ease-editorial),
-    transform var(--motion-medium) var(--ease-editorial);
-}
-
-.project-frame:hover img,
-.project-frame:focus-visible img {
-  transform: scale(1.018);
-}
-
 /* ---------- Motion & Video ---------- */
 
 .motion-intro {
@@ -455,7 +444,6 @@ section {
     scroll-behavior: auto;
   }
 
-  .project-frame img,
   .motion-frame,
   .automotive-reel-frame,
   .automotive-cover,
@@ -463,8 +451,6 @@ section {
     transition: none;
   }
 
-  .project-frame:hover img,
-  .project-frame:focus-visible img,
   .automotive-cover:hover .automotive-play,
   .automotive-cover:focus-visible .automotive-play {
     transform: none;
