@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
 import '../motion.css'
 
@@ -19,28 +19,26 @@ function VideoPlayer({ src, title, className = '' }) {
 
 function AutomotiveReelCard({ piece, index }) {
   const videoRef = useRef(null)
-  const [hasStarted, setHasStarted] = useState(false)
 
-  const prepareVideo = () => {
+  useEffect(() => {
     const video = videoRef.current
-    if (!video || video.readyState >= 2) return
+    if (!video) return undefined
 
-    video.preload = 'auto'
-    video.load()
-  }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+        }
+      },
+      { threshold: 0.45 },
+    )
 
-  const playVideo = async () => {
-    const video = videoRef.current
-    if (!video) return
+    observer.observe(video)
 
-    setHasStarted(true)
-
-    try {
-      await video.play()
-    } catch {
-      setHasStarted(false)
-    }
-  }
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <article className="automotive-reel-card" role="listitem">
@@ -51,15 +49,14 @@ function AutomotiveReelCard({ piece, index }) {
         <span>Automotive · Video Edit</span>
       </div>
 
-      <div
-        className={`automotive-reel-frame ${hasStarted ? 'is-playing' : ''}`}
-        onMouseEnter={prepareVideo}
-        onFocus={prepareVideo}
-      >
+      <div className="automotive-reel-frame">
         <video
           ref={videoRef}
           className="motion-video automotive-reel-video"
-          controls={hasStarted}
+          autoPlay
+          muted
+          loop
+          controls
           playsInline
           preload="metadata"
           poster={piece.cover}
@@ -68,21 +65,6 @@ function AutomotiveReelCard({ piece, index }) {
           <source src={piece.src} type="video/mp4" />
           Your browser does not support HTML video.
         </video>
-
-        {!hasStarted && (
-          <button
-            className="automotive-cover"
-            type="button"
-            onClick={playVideo}
-            onMouseEnter={prepareVideo}
-            onFocus={prepareVideo}
-            aria-label={`Play ${piece.title}`}
-          >
-            <span className="automotive-play" aria-hidden="true">
-              <span>▶</span>
-            </span>
-          </button>
-        )}
       </div>
 
       <h4>{piece.title}</h4>
@@ -91,6 +73,34 @@ function AutomotiveReelCard({ piece, index }) {
 }
 
 function Motion() {
+  const reelRef = useRef(null)
+
+  useEffect(() => {
+    const reel = reelRef.current
+    if (!reel) return undefined
+
+    const handleWheel = (event) => {
+      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return
+
+      const maxScrollLeft = reel.scrollWidth - reel.clientWidth
+      if (maxScrollLeft <= 0) return
+
+      const atStart = reel.scrollLeft <= 1
+      const atEnd = reel.scrollLeft >= maxScrollLeft - 1
+      const movingBackward = event.deltaY < 0
+      const movingForward = event.deltaY > 0
+
+      if ((movingBackward && atStart) || (movingForward && atEnd)) return
+
+      event.preventDefault()
+      reel.scrollLeft += event.deltaY
+    }
+
+    reel.addEventListener('wheel', handleWheel, { passive: false })
+
+    return () => reel.removeEventListener('wheel', handleWheel)
+  }, [])
+
   return (
     <section className="motion" id="motion" aria-label="Motion and video work">
       <div className="section-head">
@@ -143,25 +153,31 @@ function Motion() {
         aria-labelledby="automotive-showcase-title"
       >
         <div className="automotive-showcase-head">
-          <span className="motion-index">03</span>
-          <h3 id="automotive-showcase-title">Automotive Video Edits</h3>
+          <div className="automotive-showcase-title-block">
+            <span className="motion-index">03</span>
+            <h3 id="automotive-showcase-title">Automotive Video Edits</h3>
+          </div>
+
+          <div className="automotive-showcase-copy">
+            <p>
+              These social edits focus on quick pacing, strong openings, and
+              giving each car its own presence within a short vertical format.
+            </p>
+            <span>
+              Commercial · Social Media · {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
+            </span>
+          </div>
         </div>
 
-        <div className="automotive-reel" role="list" aria-label="Automotive video reel">
+        <div
+          className="automotive-reel"
+          ref={reelRef}
+          role="list"
+          aria-label="Automotive video reel"
+        >
           {automotiveMotion.map((piece, index) => (
             <AutomotiveReelCard piece={piece} index={index} key={piece.id} />
           ))}
-        </div>
-
-        <div className="automotive-showcase-foot">
-          <p>
-            These edits were made for social media, so I was thinking about
-            pace, strong openings, and how to make each car feel distinct in
-            a short vertical format.
-          </p>
-          <span>
-            Commercial · Social Media · {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
-          </span>
         </div>
       </section>
     </section>
