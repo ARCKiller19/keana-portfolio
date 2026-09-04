@@ -205,13 +205,6 @@ section {
   line-height: 1.58;
 }
 
-.automotive-reel-shell {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: clamp(10px, 1.4vw, 18px);
-  align-items: center;
-}
-
 .automotive-reel {
   display: grid;
   grid-auto-flow: column;
@@ -219,44 +212,24 @@ section {
   gap: clamp(16px, 2vw, 24px);
   min-width: 0;
   overflow-x: auto;
-  padding: 0;
+  padding: 0 0 24px;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: 1px;
   overscroll-behavior-inline: contain;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
 }
 
 .automotive-reel::-webkit-scrollbar {
-  display: none;
+  height: 6px;
 }
 
-.automotive-reel-nav {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 1px solid var(--rule-strong);
-  border-radius: 50%;
-  background: var(--bg);
-  color: var(--cream);
-  font-family: var(--font-mono);
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-  transition: border-color 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+.automotive-reel::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.automotive-reel-nav:hover:not(:disabled),
-.automotive-reel-nav:focus-visible:not(:disabled) {
-  border-color: var(--moss);
-  color: var(--moss);
-}
-
-.automotive-reel-nav:disabled {
-  opacity: 0.2;
-  cursor: default;
+.automotive-reel::-webkit-scrollbar-thumb {
+  background: var(--rule-strong);
 }
 
 .automotive-reel-card {
@@ -381,12 +354,6 @@ section {
   .automotive-reel {
     grid-auto-columns: clamp(220px, 36vw, 286px);
   }
-
-  .automotive-reel-nav {
-    width: 40px;
-    height: 40px;
-    font-size: 17px;
-  }
 }
 
 @media (max-width: 720px) {
@@ -456,37 +423,16 @@ section {
     max-width: 58ch;
   }
 
-  .automotive-reel-shell {
-    grid-template-columns: 36px minmax(0, 1fr) 36px;
-    gap: 8px;
-  }
-
   .automotive-reel {
     grid-auto-columns: min(76vw, 272px);
     gap: 15px;
-  }
-
-  .automotive-reel-nav {
-    width: 36px;
-    height: 36px;
-    font-size: 15px;
+    padding-bottom: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .automotive-reel-shell {
-    grid-template-columns: 32px minmax(0, 1fr) 32px;
-    gap: 6px;
-  }
-
   .automotive-reel {
     grid-auto-columns: min(72vw, 248px);
-  }
-
-  .automotive-reel-nav {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
   }
 }
 
@@ -499,8 +445,7 @@ section {
   .motion-frame,
   .automotive-reel-frame,
   .automotive-cover,
-  .automotive-play,
-  .automotive-reel-nav {
+  .automotive-play {
     transition: none;
   }
 }
