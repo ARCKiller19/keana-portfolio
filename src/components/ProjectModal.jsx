@@ -68,6 +68,7 @@ function ProjectModal({ project, onClose }) {
               <img
                 src={project.image}
                 alt={project.imageAlt ?? `${project.title} project preview`}
+                decoding="async"
                 onError={handleImageError}
               />
             </figure>
