@@ -1,3 +1,30 @@
+/* ---------- Global interaction polish ---------- */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+section {
+  scroll-margin-top: 88px;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+}
+
+.project-frame img {
+  transition: opacity 0.2s ease, transform 0.25s ease;
+}
+
+.project-frame:hover img,
+.project-frame:focus-visible img {
+  transform: scale(1.025);
+}
+
 /* ---------- Motion & Video ---------- */
 
 .motion-intro {
@@ -26,6 +53,11 @@
   margin-left: auto;
 }
 
+.motion-piece-portrait {
+  width: min(46%, 460px);
+  margin-left: auto;
+}
+
 .motion-meta {
   display: flex;
   justify-content: space-between;
@@ -48,6 +80,16 @@
   border: 1px solid var(--rule-strong);
   background: var(--bg-raised);
   aspect-ratio: 16 / 9;
+  transition: border-color 0.22s ease;
+}
+
+.motion-frame:hover,
+.motion-frame:focus-within {
+  border-color: var(--moss);
+}
+
+.motion-frame-portrait {
+  aspect-ratio: 9 / 16;
 }
 
 .motion-video {
@@ -113,6 +155,22 @@
   font-size: 11px;
 }
 
+.motion-collection[open] .automotive-grid {
+  animation: motion-collection-reveal 0.24s ease-out;
+}
+
+@keyframes motion-collection-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .automotive-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -132,6 +190,10 @@
 @media (max-width: 900px) {
   .motion-piece {
     width: 100%;
+  }
+
+  .motion-piece-portrait {
+    width: min(62%, 460px);
   }
 
   .motion-collection-summary {
@@ -155,6 +217,10 @@
 
   .motion-featured {
     gap: 48px;
+  }
+
+  .motion-piece-portrait {
+    width: 100%;
   }
 
   .motion-meta {
@@ -188,5 +254,20 @@
 
   .automotive-piece:nth-child(5) {
     grid-column: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .motion-collection[open] .automotive-grid {
+    animation: none;
+  }
+
+  .project-frame img,
+  .motion-frame {
+    transition: none;
   }
 }

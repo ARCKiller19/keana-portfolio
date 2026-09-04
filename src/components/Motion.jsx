@@ -21,18 +21,23 @@ function Motion() {
     <section className="motion" id="motion" aria-label="Motion and video work">
       <div className="section-head">
         <h2>Motion &amp; Video</h2>
-        <span className="count">03 Collections</span>
+        <span className="count">03 Selected Works</span>
       </div>
 
       <p className="motion-intro">
-        Selected animation and video editing work, from expressive motion pieces
-        to commercial automotive edits.
+        Animation, video edits, and commercial work.
       </p>
 
       <div className="motion-featured">
         {featuredMotion.map((piece, index) => (
           <article
-            className={`motion-piece ${index % 2 === 1 ? 'motion-piece-offset' : ''}`}
+            className={`motion-piece ${
+              piece.layout === 'portrait'
+                ? 'motion-piece-portrait'
+                : index % 2 === 1
+                  ? 'motion-piece-offset'
+                  : ''
+            }`}
             key={piece.id}
           >
             <div className="motion-meta">
@@ -40,7 +45,11 @@ function Motion() {
               <span>{piece.category}</span>
             </div>
 
-            <div className="motion-frame">
+            <div
+              className={`motion-frame ${
+                piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
+              }`}
+            >
               <VideoPlayer src={piece.src} title={piece.title} />
             </div>
 
