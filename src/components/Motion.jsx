@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
 import '../motion.css'
 
@@ -77,6 +77,46 @@ function AutomotiveReelCard({ piece, index }) {
 }
 
 function Motion() {
+  const reelRef = useRef(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
+
+  useEffect(() => {
+    const reel = reelRef.current
+    if (!reel) return undefined
+
+    const updateControls = () => {
+      const maxScrollLeft = Math.max(0, reel.scrollWidth - reel.clientWidth)
+      setCanScrollLeft(reel.scrollLeft > 2)
+      setCanScrollRight(reel.scrollLeft < maxScrollLeft - 2)
+    }
+
+    updateControls()
+    reel.addEventListener('scroll', updateControls, { passive: true })
+    window.addEventListener('resize', updateControls)
+
+    return () => {
+      reel.removeEventListener('scroll', updateControls)
+      window.removeEventListener('resize', updateControls)
+    }
+  }, [])
+
+  const scrollReel = (direction) => {
+    const reel = reelRef.current
+    if (!reel) return
+
+    const firstCard = reel.querySelector('.automotive-reel-card')
+    const reelStyles = window.getComputedStyle(reel)
+    const gap = Number.parseFloat(reelStyles.columnGap || reelStyles.gap) || 0
+    const cardWidth = firstCard?.getBoundingClientRect().width ?? reel.clientWidth * 0.75
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+    reel.scrollBy({
+      left: direction * (cardWidth + gap),
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    })
+  }
+
   return (
     <section className="motion" id="motion" aria-label="Motion and video work">
       <div className="section-head">
@@ -145,15 +185,37 @@ function Motion() {
           </div>
         </div>
 
-        <div
-          className="automotive-reel"
-          role="list"
-          aria-label="Automotive video reel"
-          style={{ paddingBottom: '24px' }}
-        >
-          {automotiveMotion.map((piece, index) => (
-            <AutomotiveReelCard piece={piece} index={index} key={piece.id} />
-          ))}
+        <div className="automotive-reel-shell">
+          <button
+            className="automotive-reel-nav automotive-reel-nav-prev"
+            type="button"
+            onClick={() => scrollReel(-1)}
+            disabled={!canScrollLeft}
+            aria-label="Show previous automotive edit"
+          >
+            <span aria-hidden="true">←</span>
+          </button>
+
+          <div
+            className="automotive-reel"
+            ref={reelRef}
+            role="list"
+            aria-label="Automotive video reel"
+          >
+            {automotiveMotion.map((piece, index) => (
+              <AutomotiveReelCard piece={piece} index={index} key={piece.id} />
+            ))}
+          </div>
+
+          <button
+            className="automotive-reel-nav automotive-reel-nav-next"
+            type="button"
+            onClick={() => scrollReel(1)}
+            disabled={!canScrollRight}
+            aria-label="Show next automotive edit"
+          >
+            <span aria-hidden="true">→</span>
+          </button>
         </div>
       </section>
     </section>
