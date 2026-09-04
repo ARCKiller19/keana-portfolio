@@ -205,30 +205,66 @@ section {
   line-height: 1.58;
 }
 
+.automotive-reel-shell {
+  position: relative;
+}
+
 .automotive-reel {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: clamp(220px, 24vw, 300px);
   gap: clamp(16px, 2vw, 24px);
   overflow-x: auto;
-  padding: 0 0 14px;
+  padding: 0;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: 1px;
   overscroll-behavior-inline: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--rule-strong) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .automotive-reel::-webkit-scrollbar {
-  height: 6px;
+  display: none;
 }
 
-.automotive-reel::-webkit-scrollbar-track {
-  background: transparent;
+.automotive-reel-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  background: rgba(10, 11, 9, 0.92);
+  color: var(--cream);
+  font-family: var(--font-mono);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: border-color 0.18s ease, color 0.18s ease, opacity 0.18s ease;
 }
 
-.automotive-reel::-webkit-scrollbar-thumb {
-  background: var(--rule-strong);
+.automotive-reel-nav:hover:not(:disabled),
+.automotive-reel-nav:focus-visible:not(:disabled) {
+  border-color: var(--moss);
+  color: var(--moss);
+}
+
+.automotive-reel-nav:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
+.automotive-reel-nav-prev {
+  left: -20px;
+}
+
+.automotive-reel-nav-next {
+  right: -20px;
 }
 
 .automotive-reel-card {
@@ -308,6 +344,16 @@ section {
   line-height: 1.15;
 }
 
+@media (max-width: 1280px) {
+  .automotive-reel-nav-prev {
+    left: 8px;
+  }
+
+  .automotive-reel-nav-next {
+    right: 8px;
+  }
+}
+
 @media (max-width: 1040px) {
   .automotive-showcase-head {
     grid-template-columns: minmax(310px, 0.9fr) minmax(340px, 1.1fr);
@@ -352,6 +398,11 @@ section {
 
   .automotive-reel {
     grid-auto-columns: clamp(220px, 36vw, 286px);
+  }
+
+  .automotive-reel-nav {
+    width: 42px;
+    height: 42px;
   }
 }
 
@@ -423,8 +474,23 @@ section {
   }
 
   .automotive-reel {
-    grid-auto-columns: min(72vw, 272px);
+    grid-auto-columns: min(76vw, 272px);
     gap: 15px;
+  }
+
+  .automotive-reel-nav {
+    top: 48%;
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+
+  .automotive-reel-nav-prev {
+    left: 6px;
+  }
+
+  .automotive-reel-nav-next {
+    right: 6px;
   }
 }
 
@@ -437,7 +503,8 @@ section {
   .motion-frame,
   .automotive-reel-frame,
   .automotive-cover,
-  .automotive-play {
+  .automotive-play,
+  .automotive-reel-nav {
     transition: none;
   }
 }
