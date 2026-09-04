@@ -1,14 +1,57 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
 import '../motion.css'
 
+function useDeferredVideoMetadata() {
+  const videoRef = useRef(null)
+  const [shouldPreload, setShouldPreload] = useState(false)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return undefined
+
+    if (!('IntersectionObserver' in window)) {
+      setShouldPreload(true)
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+
+        setShouldPreload(true)
+        observer.disconnect()
+      },
+      { rootMargin: '320px 160px' },
+    )
+
+    observer.observe(video)
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (shouldPreload) {
+      videoRef.current?.load()
+    }
+  }, [shouldPreload])
+
+  return {
+    videoRef,
+    preload: shouldPreload ? 'metadata' : 'none',
+  }
+}
+
 function VideoPlayer({ src, title, className = '' }) {
+  const { videoRef, preload } = useDeferredVideoMetadata()
+
   return (
     <video
+      ref={videoRef}
       className={`motion-video ${className}`.trim()}
       controls
       playsInline
-      preload="metadata"
+      preload={preload}
       aria-label={title}
     >
       <source src={src} type="video/mp4" />
@@ -18,7 +61,7 @@ function VideoPlayer({ src, title, className = '' }) {
 }
 
 function AutomotiveReelCard({ piece, index }) {
-  const videoRef = useRef(null)
+  const { videoRef, preload } = useDeferredVideoMetadata()
   const [hasStarted, setHasStarted] = useState(false)
 
   const playVideo = async () => {
@@ -49,7 +92,7 @@ function AutomotiveReelCard({ piece, index }) {
           className="motion-video automotive-reel-video"
           controls={hasStarted}
           playsInline
-          preload="metadata"
+          preload={preload}
           poster={piece.cover}
           aria-label={piece.title}
         >
