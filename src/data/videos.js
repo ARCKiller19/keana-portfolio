@@ -2,14 +2,14 @@ export const featuredMotion = [
   {
     id: 'cover-animation',
     number: '01',
-    title: 'Special Singer — Cover Animation',
+    title: 'Special Singer Cover Animation Edit',
     category: 'Motion Design · Animation',
     src: '/videos/motion/cover-animation-edit-for-special-singer.mp4',
   },
   {
     id: 'first-love',
     number: '02',
-    title: 'First Love — Animation Edit',
+    title: 'First Love Animation Edit',
     category: 'Animation · Video Editing',
     layout: 'portrait',
     src: '/videos/motion/first-love-animation-edit.mp4',

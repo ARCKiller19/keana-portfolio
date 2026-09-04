@@ -46,7 +46,7 @@ section {
 }
 
 .motion-piece {
-  width: min(78%, 900px);
+  width: min(68%, 760px);
 }
 
 .motion-piece-offset {
@@ -54,7 +54,7 @@ section {
 }
 
 .motion-piece-portrait {
-  width: min(46%, 460px);
+  width: min(34%, 360px);
   margin-left: auto;
 }
 
@@ -189,11 +189,11 @@ section {
 
 @media (max-width: 900px) {
   .motion-piece {
-    width: 100%;
+    width: min(88%, 760px);
   }
 
   .motion-piece-portrait {
-    width: min(62%, 460px);
+    width: min(54%, 360px);
   }
 
   .motion-collection-summary {
