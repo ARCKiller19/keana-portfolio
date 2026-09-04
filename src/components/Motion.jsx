@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
-import useReveal from '../hooks/useReveal.js'
 import '../motion.css'
 
 function useDeferredVideoMetadata() {
@@ -58,44 +57,6 @@ function VideoPlayer({ src, title, className = '' }) {
       <source src={src} type="video/mp4" />
       Your browser does not support HTML video.
     </video>
-  )
-}
-
-function FeaturedMotionPiece({ piece, index }) {
-  const revealRef = useReveal()
-
-  return (
-    <article
-      className={`motion-piece reveal-pair ${
-        index % 2 === 1 ? 'motion-piece-reverse' : ''
-      }`}
-      ref={revealRef}
-    >
-      <div
-        className={`motion-piece-media ${
-          piece.layout === 'portrait' ? 'motion-piece-media-portrait' : ''
-        }`}
-      >
-        <div className="motion-meta">
-          <span className="motion-index">{piece.number}</span>
-          <span>{piece.category}</span>
-        </div>
-
-        <div
-          className={`motion-frame ${
-            piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
-          }`}
-        >
-          <VideoPlayer src={piece.src} title={piece.title} />
-        </div>
-      </div>
-
-      <div className="motion-piece-copy">
-        <span className="motion-piece-label">Behind the edit</span>
-        <h3>{piece.title}</h3>
-        <p>{piece.reflection}</p>
-      </div>
-    </article>
   )
 }
 
@@ -159,25 +120,50 @@ function AutomotiveReelCard({ piece, index }) {
 }
 
 function Motion() {
-  const headingRevealRef = useReveal()
-  const introRevealRef = useReveal()
-  const automotiveHeadingRevealRef = useReveal()
-  const reelRevealRef = useReveal()
-
   return (
     <section className="motion" id="motion" aria-label="Motion and video work">
-      <div className="section-head reveal-pair" ref={headingRevealRef}>
+      <div className="section-head">
         <h2>Motion &amp; Video</h2>
         <span className="count">03 Selected Works</span>
       </div>
 
-      <p className="motion-intro reveal-block" ref={introRevealRef}>
+      <p className="motion-intro">
         Animation, video edits, and commercial work.
       </p>
 
       <div className="motion-featured">
         {featuredMotion.map((piece, index) => (
-          <FeaturedMotionPiece piece={piece} index={index} key={piece.id} />
+          <article
+            className={`motion-piece ${
+              index % 2 === 1 ? 'motion-piece-reverse' : ''
+            }`}
+            key={piece.id}
+          >
+            <div
+              className={`motion-piece-media ${
+                piece.layout === 'portrait' ? 'motion-piece-media-portrait' : ''
+              }`}
+            >
+              <div className="motion-meta">
+                <span className="motion-index">{piece.number}</span>
+                <span>{piece.category}</span>
+              </div>
+
+              <div
+                className={`motion-frame ${
+                  piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
+                }`}
+              >
+                <VideoPlayer src={piece.src} title={piece.title} />
+              </div>
+            </div>
+
+            <div className="motion-piece-copy">
+              <span className="motion-piece-label">Behind the edit</span>
+              <h3>{piece.title}</h3>
+              <p>{piece.reflection}</p>
+            </div>
+          </article>
         ))}
       </div>
 
@@ -185,10 +171,7 @@ function Motion() {
         className="automotive-showcase"
         aria-labelledby="automotive-showcase-title"
       >
-        <div
-          className="automotive-showcase-head reveal-pair"
-          ref={automotiveHeadingRevealRef}
-        >
+        <div className="automotive-showcase-head">
           <div className="automotive-showcase-title-block">
             <span className="motion-index">03</span>
             <h3 id="automotive-showcase-title">Automotive Video Edits</h3>
@@ -206,10 +189,9 @@ function Motion() {
         </div>
 
         <div
-          className="automotive-reel reveal-stagger"
+          className="automotive-reel"
           role="list"
           aria-label="Automotive video reel"
-          ref={reelRevealRef}
         >
           {automotiveMotion.map((piece, index) => (
             <AutomotiveReelCard piece={piece} index={index} key={piece.id} />
