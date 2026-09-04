@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
 import '../motion.css'
 
-function useDeferredVideoMetadata() {
+function useDeferredVideoMetadata(rootMargin = '1400px 200px') {
   const videoRef = useRef(null)
   const [shouldPreload, setShouldPreload] = useState(false)
 
@@ -22,13 +22,13 @@ function useDeferredVideoMetadata() {
         setShouldPreload(true)
         observer.disconnect()
       },
-      { rootMargin: '320px 160px' },
+      { rootMargin },
     )
 
     observer.observe(video)
 
     return () => observer.disconnect()
-  }, [])
+  }, [rootMargin])
 
   useEffect(() => {
     if (shouldPreload) {
@@ -43,7 +43,7 @@ function useDeferredVideoMetadata() {
 }
 
 function VideoPlayer({ src, title, className = '' }) {
-  const { videoRef, preload } = useDeferredVideoMetadata()
+  const { videoRef, preload } = useDeferredVideoMetadata('2200px 260px')
 
   return (
     <video
@@ -61,7 +61,7 @@ function VideoPlayer({ src, title, className = '' }) {
 }
 
 function AutomotiveReelCard({ piece, index }) {
-  const { videoRef, preload } = useDeferredVideoMetadata()
+  const { videoRef, preload } = useDeferredVideoMetadata('1400px 200px')
   const [hasStarted, setHasStarted] = useState(false)
 
   const playVideo = async () => {
