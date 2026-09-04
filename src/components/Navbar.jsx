@@ -99,9 +99,9 @@ function Navbar() {
 
       <span className="nav-meta">Davao City, PH</span>
 
-      <span className="nav-progress" aria-hidden="true">
-        <span className="nav-progress-bar" ref={progressRef} />
-      </span>
+      <div className="nav-progress" aria-hidden="true">
+        <div className="nav-progress-bar" ref={progressRef} />
+      </div>
     </header>
   )
 }
