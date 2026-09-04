@@ -186,24 +186,24 @@ section {
   justify-self: end;
 }
 
-.automotive-showcase-copy p {
-  max-width: 66ch;
-  margin: 0;
-  color: var(--cream-dim);
-  font-size: clamp(13px, 1.2vw, 14px);
-  font-weight: 300;
-  line-height: 1.62;
-}
-
 .automotive-showcase-copy span {
   display: block;
-  margin-top: 14px;
+  margin-bottom: 12px;
   font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--cream-dim);
   white-space: nowrap;
+}
+
+.automotive-showcase-copy p {
+  max-width: 64ch;
+  margin: 0;
+  color: var(--cream-dim);
+  font-size: clamp(13px, 1.2vw, 14px);
+  font-weight: 300;
+  line-height: 1.58;
 }
 
 .automotive-reel {
@@ -253,6 +253,48 @@ section {
 
 .automotive-reel-video {
   object-fit: cover;
+}
+
+.automotive-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: rgba(5, 6, 4, 0.34);
+  color: var(--cream);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.automotive-cover:hover,
+.automotive-cover:focus-visible {
+  background: rgba(5, 6, 4, 0.16);
+}
+
+.automotive-play {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(239, 233, 219, 0.64);
+  border-radius: 50%;
+  background: rgba(10, 11, 9, 0.56);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.automotive-play span {
+  margin-left: 3px;
+  font-size: 13px;
+}
+
+.automotive-cover:hover .automotive-play,
+.automotive-cover:focus-visible .automotive-play {
+  transform: scale(1.06);
+  background: rgba(10, 11, 9, 0.76);
 }
 
 .automotive-reel-card h4 {
@@ -366,6 +408,7 @@ section {
 
   .automotive-showcase-head h3 {
     font-size: clamp(27px, 8vw, 36px);
+    white-space: normal;
   }
 
   .automotive-showcase-copy {
@@ -389,7 +432,9 @@ section {
 
   .project-frame img,
   .motion-frame,
-  .automotive-reel-frame {
+  .automotive-reel-frame,
+  .automotive-cover,
+  .automotive-play {
     transition: none;
   }
 }
