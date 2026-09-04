@@ -508,8 +508,7 @@
         opacity var(--motion-fast) var(--ease-editorial),
         transform var(--motion-medium) var(--ease-editorial);
     }
-  }
-  
+
     &:hover img,
     &:focus-visible img {
       opacity: 0.9;
