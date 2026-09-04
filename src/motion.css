@@ -16,15 +16,6 @@ section {
   background: var(--bg);
 }
 
-.project-frame img {
-  transition: opacity 0.2s ease, transform 0.25s ease;
-}
-
-.project-frame:hover img,
-.project-frame:focus-visible img {
-  transform: scale(1.025);
-}
-
 /* ---------- Motion & Video ---------- */
 
 .motion-intro {
@@ -93,7 +84,7 @@ section {
   border: 1px solid var(--rule-strong);
   background: var(--bg-raised);
   aspect-ratio: 16 / 9;
-  transition: border-color 0.22s ease;
+  transition: border-color var(--motion-fast) var(--ease-editorial);
 }
 
 .motion-frame:hover,
@@ -232,6 +223,14 @@ section {
   background: var(--rule-strong);
 }
 
+.automotive-reel:hover {
+  scrollbar-color: var(--moss) transparent;
+}
+
+.automotive-reel:hover::-webkit-scrollbar-thumb {
+  background: var(--moss);
+}
+
 .automotive-reel-card {
   min-width: 0;
   scroll-snap-align: start;
@@ -247,7 +246,7 @@ section {
   overflow: hidden;
   border: 1px solid var(--rule-strong);
   background: #050604;
-  transition: border-color 0.2s ease;
+  transition: border-color var(--motion-fast) var(--ease-editorial);
 }
 
 .automotive-reel-frame:hover,
@@ -271,7 +270,7 @@ section {
   background: rgba(5, 6, 4, 0.34);
   color: var(--cream);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--motion-fast) var(--ease-editorial);
 }
 
 .automotive-cover:hover,
@@ -287,7 +286,10 @@ section {
   border: 1px solid rgba(239, 233, 219, 0.64);
   border-radius: 50%;
   background: rgba(10, 11, 9, 0.56);
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition:
+    transform var(--motion-fast) var(--ease-editorial),
+    background-color var(--motion-fast) var(--ease-editorial),
+    border-color var(--motion-fast) var(--ease-editorial);
 }
 
 .automotive-play span {
@@ -297,7 +299,8 @@ section {
 
 .automotive-cover:hover .automotive-play,
 .automotive-cover:focus-visible .automotive-play {
-  transform: scale(1.06);
+  transform: scale(1.045);
+  border-color: var(--cream);
   background: rgba(10, 11, 9, 0.76);
 }
 
@@ -441,11 +444,15 @@ section {
     scroll-behavior: auto;
   }
 
-  .project-frame img,
   .motion-frame,
   .automotive-reel-frame,
   .automotive-cover,
   .automotive-play {
     transition: none;
+  }
+
+  .automotive-cover:hover .automotive-play,
+  .automotive-cover:focus-visible .automotive-play {
+    transform: none;
   }
 }

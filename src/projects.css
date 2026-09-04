@@ -9,11 +9,27 @@
   font: inherit;
   text-align: inherit;
   cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-editorial);
 }
 
 .project-trigger .project-image-contain {
   object-fit: contain;
   background: #080908;
+}
+
+.project-trigger:hover,
+.project-trigger:focus-visible {
+  border-color: var(--moss);
+}
+
+.project-trigger:hover .project-image,
+.project-trigger:focus-visible .project-image {
+  transform: scale(1.018);
+}
+
+.project-trigger:hover + .project-info h3,
+.project-trigger:focus-visible + .project-info h3 {
+  color: var(--moss);
 }
 
 .project-frame-hint {
@@ -31,7 +47,9 @@
   text-transform: uppercase;
   opacity: 0;
   transform: translateY(4px);
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition:
+    opacity var(--motion-fast) var(--ease-editorial),
+    transform var(--motion-fast) var(--ease-editorial);
 }
 
 .project-trigger:hover .project-frame-hint,
@@ -47,11 +65,22 @@
   color: var(--moss);
   font: inherit;
   cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-editorial);
+}
+
+.project-details-link span {
+  display: inline-block;
+  transition: transform var(--motion-fast) var(--ease-editorial);
 }
 
 .project-details-link:hover,
 .project-details-link:focus-visible {
   color: var(--cream);
+}
+
+.project-details-link:hover span,
+.project-details-link:focus-visible span {
+  transform: translate(3px, -2px);
 }
 
 /* ---------- Project modal ---------- */
@@ -69,9 +98,33 @@
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.62);
 }
 
+.project-modal[open] {
+  animation: project-modal-enter 320ms var(--ease-editorial) both;
+}
+
 .project-modal::backdrop {
   background: rgba(5, 6, 4, 0.82);
   backdrop-filter: blur(8px);
+}
+
+.project-modal[open]::backdrop {
+  animation: project-modal-backdrop-enter 220ms ease-out both;
+}
+
+@keyframes project-modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes project-modal-backdrop-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .project-modal-shell {
@@ -126,6 +179,7 @@
   color: var(--cream-dim);
   font: inherit;
   cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-editorial);
 }
 
 .project-modal-close:hover,
@@ -248,12 +302,25 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--cream);
+  transition:
+    border-color var(--motion-fast) var(--ease-editorial),
+    color var(--motion-fast) var(--ease-editorial);
+}
+
+.project-live-link span {
+  display: inline-block;
+  transition: transform var(--motion-fast) var(--ease-editorial);
 }
 
 .project-live-link:hover,
 .project-live-link:focus-visible {
   border-color: var(--moss);
   color: var(--moss);
+}
+
+.project-live-link:hover span,
+.project-live-link:focus-visible span {
+  transform: translate(3px, -2px);
 }
 
 .project-live-unavailable {
@@ -341,7 +408,27 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-frame-hint {
+  .project-frame-hint,
+  .project-trigger,
+  .project-details-link,
+  .project-details-link span,
+  .project-modal-close,
+  .project-live-link,
+  .project-live-link span {
     transition: none;
+  }
+
+  .project-modal[open],
+  .project-modal[open]::backdrop {
+    animation: none;
+  }
+
+  .project-trigger:hover .project-image,
+  .project-trigger:focus-visible .project-image,
+  .project-details-link:hover span,
+  .project-details-link:focus-visible span,
+  .project-live-link:hover span,
+  .project-live-link:focus-visible span {
+    transform: none;
   }
 }
