@@ -5,6 +5,8 @@ export const featuredMotion = [
     title: 'Special Singer Cover Animation Edit',
     category: 'Motion Design · Animation',
     src: '/videos/motion/cover-animation-edit-for-special-singer.mp4',
+    reflection:
+      'I approached this edit as a rhythm exercise. I wanted the cover artwork to feel alive without crowding it, so I focused on movement that supports the mood and lets each beat breathe.',
   },
   {
     id: 'first-love',
@@ -13,6 +15,8 @@ export const featuredMotion = [
     category: 'Animation · Video Editing',
     layout: 'portrait',
     src: '/videos/motion/first-love-animation-edit.mp4',
+    reflection:
+      'I wanted this edit to feel softer and more personal. I kept thinking about pacing, gentle movement, and how animation could carry the feeling of the song without becoming louder than it.',
   },
 ]
 
