@@ -78,8 +78,6 @@ function AutomotiveReelCard({ piece, index }) {
             onFocus={prepareVideo}
             aria-label={`Play ${piece.title}`}
           >
-            <span className="automotive-cover-label">Selected edit</span>
-            <span className="automotive-cover-title">{piece.title}</span>
             <span className="automotive-play" aria-hidden="true">
               <span>▶</span>
             </span>
@@ -109,10 +107,14 @@ function Motion() {
           <article
             className={`motion-piece ${
               index % 2 === 1 ? 'motion-piece-reverse' : ''
-            } ${piece.layout === 'portrait' ? 'motion-piece-portrait' : ''}`}
+            }`}
             key={piece.id}
           >
-            <div className="motion-piece-media">
+            <div
+              className={`motion-piece-media ${
+                piece.layout === 'portrait' ? 'motion-piece-media-portrait' : ''
+              }`}
+            >
               <div className="motion-meta">
                 <span className="motion-index">{piece.number}</span>
                 <span>{piece.category}</span>
@@ -141,21 +143,8 @@ function Motion() {
         aria-labelledby="automotive-showcase-title"
       >
         <div className="automotive-showcase-head">
-          <div>
-            <span className="motion-index">03</span>
-            <h3 id="automotive-showcase-title">Automotive Video Edits</h3>
-          </div>
-
-          <div className="automotive-showcase-copy">
-            <p>
-              These edits were made for social media, so I was thinking about
-              pace, strong openings, and how to make each car feel distinct in
-              a short vertical format.
-            </p>
-            <span>
-              Commercial · Social Media · {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
-            </span>
-          </div>
+          <span className="motion-index">03</span>
+          <h3 id="automotive-showcase-title">Automotive Video Edits</h3>
         </div>
 
         <div className="automotive-reel" role="list" aria-label="Automotive video reel">
@@ -164,9 +153,16 @@ function Motion() {
           ))}
         </div>
 
-        <p className="automotive-reel-hint">
-          Scroll sideways to browse every edit. Hover a cover to reveal the video, then press play.
-        </p>
+        <div className="automotive-showcase-foot">
+          <p>
+            These edits were made for social media, so I was thinking about
+            pace, strong openings, and how to make each car feel distinct in
+            a short vertical format.
+          </p>
+          <span>
+            Commercial · Social Media · {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
+          </span>
+        </div>
       </section>
     </section>
   )
