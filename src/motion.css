@@ -29,7 +29,7 @@ section {
 
 .motion-intro {
   max-width: var(--container);
-  margin: -24px auto 56px;
+  margin: -24px auto 64px;
   color: var(--cream-dim);
   font-weight: 300;
 }
@@ -42,14 +42,14 @@ section {
 
 .motion-featured {
   display: grid;
-  gap: clamp(72px, 9vw, 124px);
+  gap: clamp(76px, 9vw, 112px);
 }
 
 .motion-piece {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
-  gap: clamp(34px, 6vw, 82px);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+  gap: clamp(40px, 6vw, 72px);
+  align-items: start;
   width: 100%;
 }
 
@@ -61,14 +61,14 @@ section {
   order: 1;
 }
 
-.motion-piece-portrait {
-  grid-template-columns: minmax(260px, 360px) minmax(280px, 1fr);
-  width: min(920px, 100%);
-  margin-left: auto;
+.motion-piece-media {
+  width: min(100%, 680px);
+  min-width: 0;
 }
 
-.motion-piece-media {
-  min-width: 0;
+.motion-piece-media-portrait {
+  width: min(100%, 300px);
+  justify-self: end;
 }
 
 .motion-meta {
@@ -77,8 +77,8 @@ section {
   gap: 20px;
   margin-bottom: 12px;
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  font-size: 10px;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--cream-dim);
 }
@@ -114,95 +114,71 @@ section {
 }
 
 .motion-piece-copy {
+  width: min(100%, 390px);
   min-width: 0;
-  padding-block: 24px;
+  padding-top: 22px;
   border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
 }
 
 .motion-piece-label {
   display: block;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--moss);
 }
 
 .motion-piece-copy h3 {
-  max-width: 14ch;
-  margin: 0 0 18px;
-  font-size: clamp(28px, 4vw, 46px);
+  max-width: 13ch;
+  margin: 0 0 16px;
+  font-size: clamp(28px, 3.6vw, 42px);
   font-weight: 400;
   line-height: 1.02;
 }
 
 .motion-piece-copy p {
-  max-width: 46ch;
+  max-width: 44ch;
   margin: 0;
   color: var(--cream-dim);
   font-size: 14px;
   font-weight: 300;
-  line-height: 1.7;
+  line-height: 1.68;
 }
 
 /* ---------- Automotive reel ---------- */
 
 .automotive-showcase {
-  margin-top: clamp(96px, 12vw, 152px);
-  padding: clamp(38px, 5vw, 64px) 0 42px;
+  margin-top: clamp(96px, 11vw, 144px);
+  padding: clamp(34px, 4vw, 52px) 0 40px;
   border-top: 1px solid var(--rule-strong);
   border-bottom: 1px solid var(--rule-strong);
 }
 
 .automotive-showcase-head {
   display: grid;
-  grid-template-columns: minmax(220px, 0.8fr) minmax(320px, 1.2fr);
-  gap: clamp(32px, 7vw, 96px);
-  align-items: end;
-  margin-bottom: 42px;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 38px;
 }
 
 .automotive-showcase-head h3 {
   max-width: 12ch;
-  margin: 8px 0 0;
-  font-size: clamp(34px, 5vw, 58px);
+  margin: 0;
+  font-size: clamp(34px, 4.8vw, 54px);
   font-weight: 400;
   line-height: 1;
-}
-
-.automotive-showcase-copy {
-  display: grid;
-  gap: 18px;
-  align-self: end;
-}
-
-.automotive-showcase-copy p {
-  max-width: 52ch;
-  margin: 0;
-  color: var(--cream-dim);
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.7;
-}
-
-.automotive-showcase-copy span,
-.automotive-reel-hint {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
 }
 
 .automotive-reel {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: clamp(220px, 26vw, 320px);
-  gap: clamp(16px, 2vw, 26px);
+  grid-auto-columns: clamp(220px, 24vw, 300px);
+  gap: clamp(16px, 2vw, 24px);
   overflow-x: auto;
-  padding: 0 0 22px;
+  padding: 0 0 20px;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: 1px;
   overscroll-behavior-inline: contain;
@@ -253,49 +229,30 @@ section {
   position: absolute;
   inset: 0;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: grid;
+  place-items: center;
   width: 100%;
-  padding: 20px;
+  padding: 0;
   border: 0;
-  background: rgba(5, 6, 4, 0.68);
+  background: rgba(5, 6, 4, 0.56);
   color: var(--cream);
-  text-align: left;
   cursor: pointer;
   transition: background-color 0.22s ease;
 }
 
 .automotive-cover:hover,
 .automotive-cover:focus-visible {
-  background: rgba(5, 6, 4, 0.28);
-}
-
-.automotive-cover-label {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-}
-
-.automotive-cover-title {
-  max-width: 9ch;
-  margin-top: 12px;
-  font-family: var(--font-display);
-  font-size: clamp(26px, 3vw, 38px);
-  line-height: 1;
+  background: rgba(5, 6, 4, 0.22);
 }
 
 .automotive-play {
   display: grid;
   place-items: center;
-  width: 54px;
-  height: 54px;
-  margin-top: auto;
+  width: 52px;
+  height: 52px;
   border: 1px solid rgba(239, 233, 219, 0.58);
   border-radius: 50%;
-  background: rgba(10, 11, 9, 0.42);
+  background: rgba(10, 11, 9, 0.5);
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
@@ -307,57 +264,87 @@ section {
 .automotive-cover:hover .automotive-play,
 .automotive-cover:focus-visible .automotive-play {
   transform: scale(1.08);
-  background: rgba(10, 11, 9, 0.72);
+  background: rgba(10, 11, 9, 0.76);
 }
 
 .automotive-reel-card h4 {
-  margin: 14px 0 0;
+  margin: 13px 0 0;
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 400;
+  line-height: 1.15;
 }
 
-.automotive-reel-hint {
-  margin: 18px 0 0;
+.automotive-showcase-foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(28px, 6vw, 80px);
+  align-items: end;
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+
+.automotive-showcase-foot p {
+  max-width: 56ch;
+  margin: 0;
+  color: var(--cream-dim);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.68;
+}
+
+.automotive-showcase-foot span {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  white-space: nowrap;
 }
 
 @media (max-width: 900px) {
-  .motion-piece,
-  .motion-piece-portrait {
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.8fr);
+  .motion-piece {
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.68fr);
+    gap: 38px;
+  }
+
+  .motion-piece-media {
     width: 100%;
   }
 
-  .motion-piece-portrait {
-    grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+  .motion-piece-media-portrait {
+    width: min(100%, 280px);
   }
 
-  .automotive-showcase-head {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    align-items: start;
-  }
-
-  .automotive-showcase-copy {
-    max-width: 620px;
+  .motion-piece-copy {
+    width: 100%;
   }
 
   .automotive-reel {
-    grid-auto-columns: clamp(220px, 38vw, 300px);
+    grid-auto-columns: clamp(220px, 36vw, 286px);
+  }
+
+  .automotive-showcase-foot {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .automotive-showcase-foot span {
+    white-space: normal;
   }
 }
 
 @media (max-width: 680px) {
   .motion-intro {
-    margin-bottom: 40px;
+    margin-bottom: 44px;
   }
 
   .motion-featured {
-    gap: 72px;
+    gap: 68px;
   }
 
-  .motion-piece,
-  .motion-piece-portrait {
+  .motion-piece {
     grid-template-columns: 1fr;
     gap: 24px;
   }
@@ -367,9 +354,14 @@ section {
     order: initial;
   }
 
-  .motion-piece-portrait .motion-piece-media {
-    width: min(72vw, 340px);
-    margin-left: auto;
+  .motion-piece-media,
+  .motion-piece-media-portrait {
+    width: 100%;
+    justify-self: start;
+  }
+
+  .motion-piece-media-portrait {
+    width: min(72vw, 290px);
   }
 
   .motion-meta {
@@ -378,26 +370,33 @@ section {
   }
 
   .motion-piece-copy {
-    padding-block: 20px;
+    padding-top: 18px;
   }
 
   .automotive-showcase {
-    margin-top: 84px;
-    padding-top: 32px;
+    margin-top: 80px;
+    padding-top: 30px;
+  }
+
+  .automotive-showcase-head {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 28px;
   }
 
   .automotive-reel {
-    grid-auto-columns: min(74vw, 280px);
-    gap: 16px;
-  }
-
-  .automotive-cover {
-    padding: 16px;
+    grid-auto-columns: min(72vw, 272px);
+    gap: 15px;
   }
 
   .automotive-play {
     width: 48px;
     height: 48px;
+  }
+
+  .automotive-showcase-foot {
+    margin-top: 24px;
+    padding-top: 20px;
   }
 }
 
