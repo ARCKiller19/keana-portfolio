@@ -51,7 +51,7 @@ const projects = [
     year: '2026',
     link: 'https://orange-engineer.vercel.app/',
     linkLabel: 'View Live Site',
-    image: '/images/projects/orange-engineers.webp',
+    image: '/images/projects/orange-engineers.png',
     imageAlt:
       'Orange Engineers homepage with a dark engineering-themed hero and orange accents',
     imageFit: 'contain',
