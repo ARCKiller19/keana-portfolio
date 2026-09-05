@@ -81,28 +81,30 @@ function Footer() {
       </div>
 
       <div className="footer-top">
-        <div>
+        <div className="footer-message">
           <p className="footer-eyebrow">Have something in mind?</p>
           <h2>Let's make something thoughtful.</h2>
         </div>
 
-        <a className="footer-email" href="mailto:romapkrr3@gmail.com">
-          <span>romapkrr3@gmail.com</span>
-          <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-
-      <nav className="footer-links" aria-label="Social links">
-        {socialLinks.map((link) => (
-          <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
-            <span className="footer-link-icon">
-              <SocialIcon name={link.icon} />
-            </span>
-            <span className="footer-link-label">{link.label}</span>
-            <span className="footer-link-arrow" aria-hidden="true">↗</span>
+        <div className="footer-contact-panel">
+          <a className="footer-email" href="mailto:romapkrr3@gmail.com">
+            <span>romapkrr3@gmail.com</span>
+            <span aria-hidden="true">↗</span>
           </a>
-        ))}
-      </nav>
+
+          <nav className="footer-links" aria-label="Social links">
+            {socialLinks.map((link) => (
+              <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
+                <span className="footer-link-icon">
+                  <SocialIcon name={link.icon} />
+                </span>
+                <span className="footer-link-label">{link.label}</span>
+                <span className="footer-link-arrow" aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </nav>
+        </div>
+      </div>
 
       <div className="footer-bottom">
         <span>© 2026 Patricia Keana Roma</span>
