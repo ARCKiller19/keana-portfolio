@@ -111,7 +111,9 @@ function MotionNotesModal({ piece, onClose }) {
 
         <footer className="motion-notes-reflection">
           <span>Looking back</span>
-          <p>{notes.closing}</p>
+          <blockquote>
+            <p>{notes.closing}</p>
+          </blockquote>
         </footer>
       </div>
     </dialog>
