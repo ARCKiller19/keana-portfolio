@@ -1,5 +1,12 @@
 /* ClickMate Instagram showcase refinements */
 
+.project-action-pair {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .project-live-link-wrap {
   position: relative;
   display: inline-block;
@@ -296,6 +303,12 @@
 }
 
 @media (max-width: 520px) {
+  .project-action-pair {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
   .project-live-link-wrap {
     padding-top: 14px;
   }
