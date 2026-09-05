@@ -24,7 +24,7 @@ export const featuredMotion = [
         {
           number: '01',
           title: 'Red',
-          meaning: 'Memory · shared past',
+          meaning: 'His point of view · memory',
         },
         {
           number: '02',
@@ -55,7 +55,7 @@ export const featuredMotion = [
         {
           title: 'The cat eyes became timeline markers',
           paragraphs: [
-            'I kept returning to shots of cat eyes because they gave me a way to mark where the story was emotionally. Red represents the shared past and the memories both characters had together. Purple shifts the story into the girl’s point of view. Yellow introduces the final chapter, where the relationship has already changed and both characters are processing what remains.',
+            'I kept returning to shots of cat eyes because they gave me a way to mark where the story was emotionally. Red represents his point of view and the memories he carries from the relationship. Purple shifts the story into the girl’s point of view. Yellow introduces the final chapter, where the relationship has already changed and both characters are processing what remains.',
             'The repeated eyes became a quiet navigation system inside the edit. They tell you that the perspective or timeline is changing without needing text on screen.',
           ],
         },
