@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
+import MotionNotesModal from './MotionNotesModal.jsx'
 import '../motion.css'
 
 function useDeferredVideoMetadata(rootMargin = '1400px 200px') {
@@ -120,85 +121,102 @@ function AutomotiveReelCard({ piece, index }) {
 }
 
 function Motion() {
+  const [selectedNotesPiece, setSelectedNotesPiece] = useState(null)
+  const closeNotes = useCallback(() => setSelectedNotesPiece(null), [])
+
   return (
-    <section className="motion" id="motion" aria-label="Motion and video work">
-      <div className="section-head">
-        <h2>Motion &amp; Video</h2>
-        <span className="count">03 Selected Works</span>
-      </div>
+    <>
+      <section className="motion" id="motion" aria-label="Motion and video work">
+        <div className="section-head">
+          <h2>Motion &amp; Video</h2>
+          <span className="count">03 Selected Works</span>
+        </div>
 
-      <p className="motion-intro">
-        Animation, video edits, and commercial work.
-      </p>
+        <p className="motion-intro">
+          Animation, video edits, and commercial work.
+        </p>
 
-      <div className="motion-featured">
-        {featuredMotion.map((piece, index) => (
-          <article
-            className={`motion-piece ${
-              index % 2 === 1 ? 'motion-piece-reverse' : ''
-            }`}
-            key={piece.id}
-          >
-            <div
-              className={`motion-piece-media ${
-                piece.layout === 'portrait' ? 'motion-piece-media-portrait' : ''
+        <div className="motion-featured">
+          {featuredMotion.map((piece, index) => (
+            <article
+              className={`motion-piece ${
+                index % 2 === 1 ? 'motion-piece-reverse' : ''
               }`}
+              key={piece.id}
             >
-              <div className="motion-meta">
-                <span className="motion-index">{piece.number}</span>
-                <span>{piece.category}</span>
-              </div>
-
               <div
-                className={`motion-frame ${
-                  piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
+                className={`motion-piece-media ${
+                  piece.layout === 'portrait' ? 'motion-piece-media-portrait' : ''
                 }`}
               >
-                <VideoPlayer src={piece.src} title={piece.title} />
+                <div className="motion-meta">
+                  <span className="motion-index">{piece.number}</span>
+                  <span>{piece.category}</span>
+                </div>
+
+                <div
+                  className={`motion-frame ${
+                    piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
+                  }`}
+                >
+                  <VideoPlayer src={piece.src} title={piece.title} />
+                </div>
               </div>
-            </div>
 
-            <div className="motion-piece-copy">
-              <span className="motion-piece-label">Behind the edit</span>
-              <h3>{piece.title}</h3>
-              <p>{piece.reflection}</p>
-            </div>
-          </article>
-        ))}
-      </div>
+              <div className="motion-piece-copy">
+                <span className="motion-piece-label">Behind the edit</span>
+                <h3>{piece.title}</h3>
+                <p>{piece.reflection}</p>
 
-      <section
-        className="automotive-showcase"
-        aria-labelledby="automotive-showcase-title"
-      >
-        <div className="automotive-showcase-head">
-          <div className="automotive-showcase-title-block">
-            <span className="motion-index">03</span>
-            <h3 id="automotive-showcase-title">Automotive Video Edits</h3>
-          </div>
-
-          <div className="automotive-showcase-copy">
-            <span>
-              Commercial · Social Media · {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
-            </span>
-            <p>
-              These social edits focus on quick pacing, strong openings, and
-              giving each car its own presence within a short vertical format.
-            </p>
-          </div>
-        </div>
-
-        <div
-          className="automotive-reel"
-          role="list"
-          aria-label="Automotive video reel"
-        >
-          {automotiveMotion.map((piece, index) => (
-            <AutomotiveReelCard piece={piece} index={index} key={piece.id} />
+                {piece.creationNotes && (
+                  <button
+                    className="motion-notes-trigger"
+                    type="button"
+                    onClick={() => setSelectedNotesPiece(piece)}
+                  >
+                    Read creation notes <span aria-hidden="true">↗</span>
+                  </button>
+                )}
+              </div>
+            </article>
           ))}
         </div>
+
+        <section
+          className="automotive-showcase"
+          aria-labelledby="automotive-showcase-title"
+        >
+          <div className="automotive-showcase-head">
+            <div className="automotive-showcase-title-block">
+              <span className="motion-index">03</span>
+              <h3 id="automotive-showcase-title">Automotive Video Edits</h3>
+            </div>
+
+            <div className="automotive-showcase-copy">
+              <span>
+                Commercial · Social Media · {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
+              </span>
+              <p>
+                These social edits focus on quick pacing, strong openings, and
+                giving each car its own presence within a short vertical format.
+              </p>
+            </div>
+          </div>
+
+          <div
+            className="automotive-reel"
+            role="list"
+            aria-label="Automotive video reel"
+          >
+            {automotiveMotion.map((piece, index) => (
+              <AutomotiveReelCard piece={piece} index={index} key={piece.id} />
+            ))}
+          </div>
+        </section>
       </section>
-    </section>
+
+      <MotionNotesModal piece={selectedNotesPiece} onClose={closeNotes} />
+    </>
   )
 }
 
