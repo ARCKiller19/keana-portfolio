@@ -4,9 +4,9 @@ const projects = [
     title: 'ClickMate Rentals',
     category: 'Brand Identity · UI/UX · Web',
     year: '2024–Present',
-    link: 'https://www.instagram.com/clickmate__rentals/',
-    linkLabel: 'View Instagram',
-    status: 'Website revamp in progress',
+    link: 'https://clickmate.vercel.app/',
+    linkLabel: 'View Website',
+    status: 'Revamping',
     image: '/images/projects/clickmate-rentals.jpg',
     description:
       'A brand identity and web experience for ClickMate Rentals, bringing the rental service into one cohesive visual system across UI, brand, and web touchpoints.',
