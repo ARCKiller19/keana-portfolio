@@ -89,14 +89,14 @@ const projects = [
   },
   {
     id: 'aroma-tiblawan',
-    title: 'Aroma Tiblawan',
+    title: 'Aroma Tiblawan Beach Resort',
     category: 'Web Design · Visual Direction',
     year: '2026',
     link: 'https://aroma-tiblawan.vercel.app/',
     linkLabel: 'View Live Site',
     image: '/images/projects/aroma-tiblawan.jpg',
     description:
-      'A web design and visual direction project for Aroma Tiblawan, shaped around a distinctive presentation while keeping the experience clear and easy to navigate.',
+      'A web design and visual direction project for Aroma Tiblawan Beach Resort, shaped around a distinctive presentation while keeping the experience clear and easy to navigate.',
   },
   {
     id: 'growth-of-a-quiet-soul',
@@ -127,18 +127,18 @@ const projects = [
   },
   {
     id: 'wordoria',
-    title: 'Wordoria',
+    title: 'World of Wordoria',
     category: 'Game Concept · Character Design · Visual Design',
     year: '2026',
     image: '/images/projects/wordoria.webp',
     imageAlt:
-      'Pixel-art Wordoria game scene with a grammar question and two characters',
+      'Pixel-art World of Wordoria game scene with a grammar question and two characters',
     imageFit: 'contain',
     modalImageFit: 'contain',
     role: 'Game concept · Character design',
     liveStatus: 'No public game build yet.',
     description:
-      'I was involved in Wordoria’s game concept and character design, helping shape the pixel-art world and the way the learning experience is presented. The project let me think about characters, atmosphere, and gameplay presentation as one visual system.',
+      'I was involved in World of Wordoria’s game concept and character design, helping shape the pixel-art world and the way the learning experience is presented. The project let me think about characters, atmosphere, and gameplay presentation as one visual system.',
   },
 ]
 
