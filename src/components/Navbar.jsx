@@ -42,6 +42,14 @@ function Navbar() {
       }
 
       const activationLine = Math.min(140, window.innerHeight * 0.22)
+      const atPageEnd =
+        window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - 2
+
+      if (atPageEnd) {
+        setActiveSection(navItems[navItems.length - 1].id)
+        return
+      }
 
       if (hero && hero.getBoundingClientRect().bottom > activationLine) {
         setActiveSection(null)
