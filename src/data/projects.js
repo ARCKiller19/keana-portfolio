@@ -4,11 +4,29 @@ const projects = [
     title: 'ClickMate Rentals',
     category: 'Brand Identity · UI/UX · Web',
     year: '2024–Present',
-    link: 'https://clickmate.vercel.app/',
-    linkLabel: 'View Live Site',
+    link: 'https://www.instagram.com/clickmate__rentals/',
+    linkLabel: 'View Instagram',
+    status: 'Website revamp in progress',
     image: '/images/projects/clickmate-rentals.jpg',
     description:
       'A brand identity and web experience for ClickMate Rentals, bringing the rental service into one cohesive visual system across UI, brand, and web touchpoints.',
+    instagram: {
+      handle: 'clickmate__rentals',
+      name: 'ClickMate Rentals',
+      profileUrl: 'https://www.instagram.com/clickmate__rentals/',
+      bio: 'Affordable Camera Rentals · Flexible Hours & Student-Friendly Rates',
+      location: 'Ateneo de Davao University',
+      stats: [
+        { label: 'Posts', value: '7' },
+        { label: 'Followers', value: '17' },
+        { label: 'Following', value: '1' },
+      ],
+      posts: Array.from({ length: 7 }, (_, index) => ({
+        id: index + 1,
+        src: `/images/projects/clickmate-instagram/post-${String(index + 1).padStart(2, '0')}.jpg`,
+        alt: `ClickMate Rentals Instagram post ${index + 1}`,
+      })),
+    },
   },
   {
     id: 'cruzalloma-farm',
