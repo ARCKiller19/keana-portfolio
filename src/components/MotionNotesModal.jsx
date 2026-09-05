@@ -19,6 +19,10 @@ function MotionNotesModal({ piece, onClose }) {
   if (!piece?.creationNotes) return null
 
   const notes = piece.creationNotes
+  const mediaLayoutClass =
+    piece.layout === 'portrait'
+      ? 'motion-notes-media-portrait'
+      : 'motion-notes-media-landscape'
 
   const handleBackdropClick = (event) => {
     if (event.target === event.currentTarget) {
@@ -58,7 +62,7 @@ function MotionNotesModal({ piece, onClose }) {
             <p className="motion-notes-lede">{notes.lede}</p>
           </div>
 
-          <div className="motion-notes-media">
+          <div className={`motion-notes-media ${mediaLayoutClass}`}>
             <video
               controls
               playsInline
