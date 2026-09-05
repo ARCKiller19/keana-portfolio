@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { handleSectionNavigation } from '../utils/sectionNavigation.js'
+import {
+  getSectionActivationLine,
+  handleSectionNavigation,
+} from '../utils/sectionNavigation.js'
 
 const navItems = [
   { id: 'about', label: 'About' },
@@ -41,7 +44,7 @@ function Navbar() {
         return
       }
 
-      const activationLine = Math.min(140, window.innerHeight * 0.22)
+      const activationLine = getSectionActivationLine()
       const atPageEnd =
         window.scrollY + window.innerHeight >=
         document.documentElement.scrollHeight - 2
@@ -59,7 +62,7 @@ function Navbar() {
       let currentSection = sections[0].id
 
       sections.forEach((section) => {
-        if (section.getBoundingClientRect().top <= activationLine) {
+        if (section.getBoundingClientRect().top <= activationLine + 1) {
           currentSection = section.id
         }
       })
