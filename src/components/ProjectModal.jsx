@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import '../clickmate-instagram.css'
 
 function LeafMark() {
   return (
@@ -13,12 +14,23 @@ function LeafMark() {
   )
 }
 
+function CarouselMark() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="7" y="5" width="11" height="11" rx="1" />
+      <path d="M5 8v10a1 1 0 0 0 1 1h10" />
+    </svg>
+  )
+}
+
 function InstagramShowcase({ instagram }) {
   const [activePost, setActivePost] = useState(instagram.posts[0])
+  const [previewSlide, setPreviewSlide] = useState(0)
   const [loadedPosts, setLoadedPosts] = useState({})
 
   useEffect(() => {
     setActivePost(instagram.posts[0])
+    setPreviewSlide(0)
     setLoadedPosts({})
   }, [instagram])
 
@@ -26,8 +38,22 @@ function InstagramShowcase({ instagram }) {
     setLoadedPosts((current) => ({ ...current, [id]: true }))
   }
 
+  const selectPost = (post) => {
+    setActivePost(post)
+    setPreviewSlide(0)
+  }
+
+  const showContinuation = () => {
+    if (activePost.carousel) setPreviewSlide(1)
+  }
+
+  const showCover = () => setPreviewSlide(0)
+
   return (
-    <section className="instagram-showcase" aria-label="ClickMate Rentals Instagram showcase">
+    <section
+      className="instagram-showcase"
+      aria-label="ClickMate Rentals Instagram showcase"
+    >
       <div className="instagram-showcase-head">
         <div>
           <p className="instagram-kicker">Social branding · Instagram</p>
@@ -40,11 +66,26 @@ function InstagramShowcase({ instagram }) {
 
       <div className="instagram-dashboard">
         <div className="instagram-profile">
-          <div className="instagram-avatar" aria-hidden="true">CK</div>
+          <a
+            className="instagram-avatar"
+            href={instagram.profileUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open ClickMate Rentals Instagram profile"
+          >
+            <img
+              src={instagram.profileImage}
+              alt="ClickMate Rentals Instagram profile"
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
 
           <div className="instagram-profile-copy">
             <div className="instagram-handle-row">
-              <strong>@{instagram.handle}</strong>
+              <a href={instagram.profileUrl} target="_blank" rel="noreferrer">
+                @{instagram.handle}
+              </a>
               <span className="instagram-status-dot" aria-hidden="true" />
             </div>
             <span>{instagram.name}</span>
@@ -63,16 +104,22 @@ function InstagramShowcase({ instagram }) {
         </div>
 
         <div className="instagram-content">
-          <div className="instagram-grid" role="list" aria-label="Instagram post grid">
+          <div
+            className="instagram-grid"
+            role="list"
+            aria-label="Instagram post grid"
+          >
             {instagram.posts.map((post) => (
               <button
-                className={`instagram-grid-item ${activePost.id === post.id ? 'is-active' : ''}`}
+                className={`instagram-grid-item ${
+                  activePost.id === post.id ? 'is-active' : ''
+                }`}
                 type="button"
                 key={post.id}
                 role="listitem"
-                onMouseEnter={() => setActivePost(post)}
-                onFocus={() => setActivePost(post)}
-                onClick={() => setActivePost(post)}
+                onMouseEnter={() => selectPost(post)}
+                onFocus={() => selectPost(post)}
+                onClick={() => selectPost(post)}
                 aria-label={`Preview ${post.alt}`}
               >
                 <span className="instagram-post-fallback" aria-hidden="true">
@@ -86,30 +133,98 @@ function InstagramShowcase({ instagram }) {
                   className={loadedPosts[post.id] ? 'is-loaded' : ''}
                   onLoad={() => markLoaded(post.id)}
                 />
+                {post.carousel && (
+                  <span className="instagram-carousel-mark" aria-label="Carousel post">
+                    <CarouselMark />
+                  </span>
+                )}
                 <span className="instagram-grid-overlay" aria-hidden="true">
-                  Preview ↗
+                  Preview
                 </span>
               </button>
             ))}
           </div>
 
           <figure className="instagram-preview">
-            <div className="instagram-preview-frame">
-              <span className="instagram-post-fallback" aria-hidden="true">
-                {String(activePost.id).padStart(2, '0')}
-              </span>
-              <img
-                src={activePost.src}
-                alt={activePost.alt}
-                loading="lazy"
-                decoding="async"
-                className={loadedPosts[activePost.id] ? 'is-loaded' : ''}
-                onLoad={() => markLoaded(activePost.id)}
-              />
+            <div
+              className={`instagram-preview-frame ${
+                previewSlide === 1 ? 'is-continuation' : ''
+              }`}
+            >
+              {previewSlide === 0 ? (
+                <>
+                  <span className="instagram-post-fallback" aria-hidden="true">
+                    {String(activePost.id).padStart(2, '0')}
+                  </span>
+                  <img
+                    src={activePost.src}
+                    alt={activePost.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className={loadedPosts[activePost.id] ? 'is-loaded' : ''}
+                    onLoad={() => markLoaded(activePost.id)}
+                  />
+
+                  {activePost.carousel && (
+                    <button
+                      className="instagram-preview-arrow instagram-preview-arrow-next"
+                      type="button"
+                      onClick={showContinuation}
+                      aria-label="Continue this carousel"
+                    >
+                      <span aria-hidden="true">›</span>
+                    </button>
+                  )}
+                </>
+              ) : (
+                <div className="instagram-continuation">
+                  <span className="instagram-continuation-label">
+                    More in this carousel
+                  </span>
+                  <p>Continue the full post on Instagram.</p>
+                  <a href={activePost.href} target="_blank" rel="noreferrer">
+                    Open post on Instagram <span aria-hidden="true">↗</span>
+                  </a>
+
+                  <button
+                    className="instagram-preview-arrow instagram-preview-arrow-back"
+                    type="button"
+                    onClick={showCover}
+                    aria-label="Return to cover image"
+                  >
+                    <span aria-hidden="true">‹</span>
+                  </button>
+                </div>
+              )}
+
+              {activePost.carousel && (
+                <div className="instagram-preview-dots" aria-label="Preview slides">
+                  <button
+                    type="button"
+                    className={previewSlide === 0 ? 'is-active' : ''}
+                    onClick={showCover}
+                    aria-label="Show cover image"
+                  />
+                  <button
+                    type="button"
+                    className={previewSlide === 1 ? 'is-active' : ''}
+                    onClick={showContinuation}
+                    aria-label="Show Instagram continuation"
+                  />
+                </div>
+              )}
             </div>
+
             <figcaption>
-              <span>Selected post</span>
-              <strong>{String(activePost.id).padStart(2, '0')} / {String(instagram.posts.length).padStart(2, '0')}</strong>
+              <span>
+                Selected post {String(activePost.id).padStart(2, '0')}
+                {activePost.carousel ? ' · Carousel' : ''}
+              </span>
+              {!activePost.carousel && (
+                <a href={activePost.href} target="_blank" rel="noreferrer">
+                  View post <span aria-hidden="true">↗</span>
+                </a>
+              )}
             </figcaption>
           </figure>
         </div>
