@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import '../motion-notes.css'
+import '../motion-notes-companion.css'
 
 function MotionNotesModal({ piece, onClose }) {
   const dialogRef = useRef(null)
