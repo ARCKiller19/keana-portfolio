@@ -20,6 +20,7 @@ function Navbar() {
     const sections = navItems
       .map(({ id }) => document.getElementById(id))
       .filter(Boolean)
+    const hero = document.querySelector('.hero')
 
     let frameId = null
 
@@ -41,9 +42,8 @@ function Navbar() {
       }
 
       const activationLine = Math.min(140, window.innerHeight * 0.22)
-      const firstSectionTop = sections[0].getBoundingClientRect().top
 
-      if (firstSectionTop > activationLine) {
+      if (hero && hero.getBoundingClientRect().bottom > activationLine) {
         setActiveSection(null)
         return
       }
