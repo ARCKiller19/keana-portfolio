@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '../motion-notes.css'
 
 function MotionNotesModal({ piece, onClose }) {
   const dialogRef = useRef(null)
+  const [activeSection, setActiveSection] = useState(0)
 
   useEffect(() => {
     const dialog = dialogRef.current
@@ -15,6 +16,48 @@ function MotionNotesModal({ piece, onClose }) {
 
     return () => dialog.removeEventListener('close', handleClose)
   }, [piece, onClose])
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (!dialog || !piece?.creationNotes) return undefined
+
+    const sections = Array.from(
+      dialog.querySelectorAll('.motion-note-section'),
+    )
+
+    if (!sections.length || !('IntersectionObserver' in window)) {
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => {
+            const rootTop = a.rootBounds?.top ?? 0
+            return (
+              Math.abs(a.boundingClientRect.top - rootTop) -
+              Math.abs(b.boundingClientRect.top - rootTop)
+            )
+          })
+
+        const nextEntry = visibleEntries[0]
+        if (!nextEntry) return
+
+        const nextIndex = sections.indexOf(nextEntry.target)
+        if (nextIndex >= 0) setActiveSection(nextIndex)
+      },
+      {
+        root: dialog,
+        rootMargin: '-22% 0px -58% 0px',
+        threshold: [0, 0.2, 0.45, 0.7],
+      },
+    )
+
+    sections.forEach((section) => observer.observe(section))
+
+    return () => observer.disconnect()
+  }, [piece])
 
   if (!piece?.creationNotes) return null
 
@@ -88,17 +131,46 @@ function MotionNotesModal({ piece, onClose }) {
         )}
 
         <div className="motion-notes-body">
-          <aside className="motion-notes-aside">
-            <span>How it came together</span>
-            <p>
-              A look at the memories, references, symbols, and editing choices
-              behind the finished piece.
-            </p>
-          </aside>
+          <div className="motion-notes-rail">
+            <aside className="motion-notes-aside">
+              <span>How it came together</span>
+              <p>
+                A look at the memories, references, symbols, and editing choices
+                behind the finished piece.
+              </p>
+            </aside>
+
+            <div
+              className="motion-notes-companion"
+              style={{ '--active-section': activeSection }}
+              aria-label={`Video companion for section ${activeSection + 1}`}
+            >
+              <div className={`motion-notes-companion-media ${mediaLayoutClass}`}>
+                <video
+                  controls
+                  playsInline
+                  preload="none"
+                  aria-label={`${piece.title} companion video`}
+                >
+                  <source src={piece.src} type="video/mp4" />
+                  Your browser does not support HTML video.
+                </video>
+              </div>
+              <div className="motion-notes-companion-meta" aria-live="polite">
+                <span>{String(activeSection + 1).padStart(2, '0')}</span>
+                <span>{notes.sections[activeSection]?.title}</span>
+              </div>
+            </div>
+          </div>
 
           <div className="motion-notes-sections">
             {notes.sections.map((section, index) => (
-              <section className="motion-note-section" key={section.title}>
+              <section
+                className={`motion-note-section ${
+                  activeSection === index ? 'is-active' : ''
+                }`}
+                key={section.title}
+              >
                 <div className="motion-note-index">
                   {String(index + 1).padStart(2, '0')}
                 </div>
