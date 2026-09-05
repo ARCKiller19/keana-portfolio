@@ -80,8 +80,9 @@ function Navbar() {
 
   return (
     <header className="nav" id="top">
-      <a className="nav-mark" href="#top" onClick={handleSectionNavigation}>
-        KEANA
+      <a className="nav-brand" href="#top" onClick={handleSectionNavigation}>
+        <span className="nav-mark">KEANA</span>
+        <span className="nav-star" aria-hidden="true">✦</span>
       </a>
 
       <nav className="nav-links" aria-label="Primary">
@@ -97,7 +98,13 @@ function Navbar() {
         ))}
       </nav>
 
-      <span className="nav-meta">Davao City, PH</span>
+      <div className="nav-status" aria-label="Availability and location">
+        <span className="nav-availability">
+          <span className="nav-status-dot" aria-hidden="true" />
+          Available
+        </span>
+        <span className="nav-location">Davao City, PH</span>
+      </div>
 
       <div className="nav-progress" aria-hidden="true">
         <div className="nav-progress-bar" ref={progressRef} />
