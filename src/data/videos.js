@@ -22,6 +22,21 @@ export const featuredMotion = [
 
 export const automotiveMotion = [
   {
+    id: 'terra-gray',
+    title: 'Terra Gray',
+    src: '/videos/automotive/terra-gray.mp4',
+  },
+  {
+    id: 'navara-black',
+    title: 'Navara Black',
+    src: '/videos/automotive/terra-black.mp4',
+  },
+  {
+    id: 'terra',
+    title: 'Terra',
+    src: '/videos/automotive/terra-gray-2.mp4',
+  },
+  {
     id: 'navara-calibre-white',
     title: 'Navara Calibre White',
     src: '/videos/automotive/navara-calibre-white.mp4',
@@ -32,18 +47,8 @@ export const automotiveMotion = [
     src: '/videos/automotive/sm-eco-showcase.mp4',
   },
   {
-    id: 'terra-gray',
-    title: 'Terra Gray',
-    src: '/videos/automotive/terra-gray.mp4',
-  },
-  {
-    id: 'terra-black',
-    title: 'Terra Black',
-    src: '/videos/automotive/terra-black.mp4',
-  },
-  {
-    id: 'livina-terra',
-    title: 'Livina & Terra',
+    id: 'livina-navara',
+    title: 'Livina & Navara',
     src: '/videos/automotive/livina-terra.mp4',
   },
 ]
