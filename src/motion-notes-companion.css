@@ -23,12 +23,8 @@
   }
 
   .motion-notes-companion {
-    --section-shift: 12px;
     display: grid;
     gap: 10px;
-    transform: translateY(calc(var(--active-section) * var(--section-shift)));
-    transition: transform 190ms var(--ease-editorial);
-    will-change: transform;
   }
 
   .motion-notes-companion-media {
@@ -105,10 +101,6 @@
     grid-template-columns: minmax(190px, 0.32fr) minmax(0, 1fr);
   }
 
-  .motion-notes-companion {
-    --section-shift: 15px;
-  }
-
   .motion-notes-companion-media.motion-notes-media-portrait {
     width: min(100%, 190px);
   }
@@ -117,10 +109,6 @@
 @media (min-width: 720px) and (max-width: 979px) and (min-height: 650px) {
   .motion-notes-body {
     gap: 28px;
-  }
-
-  .motion-notes-companion {
-    --section-shift: 8px;
   }
 
   .motion-notes-companion-media.motion-notes-media-portrait {
@@ -147,7 +135,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .motion-notes-companion,
   .motion-note-section {
     transition: none;
   }
