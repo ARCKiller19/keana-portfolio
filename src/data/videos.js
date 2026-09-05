@@ -27,14 +27,14 @@ export const automotiveMotion = [
     src: '/videos/automotive/terra-gray.mp4',
   },
   {
-    id: 'navara-black',
-    title: 'Navara Black',
-    src: '/videos/automotive/terra-black.mp4',
-  },
-  {
     id: 'terra',
     title: 'Terra',
     src: '/videos/automotive/terra-gray-2.mp4',
+  },
+  {
+    id: 'navara-black',
+    title: 'Navara Black',
+    src: '/videos/automotive/terra-black.mp4',
   },
   {
     id: 'navara-calibre-white',
