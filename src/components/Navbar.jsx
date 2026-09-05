@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { handleSectionNavigation } from '../utils/sectionNavigation.js'
 
 const navItems = [
+  { id: 'about', label: 'About' },
   { id: 'work', label: 'Work' },
   { id: 'motion', label: 'Motion' },
-  { id: 'about', label: 'About' },
   { id: 'playground', label: 'Playground' },
   { id: 'contact', label: 'Contact' },
 ]
@@ -17,9 +17,13 @@ function Navbar() {
     const progressBar = progressRef.current
     if (!progressBar) return undefined
 
+    const sections = navItems
+      .map(({ id }) => document.getElementById(id))
+      .filter(Boolean)
+
     let frameId = null
 
-    const updateProgress = () => {
+    const updateNavigationState = () => {
       frameId = null
 
       const scrollableHeight =
@@ -30,52 +34,48 @@ function Navbar() {
           : 0
 
       progressBar.style.transform = `scaleX(${progress})`
+
+      if (sections.length === 0) {
+        setActiveSection(null)
+        return
+      }
+
+      const activationLine = Math.min(140, window.innerHeight * 0.22)
+      const firstSectionTop = sections[0].getBoundingClientRect().top
+
+      if (firstSectionTop > activationLine) {
+        setActiveSection(null)
+        return
+      }
+
+      let currentSection = sections[0].id
+
+      sections.forEach((section) => {
+        if (section.getBoundingClientRect().top <= activationLine) {
+          currentSection = section.id
+        }
+      })
+
+      setActiveSection(currentSection)
     }
 
-    const requestProgressUpdate = () => {
+    const requestNavigationUpdate = () => {
       if (frameId !== null) return
-      frameId = window.requestAnimationFrame(updateProgress)
+      frameId = window.requestAnimationFrame(updateNavigationState)
     }
 
-    updateProgress()
-    window.addEventListener('scroll', requestProgressUpdate, { passive: true })
-    window.addEventListener('resize', requestProgressUpdate)
+    updateNavigationState()
+    window.addEventListener('scroll', requestNavigationUpdate, { passive: true })
+    window.addEventListener('resize', requestNavigationUpdate)
 
     return () => {
-      window.removeEventListener('scroll', requestProgressUpdate)
-      window.removeEventListener('resize', requestProgressUpdate)
+      window.removeEventListener('scroll', requestNavigationUpdate)
+      window.removeEventListener('resize', requestNavigationUpdate)
 
       if (frameId !== null) {
         window.cancelAnimationFrame(frameId)
       }
     }
-  }, [])
-
-  useEffect(() => {
-    if (!('IntersectionObserver' in window)) return undefined
-
-    const sections = navItems
-      .map(({ id }) => document.getElementById(id))
-      .filter(Boolean)
-
-    if (sections.length === 0) return undefined
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries.find((entry) => entry.isIntersecting)
-        if (visibleEntry) {
-          setActiveSection(visibleEntry.target.id)
-        }
-      },
-      {
-        rootMargin: '-20% 0px -65% 0px',
-        threshold: 0,
-      },
-    )
-
-    sections.forEach((section) => observer.observe(section))
-
-    return () => observer.disconnect()
   }, [])
 
   return (
