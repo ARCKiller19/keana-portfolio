@@ -333,7 +333,34 @@ function ProjectModal({ project, onClose }) {
 
               <div className="project-modal-action-row">
                 {project.link ? (
-                  <div className="project-live-link-wrap">
+                  project.instagram ? (
+                    <div className="project-action-pair">
+                      <a
+                        className="project-live-link"
+                        href={project.instagram.profileUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        View Instagram
+                        <span aria-hidden="true"> ↗</span>
+                      </a>
+
+                      <div className="project-live-link-wrap">
+                        <a
+                          className="project-live-link"
+                          href={project.link}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {project.linkLabel ?? 'View Live'}
+                          <span aria-hidden="true"> ↗</span>
+                        </a>
+                        {project.status && (
+                          <span className="project-revamp-badge">{project.status}</span>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
                     <a
                       className="project-live-link"
                       href={project.link}
@@ -343,10 +370,7 @@ function ProjectModal({ project, onClose }) {
                       {project.linkLabel ?? 'View Live'}
                       <span aria-hidden="true"> ↗</span>
                     </a>
-                    {project.status && (
-                      <span className="project-revamp-badge">{project.status}</span>
-                    )}
-                  </div>
+                  )
                 ) : (
                   <p className="project-live-unavailable">
                     {project.liveStatus ?? 'No public build available yet.'}
