@@ -1,0 +1,154 @@
+.motion-notes-companion {
+  display: none;
+}
+
+@media (min-width: 720px) and (min-height: 650px) {
+  .motion-notes-body {
+    grid-template-columns: minmax(164px, 0.28fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 64px);
+  }
+
+  .motion-notes-rail {
+    position: sticky;
+    top: 22px;
+    align-self: start;
+    display: grid;
+    gap: 24px;
+    min-width: 0;
+  }
+
+  .motion-notes-aside {
+    position: static;
+    top: auto;
+  }
+
+  .motion-notes-companion {
+    --section-shift: 12px;
+    display: grid;
+    gap: 10px;
+    transform: translateY(calc(var(--active-section) * var(--section-shift)));
+    transition: transform 190ms var(--ease-editorial);
+    will-change: transform;
+  }
+
+  .motion-notes-companion-media {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--rule-strong);
+    background: #050604;
+    transition:
+      border-color var(--motion-fast) var(--ease-editorial),
+      box-shadow var(--motion-fast) var(--ease-editorial);
+  }
+
+  .motion-notes-companion-media.motion-notes-media-portrait {
+    width: min(100%, 176px);
+    aspect-ratio: 9 / 16;
+  }
+
+  .motion-notes-companion-media.motion-notes-media-landscape {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .motion-notes-companion-media::before {
+    content: '';
+    position: absolute;
+    inset: 7px;
+    z-index: 2;
+    border: 1px solid rgba(239, 233, 219, 0.1);
+    pointer-events: none;
+  }
+
+  .motion-notes-companion-media video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #050604;
+  }
+
+  .motion-notes-companion-meta {
+    display: grid;
+    gap: 4px;
+    padding-top: 9px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.07em;
+    line-height: 1.45;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
+
+  .motion-notes-companion-meta span:first-child {
+    color: var(--moss);
+  }
+
+  .motion-note-section {
+    transition:
+      border-color var(--motion-fast) var(--ease-editorial),
+      opacity var(--motion-fast) var(--ease-editorial);
+  }
+
+  .motion-note-section.is-active {
+    border-bottom-color: rgba(167, 179, 95, 0.34);
+  }
+
+  .motion-note-section.is-active .motion-note-index {
+    color: var(--cream);
+  }
+}
+
+@media (min-width: 980px) and (min-height: 650px) {
+  .motion-notes-body {
+    grid-template-columns: minmax(190px, 0.32fr) minmax(0, 1fr);
+  }
+
+  .motion-notes-companion {
+    --section-shift: 15px;
+  }
+
+  .motion-notes-companion-media.motion-notes-media-portrait {
+    width: min(100%, 190px);
+  }
+}
+
+@media (min-width: 720px) and (max-width: 979px) and (min-height: 650px) {
+  .motion-notes-body {
+    gap: 28px;
+  }
+
+  .motion-notes-companion {
+    --section-shift: 8px;
+  }
+
+  .motion-notes-companion-media.motion-notes-media-portrait {
+    width: min(100%, 150px);
+  }
+
+  .motion-notes-companion-meta {
+    font-size: 7.5px;
+  }
+}
+
+@media (max-width: 719px), (max-height: 649px) {
+  .motion-notes-rail {
+    display: contents;
+  }
+
+  .motion-notes-aside {
+    position: static;
+  }
+
+  .motion-notes-companion {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-notes-companion,
+  .motion-note-section {
+    transition: none;
+  }
+}
