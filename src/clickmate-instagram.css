@@ -1,5 +1,47 @@
 /* ClickMate Instagram showcase refinements */
 
+.project-live-link-wrap {
+  position: relative;
+  display: inline-block;
+  padding-top: 10px;
+}
+
+.project-revamp-badge {
+  position: absolute;
+  z-index: 2;
+  top: -4px;
+  right: -16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 9px 5px;
+  border: 1px solid rgba(178, 194, 92, 0.72);
+  border-radius: 2px;
+  background: #7f913f;
+  color: #0a0b09;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.32),
+    0 0 14px rgba(167, 179, 95, 0.16);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  transform: rotate(4deg);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.project-revamp-badge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #dce9a3;
+  box-shadow: 0 0 7px rgba(220, 233, 163, 0.72);
+}
+
 .instagram-avatar {
   position: relative;
   overflow: hidden;
@@ -194,7 +236,7 @@
 }
 
 .instagram-continuation-label {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   font-family: var(--font-mono);
   font-size: 8px;
   letter-spacing: 0.09em;
@@ -202,20 +244,11 @@
   color: var(--moss);
 }
 
-.instagram-continuation p {
-  max-width: 12ch;
-  margin: 0 0 24px;
-  font-family: var(--font-display);
-  font-size: clamp(28px, 3.2vw, 42px);
-  line-height: 1.02;
-  color: var(--cream);
-}
-
 .instagram-continuation a {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 11px 14px;
+  padding: 12px 15px;
   border: 1px solid var(--rule-strong);
   font-family: var(--font-mono);
   font-size: 8px;
@@ -224,13 +257,15 @@
   color: var(--cream);
   transition:
     border-color var(--motion-fast) var(--ease-editorial),
-    color var(--motion-fast) var(--ease-editorial);
+    color var(--motion-fast) var(--ease-editorial),
+    background-color var(--motion-fast) var(--ease-editorial);
 }
 
 .instagram-continuation a:hover,
 .instagram-continuation a:focus-visible {
   border-color: var(--moss);
   color: var(--moss);
+  background: rgba(167, 179, 95, 0.03);
 }
 
 .instagram-preview figcaption {
@@ -261,6 +296,16 @@
 }
 
 @media (max-width: 520px) {
+  .project-live-link-wrap {
+    padding-top: 14px;
+  }
+
+  .project-revamp-badge {
+    right: -8px;
+    top: 0;
+    font-size: 7px;
+  }
+
   .instagram-preview {
     padding: 14px;
   }
@@ -279,10 +324,6 @@
 
   .instagram-continuation {
     padding: 28px 34px;
-  }
-
-  .instagram-continuation p {
-    font-size: clamp(26px, 9vw, 36px);
   }
 
   .instagram-preview figcaption {
