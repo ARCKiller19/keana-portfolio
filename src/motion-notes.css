@@ -251,13 +251,21 @@
   display: grid;
   grid-template-columns: 44px minmax(0, 1fr);
   gap: 22px;
-  padding: 0 0 42px;
+  padding: clamp(30px, 3vw, 36px) 0 42px;
   margin-bottom: 42px;
   border-bottom: 1px solid var(--rule);
 }
 
+.motion-note-section:first-child {
+  padding-top: clamp(26px, 2.6vw, 32px);
+}
+
 .motion-note-section:last-child {
   margin-bottom: 0;
+}
+
+.motion-note-index {
+  padding-top: 5px;
 }
 
 .motion-note-section h3 {
@@ -451,6 +459,15 @@
   .motion-note-section {
     grid-template-columns: 1fr;
     gap: 10px;
+    padding: 24px 0 34px;
+  }
+
+  .motion-note-section:first-child {
+    padding-top: 22px;
+  }
+
+  .motion-note-index {
+    padding-top: 0;
   }
 
   .motion-notes-reflection {
