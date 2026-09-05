@@ -178,12 +178,9 @@ function InstagramShowcase({ instagram }) {
                 </>
               ) : (
                 <div className="instagram-continuation">
-                  <span className="instagram-continuation-label">
-                    More in this carousel
-                  </span>
-                  <p>Continue the full post on Instagram.</p>
+                  <span className="instagram-continuation-label">More on Instagram</span>
                   <a href={activePost.href} target="_blank" rel="noreferrer">
-                    Open post on Instagram <span aria-hidden="true">↗</span>
+                    View on Instagram <span aria-hidden="true">↗</span>
                   </a>
 
                   <button
@@ -309,12 +306,7 @@ function ProjectModal({ project, onClose }) {
             </figure>
 
             <div className="project-modal-copy">
-              <div className="project-modal-year-row">
-                <p className="project-modal-year">{project.year}</p>
-                {project.status && (
-                  <span className="project-status">{project.status}</span>
-                )}
-              </div>
+              <p className="project-modal-year">{project.year}</p>
               <h2 id={`${project.id}-modal-title`}>{project.title}</h2>
               <p
                 className="project-modal-description"
@@ -341,15 +333,20 @@ function ProjectModal({ project, onClose }) {
 
               <div className="project-modal-action-row">
                 {project.link ? (
-                  <a
-                    className="project-live-link"
-                    href={project.link}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {project.linkLabel ?? 'View Live'}
-                    <span aria-hidden="true"> ↗</span>
-                  </a>
+                  <div className="project-live-link-wrap">
+                    <a
+                      className="project-live-link"
+                      href={project.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {project.linkLabel ?? 'View Live'}
+                      <span aria-hidden="true"> ↗</span>
+                    </a>
+                    {project.status && (
+                      <span className="project-revamp-badge">{project.status}</span>
+                    )}
+                  </div>
                 ) : (
                   <p className="project-live-unavailable">
                     {project.liveStatus ?? 'No public build available yet.'}
