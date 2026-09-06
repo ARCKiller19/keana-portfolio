@@ -1,0 +1,65 @@
+/* Turn the navbar corner marks into intentional frame accents around the side groups. */
+
+.nav::before,
+.nav::after {
+  content: none;
+}
+
+.nav-brand,
+.nav-status {
+  position: relative;
+  isolation: isolate;
+}
+
+.nav-brand::before,
+.nav-status::before {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.72;
+}
+
+.nav-brand::before {
+  inset: -9px -16px -9px -12px;
+  border-left: 1px solid rgba(167, 179, 95, 0.54);
+  border-top: 1px solid rgba(239, 233, 219, 0.12);
+  border-bottom: 1px solid rgba(239, 233, 219, 0.16);
+  clip-path: polygon(0 0, 46% 0, 46% 1px, 1px 1px, 1px calc(100% - 1px), 56% calc(100% - 1px), 56% 100%, 0 100%);
+}
+
+.nav-status::before {
+  inset: -9px -12px -9px -16px;
+  border-right: 1px solid rgba(167, 179, 95, 0.54);
+  border-top: 1px solid rgba(239, 233, 219, 0.12);
+  border-bottom: 1px solid rgba(239, 233, 219, 0.16);
+  clip-path: polygon(54% 0, 100% 0, 100% 100%, 44% 100%, 44% calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) 1px, 54% 1px);
+}
+
+.nav-brand::after,
+.nav-status::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 1px;
+  background: var(--led);
+  opacity: 0.58;
+  pointer-events: none;
+}
+
+.nav-brand::after {
+  right: -20px;
+}
+
+.nav-status::after {
+  left: -20px;
+}
+
+@media (max-width: 720px) {
+  .nav-brand::before,
+  .nav-status::before,
+  .nav-brand::after,
+  .nav-status::after {
+    display: none;
+  }
+}
