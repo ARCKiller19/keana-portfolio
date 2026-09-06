@@ -1,0 +1,200 @@
+/* Editorial process context for the automotive reel collection. */
+
+.automotive-process {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(30px, 5.5vw, 72px);
+  margin-top: clamp(48px, 6vw, 72px);
+  padding-top: clamp(28px, 3.5vw, 42px);
+  border-top: 1px solid var(--rule-strong);
+}
+
+.automotive-process-heading {
+  min-width: 0;
+}
+
+.automotive-process-kicker {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--moss);
+}
+
+.automotive-process-heading h4 {
+  max-width: 12ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.4vw, 44px);
+  font-weight: 400;
+  line-height: 1.02;
+}
+
+.automotive-process-story {
+  width: min(100%, 760px);
+  justify-self: end;
+}
+
+.automotive-process-story > p {
+  max-width: 70ch;
+  margin: 0 0 18px;
+  color: var(--cream-dim);
+  font-size: clamp(13px, 1.15vw, 14px);
+  font-weight: 300;
+  line-height: 1.72;
+}
+
+.automotive-process-story > p:last-of-type {
+  margin-bottom: 0;
+}
+
+.automotive-process-quote {
+  position: relative;
+  margin: clamp(26px, 3.5vw, 38px) 0 0;
+  padding: 18px 22px 18px 26px;
+  border-left: 1px solid rgba(167, 179, 95, 0.58);
+  border-top: 1px solid rgba(239, 233, 219, 0.1);
+  border-bottom: 1px solid rgba(239, 233, 219, 0.08);
+  background: linear-gradient(90deg, rgba(167, 179, 95, 0.055), transparent 76%);
+}
+
+.automotive-process-quote::before {
+  content: '“';
+  position: absolute;
+  top: 4px;
+  left: 9px;
+  color: rgba(167, 179, 95, 0.58);
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 1;
+}
+
+.automotive-process-quote p {
+  max-width: 58ch;
+  margin: 0;
+  color: rgba(239, 233, 219, 0.82);
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 24px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.38;
+}
+
+.automotive-process-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 4px 0 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.automotive-process-grid > div {
+  min-width: 0;
+  padding: 22px clamp(16px, 2.2vw, 28px) 24px;
+  border-right: 1px solid var(--rule);
+}
+
+.automotive-process-grid > div:first-child {
+  padding-left: 0;
+}
+
+.automotive-process-grid > div:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.automotive-process-grid dt {
+  margin-bottom: 13px;
+  color: var(--moss);
+  font-size: 9px;
+}
+
+.automotive-process-grid dd {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  color: var(--cream-dim);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.automotive-process-grid dd span {
+  position: relative;
+  padding-left: 13px;
+}
+
+.automotive-process-grid dd span::before {
+  content: '';
+  position: absolute;
+  top: 0.7em;
+  left: 0;
+  width: 4px;
+  height: 1px;
+  background: rgba(167, 179, 95, 0.72);
+}
+
+@media (max-width: 900px) {
+  .automotive-process {
+    grid-template-columns: minmax(180px, 0.58fr) minmax(0, 1.42fr);
+    gap: 30px;
+  }
+
+  .automotive-process-story {
+    width: 100%;
+  }
+
+  .automotive-process-grid > div {
+    padding-inline: 16px;
+  }
+
+  .automotive-process-grid > div:first-child {
+    padding-left: 0;
+  }
+
+  .automotive-process-grid > div:last-child {
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .automotive-process {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 44px;
+    padding-top: 28px;
+  }
+
+  .automotive-process-heading h4 {
+    max-width: 15ch;
+    font-size: clamp(28px, 8vw, 36px);
+  }
+
+  .automotive-process-quote {
+    padding: 16px 18px 16px 23px;
+  }
+
+  .automotive-process-quote p {
+    font-size: clamp(18px, 5.6vw, 22px);
+  }
+
+  .automotive-process-grid {
+    grid-template-columns: 1fr;
+    margin-top: 0;
+  }
+
+  .automotive-process-grid > div,
+  .automotive-process-grid > div:first-child,
+  .automotive-process-grid > div:last-child {
+    padding: 18px 0 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .automotive-process-grid > div:last-child {
+    border-bottom: 0;
+  }
+}
