@@ -9,7 +9,7 @@ const navItems = [
   { id: 'work', label: 'Work', icon: 'frame' },
   { id: 'motion', label: 'Motion', icon: 'motion' },
   { id: 'playground', label: 'Playground', icon: 'bloom' },
-  { id: 'contact', label: 'Contact', icon: 'branch' },
+  { id: 'contact', label: 'Contact', icon: 'phone' },
 ]
 
 function NavIcon({ type }) {
@@ -43,9 +43,9 @@ function NavIcon({ type }) {
   if (type === 'motion') {
     return (
       <svg {...commonProps}>
-        <path d="M5.5 22.5C10 22.5 10.2 10 15.3 10C19.8 10 20.4 18.5 26.5 18.5" />
-        <path d="M22.3 14.7L26.5 18.5L22.4 22" />
-        <circle cx="8" cy="22.5" r="1.5" />
+        <path d="M6.2 21.5C10.2 21.5 10.6 10.5 15.5 10.5C20.1 10.5 20.4 19.4 25.8 19.4" />
+        <path d="M10.2 17.8L6.2 21.5L10 25.1" />
+        <path d="M21.8 15.7L25.8 19.4L21.9 23" />
       </svg>
     )
   }
@@ -62,13 +62,15 @@ function NavIcon({ type }) {
     )
   }
 
-  return (
-    <svg {...commonProps}>
-      <path d="M8 24C11 21 13.5 18.2 15 15C16.2 12.5 16.5 9.5 16.1 6" />
-      <path d="M15.4 13.6C19 12.8 22.3 10.8 24.6 7.8C24.8 11.8 23.4 15.1 20.5 17.3C18.7 18.6 16.6 19.2 14.4 19.2" />
-      <path d="M12.6 18.8C10.1 17.9 8.3 16.2 7.2 13.6C10 13.5 12.4 14.3 14.3 16" />
-    </svg>
-  )
+  if (type === 'phone') {
+    return (
+      <svg {...commonProps}>
+        <path d="M10.2 6.7L13.4 11.1L11.1 13.4C12.8 16.9 15.1 19.2 18.6 20.9L20.9 18.6L25.3 21.8L23.8 25C23.4 25.9 22.4 26.4 21.4 26.2C13.5 24.8 7.2 18.5 5.8 10.6C5.6 9.6 6.1 8.6 7 8.2L10.2 6.7Z" />
+      </svg>
+    )
+  }
+
+  return null
 }
 
 function Navbar() {
