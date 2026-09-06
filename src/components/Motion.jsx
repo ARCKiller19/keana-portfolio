@@ -3,6 +3,7 @@ import { automotiveMotion, featuredMotion } from '../data/videos.js'
 import MotionNotesModal from './MotionNotesModal.jsx'
 import '../motion.css'
 import '../automotive-notes.css'
+import '../automotive-story-overlay.css'
 
 function useDeferredVideoMetadata(rootMargin = '1400px 200px') {
   const videoRef = useRef(null)
@@ -84,76 +85,60 @@ function AutomotiveStoryCard({ piece, total }) {
       className={`automotive-story-card ${hasStarted ? 'is-playing' : ''}`}
       role="listitem"
     >
-      <div className="motion-meta automotive-reel-meta">
-        <span className="motion-index">{piece.number}</span>
-        <span>{piece.category}</span>
-      </div>
+      <div className="automotive-story-frame">
+        <video
+          ref={videoRef}
+          className="motion-video automotive-story-video"
+          controls={hasStarted}
+          playsInline
+          preload={preload}
+          poster={piece.cover}
+          aria-label={piece.title}
+        >
+          <source src={piece.src} type="video/mp4" />
+          Your browser does not support HTML video.
+        </video>
 
-      <div className="automotive-story-shell">
-        <div className="automotive-story-media">
-          <video
-            ref={videoRef}
-            className="motion-video automotive-story-video"
-            controls={hasStarted}
-            playsInline
-            preload={preload}
-            poster={piece.cover}
-            aria-label={piece.title}
-          >
-            <source src={piece.src} type="video/mp4" />
-            Your browser does not support HTML video.
-          </video>
+        {!hasStarted && (
+          <>
+            <img
+              className="automotive-story-cover-image"
+              src={piece.cover}
+              alt=""
+              loading="lazy"
+            />
+            <div className="automotive-story-cover-film" aria-hidden="true" />
 
-          <div
-            className={`automotive-story-cover-layer ${
-              hasStarted ? 'is-hidden' : ''
-            }`}
-          >
-            <div className="automotive-story-underlay" aria-hidden="true">
-              <span className="automotive-story-underlay-kicker">
-                Underneath
-              </span>
-            </div>
+            <div className="automotive-note-overlay" aria-hidden="true">
+              <div className="automotive-note-meta">
+                <span>Creation note</span>
+                <span>
+                  {piece.number} / {String(total).padStart(2, '0')}
+                </span>
+              </div>
 
-            <div className="automotive-story-cover">
-              <img
-                className="automotive-story-image"
-                src={piece.cover}
-                alt=""
-                loading="lazy"
-              />
-              <div className="automotive-story-film" aria-hidden="true" />
-              <div
-                className="automotive-story-film automotive-story-film-soft"
-                aria-hidden="true"
-              />
+              <div className="automotive-note-copy">
+                <h4>{piece.title}</h4>
+                <p>{piece.note}</p>
+              </div>
             </div>
 
             <button
-              className="automotive-slit-action"
+              className="automotive-story-play"
               type="button"
               onClick={playVideo}
               aria-label={`Play ${piece.title}`}
             >
-              <span className="automotive-slit-action-label">Play video</span>
-              <span className="automotive-slit-action-icon" aria-hidden="true">
-                ↗
+              <span className="automotive-story-play-prompt">
+                <span className="automotive-story-play-desktop">
+                  Click to play video
+                </span>
+                <span className="automotive-story-play-touch">Play video</span>
+                <span aria-hidden="true">↗</span>
               </span>
             </button>
-          </div>
-        </div>
-
-        <div className="automotive-story-body">
-          <div className="automotive-story-kicker-row">
-            <span>Creation note</span>
-            <span>
-              {piece.number} / {String(total).padStart(2, '0')}
-            </span>
-          </div>
-
-          <h4>{piece.title}</h4>
-          <p>{piece.note}</p>
-        </div>
+          </>
+        )}
       </div>
     </article>
   )
