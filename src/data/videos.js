@@ -123,7 +123,7 @@ export const automotiveMotion = [
     src: '/videos/automotive/navara-calibre-white.mp4',
     cover: '/images/automotive-covers/navara-calibre-white.jpg',
     note:
-      'For cooler or more relaxed tracks, I leaned on softer fades. Faster tracks gave me room for sharper cuts and more energetic transitions. The transition library was limited too, so every effect had to earn its place. The edit had to work because of timing, rhythm, and restraint, not because I could throw more effects at it. The goal was always the same: keep the cars feeling grand, clean, and premium rather than cluttered.',
+      'The client happened to capture a guard removing paper from the car. You’d think it was scripted, that it might’ve been staged, but it wasn’t. That small action complemented the edit so naturally that it became one of those moments I could not have planned better myself.',
   },
   {
     id: 'navara-black',
@@ -133,7 +133,7 @@ export const automotiveMotion = [
     src: '/videos/automotive/terra-black.mp4',
     cover: '/images/automotive-covers/navara-black.jpg',
     note:
-      'The client happened to capture a guard removing paper from the car. You’d think it was scripted, that it might’ve been staged, but it wasn’t. That small action complemented the edit so naturally that it became one of those moments I could not have planned better myself.',
+      'For cooler or more relaxed tracks, I leaned on softer fades. Faster tracks gave me room for sharper cuts and more energetic transitions. The transition library was limited too, so every effect had to earn its place. The edit had to work because of timing, rhythm, and restraint, not because I could throw more effects at it. The goal was always the same: keep the cars feeling grand, clean, and premium rather than cluttered.',
   },
   {
     id: 'sm-eco-showcase',
