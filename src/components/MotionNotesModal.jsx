@@ -26,38 +26,42 @@ function MotionNotesModal({ piece, onClose }) {
       dialog.querySelectorAll('.motion-note-section'),
     )
 
-    if (!sections.length || !('IntersectionObserver' in window)) {
-      return undefined
+    if (!sections.length) return undefined
+
+    let frameId = null
+
+    const updateActiveSection = () => {
+      frameId = null
+
+      const dialogRect = dialog.getBoundingClientRect()
+      const activationLine = dialogRect.top + dialog.clientHeight * 0.34
+      let nextIndex = 0
+
+      sections.forEach((section, index) => {
+        if (section.getBoundingClientRect().top <= activationLine) {
+          nextIndex = index
+        }
+      })
+
+      setActiveSection((currentIndex) =>
+        currentIndex === nextIndex ? currentIndex : nextIndex,
+      )
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntries = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => {
-            const rootTop = a.rootBounds?.top ?? 0
-            return (
-              Math.abs(a.boundingClientRect.top - rootTop) -
-              Math.abs(b.boundingClientRect.top - rootTop)
-            )
-          })
+    const handleScroll = () => {
+      if (frameId !== null) return
+      frameId = window.requestAnimationFrame(updateActiveSection)
+    }
 
-        const nextEntry = visibleEntries[0]
-        if (!nextEntry) return
+    updateActiveSection()
+    dialog.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll)
 
-        const nextIndex = sections.indexOf(nextEntry.target)
-        if (nextIndex >= 0) setActiveSection(nextIndex)
-      },
-      {
-        root: dialog,
-        rootMargin: '-22% 0px -58% 0px',
-        threshold: [0, 0.2, 0.45, 0.7],
-      },
-    )
-
-    sections.forEach((section) => observer.observe(section))
-
-    return () => observer.disconnect()
+    return () => {
+      dialog.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+      if (frameId !== null) window.cancelAnimationFrame(frameId)
+    }
   }, [piece])
 
   if (!piece?.creationNotes) return null
@@ -143,7 +147,6 @@ function MotionNotesModal({ piece, onClose }) {
 
             <div
               className="motion-notes-companion"
-              style={{ '--active-section': activeSection }}
               aria-label={`Video companion for section ${activeSection + 1}`}
             >
               <div className={`motion-notes-companion-media ${mediaLayoutClass}`}>
