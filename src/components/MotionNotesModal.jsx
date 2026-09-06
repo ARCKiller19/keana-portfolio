@@ -137,32 +137,34 @@ function MotionNotesModal({ piece, onClose }) {
 
         <div className="motion-notes-body">
           <div className="motion-notes-rail">
-            <aside className="motion-notes-aside">
-              <span>How it came together</span>
-              <p>
-                A look at the memories, references, symbols, and editing choices
-                behind the finished piece.
-              </p>
-            </aside>
+            <div className="motion-notes-rail-sticky">
+              <aside className="motion-notes-aside">
+                <span>How it came together</span>
+                <p>
+                  A look at the memories, references, symbols, and editing choices
+                  behind the finished piece.
+                </p>
+              </aside>
 
-            <div
-              className="motion-notes-companion"
-              aria-label={`Video companion for section ${activeSection + 1}`}
-            >
-              <div className={`motion-notes-companion-media ${mediaLayoutClass}`}>
-                <video
-                  controls
-                  playsInline
-                  preload="none"
-                  aria-label={`${piece.title} companion video`}
-                >
-                  <source src={piece.src} type="video/mp4" />
-                  Your browser does not support HTML video.
-                </video>
-              </div>
-              <div className="motion-notes-companion-meta" aria-live="polite">
-                <span>{String(activeSection + 1).padStart(2, '0')}</span>
-                <span>{notes.sections[activeSection]?.title}</span>
+              <div
+                className="motion-notes-companion"
+                aria-label={`Video companion for section ${activeSection + 1}`}
+              >
+                <div className={`motion-notes-companion-media ${mediaLayoutClass}`}>
+                  <video
+                    controls
+                    playsInline
+                    preload="none"
+                    aria-label={`${piece.title} companion video`}
+                  >
+                    <source src={piece.src} type="video/mp4" />
+                    Your browser does not support HTML video.
+                  </video>
+                </div>
+                <div className="motion-notes-companion-meta" aria-live="polite">
+                  <span>{String(activeSection + 1).padStart(2, '0')}</span>
+                  <span>{notes.sections[activeSection]?.title}</span>
+                </div>
               </div>
             </div>
           </div>
