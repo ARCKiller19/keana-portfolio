@@ -9,13 +9,17 @@
   }
 
   .motion-notes-rail {
+    position: relative;
+    align-self: stretch;
+    min-width: 0;
+  }
+
+  .motion-notes-rail-sticky {
     position: sticky;
     top: 22px;
-    align-self: start;
     display: grid;
     gap: 24px;
     min-width: 0;
-    margin-bottom: -24px;
   }
 
   .motion-notes-aside {
@@ -68,9 +72,9 @@
   }
 
   .motion-notes-companion-meta {
-    display: grid;
-    gap: 4px;
-    padding-top: 9px;
+    position: relative;
+    height: 0;
+    padding: 0;
     border-top: 1px solid var(--rule);
     font-family: var(--font-mono);
     font-size: 8px;
@@ -80,8 +84,19 @@
     color: var(--cream-dim);
   }
 
+  .motion-notes-companion-meta span {
+    position: absolute;
+    left: 0;
+    white-space: normal;
+  }
+
   .motion-notes-companion-meta span:first-child {
+    top: 9px;
     color: var(--moss);
+  }
+
+  .motion-notes-companion-meta span:last-child {
+    top: 24px;
   }
 
   .motion-note-section {
@@ -116,10 +131,6 @@
     gap: 28px;
   }
 
-  .motion-notes-rail {
-    margin-bottom: -18px;
-  }
-
   .motion-notes-companion-media.motion-notes-media-portrait {
     width: min(100%, 150px);
   }
@@ -130,7 +141,8 @@
 }
 
 @media (max-width: 719px), (max-height: 649px) {
-  .motion-notes-rail {
+  .motion-notes-rail,
+  .motion-notes-rail-sticky {
     display: contents;
   }
 
