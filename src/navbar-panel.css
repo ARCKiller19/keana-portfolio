@@ -1,9 +1,9 @@
-/* Compact editorial navigation with connected section progress. */
+/* Compact botanical navigation: independent brand/status with a growing stem path. */
 
 .nav.nav-panel {
-  min-height: 84px;
+  min-height: 82px;
   gap: clamp(14px, 2vw, 24px);
-  padding: 10px var(--gutter) 12px;
+  padding: 10px var(--gutter) 11px;
   background:
     linear-gradient(180deg, rgba(20, 23, 17, 0.76), rgba(9, 10, 8, 0.9)),
     rgba(10, 11, 9, 0.82);
@@ -17,6 +17,8 @@
 .nav.nav-panel::after {
   display: none;
 }
+
+/* ---------- Brand plaque ---------- */
 
 .nav-panel .nav-brand {
   position: relative;
@@ -71,6 +73,8 @@
   transform: none;
 }
 
+/* ---------- Growing stem navigation ---------- */
+
 .nav-panel .nav-links.nav-tiles {
   display: flex;
   align-items: center;
@@ -95,55 +99,82 @@
 .nav-panel .nav-tile {
   position: relative;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 38px auto;
   place-items: center;
   gap: 4px;
-  width: clamp(72px, 6vw, 84px);
-  min-height: 62px;
-  padding: 8px 7px 7px;
-  color: rgba(239, 233, 219, 0.72);
-  border: 1px solid rgba(239, 233, 219, 0.12);
-  border-radius: 9px;
-  background:
-    linear-gradient(180deg, rgba(239, 233, 219, 0.022), rgba(167, 179, 95, 0.024)),
-    rgba(13, 15, 12, 0.46);
-  overflow: hidden;
-  transition:
-    color var(--motion-fast) var(--ease-editorial),
-    border-color var(--motion-fast) var(--ease-editorial),
-    background-color var(--motion-fast) var(--ease-editorial),
-    box-shadow var(--motion-fast) var(--ease-editorial);
+  width: clamp(66px, 5.7vw, 78px);
+  min-height: 58px;
+  padding: 3px 4px 2px;
+  color: rgba(239, 233, 219, 0.6);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+  transition: color var(--motion-fast) var(--ease-editorial);
 }
 
 .nav-panel .nav-tile::after {
   display: none;
 }
 
+.nav-panel .nav-tile::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border: 1px solid rgba(239, 233, 219, 0.35);
+  border-radius: 50%;
+  background: var(--bg);
+  transform: translate(-50%, -50%);
+  transition:
+    width var(--motion-fast) var(--ease-editorial),
+    height var(--motion-fast) var(--ease-editorial),
+    border-color var(--motion-fast) var(--ease-editorial),
+    background-color var(--motion-fast) var(--ease-editorial),
+    box-shadow var(--motion-fast) var(--ease-editorial);
+  pointer-events: none;
+}
+
 .nav-panel .nav-tile:hover,
 .nav-panel .nav-tile:focus-visible,
 .nav-panel .nav-tile[aria-current='location'] {
   color: var(--cream);
-  border-color: rgba(167, 179, 95, 0.42);
-  background:
-    linear-gradient(180deg, rgba(167, 179, 95, 0.085), rgba(167, 179, 95, 0.022)),
-    rgba(16, 18, 14, 0.7);
-  box-shadow: inset 0 0 0 1px rgba(239, 233, 219, 0.018);
+}
+
+.nav-panel .nav-tile:hover::before,
+.nav-panel .nav-tile:focus-visible::before,
+.nav-panel .nav-tile[aria-current='location']::before {
+  width: 7px;
+  height: 7px;
+  border-color: var(--led);
+  background: var(--led);
+  box-shadow: 0 0 0 3px rgba(167, 179, 95, 0.08);
 }
 
 .nav-panel .nav-tile-icon {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
-  color: rgba(239, 233, 219, 0.68);
-  transition: color var(--motion-fast) var(--ease-editorial);
+  width: 30px;
+  height: 30px;
+  margin-top: 0;
+  color: rgba(239, 233, 219, 0.52);
+  opacity: 0.82;
+  transform: translateY(5px);
+  transition:
+    color var(--motion-fast) var(--ease-editorial),
+    opacity var(--motion-fast) var(--ease-editorial),
+    transform var(--motion-fast) var(--ease-editorial);
 }
 
 .nav-panel .nav-tile-icon svg {
   width: 100%;
   height: 100%;
   stroke: currentColor;
-  stroke-width: 1.15;
+  stroke-width: 1.05;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -152,6 +183,8 @@
 .nav-panel .nav-tile:focus-visible .nav-tile-icon,
 .nav-panel .nav-tile[aria-current='location'] .nav-tile-icon {
   color: var(--led);
+  opacity: 1;
+  transform: translateY(3px);
 }
 
 .nav-panel .nav-tile-label {
@@ -165,38 +198,63 @@
 
 .nav-panel .nav-connector {
   --connector-progress: 0;
+  position: relative;
   display: inline-flex;
   align-items: center;
-  width: clamp(22px, 2vw, 30px);
-  height: 14px;
+  width: clamp(27px, 2.4vw, 36px);
+  height: 22px;
   flex: 0 0 auto;
+  transform: translateY(-8px);
+}
+
+.nav-panel .nav-path-stop:nth-child(even) .nav-connector {
+  transform: translateY(-8px) rotate(1.6deg);
+}
+
+.nav-panel .nav-path-stop:nth-child(odd) .nav-connector {
+  transform: translateY(-8px) rotate(-1.4deg);
 }
 
 .nav-panel .nav-connector-dot {
-  width: 4px;
-  height: 4px;
-  flex: 0 0 4px;
-  border: 1px solid rgba(167, 179, 95, 0.84);
+  position: relative;
+  z-index: 2;
+  width: 5px;
+  height: 5px;
+  flex: 0 0 5px;
+  border: 1px solid rgba(167, 179, 95, 0.7);
   border-radius: 50%;
-  background: var(--led);
+  background: var(--bg);
   box-shadow: none;
-  transition: opacity 120ms linear;
+  transition:
+    opacity 120ms linear,
+    background-color 120ms linear;
 }
 
 .nav-panel .nav-connector-dot-start {
-  opacity: calc(1 - (var(--connector-progress) * 0.66));
+  opacity: calc(0.9 - (var(--connector-progress) * 0.42));
+  background: var(--led);
 }
 
 .nav-panel .nav-connector-dot-end {
-  opacity: calc(0.28 + (var(--connector-progress) * 0.72));
+  opacity: calc(0.32 + (var(--connector-progress) * 0.68));
+  background: color-mix(in srgb, var(--led) calc(var(--connector-progress) * 100%), var(--bg));
 }
 
 .nav-panel .nav-connector-track {
   position: relative;
   height: 1px;
   flex: 1 1 auto;
-  background: rgba(239, 233, 219, 0.16);
-  overflow: hidden;
+  background: rgba(239, 233, 219, 0.14);
+  overflow: visible;
+}
+
+.nav-panel .nav-connector-track::before {
+  content: '';
+  position: absolute;
+  inset: -2px 0;
+  border-top: 1px solid rgba(239, 233, 219, 0.045);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 .nav-panel .nav-connector-fill {
@@ -207,6 +265,31 @@
   transform-origin: left center;
   will-change: transform;
 }
+
+/* A few small leaves keep the path botanical without turning it into illustration. */
+.nav-panel .nav-path-stop:nth-child(1) .nav-connector::after,
+.nav-panel .nav-path-stop:nth-child(3) .nav-connector::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 53%;
+  width: 7px;
+  height: 4px;
+  border: 1px solid rgba(167, 179, 95, 0.42);
+  border-radius: 100% 0 100% 0;
+  background: rgba(167, 179, 95, 0.035);
+  transform: rotate(-28deg);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.nav-panel .nav-path-stop:nth-child(3) .nav-connector::after {
+  top: 14px;
+  left: 42%;
+  transform: rotate(148deg);
+}
+
+/* ---------- Availability badge ---------- */
 
 .nav-panel .nav-status {
   flex: 0 0 auto;
@@ -243,7 +326,7 @@
     display: grid;
     grid-template-columns: auto 1fr auto;
     gap: 12px;
-    min-height: 78px;
+    min-height: 76px;
   }
 
   .nav-panel .nav-brand {
@@ -267,12 +350,12 @@
   }
 
   .nav-panel .nav-tile {
-    width: 76px;
-    min-height: 58px;
+    width: 70px;
+    min-height: 56px;
   }
 
   .nav-panel .nav-connector {
-    width: 22px;
+    width: 25px;
   }
 
   .nav-panel .nav-status {
@@ -287,8 +370,8 @@
     grid-template-areas:
       'brand status'
       'tiles tiles';
-    row-gap: 8px;
-    padding-block: 9px 10px;
+    row-gap: 7px;
+    padding-block: 9px 9px;
   }
 
   .nav-panel .nav-brand {
@@ -308,23 +391,28 @@
   }
 
   .nav-panel .nav-tile {
-    width: 70px;
-    min-height: 54px;
-    padding: 6px;
-    border-radius: 8px;
+    width: 64px;
+    min-height: 52px;
+    padding-inline: 3px;
   }
 
   .nav-panel .nav-connector {
-    width: 20px;
+    width: 22px;
   }
 
   .nav-panel .nav-tile-icon {
-    width: 24px;
-    height: 24px;
+    width: 25px;
+    height: 25px;
   }
 
   .nav-panel .nav-tile-label {
     font-size: 7px;
+  }
+
+  .nav-panel .nav-path-stop:nth-child(1) .nav-connector::after,
+  .nav-panel .nav-path-stop:nth-child(3) .nav-connector::after {
+    width: 6px;
+    height: 3px;
   }
 }
 
@@ -336,5 +424,14 @@
 
   .nav-panel .nav-location {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-panel .nav-tile,
+  .nav-panel .nav-tile::before,
+  .nav-panel .nav-tile-icon,
+  .nav-panel .nav-connector-dot {
+    transition: none;
   }
 }
