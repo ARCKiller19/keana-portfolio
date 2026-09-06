@@ -252,7 +252,9 @@ function Motion() {
                 </div>
               </div>
 
-              <p className="automotive-process-bridge">So I had to create the feeling of more.</p>
+              <p className="automotive-process-bridge">
+                So I had to create the feeling of <strong>MORE</strong>.
+              </p>
 
               <div className="automotive-process-story">
                 <p>
@@ -274,19 +276,21 @@ function Motion() {
                 <p>
                   For cooler or more relaxed tracks, I leaned on softer fades.
                   Faster tracks gave me room for sharper cuts and more energetic
-                  transitions. Even with a limited free transition library, I kept
-                  the finish controlled so the cars still felt grand, clean, and
-                  premium rather than cluttered.
+                  transitions. The transition library was limited too, so every
+                  effect had to earn its place. The edit had to work because of
+                  timing, rhythm, and restraint, not because I could throw more
+                  effects at it. The goal was always the same: keep the cars
+                  feeling grand, clean, and premium rather than cluttered.
                 </p>
 
                 <aside className="automotive-unplanned-moment" aria-label="Unplanned moment">
                   <span>Unplanned moment · Navara Calibre White</span>
                   <p>
                     The client happened to capture a guard removing paper from the
-                    car. It looks like something that might have been staged, but it
-                    was not. That small action complemented the edit so naturally
-                    that it became one of those moments I could not have planned
-                    better myself.
+                    car. You’d think it was scripted, that it might’ve been staged,
+                    but it wasn’t. That small action complemented the edit so
+                    naturally that it became one of those moments I could not have
+                    planned better myself.
                   </p>
                 </aside>
 
