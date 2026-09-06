@@ -258,7 +258,22 @@ function Motion() {
           >
             <div className="automotive-process-heading">
               <span className="automotive-process-kicker">Process note</span>
-              <h4 id="automotive-process-title">There was never enough footage</h4>
+
+              <h4
+                id="automotive-process-title"
+                className="automotive-process-statement"
+              >
+                <span>How I made</span>
+                <span className="automotive-process-statement-emphasis">
+                  1–2 clips
+                </span>
+                <span>feel like more.</span>
+              </h4>
+
+              <p className="automotive-process-support">
+                Most of the finished reels below started with far less raw material
+                than they look like.
+              </p>
             </div>
 
             <div className="automotive-process-content">
@@ -267,39 +282,26 @@ function Motion() {
                 aria-label="Automotive editing constraints"
               >
                 <span className="automotive-evidence-label">
-                  What I was actually working with
+                  What I was working with
                 </span>
 
                 <dl className="automotive-process-grid">
                   <div>
-                    <dt>01–02</dt>
-                    <dd>
-                      <strong>Short clips</strong>
-                      <span>per vehicle</span>
-                    </dd>
+                    <dt>Just 1–2 clips</dt>
+                    <dd>per vehicle</dd>
                   </div>
 
                   <div>
-                    <dt>Few</dt>
-                    <dd>
-                      <strong>Usable angles</strong>
-                      <span>often repeated</span>
-                    </dd>
+                    <dt>Very few angles</dt>
+                    <dd>often repeated</dd>
                   </div>
 
                   <div>
-                    <dt>Mixed</dt>
-                    <dd>
-                      <strong>Source quality</strong>
-                      <span>not always ideal</span>
-                    </dd>
+                    <dt>Mixed quality</dt>
+                    <dd>not always ideal</dd>
                   </div>
                 </dl>
               </div>
-
-              <p className="automotive-process-bridge">
-                So I had to create the feeling of <strong>MORE</strong>.
-              </p>
             </div>
           </div>
 
