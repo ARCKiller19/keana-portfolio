@@ -69,6 +69,7 @@
   .motion-notes-companion-meta {
     display: grid;
     gap: 4px;
+    margin-top: clamp(42px, 4.2vw, 54px);
     padding-top: 9px;
     border-top: 1px solid var(--rule);
     font-family: var(--font-mono);
@@ -124,6 +125,7 @@
   }
 
   .motion-notes-companion-meta {
+    margin-top: 38px;
     font-size: 7.5px;
   }
 }
