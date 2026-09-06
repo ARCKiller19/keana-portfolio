@@ -130,7 +130,7 @@
 .nav-panel .nav-tile {
   position: relative;
   display: grid;
-  grid-template-rows: 38px auto;
+  grid-template-rows: 40px auto;
   place-items: center;
   gap: 4px;
   width: clamp(66px, 5.7vw, 78px);
@@ -151,10 +151,10 @@
 .nav-panel .nav-tile::before {
   content: '';
   position: absolute;
-  top: 15px;
+  top: 10px;
   left: 50%;
-  width: 4px;
-  height: 4px;
+  width: 3px;
+  height: 3px;
   border: 1px solid rgba(239, 233, 219, 0.35);
   border-radius: 50%;
   background: var(--bg);
@@ -177,11 +177,11 @@
 .nav-panel .nav-tile:hover::before,
 .nav-panel .nav-tile:focus-visible::before,
 .nav-panel .nav-tile[aria-current='location']::before {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-color: var(--led);
   background: var(--led);
-  box-shadow: 0 0 0 3px rgba(167, 179, 95, 0.08);
+  box-shadow: 0 0 0 2px rgba(167, 179, 95, 0.07);
 }
 
 .nav-panel .nav-tile-icon {
@@ -194,7 +194,7 @@
   margin-top: 0;
   color: rgba(239, 233, 219, 0.52);
   opacity: 0.82;
-  transform: translateY(5px);
+  transform: translateY(7px);
   transition:
     color var(--motion-fast) var(--ease-editorial),
     opacity var(--motion-fast) var(--ease-editorial),
@@ -215,7 +215,7 @@
 .nav-panel .nav-tile[aria-current='location'] .nav-tile-icon {
   color: var(--led);
   opacity: 1;
-  transform: translateY(3px);
+  transform: translateY(5px);
 }
 
 .nav-panel .nav-tile-label {
