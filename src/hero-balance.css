@@ -1,5 +1,24 @@
 /* Keep the hero readable as the landing view without changing its composition. */
 
+/* The About section itself is container-width, so draw its divider at viewport width
+   to match the full-width section rules used elsewhere. */
+.about {
+  position: relative;
+  border-top: 0;
+}
+
+.about::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  transform: translateX(-50%);
+  background: var(--rule);
+  pointer-events: none;
+}
+
 @media (min-width: 961px) {
   .hero {
     min-height: calc(100dvh - 86px);
@@ -12,7 +31,14 @@
   }
 }
 
-@media (max-width: 960px) {
+@media (min-width: 721px) and (max-width: 960px) {
+  .hero {
+    padding-top: clamp(30px, 4.5vw, 42px);
+    padding-bottom: clamp(62px, 7vw, 82px);
+  }
+}
+
+@media (max-width: 720px) {
   .hero {
     padding-top: clamp(30px, 4.5vw, 42px);
   }
