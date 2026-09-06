@@ -244,6 +244,27 @@ function Motion() {
                 Commercial · Social Media ·{' '}
                 {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
               </span>
+
+              <dl
+                className="automotive-process-grid automotive-process-grid-compact"
+                aria-label="Automotive editing constraints"
+              >
+                <div>
+                  <dt>Just 1–2 clips</dt>
+                  <dd>per vehicle</dd>
+                </div>
+
+                <div>
+                  <dt>Very few angles</dt>
+                  <dd>often repeated</dd>
+                </div>
+
+                <div>
+                  <dt>Mixed quality</dt>
+                  <dd>not always ideal</dd>
+                </div>
+              </dl>
+
               <p>
                 These edits were built around limitation: very short clips,
                 repeated angles, mixed source quality, and the pressure to still
@@ -264,59 +285,6 @@ function Motion() {
                 total={automotiveMotion.length}
               />
             ))}
-          </div>
-
-          <div
-            className="automotive-process"
-            aria-labelledby="automotive-process-title"
-          >
-            <div className="automotive-process-heading">
-              <span className="automotive-process-kicker">Process note</span>
-
-              <h4
-                id="automotive-process-title"
-                className="automotive-process-statement"
-              >
-                <span>How I made</span>
-                <span className="automotive-process-statement-emphasis">
-                  1–2 clips
-                </span>
-                <span>feel like more.</span>
-              </h4>
-
-              <p className="automotive-process-support">
-                Most of the finished reels below started with far less raw material
-                than they look like.
-              </p>
-            </div>
-
-            <div className="automotive-process-content">
-              <div
-                className="automotive-evidence"
-                aria-label="Automotive editing constraints"
-              >
-                <span className="automotive-evidence-label">
-                  What I was working with
-                </span>
-
-                <dl className="automotive-process-grid">
-                  <div>
-                    <dt>Just 1–2 clips</dt>
-                    <dd>per vehicle</dd>
-                  </div>
-
-                  <div>
-                    <dt>Very few angles</dt>
-                    <dd>often repeated</dd>
-                  </div>
-
-                  <div>
-                    <dt>Mixed quality</dt>
-                    <dd>not always ideal</dd>
-                  </div>
-                </dl>
-              </div>
-            </div>
           </div>
 
           <blockquote className="automotive-process-quote">
