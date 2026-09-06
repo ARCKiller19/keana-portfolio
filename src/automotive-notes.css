@@ -2,12 +2,11 @@
 
 .automotive-process {
   display: grid;
-  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.2fr);
-  gap: clamp(30px, 5.5vw, 72px);
-  margin-top: clamp(48px, 6vw, 72px);
+  grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(20px, 3vw, 36px);
+  margin-top: clamp(34px, 4.2vw, 50px);
   margin-bottom: clamp(28px, 3vw, 40px);
-  padding-top: clamp(28px, 3.5vw, 42px);
-  border-top: 1px solid var(--rule-strong);
+  padding-top: 0;
 }
 
 .automotive-process-heading {
@@ -30,8 +29,8 @@
 
 .automotive-process-statement {
   display: grid;
-  gap: 4px;
-  max-width: 10ch;
+  gap: 3px;
+  max-width: 16ch;
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(30px, 3.2vw, 40px);
@@ -54,8 +53,8 @@
 }
 
 .automotive-process-support {
-  max-width: 30ch;
-  margin: 16px 0 0;
+  max-width: 34ch;
+  margin: 15px 0 0;
   color: rgba(239, 233, 219, 0.72);
   font-size: clamp(12px, 1.05vw, 13px);
   font-weight: 300;
@@ -64,7 +63,7 @@
 
 .automotive-process-content {
   min-width: 0;
-  width: min(100%, 860px);
+  width: 100%;
 }
 
 .automotive-evidence {
@@ -73,22 +72,22 @@
 }
 
 .automotive-evidence-label {
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   color: var(--cream-dim);
 }
 
 .automotive-process-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(14px, 1.8vw, 22px);
+  gap: clamp(10px, 1.2vw, 16px);
   margin: 0;
 }
 
 .automotive-process-grid > div {
   position: relative;
   min-width: 0;
-  min-height: 112px;
-  padding: 14px 12px 0 20px;
+  min-height: 104px;
+  padding: 12px 4px 0 12px;
   border: 0;
   background: none;
 }
@@ -98,22 +97,22 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 24px;
-  height: 18px;
+  width: 22px;
+  height: 17px;
   border-top: 1px solid rgba(167, 179, 95, 0.72);
   border-left: 1px solid rgba(167, 179, 95, 0.72);
   pointer-events: none;
 }
 
 .automotive-process-grid > div:nth-child(2) {
-  transform: translateY(8px);
+  transform: none;
 }
 
 .automotive-process-grid dt {
   margin: 0 0 8px;
   color: rgba(239, 233, 219, 0.92);
   font-family: var(--font-sans);
-  font-size: clamp(24px, 2.3vw, 31px);
+  font-size: clamp(22px, 2vw, 29px);
   font-weight: 600;
   line-height: 0.98;
   letter-spacing: -0.04em;
@@ -165,11 +164,12 @@
 
 @media (max-width: 900px) {
   .automotive-process {
-    grid-template-columns: minmax(220px, 0.76fr) minmax(0, 1.24fr);
-    gap: 30px;
+    grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+    gap: 22px;
   }
 
   .automotive-process-statement {
+    max-width: 15ch;
     font-size: clamp(28px, 3.8vw, 36px);
   }
 
@@ -178,30 +178,30 @@
   }
 
   .automotive-process-grid {
-    gap: 12px;
+    gap: 10px;
   }
 
   .automotive-process-grid > div {
-    min-height: 102px;
-    padding-left: 18px;
+    min-height: 98px;
+    padding-left: 10px;
   }
 
   .automotive-process-grid dt {
-    font-size: clamp(21px, 3vw, 27px);
+    font-size: clamp(20px, 2.7vw, 25px);
   }
 }
 
 @media (max-width: 720px) {
   .automotive-process {
     grid-template-columns: 1fr;
-    gap: 24px;
-    margin-top: 44px;
+    gap: 22px;
+    margin-top: 34px;
     margin-bottom: 24px;
-    padding-top: 28px;
+    padding-top: 0;
   }
 
   .automotive-process-statement {
-    max-width: 12ch;
+    max-width: 14ch;
     font-size: clamp(28px, 8vw, 36px);
   }
 
@@ -221,7 +221,7 @@
   .automotive-process-grid > div,
   .automotive-process-grid > div:nth-child(2) {
     min-height: 0;
-    padding: 14px 0 0 18px;
+    padding: 12px 0 0 12px;
     transform: none;
   }
 
