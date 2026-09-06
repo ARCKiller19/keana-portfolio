@@ -80,6 +80,17 @@ function AutomotiveStoryCard({ piece, total }) {
     }
   }
 
+  const returnToStory = () => {
+    const video = videoRef.current
+
+    if (video) {
+      video.pause()
+      video.currentTime = 0
+    }
+
+    setHasStarted(false)
+  }
+
   return (
     <article
       className={`automotive-story-card ${hasStarted ? 'is-playing' : ''}`}
@@ -140,6 +151,18 @@ function AutomotiveStoryCard({ piece, total }) {
           </>
         )}
       </div>
+
+      <button
+        className={`automotive-story-control ${hasStarted ? 'is-back' : ''}`}
+        type="button"
+        onClick={hasStarted ? returnToStory : playVideo}
+        aria-label={
+          hasStarted ? `Back to story for ${piece.title}` : `Play ${piece.title}`
+        }
+      >
+        <span>{hasStarted ? 'Back to story' : 'Play video'}</span>
+        <span aria-hidden="true">{hasStarted ? '↙' : '↗'}</span>
+      </button>
     </article>
   )
 }
