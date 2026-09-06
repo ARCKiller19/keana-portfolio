@@ -6,7 +6,6 @@
   .motion-notes-body {
     grid-template-columns: minmax(164px, 0.28fr) minmax(0, 1fr);
     gap: clamp(28px, 5vw, 64px);
-    padding-bottom: clamp(28px, 4vw, 44px);
   }
 
   .motion-notes-rail {
@@ -16,6 +15,7 @@
     display: grid;
     gap: 24px;
     min-width: 0;
+    margin-bottom: -24px;
   }
 
   .motion-notes-aside {
@@ -114,6 +114,10 @@
 @media (min-width: 720px) and (max-width: 979px) and (min-height: 650px) {
   .motion-notes-body {
     gap: 28px;
+  }
+
+  .motion-notes-rail {
+    margin-bottom: -18px;
   }
 
   .motion-notes-companion-media.motion-notes-media-portrait {
