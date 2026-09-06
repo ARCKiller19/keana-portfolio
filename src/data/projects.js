@@ -113,7 +113,7 @@ const projects = [
     id: 'orange-engineers',
     title: 'Orange Engineers',
     category: 'Web Design · UI/UX · Interaction Concept',
-    year: '2026',
+    year: '2024',
     link: 'https://orange-engineer.vercel.app/',
     linkLabel: 'View Live Site',
     image: '/images/projects/orange-engineers.png',
