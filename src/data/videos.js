@@ -97,32 +97,62 @@ export const featuredMotion = [
 export const automotiveMotion = [
   {
     id: 'terra-gray',
+    number: '01',
     title: 'Terra Gray',
+    category: 'Automotive · Video Edit',
     src: '/videos/automotive/terra-gray.mp4',
+    cover: '/images/automotive-covers/terra-gray.jpg',
+    note:
+      'Most of these reels began with very little material. I was often given only one or two short clips of the vehicle being featured that day, with very few angles and sometimes difficult resolutions. The challenge was to make that small amount of footage feel complete, polished, and exciting without hiding it under unnecessary effects.',
   },
   {
     id: 'terra',
+    number: '02',
     title: 'Terra',
+    category: 'Automotive · Video Edit',
     src: '/videos/automotive/terra-gray-2.mp4',
+    cover: '/images/automotive-covers/terra.jpg',
+    note:
+      'Music became one of my most useful editing tools. Upbeat tracks gave me more places to recut the same footage, change the timing, swap repeated angles, and make limited material feel more dynamic. Beat drops were especially valuable. I would often place a cut milliseconds before the drop so the next shot or transition landed with an immediate kick.',
   },
   {
     id: 'navara-calibre-white',
+    number: '03',
     title: 'Navara Calibre White',
+    category: 'Automotive · Video Edit',
     src: '/videos/automotive/navara-calibre-white.mp4',
+    cover: '/images/automotive-covers/navara-calibre-white.jpg',
+    note:
+      'For cooler or more relaxed tracks, I leaned on softer fades. Faster tracks gave me room for sharper cuts and more energetic transitions. The transition library was limited too, so every effect had to earn its place. The edit had to work because of timing, rhythm, and restraint, not because I could throw more effects at it. The goal was always the same: keep the cars feeling grand, clean, and premium rather than cluttered.',
   },
   {
     id: 'navara-black',
+    number: '04',
     title: 'Navara Black',
+    category: 'Automotive · Video Edit',
     src: '/videos/automotive/terra-black.mp4',
+    cover: '/images/automotive-covers/navara-black.jpg',
+    note:
+      'The client happened to capture a guard removing paper from the car. You’d think it was scripted, that it might’ve been staged, but it wasn’t. That small action complemented the edit so naturally that it became one of those moments I could not have planned better myself.',
   },
   {
     id: 'sm-eco-showcase',
+    number: '05',
     title: 'SM ECO Showcasing of Cars',
+    category: 'Automotive · Video Edit',
     src: '/videos/automotive/sm-eco-showcase.mp4',
+    cover: '/images/automotive-covers/sm-eco-showcase.jpg',
+    note:
+      'I see moments like that as blessings from Jesus. Even when the resources were limited, I was often given just enough of the right material to make something stronger than I expected. What felt frustrating at first became a beautiful challenge. It showed me how much I could still create when the footage, angles, tools, and time were not ideal.',
   },
   {
     id: 'livina-navara',
+    number: '06',
     title: 'Livina & Navara',
+    category: 'Automotive · Video Edit',
     src: '/videos/automotive/livina-terra.mp4',
+    cover: '/images/automotive-covers/livina-navara.jpg',
+    note:
+      'The results surprised people around the client, too. Coworkers complimented the edits and asked about having similar content made for them.',
   },
 ]

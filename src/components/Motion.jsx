@@ -62,8 +62,8 @@ function VideoPlayer({ src, title, className = '' }) {
   )
 }
 
-function AutomotiveReelCard({ piece, index }) {
-  const { videoRef, preload } = useDeferredVideoMetadata('1400px 200px')
+function AutomotiveStoryCard({ piece, total }) {
+  const { videoRef, preload } = useDeferredVideoMetadata('1400px 240px')
   const [hasStarted, setHasStarted] = useState(false)
 
   const playVideo = async () => {
@@ -80,43 +80,81 @@ function AutomotiveReelCard({ piece, index }) {
   }
 
   return (
-    <article className="automotive-reel-card" role="listitem">
+    <article
+      className={`automotive-story-card ${hasStarted ? 'is-playing' : ''}`}
+      role="listitem"
+    >
       <div className="motion-meta automotive-reel-meta">
-        <span className="motion-index">
-          {String(index + 1).padStart(2, '0')}
-        </span>
-        <span>Automotive · Video Edit</span>
+        <span className="motion-index">{piece.number}</span>
+        <span>{piece.category}</span>
       </div>
 
-      <div className={`automotive-reel-frame ${hasStarted ? 'is-playing' : ''}`}>
-        <video
-          ref={videoRef}
-          className="motion-video automotive-reel-video"
-          controls={hasStarted}
-          playsInline
-          preload={preload}
-          poster={piece.cover}
-          aria-label={piece.title}
-        >
-          <source src={piece.src} type="video/mp4" />
-          Your browser does not support HTML video.
-        </video>
-
-        {!hasStarted && (
-          <button
-            className="automotive-cover"
-            type="button"
-            onClick={playVideo}
-            aria-label={`Play ${piece.title}`}
+      <div className="automotive-story-shell">
+        <div className="automotive-story-media">
+          <video
+            ref={videoRef}
+            className="motion-video automotive-story-video"
+            controls={hasStarted}
+            playsInline
+            preload={preload}
+            poster={piece.cover}
+            aria-label={piece.title}
           >
-            <span className="automotive-play" aria-hidden="true">
-              <span>▶</span>
-            </span>
-          </button>
-        )}
-      </div>
+            <source src={piece.src} type="video/mp4" />
+            Your browser does not support HTML video.
+          </video>
 
-      <h4>{piece.title}</h4>
+          <div
+            className={`automotive-story-cover-layer ${
+              hasStarted ? 'is-hidden' : ''
+            }`}
+          >
+            <div className="automotive-story-underlay" aria-hidden="true">
+              <span className="automotive-story-underlay-kicker">
+                Underneath
+              </span>
+            </div>
+
+            <div className="automotive-story-cover">
+              <img
+                className="automotive-story-image"
+                src={piece.cover}
+                alt=""
+                loading="lazy"
+              />
+              <div className="automotive-story-film" aria-hidden="true" />
+              <div
+                className="automotive-story-film automotive-story-film-soft"
+                aria-hidden="true"
+              />
+            </div>
+
+            <button
+              className="automotive-slit-action"
+              type="button"
+              onClick={playVideo}
+              aria-label={`Play ${piece.title}`}
+            >
+              <span className="automotive-slit-action-label">Play video</span>
+              <span className="automotive-slit-action-icon" aria-hidden="true">
+                ↗
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div className="automotive-story-body">
+          <div className="automotive-story-kicker-row">
+            <span>Creation note</span>
+            <span>
+              {piece.number} / {String(total).padStart(2, '0')}
+            </span>
+          </div>
+
+          <h4>{piece.title}</h4>
+          <p>{piece.note}</p>
+        </div>
+      </div>
     </article>
   )
 }
@@ -199,20 +237,11 @@ function Motion() {
                 {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
               </span>
               <p>
-                These social edits focus on quick pacing, strong openings, and
-                giving each car its own presence within a short vertical format.
+                These edits were built around limitation: very short clips,
+                repeated angles, mixed source quality, and the pressure to still
+                make each car feel polished, premium, and complete.
               </p>
             </div>
-          </div>
-
-          <div
-            className="automotive-reel"
-            role="list"
-            aria-label="Automotive video reel"
-          >
-            {automotiveMotion.map((piece, index) => (
-              <AutomotiveReelCard piece={piece} index={index} key={piece.id} />
-            ))}
           </div>
 
           <div
@@ -225,9 +254,15 @@ function Motion() {
             </div>
 
             <div className="automotive-process-content">
-              <div className="automotive-evidence" aria-label="Automotive editing constraints">
-                <span className="automotive-evidence-label">What I was actually working with</span>
-                <div className="automotive-process-grid">
+              <div
+                className="automotive-evidence"
+                aria-label="Automotive editing constraints"
+              >
+                <span className="automotive-evidence-label">
+                  What I was actually working with
+                </span>
+
+                <dl className="automotive-process-grid">
                   <div>
                     <dt>01–02</dt>
                     <dd>
@@ -235,6 +270,7 @@ function Motion() {
                       <span>per vehicle</span>
                     </dd>
                   </div>
+
                   <div>
                     <dt>Few</dt>
                     <dd>
@@ -242,6 +278,7 @@ function Motion() {
                       <span>often repeated</span>
                     </dd>
                   </div>
+
                   <div>
                     <dt>Mixed</dt>
                     <dd>
@@ -249,75 +286,35 @@ function Motion() {
                       <span>not always ideal</span>
                     </dd>
                   </div>
-                </div>
+                </dl>
               </div>
 
               <p className="automotive-process-bridge">
                 So I had to create the feeling of <strong>MORE</strong>.
               </p>
-
-              <div className="automotive-process-story">
-                <p>
-                  Most of these reels began with very little material. I was often
-                  given only one or two short clips of the vehicle being featured
-                  that day, with very few angles and sometimes difficult
-                  resolutions. The challenge was to make that small amount of
-                  footage feel complete, polished, and exciting without hiding it
-                  under unnecessary effects.
-                </p>
-                <p>
-                  Music became one of my most useful editing tools. Upbeat tracks
-                  gave me more places to recut the same footage, change the timing,
-                  swap repeated angles, and make limited material feel more
-                  dynamic. Beat drops were especially valuable. I would often
-                  place a cut milliseconds before the drop so the next shot or
-                  transition landed with an immediate kick.
-                </p>
-                <p>
-                  For cooler or more relaxed tracks, I leaned on softer fades.
-                  Faster tracks gave me room for sharper cuts and more energetic
-                  transitions. The transition library was limited too, so every
-                  effect had to earn its place. The edit had to work because of
-                  timing, rhythm, and restraint, not because I could throw more
-                  effects at it. The goal was always the same: keep the cars
-                  feeling grand, clean, and premium rather than cluttered.
-                </p>
-
-                <aside className="automotive-unplanned-moment" aria-label="Unplanned moment">
-                  <span>Unplanned moment · Navara Calibre White</span>
-                  <p>
-                    The client happened to capture a guard removing paper from the
-                    car. You’d think it was scripted, that it might’ve been staged,
-                    but it wasn’t. That small action complemented the edit so
-                    naturally that it became one of those moments I could not have
-                    planned better myself.
-                  </p>
-                </aside>
-
-                <p>
-                  I see moments like that as blessings from Jesus. Even when the
-                  resources were limited, I was often given just enough of the
-                  right material to make something stronger than I expected. What
-                  felt frustrating at first became a beautiful challenge. It showed
-                  me how much I could still create when the footage, angles, tools,
-                  and time were not ideal.
-                </p>
-                <p>
-                  The results surprised people around the client, too. Coworkers
-                  complimented the edits and asked about having similar content
-                  made for them.
-                </p>
-
-                <blockquote className="automotive-process-quote">
-                  <p>
-                    I started treating each edit like a small experiment: how far
-                    could I push one or two clips before the repetition became
-                    noticeable?
-                  </p>
-                </blockquote>
-              </div>
             </div>
           </div>
+
+          <div
+            className="automotive-reel"
+            role="list"
+            aria-label="Automotive story reel"
+          >
+            {automotiveMotion.map((piece) => (
+              <AutomotiveStoryCard
+                piece={piece}
+                key={piece.id}
+                total={automotiveMotion.length}
+              />
+            ))}
+          </div>
+
+          <blockquote className="automotive-process-quote">
+            <p>
+              I started treating each edit like a small experiment: how far could
+              I push one or two clips before the repetition became noticeable?
+            </p>
+          </blockquote>
         </section>
       </section>
 

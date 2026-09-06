@@ -456,3 +456,524 @@ section {
     transform: none;
   }
 }
+
+/* ---------- Automotive story card redesign ---------- */
+
+.automotive-showcase {
+  margin-top: clamp(96px, 11vw, 144px);
+  padding: clamp(34px, 4vw, 52px) 0 40px;
+  border-top: 1px solid var(--rule-strong);
+}
+
+.automotive-showcase-head {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.92fr) minmax(420px, 1.08fr);
+  gap: clamp(36px, 7vw, 92px);
+  align-items: end;
+  margin-bottom: 0;
+}
+
+.automotive-showcase-title-block {
+  min-width: 0;
+}
+
+.automotive-showcase-title-block .motion-index {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.automotive-showcase-head h3 {
+  margin: 0;
+  font-size: clamp(34px, 4vw, 50px);
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.automotive-showcase-copy {
+  width: min(100%, 650px);
+  justify-self: end;
+}
+
+.automotive-showcase-copy span {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  white-space: nowrap;
+}
+
+.automotive-showcase-copy p {
+  max-width: 64ch;
+  margin: 0;
+  color: var(--cream-dim);
+  font-size: clamp(13px, 1.2vw, 14px);
+  font-weight: 300;
+  line-height: 1.58;
+}
+
+.automotive-reel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(300px, 30vw, 380px);
+  gap: clamp(18px, 2.2vw, 28px);
+  min-width: 0;
+  overflow-x: auto;
+  padding: 0 0 24px;
+  margin-top: clamp(16px, 2vw, 24px);
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1px;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
+}
+
+.automotive-reel::-webkit-scrollbar {
+  height: 6px;
+}
+
+.automotive-reel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.automotive-reel::-webkit-scrollbar-thumb {
+  background: var(--rule-strong);
+}
+
+.automotive-reel:hover {
+  scrollbar-color: var(--moss) transparent;
+}
+
+.automotive-reel:hover::-webkit-scrollbar-thumb {
+  background: var(--moss);
+}
+
+.automotive-story-card {
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.automotive-reel-meta {
+  margin-bottom: 12px;
+  font-size: 9px;
+}
+
+.automotive-story-shell {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100%;
+  border: 1px solid rgba(239, 233, 219, 0.12);
+  background:
+    linear-gradient(180deg, rgba(14, 16, 13, 0.98), rgba(8, 10, 8, 0.98)),
+    rgba(255, 255, 255, 0.01);
+  transition: border-color var(--motion-fast) var(--ease-editorial);
+}
+
+.automotive-story-shell:hover,
+.automotive-story-shell:focus-within {
+  border-color: rgba(167, 179, 95, 0.7);
+}
+
+.automotive-story-media {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(239, 233, 219, 0.08);
+  background: #050604;
+}
+
+.automotive-story-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #050604;
+}
+
+.automotive-story-cover-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  transition:
+    opacity var(--motion-fast) var(--ease-editorial),
+    visibility var(--motion-fast) var(--ease-editorial);
+}
+
+.automotive-story-cover-layer.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.automotive-story-underlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(167, 179, 95, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(10, 11, 9, 0.96), rgba(6, 7, 6, 0.88));
+}
+
+.automotive-story-underlay::before {
+  content: '';
+  position: absolute;
+  top: 26px;
+  right: 16px;
+  width: 88px;
+  height: 1px;
+  background: rgba(167, 179, 95, 0.72);
+  transform: rotate(-45deg);
+  transform-origin: right center;
+}
+
+.automotive-story-underlay-kicker {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  color: rgba(239, 233, 219, 0.52);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.automotive-story-cover {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 102px) 0, 100% 102px, 100% 100%, 0 100%);
+  transition: transform var(--motion-fast) var(--ease-editorial);
+}
+
+.automotive-story-shell:hover .automotive-story-cover,
+.automotive-story-shell:focus-within .automotive-story-cover {
+  transform: translate(-14px, 14px);
+}
+
+.automotive-story-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.58) saturate(0.72) blur(1.7px);
+  transform: scale(1.03);
+  transition:
+    filter var(--motion-fast) var(--ease-editorial),
+    transform var(--motion-fast) var(--ease-editorial);
+}
+
+.automotive-story-shell:hover .automotive-story-image,
+.automotive-story-shell:focus-within .automotive-story-image {
+  filter: brightness(0.72) saturate(0.84) blur(0.3px);
+  transform: scale(1.01);
+}
+
+.automotive-story-film {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(6, 7, 6, 0.12), rgba(6, 7, 6, 0.26) 34%, rgba(6, 7, 6, 0.8) 100%);
+}
+
+.automotive-story-film-soft {
+  background:
+    linear-gradient(135deg, rgba(126, 139, 78, 0.18), transparent 42%),
+    linear-gradient(180deg, transparent 0%, rgba(4, 5, 4, 0.12) 100%);
+  opacity: 0.42;
+}
+
+.automotive-slit-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  display: grid;
+  justify-items: end;
+  align-content: start;
+  gap: 8px;
+  width: 136px;
+  height: 136px;
+  padding: 16px;
+  border: 0;
+  background: transparent;
+  color: var(--cream);
+  cursor: pointer;
+  text-align: right;
+}
+
+.automotive-slit-action-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 12px;
+  border: 1px solid rgba(239, 233, 219, 0.28);
+  background: rgba(9, 10, 8, 0.58);
+  color: rgba(239, 233, 219, 0.92);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    border-color var(--motion-fast) var(--ease-editorial),
+    background-color var(--motion-fast) var(--ease-editorial),
+    color var(--motion-fast) var(--ease-editorial);
+}
+
+.automotive-slit-action-icon {
+  color: var(--moss);
+  font-size: 16px;
+  line-height: 1;
+  transition:
+    transform var(--motion-fast) var(--ease-editorial),
+    color var(--motion-fast) var(--ease-editorial);
+}
+
+.automotive-story-shell:hover .automotive-slit-action-label,
+.automotive-story-shell:focus-within .automotive-slit-action-label,
+.automotive-slit-action:focus-visible .automotive-slit-action-label {
+  border-color: rgba(239, 233, 219, 0.5);
+  background: rgba(9, 10, 8, 0.8);
+  color: var(--cream);
+}
+
+.automotive-story-shell:hover .automotive-slit-action-icon,
+.automotive-story-shell:focus-within .automotive-slit-action-icon,
+.automotive-slit-action:focus-visible .automotive-slit-action-icon {
+  transform: translate(2px, -2px);
+  color: rgba(167, 179, 95, 0.94);
+}
+
+.automotive-story-body {
+  display: grid;
+  gap: 12px;
+  padding: 18px 18px 20px;
+}
+
+.automotive-story-kicker-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--cream-dim);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.automotive-story-kicker-row span:last-child {
+  color: var(--moss);
+}
+
+.automotive-story-body h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 400;
+  line-height: 1.06;
+}
+
+.automotive-story-body p {
+  margin: 0;
+  color: rgba(239, 233, 219, 0.86);
+  font-size: clamp(13px, 1.15vw, 14px);
+  font-weight: 300;
+  line-height: 1.68;
+  transition: color var(--motion-fast) var(--ease-editorial);
+}
+
+.automotive-story-shell:hover .automotive-story-body p,
+.automotive-story-shell:focus-within .automotive-story-body p {
+  color: rgba(239, 233, 219, 0.74);
+}
+
+.automotive-story-card.is-playing .automotive-story-body p {
+  color: rgba(239, 233, 219, 0.86);
+}
+
+@media (max-width: 1040px) {
+  .automotive-showcase-head {
+    grid-template-columns: minmax(310px, 0.9fr) minmax(340px, 1.1fr);
+    gap: 40px;
+  }
+
+  .automotive-showcase-head h3 {
+    font-size: clamp(30px, 4vw, 42px);
+  }
+
+  .automotive-showcase-copy span {
+    white-space: normal;
+  }
+
+  .automotive-reel {
+    grid-auto-columns: clamp(290px, 38vw, 350px);
+  }
+}
+
+@media (max-width: 900px) {
+  .motion-piece {
+    grid-template-columns: minmax(0, 1fr) minmax(230px, 0.72fr);
+    gap: 34px;
+  }
+
+  .motion-piece-media {
+    width: 100%;
+  }
+
+  .motion-piece-media-portrait {
+    width: min(100%, 280px);
+  }
+
+  .motion-piece-copy {
+    width: 100%;
+  }
+
+  .automotive-showcase-head {
+    grid-template-columns: minmax(280px, 0.9fr) minmax(300px, 1.1fr);
+    gap: 28px;
+  }
+
+  .automotive-showcase-copy {
+    width: 100%;
+  }
+
+  .automotive-reel {
+    grid-auto-columns: clamp(280px, 48vw, 340px);
+  }
+}
+
+@media (max-width: 720px) {
+  .motion-intro {
+    margin-bottom: 44px;
+  }
+
+  .motion-featured {
+    gap: 68px;
+  }
+
+  .motion-piece {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .motion-piece-reverse .motion-piece-media,
+  .motion-piece-reverse .motion-piece-copy {
+    order: initial;
+  }
+
+  .motion-piece-media,
+  .motion-piece-media-portrait {
+    width: 100%;
+    justify-self: start;
+  }
+
+  .motion-piece-media-portrait {
+    width: min(72vw, 290px);
+  }
+
+  .motion-meta {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .motion-piece-copy {
+    padding-top: 18px;
+  }
+
+  .motion-piece-copy h3 {
+    max-width: 16ch;
+    font-size: clamp(26px, 8vw, 36px);
+  }
+
+  .automotive-showcase {
+    margin-top: 80px;
+    padding-top: 30px;
+  }
+
+  .automotive-showcase-head {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .automotive-showcase-head h3 {
+    font-size: clamp(27px, 8vw, 36px);
+    white-space: normal;
+  }
+
+  .automotive-showcase-copy {
+    justify-self: start;
+  }
+
+  .automotive-showcase-copy p {
+    max-width: 58ch;
+  }
+
+  .automotive-reel {
+    grid-auto-columns: min(84vw, 340px);
+    gap: 16px;
+    padding-bottom: 20px;
+  }
+
+  .automotive-story-cover {
+    clip-path: polygon(0 0, calc(100% - 88px) 0, 100% 88px, 100% 100%, 0 100%);
+  }
+
+  .automotive-story-underlay::before {
+    top: 22px;
+    right: 14px;
+    width: 74px;
+  }
+
+  .automotive-slit-action {
+    width: 116px;
+    height: 116px;
+    padding: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .automotive-reel {
+    grid-auto-columns: min(88vw, 320px);
+  }
+
+  .automotive-story-body {
+    padding: 16px 16px 18px;
+  }
+
+  .automotive-story-body h4 {
+    font-size: clamp(19px, 6vw, 24px);
+  }
+
+  .automotive-story-body p {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .motion-frame,
+  .automotive-story-shell,
+  .automotive-story-cover-layer,
+  .automotive-story-cover,
+  .automotive-story-image,
+  .automotive-slit-action-label,
+  .automotive-slit-action-icon,
+  .automotive-story-body p {
+    transition: none;
+  }
+
+  .automotive-story-shell:hover .automotive-story-cover,
+  .automotive-story-shell:focus-within .automotive-story-cover {
+    transform: none;
+  }
+
+  .automotive-story-shell:hover .automotive-slit-action-icon,
+  .automotive-story-shell:focus-within .automotive-slit-action-icon,
+  .automotive-slit-action:focus-visible .automotive-slit-action-icon {
+    transform: none;
+  }
+}

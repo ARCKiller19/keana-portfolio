@@ -5,6 +5,7 @@
   grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.28fr);
   gap: clamp(30px, 5.5vw, 72px);
   margin-top: clamp(48px, 6vw, 72px);
+  margin-bottom: clamp(28px, 3vw, 40px);
   padding-top: clamp(28px, 3.5vw, 42px);
   border-top: 1px solid var(--rule-strong);
 }
@@ -14,8 +15,7 @@
 }
 
 .automotive-process-kicker,
-.automotive-evidence-label,
-.automotive-unplanned-moment > span {
+.automotive-evidence-label {
   display: block;
   font-family: var(--font-mono);
   font-size: 9px;
@@ -39,6 +39,7 @@
 
 .automotive-process-content {
   min-width: 0;
+  width: min(100%, 860px);
 }
 
 .automotive-evidence {
@@ -120,7 +121,7 @@
 
 .automotive-process-bridge {
   position: relative;
-  margin: clamp(34px, 4vw, 48px) 0 28px;
+  margin: clamp(34px, 4vw, 48px) 0 0;
   padding: 0 0 0 26px;
   color: rgba(239, 233, 219, 0.86);
   font-family: var(--font-sans);
@@ -151,49 +152,10 @@
   transform: rotate(45deg);
 }
 
-.automotive-process-story {
-  width: min(100%, 760px);
-}
-
-.automotive-process-story > p {
-  max-width: 70ch;
-  margin: 0 0 18px;
-  color: var(--cream-dim);
-  font-size: clamp(13px, 1.15vw, 14px);
-  font-weight: 300;
-  line-height: 1.72;
-}
-
-.automotive-process-story > p:last-of-type {
-  margin-bottom: 0;
-}
-
-.automotive-unplanned-moment {
-  margin: clamp(28px, 3.6vw, 40px) 0;
-  padding: 20px 22px 20px 24px;
-  border-top: 1px solid rgba(239, 233, 219, 0.1);
-  border-bottom: 1px solid rgba(239, 233, 219, 0.1);
-  border-left: 1px solid rgba(167, 179, 95, 0.52);
-  background: linear-gradient(90deg, rgba(167, 179, 95, 0.035), transparent 78%);
-}
-
-.automotive-unplanned-moment > span {
-  margin-bottom: 10px;
-  color: var(--moss);
-}
-
-.automotive-unplanned-moment p {
-  max-width: 68ch;
-  margin: 0;
-  color: var(--cream-dim);
-  font-size: clamp(13px, 1.15vw, 14px);
-  font-weight: 300;
-  line-height: 1.68;
-}
-
 .automotive-process-quote {
   position: relative;
-  margin: clamp(26px, 3.5vw, 38px) 0 0;
+  width: min(100%, 820px);
+  margin: clamp(28px, 3.5vw, 40px) 0 0;
   padding: 18px 22px 18px 26px;
   border-left: 1px solid rgba(167, 179, 95, 0.58);
   border-top: 1px solid rgba(239, 233, 219, 0.1);
@@ -250,6 +212,7 @@
     grid-template-columns: 1fr;
     gap: 24px;
     margin-top: 44px;
+    margin-bottom: 24px;
     padding-top: 28px;
   }
 
@@ -276,10 +239,6 @@
 
   .automotive-process-bridge {
     margin-top: 34px;
-  }
-
-  .automotive-unplanned-moment {
-    padding: 18px 18px 18px 20px;
   }
 
   .automotive-process-quote {
