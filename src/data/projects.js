@@ -129,7 +129,7 @@ const projects = [
     id: 'wordoria',
     title: 'World of Wordoria',
     category: 'Game Concept · Character Design · Visual Design',
-    year: '2026',
+    year: '2024',
     image: '/images/projects/wordoria.webp',
     imageAlt:
       'Pixel-art World of Wordoria game scene with a grammar question and two characters',
