@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
 import MotionNotesModal from './MotionNotesModal.jsx'
 import '../motion.css'
+import '../automotive-notes.css'
 
 function useDeferredVideoMetadata(rootMargin = '1400px 200px') {
   const videoRef = useRef(null)
@@ -194,7 +195,8 @@ function Motion() {
 
             <div className="automotive-showcase-copy">
               <span>
-                Commercial · Social Media · {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
+                Commercial · Social Media ·{' '}
+                {String(automotiveMotion.length).padStart(2, '0')} Selected Pieces
               </span>
               <p>
                 These social edits focus on quick pacing, strong openings, and
@@ -211,6 +213,82 @@ function Motion() {
             {automotiveMotion.map((piece, index) => (
               <AutomotiveReelCard piece={piece} index={index} key={piece.id} />
             ))}
+          </div>
+
+          <div
+            className="automotive-process"
+            aria-labelledby="automotive-process-title"
+          >
+            <div className="automotive-process-heading">
+              <span className="automotive-process-kicker">Process note</span>
+              <h4 id="automotive-process-title">Working with limited footage</h4>
+            </div>
+
+            <div className="automotive-process-story">
+              <p>
+                Most of these reels began with very little material. I was often
+                given only one or two short clips of the vehicle being featured
+                that day, with very few angles and sometimes difficult
+                resolutions. The challenge was to make that small amount of
+                footage feel complete, polished, and exciting without hiding it
+                under unnecessary effects.
+              </p>
+              <p>
+                Music became one of my most useful editing tools. Upbeat tracks
+                gave me more places to recut the same footage, change the timing,
+                swap repeated angles, and make limited material feel more
+                dynamic. Beat drops were especially valuable. I would often
+                place a cut milliseconds before the drop so the next shot or
+                transition landed with an immediate kick.
+              </p>
+              <p>
+                For cooler or more relaxed tracks, I leaned on softer fades.
+                Faster tracks gave me room for sharper cuts and more energetic
+                transitions. Even with a limited free transition library, I kept
+                the finish controlled so the cars still felt grand, clean, and
+                premium rather than cluttered.
+              </p>
+              <p>
+                The results surprised people around the client, too. Coworkers
+                complimented the edits and asked about having similar content
+                made for them.
+              </p>
+
+              <blockquote className="automotive-process-quote">
+                <p>
+                  I started treating each edit like a small experiment: how far
+                  could I push one or two clips before the repetition became
+                  noticeable?
+                </p>
+              </blockquote>
+            </div>
+
+            <dl className="automotive-process-grid">
+              <div>
+                <dt>Limited source</dt>
+                <dd>
+                  <span>Usually 1 to 2 short clips</span>
+                  <span>Very few usable angles</span>
+                  <span>Mixed or challenging resolution</span>
+                </dd>
+              </div>
+              <div>
+                <dt>Editing response</dt>
+                <dd>
+                  <span>Music-led pacing</span>
+                  <span>Rhythmic recutting and controlled reuse</span>
+                  <span>Beat-drop cuts, fades, and transitions</span>
+                </dd>
+              </div>
+              <div>
+                <dt>Intent and result</dt>
+                <dd>
+                  <span>Short and eye-catching reels</span>
+                  <span>Premium finish without visual clutter</span>
+                  <span>Coworkers asked for similar content</span>
+                </dd>
+              </div>
+            </dl>
           </div>
         </section>
       </section>
