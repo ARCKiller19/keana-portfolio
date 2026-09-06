@@ -253,6 +253,20 @@ function Motion() {
           </div>
 
           <div
+            className="automotive-reel"
+            role="list"
+            aria-label="Automotive story reel"
+          >
+            {automotiveMotion.map((piece) => (
+              <AutomotiveStoryCard
+                piece={piece}
+                key={piece.id}
+                total={automotiveMotion.length}
+              />
+            ))}
+          </div>
+
+          <div
             className="automotive-process"
             aria-labelledby="automotive-process-title"
           >
@@ -303,20 +317,6 @@ function Motion() {
                 </dl>
               </div>
             </div>
-          </div>
-
-          <div
-            className="automotive-reel"
-            role="list"
-            aria-label="Automotive story reel"
-          >
-            {automotiveMotion.map((piece) => (
-              <AutomotiveStoryCard
-                piece={piece}
-                key={piece.id}
-                total={automotiveMotion.length}
-              />
-            ))}
           </div>
 
           <blockquote className="automotive-process-quote">
