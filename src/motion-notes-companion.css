@@ -6,6 +6,7 @@
   .motion-notes-body {
     grid-template-columns: minmax(164px, 0.28fr) minmax(0, 1fr);
     gap: clamp(28px, 5vw, 64px);
+    padding-bottom: clamp(28px, 4vw, 44px);
   }
 
   .motion-notes-rail {
@@ -13,7 +14,7 @@
     top: 22px;
     align-self: start;
     display: grid;
-    gap: clamp(54px, 6vw, 68px);
+    gap: 24px;
     min-width: 0;
   }
 
@@ -69,7 +70,6 @@
   .motion-notes-companion-meta {
     display: grid;
     gap: 4px;
-    margin-top: clamp(42px, 4.2vw, 54px);
     padding-top: 9px;
     border-top: 1px solid var(--rule);
     font-family: var(--font-mono);
@@ -116,16 +116,11 @@
     gap: 28px;
   }
 
-  .motion-notes-rail {
-    gap: 52px;
-  }
-
   .motion-notes-companion-media.motion-notes-media-portrait {
     width: min(100%, 150px);
   }
 
   .motion-notes-companion-meta {
-    margin-top: 38px;
     font-size: 7.5px;
   }
 }
