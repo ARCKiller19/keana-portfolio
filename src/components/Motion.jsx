@@ -224,88 +224,95 @@ function Motion() {
               <h4 id="automotive-process-title">There was never enough footage</h4>
             </div>
 
-            <div className="automotive-process-story">
-              <p>
-                Most of these reels began with very little material. I was often
-                given only one or two short clips of the vehicle being featured
-                that day, with very few angles and sometimes difficult
-                resolutions. The challenge was to make that small amount of
-                footage feel complete, polished, and exciting without hiding it
-                under unnecessary effects.
-              </p>
-              <p>
-                Music became one of my most useful editing tools. Upbeat tracks
-                gave me more places to recut the same footage, change the timing,
-                swap repeated angles, and make limited material feel more
-                dynamic. Beat drops were especially valuable. I would often
-                place a cut milliseconds before the drop so the next shot or
-                transition landed with an immediate kick.
-              </p>
-              <p>
-                For cooler or more relaxed tracks, I leaned on softer fades.
-                Faster tracks gave me room for sharper cuts and more energetic
-                transitions. Even with a limited free transition library, I kept
-                the finish controlled so the cars still felt grand, clean, and
-                premium rather than cluttered.
-              </p>
-              <p>
-                Sometimes the little footage I did receive gave me exactly the
-                moment an edit needed. In the Navara Calibre White reel, the
-                client happened to capture a guard removing paper from the car.
-                It looks like something that might have been staged for the
-                video, but it was not. That small action complemented the edit so
-                naturally that it became one of those moments I could not have
-                planned better myself.
-              </p>
-              <p>
-                I see moments like that as blessings from Jesus. Even when the
-                resources were limited, I was often given just enough of the
-                right material to make something stronger than I expected. What
-                felt frustrating at first became a beautiful challenge. It showed
-                me how much I could still create when the footage, angles, tools,
-                and time were not ideal.
-              </p>
-              <p>
-                The results surprised people around the client, too. Coworkers
-                complimented the edits and asked about having similar content
-                made for them.
-              </p>
+            <div className="automotive-process-content">
+              <div className="automotive-evidence" aria-label="Automotive editing constraints">
+                <span className="automotive-evidence-label">What I was actually working with</span>
+                <div className="automotive-process-grid">
+                  <div>
+                    <dt>01–02</dt>
+                    <dd>
+                      <strong>Short clips</strong>
+                      <span>per vehicle</span>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Few</dt>
+                    <dd>
+                      <strong>Usable angles</strong>
+                      <span>often repeated</span>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Mixed</dt>
+                    <dd>
+                      <strong>Source quality</strong>
+                      <span>not always ideal</span>
+                    </dd>
+                  </div>
+                </div>
+              </div>
 
-              <blockquote className="automotive-process-quote">
+              <p className="automotive-process-bridge">So I had to create the feeling of more.</p>
+
+              <div className="automotive-process-story">
                 <p>
-                  I started treating each edit like a small experiment: how far
-                  could I push one or two clips before the repetition became
-                  noticeable?
+                  Most of these reels began with very little material. I was often
+                  given only one or two short clips of the vehicle being featured
+                  that day, with very few angles and sometimes difficult
+                  resolutions. The challenge was to make that small amount of
+                  footage feel complete, polished, and exciting without hiding it
+                  under unnecessary effects.
                 </p>
-              </blockquote>
-            </div>
+                <p>
+                  Music became one of my most useful editing tools. Upbeat tracks
+                  gave me more places to recut the same footage, change the timing,
+                  swap repeated angles, and make limited material feel more
+                  dynamic. Beat drops were especially valuable. I would often
+                  place a cut milliseconds before the drop so the next shot or
+                  transition landed with an immediate kick.
+                </p>
+                <p>
+                  For cooler or more relaxed tracks, I leaned on softer fades.
+                  Faster tracks gave me room for sharper cuts and more energetic
+                  transitions. Even with a limited free transition library, I kept
+                  the finish controlled so the cars still felt grand, clean, and
+                  premium rather than cluttered.
+                </p>
 
-            <dl className="automotive-process-grid">
-              <div>
-                <dt>Limited source</dt>
-                <dd>
-                  <span>Usually 1 to 2 short clips</span>
-                  <span>Very few usable angles</span>
-                  <span>Mixed or challenging resolution</span>
-                </dd>
+                <aside className="automotive-unplanned-moment" aria-label="Unplanned moment">
+                  <span>Unplanned moment · Navara Calibre White</span>
+                  <p>
+                    The client happened to capture a guard removing paper from the
+                    car. It looks like something that might have been staged, but it
+                    was not. That small action complemented the edit so naturally
+                    that it became one of those moments I could not have planned
+                    better myself.
+                  </p>
+                </aside>
+
+                <p>
+                  I see moments like that as blessings from Jesus. Even when the
+                  resources were limited, I was often given just enough of the
+                  right material to make something stronger than I expected. What
+                  felt frustrating at first became a beautiful challenge. It showed
+                  me how much I could still create when the footage, angles, tools,
+                  and time were not ideal.
+                </p>
+                <p>
+                  The results surprised people around the client, too. Coworkers
+                  complimented the edits and asked about having similar content
+                  made for them.
+                </p>
+
+                <blockquote className="automotive-process-quote">
+                  <p>
+                    I started treating each edit like a small experiment: how far
+                    could I push one or two clips before the repetition became
+                    noticeable?
+                  </p>
+                </blockquote>
               </div>
-              <div>
-                <dt>Editing response</dt>
-                <dd>
-                  <span>Music-led pacing</span>
-                  <span>Rhythmic recutting and controlled reuse</span>
-                  <span>Beat-drop cuts, fades, and transitions</span>
-                </dd>
-              </div>
-              <div>
-                <dt>What the limitation taught me</dt>
-                <dd>
-                  <span>Work with the useful moments I am given</span>
-                  <span>Keep the finish premium without visual clutter</span>
-                  <span>Push my skills beyond the available resources</span>
-                </dd>
-              </div>
-            </dl>
+            </div>
           </div>
         </section>
       </section>
