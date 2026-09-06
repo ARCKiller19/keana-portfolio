@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   getSectionActivationLine,
   handleSectionNavigation,
@@ -72,13 +72,12 @@ function NavIcon({ type }) {
 }
 
 function Navbar() {
-  const progressRef = useRef(null)
   const [activeSection, setActiveSection] = useState(null)
+  const [connectorProgress, setConnectorProgress] = useState(() =>
+    navItems.slice(0, -1).map(() => 0),
+  )
 
   useEffect(() => {
-    const progressBar = progressRef.current
-    if (!progressBar) return undefined
-
     const sections = navItems
       .map(({ id }) => document.getElementById(id))
       .filter(Boolean)
@@ -89,32 +88,27 @@ function Navbar() {
     const updateNavigationState = () => {
       frameId = null
 
-      const scrollableHeight =
-        document.documentElement.scrollHeight - window.innerHeight
-      const progress =
-        scrollableHeight > 0
-          ? Math.min(Math.max(window.scrollY / scrollableHeight, 0), 1)
-          : 0
-
-      progressBar.style.transform = `scaleX(${progress})`
-
       if (sections.length === 0) {
         setActiveSection(null)
+        setConnectorProgress(navItems.slice(0, -1).map(() => 0))
         return
       }
 
       const activationLine = getSectionActivationLine()
+      const activationY = window.scrollY + activationLine
       const atPageEnd =
         window.scrollY + window.innerHeight >=
         document.documentElement.scrollHeight - 2
 
       if (atPageEnd) {
         setActiveSection(navItems[navItems.length - 1].id)
+        setConnectorProgress(navItems.slice(0, -1).map(() => 1))
         return
       }
 
       if (hero && hero.getBoundingClientRect().bottom > activationLine) {
         setActiveSection(null)
+        setConnectorProgress(navItems.slice(0, -1).map(() => 0))
         return
       }
 
@@ -126,7 +120,20 @@ function Navbar() {
         }
       })
 
+      const nextConnectorProgress = navItems.slice(0, -1).map((_, index) => {
+        const current = sections[index]
+        const next = sections[index + 1]
+        if (!current || !next) return 0
+
+        const start = current.offsetTop
+        const end = next.offsetTop
+        if (end <= start) return activationY >= end ? 1 : 0
+
+        return Math.min(Math.max((activationY - start) / (end - start), 0), 1)
+      })
+
       setActiveSection(currentSection)
+      setConnectorProgress(nextConnectorProgress)
     }
 
     const requestNavigationUpdate = () => {
@@ -156,19 +163,34 @@ function Navbar() {
       </a>
 
       <nav className="nav-links nav-tiles" aria-label="Primary">
-        {navItems.map((item) => (
-          <a
-            className="nav-tile"
-            href={`#${item.id}`}
-            key={item.id}
-            onClick={handleSectionNavigation}
-            aria-current={activeSection === item.id ? 'location' : undefined}
-          >
-            <span className="nav-tile-icon">
-              <NavIcon type={item.icon} />
-            </span>
-            <span className="nav-tile-label">{item.label}</span>
-          </a>
+        {navItems.map((item, index) => (
+          <span className="nav-path-stop" key={item.id}>
+            <a
+              className="nav-tile"
+              href={`#${item.id}`}
+              onClick={handleSectionNavigation}
+              aria-current={activeSection === item.id ? 'location' : undefined}
+            >
+              <span className="nav-tile-icon">
+                <NavIcon type={item.icon} />
+              </span>
+              <span className="nav-tile-label">{item.label}</span>
+            </a>
+
+            {index < navItems.length - 1 && (
+              <span
+                className="nav-connector"
+                aria-hidden="true"
+                style={{ '--connector-progress': connectorProgress[index] ?? 0 }}
+              >
+                <span className="nav-connector-dot nav-connector-dot-start" />
+                <span className="nav-connector-track">
+                  <span className="nav-connector-fill" />
+                </span>
+                <span className="nav-connector-dot nav-connector-dot-end" />
+              </span>
+            )}
+          </span>
         ))}
       </nav>
 
@@ -178,10 +200,6 @@ function Navbar() {
           Available
         </span>
         <span className="nav-location">Davao City, PH</span>
-      </div>
-
-      <div className="nav-progress" aria-hidden="true">
-        <div className="nav-progress-bar" ref={progressRef} />
       </div>
     </header>
   )
