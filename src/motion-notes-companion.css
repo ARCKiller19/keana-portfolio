@@ -82,12 +82,14 @@
   }
 
   .motion-note-section {
+    border-top: 1px solid var(--rule);
     transition:
       border-color var(--motion-fast) var(--ease-editorial),
       opacity var(--motion-fast) var(--ease-editorial);
   }
 
   .motion-note-section.is-active {
+    border-top-color: rgba(167, 179, 95, 0.34);
     border-bottom-color: rgba(167, 179, 95, 0.34);
   }
 
