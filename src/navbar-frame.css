@@ -1,4 +1,4 @@
-/* Turn the navbar corner marks into intentional frame accents around the side groups. */
+/* Keep the navbar side accents as simple mirrored L-shaped technical frames. */
 
 .nav::before,
 .nav::after {
@@ -22,17 +22,13 @@
 .nav-brand::before {
   inset: -9px -16px -9px -12px;
   border-left: 1px solid rgba(167, 179, 95, 0.54);
-  border-top: 1px solid rgba(239, 233, 219, 0.12);
   border-bottom: 1px solid rgba(239, 233, 219, 0.16);
-  clip-path: polygon(0 0, 46% 0, 46% 1px, 1px 1px, 1px calc(100% - 1px), 56% calc(100% - 1px), 56% 100%, 0 100%);
 }
 
 .nav-status::before {
   inset: -9px -12px -9px -16px;
   border-right: 1px solid rgba(167, 179, 95, 0.54);
-  border-top: 1px solid rgba(239, 233, 219, 0.12);
   border-bottom: 1px solid rgba(239, 233, 219, 0.16);
-  clip-path: polygon(54% 0, 100% 0, 100% 100%, 44% 100%, 44% calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) 1px, 54% 1px);
 }
 
 .nav-brand::after,
