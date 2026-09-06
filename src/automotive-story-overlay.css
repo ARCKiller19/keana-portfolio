@@ -181,6 +181,50 @@
   outline-offset: -5px;
 }
 
+.automotive-story-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 11px;
+  border: 1px solid rgba(239, 233, 219, 0.14);
+  border-top: 0;
+  background: rgba(8, 9, 7, 0.72);
+  color: rgba(239, 233, 219, 0.66);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color var(--motion-fast) var(--ease-editorial),
+    border-color var(--motion-fast) var(--ease-editorial),
+    background-color var(--motion-fast) var(--ease-editorial);
+}
+
+.automotive-story-control span:last-child {
+  color: var(--moss);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.automotive-story-control:hover,
+.automotive-story-control:focus-visible {
+  border-color: rgba(167, 179, 95, 0.58);
+  background: rgba(10, 11, 9, 0.92);
+  color: rgba(239, 233, 219, 0.94);
+}
+
+.automotive-story-control.is-back {
+  color: rgba(239, 233, 219, 0.84);
+}
+
+.automotive-story-control:focus-visible {
+  outline: 1px solid var(--moss);
+  outline-offset: 2px;
+}
+
 @media (max-width: 900px) {
   .automotive-reel {
     grid-auto-columns: clamp(236px, 34vw, 274px);
@@ -220,23 +264,13 @@
     filter: brightness(0.56) saturate(0.78);
   }
 
-  .automotive-story-play {
-    place-items: end;
-    padding: 0 12px 12px 0;
-  }
-
   .automotive-story-play-prompt {
-    opacity: 1;
-    padding: 8px 10px;
-    background: rgba(7, 8, 6, 0.72);
-  }
-
-  .automotive-story-play-desktop {
     display: none;
   }
 
-  .automotive-story-play-touch {
-    display: inline;
+  .automotive-story-control {
+    min-height: 40px;
+    padding-inline: 12px;
   }
 }
 
@@ -244,7 +278,8 @@
   .automotive-story-frame,
   .automotive-story-cover-image,
   .automotive-note-overlay,
-  .automotive-story-play-prompt {
+  .automotive-story-play-prompt,
+  .automotive-story-control {
     transition: none;
   }
 }
