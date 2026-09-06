@@ -221,7 +221,7 @@ function Motion() {
           >
             <div className="automotive-process-heading">
               <span className="automotive-process-kicker">Process note</span>
-              <h4 id="automotive-process-title">Working with limited footage</h4>
+              <h4 id="automotive-process-title">There was never enough footage</h4>
             </div>
 
             <div className="automotive-process-story">
@@ -247,6 +247,23 @@ function Motion() {
                 transitions. Even with a limited free transition library, I kept
                 the finish controlled so the cars still felt grand, clean, and
                 premium rather than cluttered.
+              </p>
+              <p>
+                Sometimes the little footage I did receive gave me exactly the
+                moment an edit needed. In the Navara Calibre White reel, the
+                client happened to capture a guard removing paper from the car.
+                It looks like something that might have been staged for the
+                video, but it was not. That small action complemented the edit so
+                naturally that it became one of those moments I could not have
+                planned better myself.
+              </p>
+              <p>
+                I see moments like that as blessings from Jesus. Even when the
+                resources were limited, I was often given just enough of the
+                right material to make something stronger than I expected. What
+                felt frustrating at first became a beautiful challenge. It showed
+                me how much I could still create when the footage, angles, tools,
+                and time were not ideal.
               </p>
               <p>
                 The results surprised people around the client, too. Coworkers
@@ -281,11 +298,11 @@ function Motion() {
                 </dd>
               </div>
               <div>
-                <dt>Intent and result</dt>
+                <dt>What the limitation taught me</dt>
                 <dd>
-                  <span>Short and eye-catching reels</span>
-                  <span>Premium finish without visual clutter</span>
-                  <span>Coworkers asked for similar content</span>
+                  <span>Work with the useful moments I am given</span>
+                  <span>Keep the finish premium without visual clutter</span>
+                  <span>Push my skills beyond the available resources</span>
                 </dd>
               </div>
             </dl>
