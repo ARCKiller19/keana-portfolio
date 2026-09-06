@@ -1,96 +1,20 @@
-/* Editorial process context for the automotive reel collection. */
-
-.automotive-process {
-  display: grid;
-  grid-template-columns: minmax(250px, 0.58fr) minmax(0, 1.42fr);
-  gap: clamp(18px, 2.4vw, 28px);
-  align-items: start;
-  margin-top: clamp(34px, 4.2vw, 50px);
-  margin-bottom: clamp(28px, 3vw, 40px);
-  padding-top: 0;
-}
-
-.automotive-process-heading {
-  min-width: 0;
-}
-
-.automotive-process-kicker,
-.automotive-evidence-label {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.automotive-process-kicker {
-  margin-bottom: 12px;
-  color: var(--moss);
-}
-
-.automotive-process-statement {
-  display: grid;
-  gap: 3px;
-  max-width: 14ch;
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(30px, 3.2vw, 40px);
-  font-weight: 400;
-  line-height: 0.98;
-}
-
-.automotive-process-statement span {
-  display: block;
-}
-
-.automotive-process-statement-emphasis {
-  color: var(--moss);
-  font-family: var(--font-sans);
-  font-size: clamp(34px, 4vw, 52px);
-  font-weight: 600;
-  line-height: 0.9;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-}
-
-.automotive-process-support {
-  max-width: 31ch;
-  margin: 13px 0 0;
-  color: rgba(239, 233, 219, 0.72);
-  font-size: clamp(12px, 1.05vw, 13px);
-  font-weight: 300;
-  line-height: 1.58;
-}
-
-.automotive-process-content {
-  min-width: 0;
-  width: 100%;
-}
-
-.automotive-evidence {
-  position: relative;
-  padding-top: 2px;
-}
-
-.automotive-evidence-label {
-  margin-bottom: 16px;
-  color: var(--cream-dim);
-}
+/* Compact process evidence and reflection for the automotive reel collection. */
 
 .automotive-process-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(8px, 1vw, 14px);
+  gap: clamp(10px, 1.1vw, 16px);
   margin: 0;
+}
+
+.automotive-process-grid-compact {
+  margin: 2px 0 16px;
 }
 
 .automotive-process-grid > div {
   position: relative;
   min-width: 0;
-  min-height: 104px;
-  padding: 12px 4px 0 12px;
-  border: 0;
-  background: none;
+  padding: 9px 4px 0 10px;
 }
 
 .automotive-process-grid > div::before {
@@ -98,34 +22,30 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 22px;
-  height: 17px;
-  border-top: 1px solid rgba(167, 179, 95, 0.72);
-  border-left: 1px solid rgba(167, 179, 95, 0.72);
+  width: 17px;
+  height: 13px;
+  border-top: 1px solid rgba(167, 179, 95, 0.58);
+  border-left: 1px solid rgba(167, 179, 95, 0.58);
   pointer-events: none;
 }
 
-.automotive-process-grid > div:nth-child(2) {
-  transform: none;
-}
-
 .automotive-process-grid dt {
-  margin: 0 0 8px;
-  color: rgba(239, 233, 219, 0.92);
+  margin: 0 0 4px;
+  color: rgba(239, 233, 219, 0.88);
   font-family: var(--font-sans);
-  font-size: clamp(22px, 2vw, 29px);
+  font-size: clamp(12px, 1.05vw, 15px);
   font-weight: 600;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  line-height: 1.08;
+  letter-spacing: -0.018em;
   text-transform: uppercase;
 }
 
 .automotive-process-grid dd {
   margin: 0;
   color: var(--cream-dim);
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 300;
-  line-height: 1.45;
+  line-height: 1.35;
 }
 
 .automotive-process-quote {
@@ -164,75 +84,40 @@
 }
 
 @media (max-width: 900px) {
-  .automotive-process {
-    grid-template-columns: minmax(240px, 0.7fr) minmax(0, 1.3fr);
-    gap: 18px;
-  }
-
-  .automotive-process-statement {
-    max-width: 14ch;
-    font-size: clamp(28px, 3.8vw, 36px);
-  }
-
-  .automotive-process-statement-emphasis {
-    font-size: clamp(32px, 4.6vw, 44px);
-  }
-
   .automotive-process-grid {
     gap: 8px;
   }
 
-  .automotive-process-grid > div {
-    min-height: 98px;
-    padding-left: 10px;
-  }
-
   .automotive-process-grid dt {
-    font-size: clamp(20px, 2.7vw, 25px);
+    font-size: clamp(11px, 1.45vw, 14px);
   }
 }
 
 @media (max-width: 720px) {
-  .automotive-process {
-    grid-template-columns: 1fr;
-    gap: 22px;
-    margin-top: 34px;
-    margin-bottom: 24px;
-    padding-top: 0;
-  }
-
-  .automotive-process-statement {
-    max-width: 14ch;
-    font-size: clamp(28px, 8vw, 36px);
-  }
-
-  .automotive-process-statement-emphasis {
-    font-size: clamp(34px, 9vw, 44px);
-  }
-
-  .automotive-process-support {
-    max-width: 42ch;
-  }
-
   .automotive-process-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
   }
 
-  .automotive-process-grid > div,
-  .automotive-process-grid > div:nth-child(2) {
-    min-height: 0;
-    padding: 12px 0 0 12px;
-    transform: none;
+  .automotive-process-grid-compact {
+    margin-bottom: 14px;
+  }
+
+  .automotive-process-grid > div {
+    padding: 8px 2px 0 8px;
+  }
+
+  .automotive-process-grid > div::before {
+    width: 14px;
+    height: 11px;
   }
 
   .automotive-process-grid dt {
-    margin-bottom: 6px;
-    font-size: 24px;
+    font-size: clamp(10px, 3vw, 12px);
   }
 
   .automotive-process-grid dd {
-    font-size: 12px;
+    font-size: 9px;
   }
 
   .automotive-process-quote {
@@ -241,5 +126,24 @@
 
   .automotive-process-quote p {
     font-size: clamp(16px, 4.5vw, 18px);
+  }
+}
+
+@media (max-width: 430px) {
+  .automotive-process-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .automotive-process-grid > div {
+    padding-left: 10px;
+  }
+
+  .automotive-process-grid dt {
+    font-size: 12px;
+  }
+
+  .automotive-process-grid dd {
+    font-size: 10px;
   }
 }
