@@ -263,6 +263,25 @@ function ProjectModal({ project, onClose }) {
     event.currentTarget.src = project.fallbackImage
   }
 
+  const projectVisual = project ? (
+    <figure
+      className={`project-modal-visual ${
+        project.modalImageFit === 'contain'
+          ? 'project-modal-visual-contain'
+          : ''
+      }`}
+      style={{ aspectRatio: 'auto' }}
+    >
+      <img
+        src={project.image}
+        alt={project.imageAlt ?? `${project.title} project preview`}
+        decoding="async"
+        onError={handleImageError}
+        style={{ height: 'auto', objectFit: 'contain' }}
+      />
+    </figure>
+  ) : null
+
   return (
     <dialog
       className="project-modal"
@@ -290,22 +309,19 @@ function ProjectModal({ project, onClose }) {
           </div>
 
           <div className="project-modal-grid">
-            <figure
-              className={`project-modal-visual ${
-                project.modalImageFit === 'contain'
-                  ? 'project-modal-visual-contain'
-                  : ''
-              }`}
-              style={{ aspectRatio: 'auto' }}
-            >
-              <img
-                src={project.image}
-                alt={project.imageAlt ?? `${project.title} project preview`}
-                decoding="async"
-                onError={handleImageError}
-                style={{ height: 'auto', objectFit: 'contain' }}
-              />
-            </figure>
+            {project.link ? (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Open ${project.title} project in a new tab`}
+                style={{ display: 'block' }}
+              >
+                {projectVisual}
+              </a>
+            ) : (
+              projectVisual
+            )}
 
             <div className="project-modal-copy">
               <p className="project-modal-year">{project.year}</p>
@@ -317,32 +333,9 @@ function ProjectModal({ project, onClose }) {
                 {project.description}
               </p>
 
-              <dl className="project-modal-meta">
-                {project.role && (
-                  <div>
-                    <dt>Contribution</dt>
-                    <dd>{project.role}</dd>
-                  </div>
-                )}
-
-                {project.tools?.length > 0 && (
-                  <div>
-                    <dt>Tools</dt>
-                    <dd>{project.tools.join(' · ')}</dd>
-                  </div>
-                )}
-
-                {project.creationNotes?.map((note) => (
-                  <div key={`${project.id}-${note.label}`}>
-                    <dt>{note.label}</dt>
-                    <dd>{note.text}</dd>
-                  </div>
-                ))}
-              </dl>
-
-              <div className="project-modal-action-row">
-                {project.link ? (
-                  project.instagram ? (
+              {project.link && (
+                <div className="project-modal-action-row">
+                  {project.instagram ? (
                     <div className="project-action-pair">
                       <a
                         className="project-live-link"
@@ -379,13 +372,40 @@ function ProjectModal({ project, onClose }) {
                       {project.linkLabel ?? 'View Live'}
                       <span aria-hidden="true"> ↗</span>
                     </a>
-                  )
-                ) : (
+                  )}
+                </div>
+              )}
+
+              <dl className="project-modal-meta">
+                {project.role && (
+                  <div>
+                    <dt>Contribution</dt>
+                    <dd>{project.role}</dd>
+                  </div>
+                )}
+
+                {project.tools?.length > 0 && (
+                  <div>
+                    <dt>Tools</dt>
+                    <dd>{project.tools.join(' · ')}</dd>
+                  </div>
+                )}
+
+                {project.creationNotes?.map((note) => (
+                  <div key={`${project.id}-${note.label}`}>
+                    <dt>{note.label}</dt>
+                    <dd>{note.text}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              {!project.link && (
+                <div className="project-modal-action-row">
                   <p className="project-live-unavailable">
                     {project.liveStatus ?? 'No public build available yet.'}
                   </p>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
 
