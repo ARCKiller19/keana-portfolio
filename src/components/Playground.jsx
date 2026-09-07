@@ -1,3 +1,5 @@
+import '../playground-owner.css'
+
 const pieces = [
   {
     src: '/images/playground/pixel-keana.png',
@@ -48,6 +50,29 @@ function Playground() {
             />
           </figure>
         ))}
+
+        <div className="playground-owner-note">
+          <svg
+            className="playground-owner-arrow"
+            viewBox="0 0 240 160"
+            aria-hidden="true"
+          >
+            <path
+              className="owner-arrow-echo"
+              d="M218 132C174 130 150 112 125 87C96 58 70 46 34 36"
+            />
+            <path d="M218 132C174 130 150 112 125 87C96 58 70 46 34 36" />
+            <path d="M34 36L50 30" />
+            <path d="M34 36L45 51" />
+          </svg>
+
+          <span className="playground-owner-label">
+            <span className="playground-owner-spark" aria-hidden="true">
+              ✦
+            </span>
+            Owner
+          </span>
+        </div>
       </div>
     </section>
   )
