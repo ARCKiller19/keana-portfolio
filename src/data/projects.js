@@ -7,8 +7,26 @@ const projects = [
     link: 'https://aroma-tiblawan.vercel.app/',
     linkLabel: 'View Live Site',
     image: '/images/projects/aroma-tiblawan.jpg',
+    role: 'Concept · Visual direction · UX decisions · AI-assisted implementation',
     description:
       'A web design and visual direction project for Aroma Tiblawan Beach Resort, shaped around a distinctive presentation while keeping the experience clear and easy to navigate.',
+    creationNotes: [
+      {
+        label: 'Creation note',
+        text:
+          'I wanted the booking experience to make the resort feel active and established, so I designed a sample booking receipt with selected details redacted. It works as a small visual cue of the booking experience without exposing personal information.',
+      },
+      {
+        label: 'Interaction',
+        text:
+          'The Messenger shortcut started as a general contact feature before the booking page was finalized. Once the booking flow came together, it became more useful: guests can copy their booking details, then jump straight to Messenger to continue the conversation with the resort.',
+      },
+      {
+        label: 'Build process',
+        text:
+          'I shaped the ideas, visual direction, content, and interaction choices, then used AI as coding assistance. I described the behavior or design I wanted, integrated the suggested code, and adjusted the result until it matched the experience I had in mind.',
+      },
+    ],
   },
   {
     id: 'growth-of-a-quiet-soul',
@@ -18,8 +36,26 @@ const projects = [
     link: 'https://patriciakeanaroma-mydigitalportfoli.vercel.app/',
     linkLabel: 'View Project',
     image: '/images/projects/growth-of-a-quiet-soul.jpg',
+    role: 'Concept · Editorial direction · Interaction design · AI-assisted implementation',
     description:
       'A creative web and editorial project that treats personal reflection as a digital reading experience with a quieter, more expressive visual rhythm.',
+    creationNotes: [
+      {
+        label: 'Context',
+        text:
+          'This began as my Seniors’ Integration Program portfolio, where the required content included journal-style reflections and an oral component. I wanted the website to feel less like a static school requirement and more like a personal reading experience.',
+      },
+      {
+        label: 'Creation note',
+        text:
+          'Because speaking was part of the requirement, I turned that into part of the interface. I recorded myself reading the content and paired the narration with background music inside a custom music player, then refined the player visually so it felt like part of the portfolio rather than an added control.',
+      },
+      {
+        label: 'Build process',
+        text:
+          'I directed the concept, content, visual choices, and interaction ideas, then used AI as coding assistance. I described what I wanted to build, followed the suggested implementation steps and code, and kept revising the result until it looked and behaved the way I intended.',
+      },
+    ],
   },
   {
     id: 'cruzalloma-farm',
