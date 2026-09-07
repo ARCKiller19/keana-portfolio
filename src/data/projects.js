@@ -157,9 +157,26 @@ const projects = [
       'Orange Engineers homepage with a dark engineering-themed hero and orange accents',
     imageFit: 'contain',
     modalImageFit: 'contain',
-    role: 'Website design · Interaction direction',
+    role: 'Logo · Hero design · Typography direction · Profile card interaction concept',
     description:
-      'I designed the website experience and visual direction for Orange Engineers, including the idea for the card-flip transition. I wanted the engineering-focused site to feel bold and memorable while keeping the experience straightforward to explore.',
+      'This began as a web development assignment a friend’s group was building. The first version felt visually flat, so I stepped in to reshape the homepage direction and make it feel simpler, stronger, and more memorable.',
+    creationNotes: [
+      {
+        label: 'Visual direction',
+        text:
+          'I designed the logo and hero. We wanted the page to stay simple rather than become busy, so I kept the dark solid background and experimented with elements in Canva until the globe-like engineering linework worked naturally behind the headline. I also shaped the type hierarchy and used orange to highlight “Engineers” so the hero had a clearer focal point.',
+      },
+      {
+        label: 'Interaction',
+        text:
+          'For the team section, I suggested flipping profile cards. I chose cover imagery that matched each person’s engineering specialization and proposed the flip transition because it made the profiles more fun to explore. My friends implemented the interaction from that idea.',
+      },
+      {
+        label: 'Exploration',
+        text:
+          'Looking back, this was one of my early experiments with mixing visual design and interaction. It showed me how much a simple page could change through stronger hierarchy, a restrained visual motif, and one playful transition.',
+      },
+    ],
   },
   {
     id: 'wordoria',
