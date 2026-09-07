@@ -14,39 +14,22 @@
 }
 
 .project-card-badge {
-  position: relative;
   display: inline-flex;
   align-items: center;
   flex: 0 0 auto;
   padding: 9px 12px 8px;
   border: 1px solid rgba(255, 242, 228, 0.45);
-  border-radius: 3px;
+  border-radius: 2px;
   background: #c96155;
   color: #fff6ea;
-  box-shadow:
-    0 8px 18px rgba(0, 0, 0, 0.28),
-    0 0 14px rgba(201, 97, 85, 0.14);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
   font-family: var(--font-mono);
   font-size: 8px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  transform: rotate(3deg);
-  transform-origin: center;
   pointer-events: none;
-}
-
-.project-card-badge::after {
-  content: '';
-  position: absolute;
-  right: 14px;
-  bottom: -6px;
-  width: 0;
-  height: 0;
-  border-top: 7px solid #c96155;
-  border-left: 6px solid transparent;
-  transform: rotate(-9deg);
 }
 
 .project-card-scope {
