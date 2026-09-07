@@ -1,0 +1,63 @@
+/* ClickMate selected-work emphasis for Marketing VA relevance */
+
+.project-card-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 12px 8px;
+  border: 1px solid rgba(255, 242, 228, 0.45);
+  border-radius: 3px;
+  background: #c96155;
+  color: #fff6ea;
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.34),
+    0 0 16px rgba(201, 97, 85, 0.18);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(3deg);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.project-card-badge::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  bottom: -6px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid #c96155;
+  border-left: 6px solid transparent;
+  transform: rotate(-9deg);
+}
+
+.project-card-scope {
+  max-width: 42ch;
+  margin: -3px 0 13px;
+  color: var(--moss);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.55;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 520px) {
+  .project-card-badge {
+    top: 10px;
+    right: 10px;
+    padding: 8px 10px 7px;
+    font-size: 7px;
+  }
+
+  .project-card-scope {
+    font-size: 8px;
+  }
+}
