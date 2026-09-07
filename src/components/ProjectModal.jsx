@@ -329,6 +329,13 @@ function ProjectModal({ project, onClose }) {
                     <dd>{project.tools.join(' · ')}</dd>
                   </div>
                 )}
+
+                {project.creationNotes?.map((note) => (
+                  <div key={`${project.id}-${note.label}`}>
+                    <dt>{note.label}</dt>
+                    <dd>{note.text}</dd>
+                  </div>
+                ))}
               </dl>
 
               <div className="project-modal-action-row">
