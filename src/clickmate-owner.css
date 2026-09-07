@@ -1,0 +1,66 @@
+/* Hand-drawn owner annotation inside the ClickMate Instagram grid */
+
+.instagram-grid {
+  position: relative;
+}
+
+.instagram-owner-note {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  color: var(--moss);
+  pointer-events: none;
+}
+
+.instagram-owner-label {
+  position: absolute;
+  right: 10%;
+  bottom: 9%;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-hero);
+  font-size: clamp(17px, 1.8vw, 25px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 7px rgba(167, 179, 95, 0.52),
+    0 0 18px rgba(167, 179, 95, 0.24);
+}
+
+.instagram-owner-label > span {
+  font-family: var(--font-mono);
+  font-size: 0.52em;
+  font-style: normal;
+  opacity: 0.9;
+}
+
+.instagram-owner-arrow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter:
+    drop-shadow(0 0 3px rgba(167, 179, 95, 0.62))
+    drop-shadow(0 0 9px rgba(167, 179, 95, 0.2));
+}
+
+.instagram-owner-arrow-echo {
+  opacity: 0.24;
+  transform: translate(2px, 2px);
+}
+
+@media (max-width: 720px) {
+  .instagram-owner-note {
+    display: none;
+  }
+}
