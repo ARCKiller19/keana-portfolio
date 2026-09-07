@@ -84,47 +84,6 @@
   pointer-events: none;
 }
 
-/* Motion creation notes use the same language, sized for their full-width layout. */
-.motion-notes-shell {
-  position: relative;
-}
-
-.motion-notes-shell::before {
-  content: 'SCROLL';
-  position: absolute;
-  z-index: 20;
-  left: 50%;
-  top: calc(100dvh - 164px);
-  transform: translateX(-50%);
-  color: rgba(239, 233, 219, 0.72);
-  font-family: var(--font-sans);
-  font-size: clamp(12px, 1.25vw, 17px);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0.2em;
-  text-indent: 0.2em;
-  text-shadow: 0 2px 12px rgba(10, 11, 9, 0.92);
-  pointer-events: none;
-}
-
-.motion-notes-shell::after {
-  content: '';
-  position: absolute;
-  z-index: 19;
-  left: 50%;
-  top: calc(100dvh - 128px);
-  width: 1px;
-  height: 68px;
-  transform: translateX(-50%);
-  background: linear-gradient(
-    to bottom,
-    rgba(239, 233, 219, 0.18),
-    rgba(239, 233, 219, 0.72)
-  );
-  box-shadow: 0 0 8px rgba(239, 233, 219, 0.08);
-  pointer-events: none;
-}
-
 @media (max-width: 900px) {
   .project-modal-shell:has(.instagram-showcase) .project-modal-grid,
   .project-modal-grid:has(.project-modal-meta > div:nth-child(3)) {
@@ -179,15 +138,5 @@
   .project-modal-grid:has(.project-modal-meta > div:nth-child(3))::after {
     height: 62px;
     margin-top: 66px;
-  }
-
-  .motion-notes-shell::before {
-    top: calc(100dvh - 132px);
-    font-size: 10px;
-  }
-
-  .motion-notes-shell::after {
-    top: calc(100dvh - 104px);
-    height: 48px;
   }
 }
