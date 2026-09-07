@@ -5,7 +5,7 @@ import './reference-polish.css'
 import './navbar-panel.css'
 import './hero-balance.css'
 import './contact-balance.css'
-import './clickmate-owner.css'
+import './interface-cues.css'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(

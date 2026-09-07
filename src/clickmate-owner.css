@@ -1,4 +1,4 @@
-/* Hand-drawn owner annotation inside the unused ClickMate Instagram grid space */
+/* Compact hand-drawn owner annotation inside the unused ClickMate Instagram grid space */
 
 .instagram-owner-note {
   position: relative;
@@ -9,7 +9,7 @@
   overflow: hidden;
   border-bottom: 1px solid var(--rule);
   background:
-    radial-gradient(circle at 72% 68%, rgba(167, 179, 95, 0.08), transparent 34%),
+    radial-gradient(circle at 54% 58%, rgba(167, 179, 95, 0.065), transparent 28%),
     #080908;
   color: var(--moss);
   pointer-events: none;
@@ -18,79 +18,91 @@
 .instagram-owner-note::before {
   content: '';
   position: absolute;
-  right: 8%;
-  bottom: 11%;
-  width: 30%;
-  height: 30%;
+  left: 47%;
+  top: 48%;
+  width: 27%;
+  height: 27%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(167, 179, 95, 0.11), transparent 68%);
+  background: radial-gradient(circle, rgba(167, 179, 95, 0.09), transparent 68%);
   filter: blur(14px);
-  opacity: 0.7;
+  opacity: 0.62;
 }
 
 .instagram-owner-label {
   position: absolute;
-  right: 8%;
-  bottom: 17%;
+  left: 45%;
+  top: 58%;
   z-index: 2;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
   font-family: var(--font-hero);
-  font-size: clamp(14px, 1.25vw, 19px);
+  font-size: clamp(13px, 1.05vw, 17px);
   font-style: italic;
   font-weight: 400;
   line-height: 1;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
   text-shadow:
-    0 0 6px rgba(167, 179, 95, 0.42),
-    0 0 14px rgba(167, 179, 95, 0.18);
+    0 0 5px rgba(167, 179, 95, 0.34),
+    0 0 12px rgba(167, 179, 95, 0.13);
 }
 
 .instagram-owner-label > span {
   font-family: var(--font-mono);
-  font-size: 0.46em;
+  font-size: 0.44em;
   font-style: normal;
-  opacity: 0.86;
+  opacity: 0.82;
 }
 
 .instagram-owner-arrow {
   position: absolute;
-  top: -65%;
-  left: 1%;
+  top: -18%;
+  left: 6%;
   z-index: 1;
-  width: 72%;
-  height: 150%;
+  width: 43%;
+  height: auto;
+  aspect-ratio: 1;
   overflow: visible;
   fill: none;
   stroke: currentColor;
-  stroke-width: 1.35;
+  stroke-width: 1.28;
   stroke-linecap: round;
   stroke-linejoin: round;
   filter:
-    drop-shadow(0 0 2px rgba(167, 179, 95, 0.5))
-    drop-shadow(0 0 7px rgba(167, 179, 95, 0.16));
+    drop-shadow(0 0 2px rgba(167, 179, 95, 0.46))
+    drop-shadow(0 0 6px rgba(167, 179, 95, 0.13));
 }
 
 .instagram-owner-arrow-echo {
-  opacity: 0.18;
-  transform: translate(1.5px, 1.5px);
+  opacity: 0.14;
+  transform: translate(1.2px, 1.2px);
+}
+
+/* Make the arrow head distinct from the curve instead of reading like one long stroke. */
+.instagram-owner-arrow > path:nth-of-type(3),
+.instagram-owner-arrow > path:nth-of-type(4) {
+  stroke-width: 1.5;
+}
+
+.instagram-owner-arrow > path:nth-of-type(4) {
+  transform-box: view-box;
+  transform-origin: 51.333% 54%;
+  transform: rotate(22deg);
 }
 
 @media (max-width: 900px) {
   .instagram-owner-label {
-    right: 7%;
-    bottom: 16%;
-    gap: 8px;
-    font-size: clamp(13px, 1.8vw, 17px);
+    left: 44%;
+    top: 59%;
+    gap: 6px;
+    font-size: clamp(12px, 1.55vw, 15px);
   }
 
   .instagram-owner-arrow {
-    top: -62%;
-    left: 0;
-    width: 74%;
-    height: 146%;
+    top: -14%;
+    left: 5%;
+    width: 45%;
   }
 }
 
