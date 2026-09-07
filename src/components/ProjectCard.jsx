@@ -52,7 +52,9 @@ function ProjectCard({ project, index, onOpen }) {
             onClick={openProject}
           >
             View details
-            <span aria-hidden="true"> ↗</span>
+            <span aria-hidden="true" style={{ marginLeft: '5px' }}>
+              ↗
+            </span>
           </button>
         </div>
       </div>
