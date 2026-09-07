@@ -1,9 +1,43 @@
 const projects = [
   {
+    id: 'aroma-tiblawan',
+    title: 'Aroma Tiblawan Beach Resort',
+    category: 'Web Design · Visual Direction',
+    year: '2026',
+    link: 'https://aroma-tiblawan.vercel.app/',
+    linkLabel: 'View Live Site',
+    image: '/images/projects/aroma-tiblawan.jpg',
+    description:
+      'A web design and visual direction project for Aroma Tiblawan Beach Resort, shaped around a distinctive presentation while keeping the experience clear and easy to navigate.',
+  },
+  {
+    id: 'growth-of-a-quiet-soul',
+    title: 'The Growth of a Quiet Soul',
+    category: 'Creative Web · Editorial Design',
+    year: '2026',
+    link: 'https://patriciakeanaroma-mydigitalportfoli.vercel.app/',
+    linkLabel: 'View Project',
+    image: '/images/projects/growth-of-a-quiet-soul.jpg',
+    description:
+      'A creative web and editorial project that treats personal reflection as a digital reading experience with a quieter, more expressive visual rhythm.',
+  },
+  {
+    id: 'cruzalloma-farm',
+    title: 'CRUZALLOMA Farm',
+    category: 'UI/UX Design · Prototyping',
+    year: '2025',
+    link: 'https://www.figma.com/proto/ZByFerIBC1eQdQ9YitE9HY/CRUZALLOMA-Farm?node-id=837-10136&t=x89sJC7GdySL3Zjn-1&scaling=contain&content-scaling=fixed&page-id=322%3A405',
+    linkLabel: 'View Prototype',
+    image: '/images/projects/cruzalloma-farm.jpg',
+    tools: ['Figma'],
+    description:
+      'A UI/UX and prototyping project for CRUZALLOMA Farm, focused on organizing the experience into a clear interface and testing the flow through an interactive prototype.',
+  },
+  {
     id: 'clickmate-rentals',
     title: 'ClickMate Rentals',
     category: 'Brand Identity · UI/UX · Web',
-    year: '2024–Present',
+    year: '2024',
     link: 'https://clickmate.vercel.app/',
     linkLabel: 'View Website',
     status: 'Revamping',
@@ -74,40 +108,6 @@ const projects = [
         },
       ],
     },
-  },
-  {
-    id: 'cruzalloma-farm',
-    title: 'CRUZALLOMA Farm',
-    category: 'UI/UX Design · Prototyping',
-    year: '2026',
-    link: 'https://www.figma.com/proto/ZByFerIBC1eQdQ9YitE9HY/CRUZALLOMA-Farm?node-id=837-10136&t=x89sJC7GdySL3Zjn-1&scaling=contain&content-scaling=fixed&page-id=322%3A405',
-    linkLabel: 'View Prototype',
-    image: '/images/projects/cruzalloma-farm.jpg',
-    tools: ['Figma'],
-    description:
-      'A UI/UX and prototyping project for CRUZALLOMA Farm, focused on organizing the experience into a clear interface and testing the flow through an interactive prototype.',
-  },
-  {
-    id: 'aroma-tiblawan',
-    title: 'Aroma Tiblawan Beach Resort',
-    category: 'Web Design · Visual Direction',
-    year: '2026',
-    link: 'https://aroma-tiblawan.vercel.app/',
-    linkLabel: 'View Live Site',
-    image: '/images/projects/aroma-tiblawan.jpg',
-    description:
-      'A web design and visual direction project for Aroma Tiblawan Beach Resort, shaped around a distinctive presentation while keeping the experience clear and easy to navigate.',
-  },
-  {
-    id: 'growth-of-a-quiet-soul',
-    title: 'The Growth of a Quiet Soul',
-    category: 'Creative Web · Editorial Design',
-    year: '2026',
-    link: 'https://patriciakeanaroma-mydigitalportfoli.vercel.app/',
-    linkLabel: 'View Project',
-    image: '/images/projects/growth-of-a-quiet-soul.jpg',
-    description:
-      'A creative web and editorial project that treats personal reflection as a digital reading experience with a quieter, more expressive visual rhythm.',
   },
   {
     id: 'orange-engineers',
