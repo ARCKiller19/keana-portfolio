@@ -23,6 +23,32 @@ function CarouselMark() {
   )
 }
 
+function InstagramOwnerNote() {
+  return (
+    <div className="instagram-owner-note" aria-label="Owner">
+      <svg
+        className="instagram-owner-arrow"
+        viewBox="0 0 300 300"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path
+          className="instagram-owner-arrow-echo"
+          d="M236 262C225 235 205 224 187 207C171 192 160 178 154 162"
+        />
+        <path d="M236 262C225 235 205 224 187 207C171 192 160 178 154 162" />
+        <path d="M154 162L166 169" />
+        <path d="M154 162L158 176" />
+      </svg>
+
+      <span className="instagram-owner-label">
+        <span aria-hidden="true">✦</span>
+        Owner
+      </span>
+    </div>
+  )
+}
+
 function InstagramShowcase({ instagram }) {
   const [activePost, setActivePost] = useState(instagram.posts[0])
   const [previewSlide, setPreviewSlide] = useState(0)
@@ -143,6 +169,8 @@ function InstagramShowcase({ instagram }) {
                 </span>
               </button>
             ))}
+
+            <InstagramOwnerNote />
           </div>
 
           <figure className="instagram-preview">
