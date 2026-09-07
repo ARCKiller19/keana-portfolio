@@ -21,26 +21,84 @@
 }
 
 /*
-  Long project and creation-note overlays use an explicit initial scroll cue,
-  inspired by the resort reference. It scrolls away with the content instead of
-  staying pinned after the visitor has already moved down the page.
+  Long project modals get a large scroll affordance in the otherwise-empty left
+  column beneath the preview. This keeps the cue intentional and obvious instead
+  of floating over the middle of the case-study copy.
 */
+.project-modal-shell:has(.instagram-showcase) .project-modal-grid,
+.project-modal-grid:has(.project-modal-meta > div:nth-child(3)) {
+  grid-template-rows: auto minmax(clamp(340px, 36vh, 460px), 1fr);
+  row-gap: 0;
+  align-items: stretch;
+}
+
+.project-modal-shell:has(.instagram-showcase) .project-modal-grid > :first-child,
+.project-modal-grid:has(.project-modal-meta > div:nth-child(3)) > :first-child {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+}
+
+.project-modal-shell:has(.instagram-showcase) .project-modal-copy,
+.project-modal-grid:has(.project-modal-meta > div:nth-child(3)) .project-modal-copy {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: start;
+}
+
+.project-modal-shell:has(.instagram-showcase) .project-modal-grid::before,
+.project-modal-grid:has(.project-modal-meta > div:nth-child(3))::before {
+  content: 'SCROLL';
+  grid-column: 1;
+  grid-row: 2;
+  align-self: center;
+  justify-self: center;
+  margin-top: -74px;
+  color: rgba(239, 233, 219, 0.66);
+  font-family: var(--font-sans);
+  font-size: clamp(36px, 4.7vw, 64px);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
+  text-shadow: 0 2px 18px rgba(10, 11, 9, 0.92);
+  pointer-events: none;
+}
+
+.project-modal-shell:has(.instagram-showcase) .project-modal-grid::after,
+.project-modal-grid:has(.project-modal-meta > div:nth-child(3))::after {
+  content: '';
+  grid-column: 1;
+  grid-row: 2;
+  align-self: center;
+  justify-self: center;
+  width: 1px;
+  height: clamp(110px, 14vh, 150px);
+  margin-top: 118px;
+  background: linear-gradient(
+    to bottom,
+    rgba(239, 233, 219, 0.2),
+    rgba(239, 233, 219, 0.76)
+  );
+  box-shadow: 0 0 10px rgba(239, 233, 219, 0.08);
+  pointer-events: none;
+}
+
+/* Motion creation notes use the same language, sized for their full-width layout. */
 .motion-notes-shell {
   position: relative;
 }
 
-.project-modal-shell:has(.instagram-showcase)::before,
-.project-modal-shell:has(.project-modal-meta > div:nth-child(3))::before,
 .motion-notes-shell::before {
   content: 'SCROLL';
   position: absolute;
   z-index: 20;
   left: 50%;
-  top: calc(100dvh - 132px);
+  top: calc(100dvh - 164px);
   transform: translateX(-50%);
-  color: rgba(239, 233, 219, 0.78);
+  color: rgba(239, 233, 219, 0.72);
   font-family: var(--font-sans);
-  font-size: 9px;
+  font-size: clamp(12px, 1.25vw, 17px);
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0.2em;
@@ -49,16 +107,14 @@
   pointer-events: none;
 }
 
-.project-modal-shell:has(.instagram-showcase)::after,
-.project-modal-shell:has(.project-modal-meta > div:nth-child(3))::after,
 .motion-notes-shell::after {
   content: '';
   position: absolute;
   z-index: 19;
   left: 50%;
-  top: calc(100dvh - 104px);
+  top: calc(100dvh - 128px);
   width: 1px;
-  height: 42px;
+  height: 68px;
   transform: translateX(-50%);
   background: linear-gradient(
     to bottom,
@@ -69,18 +125,69 @@
   pointer-events: none;
 }
 
-@media (max-width: 720px) {
-  .project-modal-shell:has(.instagram-showcase)::before,
-  .project-modal-shell:has(.project-modal-meta > div:nth-child(3))::before,
-  .motion-notes-shell::before {
-    top: calc(100dvh - 112px);
-    font-size: 8px;
+@media (max-width: 900px) {
+  .project-modal-shell:has(.instagram-showcase) .project-modal-grid,
+  .project-modal-grid:has(.project-modal-meta > div:nth-child(3)) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(190px, 23vh) auto;
+    row-gap: 22px;
   }
 
-  .project-modal-shell:has(.instagram-showcase)::after,
-  .project-modal-shell:has(.project-modal-meta > div:nth-child(3))::after,
+  .project-modal-shell:has(.instagram-showcase) .project-modal-grid > :first-child,
+  .project-modal-grid:has(.project-modal-meta > div:nth-child(3)) > :first-child {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .project-modal-shell:has(.instagram-showcase) .project-modal-copy,
+  .project-modal-grid:has(.project-modal-meta > div:nth-child(3)) .project-modal-copy {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .project-modal-shell:has(.instagram-showcase) .project-modal-grid::before,
+  .project-modal-grid:has(.project-modal-meta > div:nth-child(3))::before {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: -38px;
+    font-size: clamp(26px, 5.5vw, 38px);
+  }
+
+  .project-modal-shell:has(.instagram-showcase) .project-modal-grid::after,
+  .project-modal-grid:has(.project-modal-meta > div:nth-child(3))::after {
+    grid-column: 1;
+    grid-row: 2;
+    height: 84px;
+    margin-top: 82px;
+  }
+}
+
+@media (max-width: 520px) {
+  .project-modal-shell:has(.instagram-showcase) .project-modal-grid,
+  .project-modal-grid:has(.project-modal-meta > div:nth-child(3)) {
+    grid-template-rows: auto 150px auto;
+    row-gap: 18px;
+  }
+
+  .project-modal-shell:has(.instagram-showcase) .project-modal-grid::before,
+  .project-modal-grid:has(.project-modal-meta > div:nth-child(3))::before {
+    margin-top: -28px;
+    font-size: 22px;
+  }
+
+  .project-modal-shell:has(.instagram-showcase) .project-modal-grid::after,
+  .project-modal-grid:has(.project-modal-meta > div:nth-child(3))::after {
+    height: 62px;
+    margin-top: 66px;
+  }
+
+  .motion-notes-shell::before {
+    top: calc(100dvh - 132px);
+    font-size: 10px;
+  }
+
   .motion-notes-shell::after {
-    top: calc(100dvh - 88px);
-    height: 34px;
+    top: calc(100dvh - 104px);
+    height: 48px;
   }
 }
