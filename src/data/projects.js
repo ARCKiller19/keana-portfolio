@@ -72,14 +72,30 @@ const projects = [
   {
     id: 'clickmate-rentals',
     title: 'ClickMate Rentals',
-    category: 'Brand Identity · UI/UX · Web',
+    category: 'Social Media Management · Brand Identity · Web',
+    cardBadge: 'Social Media Mgmt',
+    cardScope: 'Instagram content · Page management · Inventory tracking · Customer records',
     year: '2024',
     link: 'https://clickmate.vercel.app/',
     linkLabel: 'View Website',
     status: 'Revamping',
     image: '/images/projects/clickmate-rentals.jpg',
+    role:
+      'Social media management · Instagram content · Brand identity · Website/UI · Inventory tracking · Customer records',
     description:
-      'A brand identity and web experience for ClickMate Rentals, bringing the rental service into one cohesive visual system across UI, brand, and web touchpoints.',
+      'A social media, brand, and web project for ClickMate Rentals. I handled the Instagram page and branded content alongside the website experience, inventory tracking, and customer record organization.',
+    creationNotes: [
+      {
+        label: 'Social media',
+        text:
+          'I handled the ClickMate Rentals Instagram page and created branded content for it, keeping the posts and page presentation consistent with the business identity while supporting its day-to-day online presence.',
+      },
+      {
+        label: 'Business operations',
+        text:
+          'Beyond the visual work, I also tracked rental inventory and organized customer details as part of the business workflow. That gave me hands-on experience supporting both the marketing side and the operational side of a small rental service.',
+      },
+    ],
     instagram: {
       handle: 'clickmate__rentals',
       name: 'ClickMate Rentals',
@@ -88,9 +104,9 @@ const projects = [
       bio: 'Affordable Camera Rentals · Flexible Hours & Student-Friendly Rates',
       location: 'Ateneo de Davao University',
       stats: [
-        { label: 'Posts', value: '7' },
-        { label: 'Followers', value: '17' },
-        { label: 'Following', value: '1' },
+        { label: 'Page managed', value: 'IG' },
+        { label: 'Branded posts', value: '7' },
+        { label: 'Inventory + records', value: 'OPS' },
       ],
       posts: [
         {
