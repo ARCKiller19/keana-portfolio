@@ -296,12 +296,14 @@ function ProjectModal({ project, onClose }) {
                   ? 'project-modal-visual-contain'
                   : ''
               }`}
+              style={{ aspectRatio: 'auto' }}
             >
               <img
                 src={project.image}
                 alt={project.imageAlt ?? `${project.title} project preview`}
                 decoding="async"
                 onError={handleImageError}
+                style={{ height: 'auto', objectFit: 'contain' }}
               />
             </figure>
 
