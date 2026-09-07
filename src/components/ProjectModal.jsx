@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import '../clickmate-instagram.css'
+import '../clickmate-owner.css'
 
 function LeafMark() {
   return (
