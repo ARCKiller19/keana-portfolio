@@ -12,9 +12,17 @@ function ProjectCard({ project, index, onOpen }) {
 
   return (
     <article className="project-card">
-      <span className="project-index">
-        {String(index + 1).padStart(2, '0')}
-      </span>
+      <div className="project-card-topline">
+        <span className="project-index">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+
+        {project.cardBadge && (
+          <span className="project-card-badge" aria-hidden="true">
+            {project.cardBadge}
+          </span>
+        )}
+      </div>
 
       <button
         className="project-frame project-trigger"
@@ -35,12 +43,6 @@ function ProjectCard({ project, index, onOpen }) {
             objectPosition: project.imagePosition ?? 'center top',
           }}
         />
-
-        {project.cardBadge && (
-          <span className="project-card-badge" aria-hidden="true">
-            {project.cardBadge}
-          </span>
-        )}
 
         <span className="project-frame-hint" aria-hidden="true">
           View details
