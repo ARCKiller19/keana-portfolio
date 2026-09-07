@@ -1,3 +1,5 @@
+import '../clickmate-card.css'
+
 function ProjectCard({ project, index, onOpen }) {
   const openProject = () => onOpen(project)
 
@@ -33,6 +35,13 @@ function ProjectCard({ project, index, onOpen }) {
             objectPosition: project.imagePosition ?? 'center top',
           }}
         />
+
+        {project.cardBadge && (
+          <span className="project-card-badge" aria-hidden="true">
+            {project.cardBadge}
+          </span>
+        )}
+
         <span className="project-frame-hint" aria-hidden="true">
           View details
         </span>
@@ -42,6 +51,10 @@ function ProjectCard({ project, index, onOpen }) {
         <h3>{project.title}</h3>
 
         <p className="project-category">{project.category}</p>
+
+        {project.cardScope && (
+          <p className="project-card-scope">{project.cardScope}</p>
+        )}
 
         <div className="project-foot">
           <span className="project-year">{project.year}</span>
