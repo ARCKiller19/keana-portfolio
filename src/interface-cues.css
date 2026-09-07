@@ -21,17 +21,22 @@
 }
 
 /*
-  Long project and creation-note overlays use an explicit scroll cue inspired by
-  the resort reference: a quiet label with a vertical line below it.
+  Long project and creation-note overlays use an explicit initial scroll cue,
+  inspired by the resort reference. It scrolls away with the content instead of
+  staying pinned after the visitor has already moved down the page.
 */
+.motion-notes-shell {
+  position: relative;
+}
+
 .project-modal-shell:has(.instagram-showcase)::before,
 .project-modal-shell:has(.project-modal-meta > div:nth-child(3))::before,
 .motion-notes-shell::before {
   content: 'SCROLL';
-  position: fixed;
-  z-index: 1200;
+  position: absolute;
+  z-index: 20;
   left: 50%;
-  bottom: 78px;
+  top: calc(100dvh - 132px);
   transform: translateX(-50%);
   color: rgba(239, 233, 219, 0.78);
   font-family: var(--font-sans);
@@ -48,10 +53,10 @@
 .project-modal-shell:has(.project-modal-meta > div:nth-child(3))::after,
 .motion-notes-shell::after {
   content: '';
-  position: fixed;
-  z-index: 1199;
+  position: absolute;
+  z-index: 19;
   left: 50%;
-  bottom: 26px;
+  top: calc(100dvh - 104px);
   width: 1px;
   height: 42px;
   transform: translateX(-50%);
@@ -68,14 +73,14 @@
   .project-modal-shell:has(.instagram-showcase)::before,
   .project-modal-shell:has(.project-modal-meta > div:nth-child(3))::before,
   .motion-notes-shell::before {
-    bottom: 64px;
+    top: calc(100dvh - 112px);
     font-size: 8px;
   }
 
   .project-modal-shell:has(.instagram-showcase)::after,
   .project-modal-shell:has(.project-modal-meta > div:nth-child(3))::after,
   .motion-notes-shell::after {
-    bottom: 20px;
+    top: calc(100dvh - 88px);
     height: 34px;
   }
 }
