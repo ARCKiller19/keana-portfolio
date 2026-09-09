@@ -46,8 +46,8 @@ function NavIcon({ type }) {
     return (
       <svg {...commonProps}>
         <path d="M6.2 21.5C10.2 21.5 10.6 10.5 15.5 10.5C20.1 10.5 20.4 19.4 25.8 19.4" />
-        <path d="M10.2 17.8L6.2 21.5L10 25.1" />
-        <path d="M21.8 15.7L25.8 19.4L21.9 23" />
+        <circle cx="6.2" cy="21.5" r="1.55" fill="currentColor" stroke="none" />
+        <circle cx="25.8" cy="19.4" r="1.55" fill="currentColor" stroke="none" />
       </svg>
     )
   }
