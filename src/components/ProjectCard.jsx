@@ -33,7 +33,7 @@ function ProjectCard({ project, index, onOpen }) {
       >
         <img
           className="project-image"
-          src={project.image}
+          src={project.cardImage ?? project.image}
           alt={project.imageAlt ?? `${project.title} preview`}
           loading="lazy"
           decoding="async"
