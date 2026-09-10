@@ -1,6 +1,6 @@
 import { handleSectionNavigation } from '../utils/sectionNavigation.js'
 
-function Hero() {
+function Hero({ onOpenBooking }) {
   return (
     <section className="hero" aria-label="Introduction">
       <div className="hero-text">
@@ -12,9 +12,19 @@ function Hero() {
           Multidisciplinary designer working across UI/UX, graphic design,
           multimedia, and digital experience.
         </p>
-        <a className="btn" href="#work" onClick={handleSectionNavigation}>
-          View Selected Work <span aria-hidden="true">↗</span>
-        </a>
+
+        <div className="hero-actions">
+          <a
+            className="btn btn-primary"
+            href="#work"
+            onClick={handleSectionNavigation}
+          >
+            View Selected Work <span aria-hidden="true">↗</span>
+          </a>
+          <button className="btn btn-secondary" type="button" onClick={onOpenBooking}>
+            Book a Call <span aria-hidden="true">↗</span>
+          </button>
+        </div>
 
         <dl className="hero-meta">
           <div>
