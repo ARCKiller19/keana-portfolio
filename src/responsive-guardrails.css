@@ -1,0 +1,50 @@
+/* Global responsive guardrails.
+   Decorative full-bleed elements may extend visually, but they must not widen the page.
+   Intentional horizontal rails such as the navbar path and automotive reel keep their own scrolling. */
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
+
+main,
+section,
+.hero-text,
+.hero-collage,
+.about > *,
+.work-grid > *,
+.motion,
+.motion-featured-section,
+.motion-piece > *,
+.automotive-showcase,
+.automotive-showcase-head > *,
+.playground-grid > *,
+.footer-top > *,
+.footer-contact-panel {
+  min-width: 0;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+}
+
+.footer-email > span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+  .section-head {
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+}
