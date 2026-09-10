@@ -168,6 +168,7 @@ const projects = [
     year: '2024',
     link: 'https://orange-engineer.vercel.app/',
     linkLabel: 'View Live Site',
+    cardImage: '/images/projects/orange-engineers.jpg',
     image: '/images/projects/orange-engineers.png',
     imageAlt:
       'Orange Engineers homepage with a dark engineering-themed hero and orange accents',
