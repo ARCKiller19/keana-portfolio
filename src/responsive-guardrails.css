@@ -1,6 +1,10 @@
 /* Global responsive guardrails.
    Decorative full-bleed elements may extend visually, but they must not widen the page.
-   Intentional horizontal rails such as the navbar path and automotive reel keep their own scrolling. */
+   Intentional horizontal rails such as the navbar path and automotive reel keep their own scrolling.
+
+   The base stylesheet still contains native CSS nesting. Older Safari versions used by devices
+   such as the iPhone 6s Plus do not reliably apply those nested rules, so the flattened rules
+   below mirror the important base and breakpoint behavior without changing modern layouts. */
 
 html,
 body,
@@ -9,9 +13,18 @@ body,
   max-width: 100%;
 }
 
+/* `hidden` is the compatibility fallback. Modern browsers that support `clip` use it so sticky
+   positioning is not turned into a scroll container. */
 html,
 body {
-  overflow-x: clip;
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  html,
+  body {
+    overflow-x: clip;
+  }
 }
 
 main,
@@ -29,6 +42,7 @@ section,
 .footer-top > *,
 .footer-contact-panel {
   min-width: 0;
+  max-width: 100%;
 }
 
 img,
@@ -42,9 +56,263 @@ svg {
   overflow-wrap: anywhere;
 }
 
+/* ---------- Flattened base rules for legacy Safari ---------- */
+
+.section-head h2 {
+  font-size: clamp(28px, 4vw, 40px);
+}
+
+.section-head .count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--cream-dim);
+}
+
+.btn:hover,
+.btn:focus-visible {
+  border-color: var(--moss);
+  color: var(--moss);
+}
+
+.btn span {
+  display: inline-block;
+  transition: transform var(--motion-fast) var(--ease-editorial);
+}
+
+.btn:hover span,
+.btn:focus-visible span {
+  transform: translate(3px, -2px);
+}
+
+.nav-links a {
+  position: relative;
+  color: var(--cream-dim);
+  transition: color var(--motion-fast) var(--ease-editorial);
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible,
+.nav-links a[aria-current='location'] {
+  color: var(--cream);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -6px;
+  left: 0;
+  height: 1px;
+  background: var(--moss);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-fast) var(--ease-editorial);
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after,
+.nav-links a[aria-current='location']::after {
+  transform: scaleX(1);
+}
+
+.frame img,
+.about-portrait img,
+.project-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.frame img {
+  opacity: 0.92;
+}
+
+.about-portrait img {
+  object-position: center 90%;
+}
+
+.project-frame img {
+  transition:
+    opacity var(--motion-fast) var(--ease-editorial),
+    transform var(--motion-medium) var(--ease-editorial);
+}
+
+.project-frame:hover img,
+.project-frame:focus-visible img {
+  opacity: 0.9;
+}
+
+.about-focus .label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  margin-bottom: 16px;
+}
+
+.about-focus li {
+  padding: 12px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 14px;
+}
+
+.about-focus li:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.project-info h3 {
+  font-size: 19px;
+  margin-bottom: 6px;
+  transition: color var(--motion-fast) var(--ease-editorial);
+}
+
+.project-foot a {
+  color: var(--moss);
+}
+
+.project-foot a:hover,
+.project-foot a:focus-visible {
+  color: var(--cream);
+}
+
+.footer-top h2 {
+  font-size: clamp(28px, 4vw, 40px);
+}
+
+.footer-links a {
+  position: relative;
+  color: var(--cream-dim);
+  transition: color var(--motion-fast) var(--ease-editorial);
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: var(--moss);
+}
+
+.footer-links a::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+  left: 0;
+  height: 1px;
+  background: var(--moss);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-fast) var(--ease-editorial);
+}
+
+.footer-links a:hover::after,
+.footer-links a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ---------- Responsive layout mirrors for legacy Safari ---------- */
+
+@media (max-width: 960px) {
+  .hero,
+  .about {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-frames {
+    min-height: 320px;
+  }
+
+  .frame-a {
+    width: 62%;
+  }
+
+  .frame-b {
+    width: 40%;
+  }
+
+  .frame-c {
+    width: 30%;
+  }
+
+  .work-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 720px) {
+  section {
+    padding: 56px var(--gutter);
+  }
+
   .section-head {
     flex-wrap: wrap;
     gap: 12px 18px;
+  }
+
+  .playground-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .playground-tile-wide {
+    grid-column: span 2;
+  }
+
+  .hero,
+  .about,
+  .work-grid,
+  .playground-grid,
+  .motion-featured,
+  .automotive-showcase,
+  .footer-top,
+  .footer-bottom {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-collage {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 640px) {
+  .work-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-meta,
+  .footer-bottom {
+    flex-direction: column;
+  }
+
+  .hero-meta {
+    gap: 16px;
+  }
+
+  .footer-bottom {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-text,
+  .hero-collage,
+  .about,
+  .work-grid,
+  .motion,
+  .playground-grid,
+  .footer {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .nav.nav-panel {
+    max-width: calc(100% - 12px);
+  }
+
+  .nav-panel .nav-links.nav-tiles {
+    min-width: 0;
+    max-width: 100%;
   }
 }
