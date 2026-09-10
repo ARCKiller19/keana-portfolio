@@ -4,6 +4,7 @@ import MotionNotesModal from './MotionNotesModal.jsx'
 import '../motion.css'
 import '../automotive-notes.css'
 import '../automotive-story-overlay.css'
+import '../motion-section-order.css'
 
 function useDeferredVideoMetadata(rootMargin = '1400px 200px') {
   const videoRef = useRef(null)
@@ -174,69 +175,19 @@ function Motion() {
   return (
     <>
       <section className="motion" id="motion" aria-label="Motion and video work">
-        <div className="section-head">
-          <h2>Motion &amp; Video</h2>
-          <span className="count">03 Selected Works</span>
-        </div>
-
-        <p className="motion-intro">
-          Animation, video edits, and commercial work.
-        </p>
-
-        <div className="motion-featured">
-          {featuredMotion.map((piece, index) => (
-            <article
-              className={`motion-piece ${
-                index % 2 === 1 ? 'motion-piece-reverse' : ''
-              }`}
-              key={piece.id}
-            >
-              <div
-                className={`motion-piece-media ${
-                  piece.layout === 'portrait' ? 'motion-piece-media-portrait' : ''
-                }`}
-              >
-                <div className="motion-meta">
-                  <span className="motion-index">{piece.number}</span>
-                  <span>{piece.category}</span>
-                </div>
-
-                <div
-                  className={`motion-frame ${
-                    piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
-                  }`}
-                >
-                  <VideoPlayer src={piece.src} title={piece.title} />
-                </div>
-              </div>
-
-              <div className="motion-piece-copy">
-                <span className="motion-piece-label">Behind the edit</span>
-                <h3>{piece.title}</h3>
-                <p>{piece.reflection}</p>
-
-                {piece.creationNotes && (
-                  <button
-                    className="motion-notes-trigger"
-                    type="button"
-                    onClick={() => setSelectedNotesPiece(piece)}
-                  >
-                    Read creation notes <span aria-hidden="true">↗</span>
-                  </button>
-                )}
-              </div>
-            </article>
-          ))}
-        </div>
-
         <section
-          className="automotive-showcase"
+          className="automotive-showcase automotive-showcase-first"
           aria-labelledby="automotive-showcase-title"
         >
           <div className="automotive-showcase-head">
             <div className="automotive-showcase-title-block">
               <span className="motion-index">03</span>
-              <h3 id="automotive-showcase-title">Automotive Video Edits</h3>
+              <h2
+                className="automotive-showcase-title"
+                id="automotive-showcase-title"
+              >
+                Automotive Video Edits
+              </h2>
             </div>
 
             <div className="automotive-showcase-copy">
@@ -294,6 +245,66 @@ function Motion() {
             </p>
           </blockquote>
         </section>
+
+        <div
+          className="motion-featured-section"
+          aria-labelledby="motion-featured-title"
+        >
+          <div className="section-head">
+            <h2 id="motion-featured-title">Motion &amp; Video</h2>
+            <span className="count">03 Selected Works</span>
+          </div>
+
+          <p className="motion-intro">
+            Animation, video edits, and commercial work.
+          </p>
+
+          <div className="motion-featured">
+            {featuredMotion.map((piece, index) => (
+              <article
+                className={`motion-piece ${
+                  index % 2 === 1 ? 'motion-piece-reverse' : ''
+                }`}
+                key={piece.id}
+              >
+                <div
+                  className={`motion-piece-media ${
+                    piece.layout === 'portrait' ? 'motion-piece-media-portrait' : ''
+                  }`}
+                >
+                  <div className="motion-meta">
+                    <span className="motion-index">{piece.number}</span>
+                    <span>{piece.category}</span>
+                  </div>
+
+                  <div
+                    className={`motion-frame ${
+                      piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
+                    }`}
+                  >
+                    <VideoPlayer src={piece.src} title={piece.title} />
+                  </div>
+                </div>
+
+                <div className="motion-piece-copy">
+                  <span className="motion-piece-label">Behind the edit</span>
+                  <h3>{piece.title}</h3>
+                  <p>{piece.reflection}</p>
+
+                  {piece.creationNotes && (
+                    <button
+                      className="motion-notes-trigger"
+                      type="button"
+                      onClick={() => setSelectedNotesPiece(piece)}
+                    >
+                      Read creation notes <span aria-hidden="true">↗</span>
+                    </button>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
       <MotionNotesModal piece={selectedNotesPiece} onClose={closeNotes} />
