@@ -7,6 +7,7 @@ import './floating-navbar.css'
 import './hero-balance.css'
 import './contact-balance.css'
 import './interface-cues.css'
+import './booking-flow.css'
 import './motion-signoffs.css'
 import App from './App.jsx'
 
