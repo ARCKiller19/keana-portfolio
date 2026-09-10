@@ -75,7 +75,7 @@ function NavIcon({ type }) {
   return null
 }
 
-function Navbar() {
+function Navbar({ onOpenBooking }) {
   const [activeSection, setActiveSection] = useState(null)
   const [connectorProgress, setConnectorProgress] = useState(() =>
     navItems.slice(0, -1).map(() => 0),
@@ -198,13 +198,18 @@ function Navbar() {
         ))}
       </nav>
 
-      <div className="nav-status" aria-label="Availability and location">
+      <button
+        className="nav-status nav-status-button"
+        type="button"
+        onClick={onOpenBooking}
+        aria-label="Available for work. Open booking options"
+      >
         <span className="nav-availability">
           <span className="nav-status-dot" aria-hidden="true" />
           Available
         </span>
-        <span className="nav-location">Davao City, PH</span>
-      </div>
+        <span className="nav-status-detail">Open for work</span>
+      </button>
     </header>
   )
 }
