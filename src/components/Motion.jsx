@@ -5,6 +5,7 @@ import '../motion.css'
 import '../automotive-notes.css'
 import '../automotive-story-overlay.css'
 import '../motion-section-order.css'
+import '../latest-motion.css'
 
 function useDeferredVideoMetadata(rootMargin = '1400px 200px') {
   const videoRef = useRef(null)
@@ -252,11 +253,13 @@ function Motion() {
         >
           <div className="section-head">
             <h2 id="motion-featured-title">Motion &amp; Video</h2>
-            <span className="count">03 Selected Works</span>
+            <span className="count">
+              {String(featuredMotion.length).padStart(2, '0')} Selected Works
+            </span>
           </div>
 
           <p className="motion-intro">
-            Animation, video edits, and commercial work.
+            Filmmaking, animation, video editing, and commercial work.
           </p>
 
           <div className="motion-featured">
@@ -264,7 +267,7 @@ function Motion() {
               <article
                 className={`motion-piece ${
                   index % 2 === 1 ? 'motion-piece-reverse' : ''
-                }`}
+                } ${piece.latest ? 'motion-piece-latest' : ''}`.trim()}
                 key={piece.id}
               >
                 <div
@@ -287,8 +290,15 @@ function Motion() {
                 </div>
 
                 <div className="motion-piece-copy">
-                  <span className="motion-piece-label">Behind the edit</span>
+                  <span className="motion-piece-label">
+                    {piece.latest
+                      ? `Latest work · ${piece.dateLabel}`
+                      : 'Behind the edit'}
+                  </span>
                   <h3>{piece.title}</h3>
+                  {piece.credit && (
+                    <span className="motion-piece-credit">{piece.credit}</span>
+                  )}
                   <p>{piece.reflection}</p>
 
                   {piece.creationNotes && (
