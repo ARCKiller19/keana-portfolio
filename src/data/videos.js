@@ -1,7 +1,20 @@
 export const featuredMotion = [
   {
-    id: 'cover-animation',
+    id: 'roast-live-action',
     number: '01',
+    title: 'Roast — Live-Action Edit',
+    category: 'Short-form Film · Video Editing',
+    layout: 'portrait',
+    latest: true,
+    dateLabel: 'Sep 2026',
+    credit: 'Filmed & Edited by Patricia Keana Roma',
+    src: '/videos/motion/roast-live-action-edit.mp4',
+    reflection:
+      'A recent live-action piece I filmed and edited around the atmosphere, movement, and personality of a café setting. It begins with quieter location details, then shifts into a more playful performance-led rhythm with repeated split-frame compositions.',
+  },
+  {
+    id: 'cover-animation',
+    number: '02',
     title: 'Special Singer Cover Animation Edit',
     category: 'Motion Design · Animation',
     src: '/videos/motion/cover-animation-edit-for-special-singer.mp4',
@@ -10,7 +23,7 @@ export const featuredMotion = [
   },
   {
     id: 'first-love',
-    number: '02',
+    number: '03',
     title: 'First Love Animation Edit',
     category: 'Animation · Video Editing',
     layout: 'portrait',
