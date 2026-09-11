@@ -21,6 +21,10 @@
 
 @media (min-width: 961px) {
   .hero {
+    /* Match the composition that previously appeared only after a ~16px scroll.
+       Negative block margin changes layout too, so the full landing view now fits
+       immediately while leaving the floating navbar and its shadow untouched. */
+    margin-top: -16px;
     min-height: calc(100dvh - 86px);
     padding-top: clamp(20px, 2.5vw, 32px);
     padding-bottom: clamp(26px, 3vw, 40px);
