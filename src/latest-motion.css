@@ -10,6 +10,11 @@
   justify-self: start;
 }
 
+/* Keep regular portrait work anchored to the left edge of its grid column. */
+.motion-piece:not(.motion-piece-latest) .motion-piece-media-portrait {
+  justify-self: start;
+}
+
 .motion-piece-latest .motion-piece-copy {
   align-self: center;
   width: min(100%, 460px);
