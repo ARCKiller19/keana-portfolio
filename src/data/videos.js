@@ -13,17 +13,41 @@ export const featuredMotion = [
       'A recent live-action piece I filmed and edited around the atmosphere, movement, and personality of a café setting. It begins with quieter location details, then shifts into a more playful performance-led rhythm with repeated split-frame compositions.',
     creationNotes: {
       lede:
-        'The soundtrack was part of how I found the tone for the edit. I wanted something calm enough to fit the café atmosphere while still giving me moments I could shape the footage around.',
+        'I treated this as a small live-action piece built from simple observations, relaxed handheld footage, and editing decisions that helped the café feel casual and alive.',
       sections: [
+        {
+          title: 'Starting with the entrance',
+          paragraphs: [
+            'I knew I wanted to begin outside the café before moving inside because it felt like the natural way to introduce the place. Filming the entrance was a little awkward because I was carrying my iPad while trying to push the door open at the same time, but the shot still worked out.',
+          ],
+        },
+        {
+          title: 'Keeping the camera relaxed',
+          paragraphs: [
+            'For the shots where I was in the video, a friend helped me film. I told him not to worry too much about keeping the camera perfectly steady and to relax his hands instead. Trying to hold a device too stiffly can make small shakes more obvious, so I was more interested in natural movement than perfect stabilization.',
+          ],
+        },
+        {
+          title: 'Filming the little details',
+          paragraphs: [
+            'I also took separate clips of random objects, tables, chairs, and small details around the café simply because I thought they were cute. They were not necessarily planned as major shots, but they helped fill out the atmosphere and made the place feel more lived in.',
+          ],
+        },
         {
           title: 'Choosing the song',
           paragraphs: [
             'I also chose the soundtrack for the edit. I was deciding between “Waiting Room” by Jenevieve and another song, but “Waiting Room” had the calmer, more relaxed mood I wanted. One moment that helped confirm it was a lyric I initially thought said “champagne,” which lined up naturally with a zoom into the drink bottles. I later realized the lyric was actually “sure thing,” but the timing still worked and became part of how I shaped the edit.',
           ],
         },
+        {
+          title: 'Getting from the verse to the chorus',
+          paragraphs: [
+            'After going inside the café, I added a short pause that feels a little like a behind-the-scenes moment, with my friend just vibing to the music. It gave me a natural way to move from the first verse into the chorus quickly without keeping too much of the song, which worked well for the short runtime.',
+          ],
+        },
       ],
       closing:
-        'That small coincidence helped confirm the direction for me. Even after I realized I had heard the lyric differently, the moment still fit the footage and the mood I wanted for the piece.',
+        'A lot of this edit came together through small practical choices and little moments that happened naturally while filming. I did not need every shot to be perfectly planned. I just needed the footage, music, and pacing to feel like they belonged together.',
     },
   },
   {
