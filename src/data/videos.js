@@ -30,7 +30,7 @@ export const featuredMotion = [
         {
           title: 'Filming the little details',
           paragraphs: [
-            'I also took separate clips of random objects, tables, chairs, and small details around the café simply because I thought they were cute. They were not necessarily planned as major shots, but they helped fill out the atmosphere and made the place feel more lived in.',
+            'I also took separate clips of whatever caught my attention around the café, like objects, tables, chairs, and small details that felt worth giving their own shot. I did not really have a strict list in mind. I just followed whatever felt interesting in the moment and let the filming flow naturally.',
           ],
         },
         {
