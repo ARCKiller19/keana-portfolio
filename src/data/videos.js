@@ -2,7 +2,7 @@ export const featuredMotion = [
   {
     id: 'roast-live-action',
     number: '01',
-    title: 'Roast — Live-Action Edit',
+    title: 'Roast: Live-Action Edit',
     category: 'Short-form Film · Video Editing',
     layout: 'portrait',
     latest: true,
@@ -22,9 +22,9 @@ export const featuredMotion = [
           ],
         },
         {
-          title: 'Keeping the camera relaxed',
+          title: 'Getting from the verse to the chorus',
           paragraphs: [
-            'For the shots where I was in the video, a friend helped me film. I told him not to worry too much about keeping the camera perfectly steady and to relax his hands instead. Trying to hold a device too stiffly can make small shakes more obvious, so I was more interested in natural movement than perfect stabilization.',
+            'After going inside the café, I added a short pause that feels a little like a behind-the-scenes moment, with my friend just vibing to the music. It gave me a natural way to move from the first verse into the chorus quickly without keeping too much of the song, which worked well for the short runtime.',
           ],
         },
         {
@@ -34,15 +34,15 @@ export const featuredMotion = [
           ],
         },
         {
-          title: 'Choosing the song',
+          title: 'Keeping the camera relaxed',
           paragraphs: [
-            'I also chose the soundtrack for the edit. I was deciding between “Waiting Room” by Jenevieve and another song, but “Waiting Room” had the calmer, more relaxed mood I wanted. One moment that helped confirm it was a lyric I initially thought said “champagne,” which lined up naturally with a zoom into the drink bottles. I later realized the lyric was actually “sure thing,” but the timing still worked and became part of how I shaped the edit.',
+            'For the shots where I was in the video, a friend helped me film. I told him not to worry too much about keeping the camera perfectly steady and to relax his hands instead. Trying to hold a device too stiffly can make small shakes more obvious, so I was more interested in natural movement than perfect stabilization.',
           ],
         },
         {
-          title: 'Getting from the verse to the chorus',
+          title: 'Choosing the song',
           paragraphs: [
-            'After going inside the café, I added a short pause that feels a little like a behind-the-scenes moment, with my friend just vibing to the music. It gave me a natural way to move from the first verse into the chorus quickly without keeping too much of the song, which worked well for the short runtime.',
+            'I also chose the soundtrack for the edit. I was deciding between “Waiting Room” by Jenevieve and another song, but “Waiting Room” had the calmer, more relaxed mood I wanted. One moment that helped confirm it was a lyric I initially thought said “champagne,” which lined up naturally with a zoom into the drink bottles. I later realized the lyric was actually “sure thing,” but the timing still worked and became part of how I shaped the edit.',
           ],
         },
       ],
