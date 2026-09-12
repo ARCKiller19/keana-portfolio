@@ -141,8 +141,8 @@ function MotionNotesModal({ piece, onClose }) {
               <aside className="motion-notes-aside">
                 <span>How it came together</span>
                 <p>
-                  A look at the memories, references, symbols, and editing choices
-                  behind the finished piece.
+                  A look at the references, choices, and editing decisions behind
+                  the finished piece.
                 </p>
               </aside>
 
