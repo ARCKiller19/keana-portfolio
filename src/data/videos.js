@@ -11,6 +11,20 @@ export const featuredMotion = [
     src: '/videos/motion/roast-live-action-edit.mp4',
     reflection:
       'A recent live-action piece I filmed and edited around the atmosphere, movement, and personality of a café setting. It begins with quieter location details, then shifts into a more playful performance-led rhythm with repeated split-frame compositions.',
+    creationNotes: {
+      lede:
+        'The soundtrack was part of how I found the tone for the edit. I wanted something calm enough to fit the café atmosphere while still giving me moments I could shape the footage around.',
+      sections: [
+        {
+          title: 'Choosing the song',
+          paragraphs: [
+            'I also chose the soundtrack for the edit. I was deciding between “Waiting Room” by Jenevieve and another song, but “Waiting Room” had the calmer, more relaxed mood I wanted. One moment that helped confirm it was a lyric I initially thought said “champagne,” which lined up naturally with a zoom into the drink bottles. I later realized the lyric was actually “sure thing,” but the timing still worked and became part of how I shaped the edit.',
+          ],
+        },
+      ],
+      closing:
+        'That small coincidence helped confirm the direction for me. Even after I realized I had heard the lyric differently, the moment still fit the footage and the mood I wanted for the piece.',
+    },
   },
   {
     id: 'cover-animation',
