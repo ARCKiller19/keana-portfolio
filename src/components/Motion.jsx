@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
+import { motionAlternateCuts } from '../data/motion-cuts.js'
 import MotionNotesModal from './MotionNotesModal.jsx'
 import '../motion.css'
 import '../automotive-notes.css'
 import '../automotive-story-overlay.css'
 import '../motion-section-order.css'
 import '../latest-motion.css'
+import '../motion-cuts.css'
 
 function useDeferredVideoMetadata(rootMargin = '1400px 200px') {
   const videoRef = useRef(null)
@@ -62,6 +64,58 @@ function VideoPlayer({ src, title, className = '' }) {
       <source src={src} type="video/mp4" />
       Your browser does not support HTML video.
     </video>
+  )
+}
+
+function MotionCutPlayer({ piece }) {
+  const cuts = [
+    { id: 'full', label: 'Full edit', src: piece.src },
+    ...(motionAlternateCuts[piece.id] ?? []),
+  ]
+  const [activeCutId, setActiveCutId] = useState('full')
+  const activeCut = cuts.find((cut) => cut.id === activeCutId) ?? cuts[0]
+
+  return (
+    <>
+      <div
+        className={`motion-frame ${
+          piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
+        }`}
+      >
+        <VideoPlayer
+          key={activeCut.src}
+          src={activeCut.src}
+          title={`${piece.title} ${activeCut.label}`}
+        />
+      </div>
+
+      {cuts.length > 1 && (
+        <div className="motion-cut-switcher">
+          <span className="motion-cut-switcher-label">Available cuts</span>
+          <div
+            className="motion-cut-options"
+            role="group"
+            aria-label={`Choose ${piece.title} cut`}
+          >
+            {cuts.map((cut) => {
+              const isActive = cut.id === activeCut.id
+
+              return (
+                <button
+                  className={`motion-cut-option ${isActive ? 'is-active' : ''}`}
+                  type="button"
+                  key={cut.id}
+                  aria-pressed={isActive}
+                  onClick={() => setActiveCutId(cut.id)}
+                >
+                  {cut.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 
@@ -280,13 +334,7 @@ function Motion() {
                     <span>{piece.category}</span>
                   </div>
 
-                  <div
-                    className={`motion-frame ${
-                      piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
-                    }`}
-                  >
-                    <VideoPlayer src={piece.src} title={piece.title} />
-                  </div>
+                  <MotionCutPlayer piece={piece} />
                 </div>
 
                 <div className="motion-piece-copy">
