@@ -40,6 +40,12 @@ export const featuredMotion = [
           ],
         },
         {
+          title: 'Making it feel like a conversation',
+          paragraphs: [
+            'Near the end, there is a behind-the-scenes moment where I say, “like you’re sitting with me.” I wanted the framing to feel like someone was actually sitting across from me while we were talking, instead of the camera just observing from a distance. My original plan was to sing one of the lines from the song in that shot, but I forgot the lyrics. It ended up becoming a small blooper instead, which I liked because it made the moment feel more natural and personal.',
+          ],
+        },
+        {
           title: 'Choosing the song',
           paragraphs: [
             'I also chose the soundtrack for the edit. I was deciding between “Waiting Room” by Jenevieve and another song, but “Waiting Room” had the calmer, more relaxed mood I wanted. One moment that helped confirm it was a lyric I initially thought said “champagne,” which lined up naturally with a zoom into the drink bottles. I later realized the lyric was actually “sure thing,” but the timing still worked and became part of how I shaped the edit.',
