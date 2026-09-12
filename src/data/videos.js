@@ -2,7 +2,7 @@ export const featuredMotion = [
   {
     id: 'roast-live-action',
     number: '01',
-    title: 'Roast: Live-Action Edit',
+    title: 'Roast: Live Action Edit',
     category: 'Short-form Film · Video Editing',
     layout: 'portrait',
     latest: true,
