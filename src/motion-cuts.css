@@ -1,31 +1,50 @@
+.motion-piece-media {
+  position: relative;
+}
+
 .motion-cut-switcher {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 10px);
+  z-index: 2;
   display: grid;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 7px;
+  width: 46px;
+  margin: 0;
+  transform: translateY(-50%);
 }
 
 .motion-cut-switcher-label {
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 0;
   letter-spacing: 0.08em;
+  text-align: center;
   text-transform: uppercase;
   color: var(--cream-dim);
 }
 
+.motion-cut-switcher-label::after {
+  content: 'Versions';
+  font-size: 7px;
+}
+
 .motion-cut-options {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   border: 1px solid var(--rule-strong);
 }
 
 .motion-cut-option {
+  display: grid;
+  place-items: center;
   min-width: 0;
-  padding: 9px 10px;
+  min-height: 104px;
+  padding: 10px 0;
   border: 0;
   background: transparent;
   color: var(--cream-dim);
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 0;
   line-height: 1;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -35,8 +54,24 @@
     color var(--motion-fast) var(--ease-editorial);
 }
 
+.motion-cut-option::before {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 8px;
+  line-height: 1;
+  letter-spacing: 0.1em;
+}
+
+.motion-cut-option:first-child::before {
+  content: 'FULL';
+}
+
+.motion-cut-option:last-child::before {
+  content: 'SHORT';
+}
+
 .motion-cut-option + .motion-cut-option {
-  border-left: 1px solid var(--rule-strong);
+  border-top: 1px solid var(--rule-strong);
 }
 
 .motion-cut-option:hover {
@@ -53,6 +88,42 @@
   z-index: 1;
   outline: 1px solid var(--moss);
   outline-offset: -2px;
+}
+
+@media (max-width: 960px) {
+  .motion-cut-switcher {
+    position: static;
+    width: 100%;
+    margin-top: 12px;
+    transform: none;
+  }
+
+  .motion-cut-switcher-label {
+    text-align: left;
+  }
+
+  .motion-cut-switcher-label::after {
+    font-size: 8px;
+  }
+
+  .motion-cut-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .motion-cut-option {
+    min-height: 0;
+    padding: 9px 10px;
+    font-size: 8px;
+  }
+
+  .motion-cut-option::before {
+    display: none;
+  }
+
+  .motion-cut-option + .motion-cut-option {
+    border-top: 0;
+    border-left: 1px solid var(--rule-strong);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
