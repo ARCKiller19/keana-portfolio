@@ -111,8 +111,8 @@ function Navbar() {
         window.innerHeight * 0.76,
       )
 
-      // Tighten the shell while the visitor is leaving the hero. Section
-      // highlighting still waits for the true section activation boundary.
+      // Compact while the visitor is leaving the hero, before About becomes
+      // the active section. Section highlighting keeps its stricter boundary.
       setIsCompact(!hero || heroBottom <= compactThreshold)
 
       if (atPageEnd) {

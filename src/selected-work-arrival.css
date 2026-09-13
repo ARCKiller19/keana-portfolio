@@ -1,0 +1,22 @@
+/* Selected Work arrival framing: center the workbench while the chapter title remains visible. */
+
+@media (min-width: 921px) {
+  .work-motion .specimen-section-head {
+    position: sticky;
+    z-index: 16;
+    top: 96px;
+    margin-bottom: 10px;
+    padding: 8px 0 12px;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(10, 11, 9, 0.98) 0%,
+      rgba(10, 11, 9, 0.88) 66%,
+      rgba(10, 11, 9, 0) 100%
+    );
+  }
+
+  .work-motion .specimen-section-head .count {
+    pointer-events: auto;
+  }
+}
