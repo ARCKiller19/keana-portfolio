@@ -225,6 +225,14 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         return
       }
 
+      const previousOpenIndex = openIndexRef.current
+      if (previousOpenIndex === index) return
+
+      if (isCompact && previousOpenIndex !== null) {
+        openIndexRef.current = null
+        setOpenIndex(null)
+      }
+
       const activeLayout = isCompact ? COMPACT_LAYOUT : DESKTOP_LAYOUT
       const station = activeLayout.stations[index]
 
@@ -236,7 +244,11 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       }
 
       setTargetedIndex(index)
-      setStatusMessage(`Moving toward ${pieces[index].title}.`)
+      setStatusMessage(
+        isCompact && previousOpenIndex !== null
+          ? `Leaving ${pieces[previousOpenIndex].title}. Moving toward ${pieces[index].title}.`
+          : `Moving toward ${pieces[index].title}.`,
+      )
       setWalkingState(true)
 
       if (fallbackTimerRef.current) {
