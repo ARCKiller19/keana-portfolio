@@ -16,6 +16,8 @@ import './selected-work-arrival.css'
 import './motion-reel-side-previews.css'
 import './motion-reel-direct-play.css'
 import './motion-cut-rail-polish.css'
+import './motion-habitat-guidance.css'
+import './motion-habitat-onboarding.js'
 import './motion-reel-preview-prime.js'
 import App from './App.jsx'
 
