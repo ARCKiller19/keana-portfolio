@@ -1,0 +1,16 @@
+@media (min-width: 821px) {
+  .footer-links a,
+  .footer-links a:nth-child(2n),
+  .footer-links a:nth-last-child(-n + 2) {
+    border: 1px solid rgba(239, 233, 219, 0.11);
+  }
+
+  .footer-links a:hover,
+  .footer-links a:focus-visible,
+  .footer-links a:nth-child(2n):hover,
+  .footer-links a:nth-child(2n):focus-visible,
+  .footer-links a:nth-last-child(-n + 2):hover,
+  .footer-links a:nth-last-child(-n + 2):focus-visible {
+    border-color: rgba(205, 221, 111, 0.52);
+  }
+}
