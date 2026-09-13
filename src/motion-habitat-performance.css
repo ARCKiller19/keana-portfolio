@@ -50,6 +50,40 @@
   animation: none !important;
 }
 
+/* Roast is the current latest piece. Keep the freshness marker compact and native to the recorder UI. */
+.motion-habitat .station-roast::after {
+  content: 'NEW · SEP 2026';
+  position: absolute;
+  z-index: 3;
+  top: -8px;
+  right: 9px;
+  padding: 3px 6px 2px;
+  border: 1px solid rgba(188, 150, 78, 0.3);
+  background: #070907;
+  color: rgba(214, 185, 116, 0.82);
+  font-family: var(--font-mono);
+  font-size: 5.5px;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.motion-habitat .station-roast:hover::after,
+.motion-habitat .station-roast:focus-visible::after,
+.motion-habitat .station-roast.is-awake::after,
+.motion-habitat .station-roast.is-open::after {
+  border-color: rgba(214, 185, 116, 0.54);
+  color: rgba(239, 216, 160, 0.98);
+}
+
+@media (max-width: 720px) {
+  .motion-habitat .station-roast::after {
+    content: 'NEW';
+    right: 8px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .motion-habitat .motion-habitat-character {
     will-change: auto;
