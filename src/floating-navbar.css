@@ -1,8 +1,8 @@
-/* Detached floating navbar shell layered over the existing botanical navigation. */
+/* Detached floating navbar shell layered over the botanical navigation. */
 
 .nav.nav-panel {
   position: sticky;
-  z-index: 1000;
+  z-index: 1100;
   top: max(14px, env(safe-area-inset-top));
   width: min(calc(100% - 32px), 1380px);
   margin: 14px auto 0;
@@ -30,8 +30,9 @@
     -webkit-backdrop-filter var(--motion-medium) var(--ease-editorial);
 }
 
-/* Once a section becomes active, the floating control bar tightens and gains contrast. */
-.nav.nav-panel:has(.nav-tile[aria-current='location']) {
+/* Compactness is a hero-exit state, not a section-activation state. This lets
+   the shell settle before About becomes the dominant viewport section. */
+.nav.nav-panel.is-compact {
   width: min(calc(100% - 72px), 1240px);
   min-height: 72px;
   padding-block: 6px 7px;
@@ -55,15 +56,15 @@
   transition-timing-function: var(--ease-editorial);
 }
 
-.nav.nav-panel:has(.nav-tile[aria-current='location']) .nav-brand {
+.nav.nav-panel.is-compact .nav-brand {
   padding-block: 10px 9px;
 }
 
-.nav.nav-panel:has(.nav-tile[aria-current='location']) .nav-status {
+.nav.nav-panel.is-compact .nav-status {
   padding-block: 8px 7px;
 }
 
-/* Keep the outer shell quiet; the existing botanical path remains the expressive layer. */
+/* Keep the outer shell quiet; the botanical path remains the expressive layer. */
 .nav.nav-panel::before,
 .nav.nav-panel::after {
   display: none;
@@ -78,7 +79,7 @@
     border-radius: 16px;
   }
 
-  .nav.nav-panel:has(.nav-tile[aria-current='location']) {
+  .nav.nav-panel.is-compact {
     width: calc(100% - 36px);
     min-height: 70px;
   }
@@ -93,7 +94,7 @@
     border-radius: 15px;
   }
 
-  .nav.nav-panel:has(.nav-tile[aria-current='location']) {
+  .nav.nav-panel.is-compact {
     width: calc(100% - 20px);
     min-height: 0;
     padding-block: 7px;
@@ -102,7 +103,7 @@
 
 @media (max-width: 420px) {
   .nav.nav-panel,
-  .nav.nav-panel:has(.nav-tile[aria-current='location']) {
+  .nav.nav-panel.is-compact {
     width: calc(100% - 12px);
     border-radius: 13px;
   }
