@@ -6,7 +6,6 @@ import Projects from './components/Projects.jsx'
 import Motion from './components/Motion.jsx'
 import Playground from './components/Playground.jsx'
 import Footer from './components/Footer.jsx'
-import SiteLoader from './components/SiteLoader.jsx'
 import ScrollStem from './components/ScrollStem.jsx'
 
 function App() {
@@ -15,11 +14,13 @@ function App() {
 
   return (
     <>
-      <SiteLoader onComplete={handleIntroComplete} />
       <ScrollStem active={motionReady} />
       <Navbar />
       <main>
-        <Hero motionReady={motionReady} />
+        <Hero
+          motionReady={motionReady}
+          onIntroComplete={handleIntroComplete}
+        />
         <About />
         <Projects />
         <Motion />
