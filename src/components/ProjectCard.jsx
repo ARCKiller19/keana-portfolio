@@ -11,7 +11,10 @@ function ProjectCard({ project, index, onOpen }) {
   }
 
   return (
-    <article className="project-card">
+    <article
+      className="project-card project-card-motion"
+      data-reveal-slot={index}
+    >
       <div className="project-card-topline">
         <span className="project-index">
           {String(index + 1).padStart(2, '0')}
