@@ -1,8 +1,79 @@
+import { useEffect, useRef } from 'react'
 import { handleSectionNavigation } from '../utils/sectionNavigation.js'
 
-function Hero() {
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max)
+}
+
+function Hero({ motionReady = false }) {
+  const heroRef = useRef(null)
+
+  useEffect(() => {
+    if (!motionReady) return undefined
+
+    const hero = heroRef.current
+    if (!hero) return undefined
+
+    const parallaxItems = Array.from(hero.querySelectorAll('[data-parallax]'))
+    const motionMedia = window.matchMedia(
+      '(min-width: 721px) and (prefers-reduced-motion: no-preference)',
+    )
+    let frameId = null
+
+    const resetParallax = () => {
+      parallaxItems.forEach((item) => {
+        item.style.removeProperty('--parallax-y')
+      })
+    }
+
+    const updateParallax = () => {
+      frameId = null
+
+      if (!motionMedia.matches) {
+        resetParallax()
+        return
+      }
+
+      const rect = hero.getBoundingClientRect()
+      const travel = window.innerHeight + rect.height
+      const progress = clamp((window.innerHeight - rect.top) / travel, 0, 1)
+      const centeredProgress = (progress - 0.5) * 2
+
+      parallaxItems.forEach((item) => {
+        const depth = Number(item.dataset.parallax ?? 0)
+        const offset = centeredProgress * depth
+        item.style.setProperty('--parallax-y', `${offset.toFixed(2)}px`)
+      })
+    }
+
+    const requestParallaxUpdate = () => {
+      if (frameId !== null) return
+      frameId = window.requestAnimationFrame(updateParallax)
+    }
+
+    updateParallax()
+    window.addEventListener('scroll', requestParallaxUpdate, { passive: true })
+    window.addEventListener('resize', requestParallaxUpdate)
+    motionMedia.addEventListener('change', requestParallaxUpdate)
+
+    return () => {
+      window.removeEventListener('scroll', requestParallaxUpdate)
+      window.removeEventListener('resize', requestParallaxUpdate)
+      motionMedia.removeEventListener('change', requestParallaxUpdate)
+      resetParallax()
+
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId)
+      }
+    }
+  }, [motionReady])
+
   return (
-    <section className="hero" aria-label="Introduction">
+    <section
+      ref={heroRef}
+      className={`hero hero-motion ${motionReady ? 'is-motion-ready' : ''}`}
+      aria-label="Introduction"
+    >
       <div className="hero-text">
         <p className="eyebrow">
           UI/UX Designer · Graphic Designer · Multimedia Creative
@@ -35,9 +106,10 @@ function Hero() {
           alt=""
           decoding="async"
           fetchPriority="low"
+          data-parallax="-10"
         />
 
-        <div className="hero-organic hero-organic-main">
+        <div className="hero-organic hero-organic-main" data-parallax="13">
           <img
             src="/images/hero/botanical-04.JPG"
             alt=""
@@ -46,7 +118,7 @@ function Hero() {
           />
         </div>
 
-        <div className="hero-photo hero-photo-right">
+        <div className="hero-photo hero-photo-right" data-parallax="24">
           <img
             src="/images/hero/botanical-10.JPG"
             alt=""
@@ -55,7 +127,7 @@ function Hero() {
           />
         </div>
 
-        <div className="hero-photo hero-photo-top">
+        <div className="hero-photo hero-photo-top" data-parallax="30">
           <img
             src="/images/hero/botanical-12.JPG"
             alt=""
@@ -64,7 +136,7 @@ function Hero() {
           />
         </div>
 
-        <div className="hero-photo hero-photo-bottom">
+        <div className="hero-photo hero-photo-bottom" data-parallax="18">
           <img
             src="/images/hero/botanical-15.JPG"
             alt=""
@@ -79,6 +151,7 @@ function Hero() {
           alt=""
           decoding="async"
           fetchPriority="low"
+          data-parallax="38"
         />
         <img
           className="hero-cutout hero-cutout-b"
@@ -86,26 +159,40 @@ function Hero() {
           alt=""
           decoding="async"
           fetchPriority="low"
+          data-parallax="27"
         />
 
-        <svg className="hero-wiring" viewBox="0 0 760 620" role="presentation">
-          <path d="M84 128H224L300 204" />
-          <path d="M348 82V180" />
-          <path d="M520 136H646V244" />
-          <path d="M240 448H104V536H250" />
-          <path d="M430 458H586V548" />
-          <path d="M318 310H448" />
+        <svg
+          className="hero-wiring"
+          viewBox="0 0 760 620"
+          role="presentation"
+          data-parallax="7"
+        >
+          <path d="M84 128H224L300 204" pathLength="1" />
+          <path d="M348 82V180" pathLength="1" />
+          <path d="M520 136H646V244" pathLength="1" />
+          <path d="M240 448H104V536H250" pathLength="1" />
+          <path d="M430 458H586V548" pathLength="1" />
+          <path d="M318 310H448" pathLength="1" />
           <circle cx="224" cy="128" r="3" />
           <circle cx="520" cy="136" r="3" />
           <circle cx="240" cy="448" r="3" />
           <circle cx="430" cy="458" r="3" />
         </svg>
 
-        <div className="hero-dot-field hero-dot-field-a" />
-        <div className="hero-dot-field hero-dot-field-b" />
-        <span className="hero-cross hero-cross-a">+</span>
-        <span className="hero-cross hero-cross-b">+</span>
-        <span className="hero-collage-label">Botanical systems · visual studies</span>
+        <div
+          className="hero-dot-field hero-dot-field-a"
+          data-parallax="16"
+        />
+        <div
+          className="hero-dot-field hero-dot-field-b"
+          data-parallax="11"
+        />
+        <span className="hero-cross hero-cross-a" data-parallax="20">+</span>
+        <span className="hero-cross hero-cross-b" data-parallax="15">+</span>
+        <span className="hero-collage-label" data-parallax="9">
+          Botanical systems · visual studies
+        </span>
       </div>
     </section>
   )
