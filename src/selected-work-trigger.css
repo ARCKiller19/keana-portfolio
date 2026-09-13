@@ -1,0 +1,40 @@
+/* Trigger the Selected Work specimen sequence from the chapter reveal. */
+
+.project-card-motion[data-reveal-slot='3'] { --card-delay: 420ms; }
+.project-card-motion[data-reveal-slot='4'] { --card-delay: 500ms; }
+.project-card-motion[data-reveal-slot='5'] { --card-delay: 580ms; }
+
+.work-motion.is-revealed .project-card-motion .project-card-topline {
+  animation: specimen-meta-arrive 440ms var(--ease-editorial) var(--card-delay) both;
+}
+
+.work-motion.is-revealed .project-card-motion .project-card-topline::before {
+  animation: specimen-node-arrive 380ms var(--ease-editorial) calc(var(--card-delay) + 80ms) both;
+}
+
+.work-motion.is-revealed .project-card-motion .project-card-topline::after {
+  animation: specimen-rule-grow 660ms var(--ease-editorial) calc(var(--card-delay) + 120ms) both;
+}
+
+.work-motion.is-revealed .project-card-motion .project-frame {
+  animation: specimen-frame-uncover 780ms var(--ease-editorial) calc(var(--card-delay) + 95ms) both;
+}
+
+.work-motion.is-revealed .project-card-motion .project-image {
+  animation: specimen-image-settle 920ms var(--ease-editorial) calc(var(--card-delay) + 135ms) both;
+}
+
+.work-motion.is-revealed .project-card-motion .project-info {
+  animation: specimen-copy-arrive 560ms var(--ease-editorial) calc(var(--card-delay) + 280ms) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-motion.is-revealed .project-card-motion .project-card-topline,
+  .work-motion.is-revealed .project-card-motion .project-card-topline::before,
+  .work-motion.is-revealed .project-card-motion .project-card-topline::after,
+  .work-motion.is-revealed .project-card-motion .project-frame,
+  .work-motion.is-revealed .project-card-motion .project-image,
+  .work-motion.is-revealed .project-card-motion .project-info {
+    animation: none !important;
+  }
+}
