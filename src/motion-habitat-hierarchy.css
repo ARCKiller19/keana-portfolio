@@ -1,0 +1,141 @@
+/* Motion Habitat hierarchy: quiet the environment so the player and stations read first. */
+
+/* The room should be calm at rest. The stations and live signals own the contrast. */
+.motion-habitat .motion-habitat-world {
+  background:
+    linear-gradient(rgba(167, 179, 95, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167, 179, 95, 0.012) 1px, transparent 1px),
+    linear-gradient(rgba(239, 233, 219, 0.007) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(239, 233, 219, 0.007) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(167, 179, 95, 0.012), transparent 44%),
+    #050705;
+  background-size: 64px 64px, 64px 64px, 16px 16px, 16px 16px, auto, auto;
+  background-position: center;
+}
+
+.motion-habitat.is-online .motion-habitat-grid {
+  opacity: 0.28;
+}
+
+.motion-habitat .motion-habitat-signal:not(.is-live):not(.is-open) {
+  stroke: rgba(167, 179, 95, 0.055);
+}
+
+/* When the visitor engages a station, let the environment recede another step. */
+.motion-habitat:has(.motion-habitat-station:hover) .motion-habitat-grid,
+.motion-habitat:has(.motion-habitat-station:focus-visible) .motion-habitat-grid,
+.motion-habitat:has(.motion-habitat-station.is-awake) .motion-habitat-grid,
+.motion-habitat:has(.motion-habitat-station.is-targeted) .motion-habitat-grid {
+  opacity: 0.17;
+}
+
+/* A game-style player nameplate makes the controllable character obvious. */
+.motion-habitat .motion-habitat-character::before {
+  content: 'KEANA';
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 7px);
+  min-width: max-content;
+  padding: 3px 6px 2px;
+  border: 1px solid rgba(205, 221, 111, 0.22);
+  background: rgba(5, 7, 5, 0.92);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(239, 233, 219, 0.02);
+  color: rgba(239, 233, 219, 0.72);
+  font-family: var(--font-mono);
+  font-size: 6px;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  transition:
+    color 180ms var(--ease-editorial),
+    border-color 180ms var(--ease-editorial),
+    box-shadow 180ms var(--ease-editorial);
+}
+
+.motion-habitat .motion-habitat-character::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 3px);
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 4px solid rgba(205, 221, 111, 0.26);
+  transform: translateX(-50%);
+}
+
+.motion-habitat .motion-habitat-character.is-walking::before {
+  border-color: rgba(205, 221, 111, 0.4);
+  color: rgba(239, 233, 219, 0.9);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.3),
+    0 0 12px rgba(167, 179, 95, 0.055);
+}
+
+@media (min-width: 981px) {
+  /* Dark clear-zones soften the grid directly behind each destination. */
+  .motion-habitat .motion-habitat-world {
+    background:
+      radial-gradient(circle at 18% 38%, rgba(3, 5, 3, 0.74) 0 8%, rgba(3, 5, 3, 0.4) 14%, transparent 25%),
+      radial-gradient(circle at 81% 28%, rgba(3, 5, 3, 0.74) 0 8%, rgba(3, 5, 3, 0.4) 14%, transparent 25%),
+      radial-gradient(circle at 79% 71%, rgba(3, 5, 3, 0.74) 0 8%, rgba(3, 5, 3, 0.4) 14%, transparent 25%),
+      linear-gradient(rgba(167, 179, 95, 0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(167, 179, 95, 0.012) 1px, transparent 1px),
+      linear-gradient(rgba(239, 233, 219, 0.007) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(239, 233, 219, 0.007) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, rgba(167, 179, 95, 0.01), transparent 44%),
+      #050705;
+    background-size: auto, auto, auto, 64px 64px, 64px 64px, 16px 16px, 16px 16px, auto, auto;
+    background-position: center;
+  }
+
+  /* One last controlled scale increase: make the machines larger, not the typography. */
+  .motion-habitat .motion-habitat-station {
+    grid-template-columns: 130px minmax(0, 178px);
+    gap: 17px;
+    width: 354px;
+    min-height: 138px;
+    padding: 16px;
+  }
+
+  .motion-habitat .motion-habitat-machine {
+    width: 130px;
+    height: 104px;
+  }
+
+  .motion-habitat .motion-habitat-machine-screen {
+    width: 90px;
+    height: 55px;
+  }
+
+  .motion-habitat .motion-habitat-station:hover,
+  .motion-habitat .motion-habitat-station:focus-visible {
+    transform: translate(-50%, -50%) translateY(-4px) scale(1.03);
+  }
+
+  .motion-habitat .motion-habitat-station.is-targeted {
+    transform: translate(-50%, -50%) scale(1.022);
+  }
+}
+
+@media (max-width: 720px) {
+  .motion-habitat.is-online .motion-habitat-grid {
+    opacity: 0.22;
+  }
+
+  .motion-habitat .motion-habitat-character::before {
+    bottom: calc(100% + 6px);
+    padding: 2px 5px;
+    font-size: 5.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-habitat .motion-habitat-character::before {
+    transition: none !important;
+  }
+}
