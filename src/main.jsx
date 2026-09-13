@@ -12,7 +12,6 @@ import './responsive-guardrails.css'
 import './botanical-motion.css'
 import './intro-navbar-guard.css'
 import './intro-vine-exit.css'
-import './selected-work-trigger.css'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
