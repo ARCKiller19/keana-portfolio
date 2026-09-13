@@ -17,6 +17,7 @@ import './motion-reel-side-previews.css'
 import './motion-reel-direct-play.css'
 import './motion-cut-rail-polish.css'
 import './film-garden-leaf-anchors.css'
+import './motion-film-garden-focus.js'
 import './motion-reel-preview-prime.js'
 import App from './App.jsx'
 
