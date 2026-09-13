@@ -1,0 +1,149 @@
+/* Refine the intro handoff so the botanical linework settles, then furls away. */
+
+.hero-motion {
+  --intro-vine-settle-scale: 0.62;
+}
+
+.hero-motion.intro-settling .hero-intro-botanical,
+.hero-motion.intro-furling .hero-intro-botanical {
+  transform:
+    translate(
+      calc(-50% + var(--intro-vine-x)),
+      calc(-50% + var(--intro-vine-y))
+    )
+    scale(var(--intro-vine-settle-scale));
+}
+
+.hero-motion.intro-settling .hero-intro-botanical {
+  opacity: 0.64;
+}
+
+.hero-motion.intro-furling .hero-intro-botanical {
+  opacity: 0;
+  transition:
+    transform 820ms var(--ease-editorial),
+    opacity 760ms var(--ease-editorial);
+}
+
+.hero-motion.intro-furling .hero-mark {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+  filter: blur(0);
+}
+
+/* Hold the fully unfurled drawing while it travels into the hero. */
+.hero-motion.intro-settling .intro-vine {
+  animation: none;
+  stroke-dashoffset: 0;
+}
+
+.hero-motion.intro-settling .intro-leaf {
+  animation: none;
+  opacity: 0.78;
+  transform: scale(1) rotate(0);
+}
+
+.hero-motion.intro-settling .intro-node {
+  animation: none;
+  opacity: 0.9;
+  transform: scale(1);
+}
+
+.hero-motion.intro-settling .intro-cross {
+  animation: none;
+  opacity: 0.7;
+  transform: rotate(45deg) scale(1);
+}
+
+/* Then reverse the growth instead of snapping the drawing away. */
+.hero-motion.intro-furling .intro-vine {
+  stroke-dashoffset: 0;
+  animation: intro-vine-furl 560ms var(--ease-editorial) forwards;
+}
+
+.hero-motion.intro-furling .intro-vine-extension {
+  animation-delay: 0ms;
+}
+
+.hero-motion.intro-furling .intro-vine-c {
+  animation-delay: 70ms;
+}
+
+.hero-motion.intro-furling .intro-vine-b {
+  animation-delay: 125ms;
+}
+
+.hero-motion.intro-furling .intro-vine-a {
+  animation-delay: 185ms;
+}
+
+@keyframes intro-vine-furl {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: 1; }
+}
+
+.hero-motion.intro-furling .intro-leaf {
+  opacity: 0.78;
+  transform: scale(1) rotate(0);
+  animation: intro-leaf-furl 430ms var(--ease-editorial) forwards;
+}
+
+.hero-motion.intro-furling .intro-leaf-d { animation-delay: 20ms; }
+.hero-motion.intro-furling .intro-leaf-c { animation-delay: 65ms; }
+.hero-motion.intro-furling .intro-leaf-e { animation-delay: 105ms; }
+.hero-motion.intro-furling .intro-leaf-b { animation-delay: 145ms; }
+.hero-motion.intro-furling .intro-leaf-a { animation-delay: 185ms; }
+
+@keyframes intro-leaf-furl {
+  0% {
+    opacity: 0.78;
+    transform: scale(1) rotate(0);
+  }
+  55% {
+    opacity: 0.48;
+    transform: scale(0.68) rotate(4deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.28) rotate(9deg);
+  }
+}
+
+.hero-motion.intro-furling .intro-node {
+  opacity: 0.9;
+  transform: scale(1);
+  animation: intro-node-furl 360ms var(--ease-editorial) 120ms forwards;
+}
+
+@keyframes intro-node-furl {
+  from { opacity: 0.9; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.3); }
+}
+
+.hero-motion.intro-furling .intro-cross {
+  opacity: 0.7;
+  transform: rotate(45deg) scale(1);
+  animation: intro-cross-furl 380ms var(--ease-editorial) 90ms forwards;
+}
+
+@keyframes intro-cross-furl {
+  from { opacity: 0.7; transform: rotate(45deg) scale(1); }
+  to { opacity: 0; transform: rotate(75deg) scale(0.45); }
+}
+
+@media (max-width: 720px) {
+  .hero-motion {
+    --intro-vine-settle-scale: 0.48;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-motion.intro-furling .hero-intro-botanical,
+  .hero-motion.intro-furling .intro-vine,
+  .hero-motion.intro-furling .intro-leaf,
+  .hero-motion.intro-furling .intro-node,
+  .hero-motion.intro-furling .intro-cross {
+    animation: none;
+    transition: none;
+  }
+}
