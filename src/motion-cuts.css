@@ -32,7 +32,7 @@
 .motion-cut-options {
   display: grid;
   grid-template-rows: repeat(2, 1fr);
-  height: 174px;
+  height: 186px;
   overflow: hidden;
   border: 1px solid rgba(239, 233, 219, 0.22);
   border-radius: 7px;
@@ -52,7 +52,6 @@
   font-family: var(--font-mono);
   font-size: 0;
   line-height: 1;
-  letter-spacing: 0.07em;
   text-transform: uppercase;
   cursor: pointer;
   transition:
@@ -62,19 +61,20 @@
 }
 
 .motion-cut-option::before {
-  writing-mode: vertical-rl;
-  text-orientation: upright;
-  font-size: 9.5px;
-  line-height: 1;
-  letter-spacing: 0.16em;
+  display: block;
+  white-space: pre;
+  font-size: 10px;
+  line-height: 1.52;
+  letter-spacing: 0;
+  text-align: center;
 }
 
 .motion-cut-option:first-child::before {
-  content: 'FULL';
+  content: 'F\A U\A L\A L';
 }
 
 .motion-cut-option:last-child::before {
-  content: 'SHORT';
+  content: 'S\A H\A O\A R\A T';
 }
 
 .motion-cut-option + .motion-cut-option {
