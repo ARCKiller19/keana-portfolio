@@ -1,4 +1,4 @@
-/* Selected Work: herbarium press release -> catalogued project grid. */
+/* Selected Work: archival tracing sheet -> specimen catalogue. */
 
 .work-motion {
   position: relative;
@@ -33,6 +33,8 @@
   max-width: var(--container);
   margin-inline: auto;
 }
+
+/* ---------- Chapter registration ---------- */
 
 .section-head-motion {
   position: relative;
@@ -111,23 +113,23 @@
 .archive-register-lock-c { left: 82%; }
 
 .work-motion.is-revealed .archive-register-line {
-  animation: archive-register-draw 680ms var(--ease-editorial) 70ms both;
+  animation: archive-register-draw 640ms var(--ease-editorial) 40ms both;
 }
 
 .work-motion.is-revealed .archive-register-node {
-  animation: archive-node-activate 420ms var(--ease-editorial) 90ms both;
+  animation: archive-node-activate 400ms var(--ease-editorial) 70ms both;
 }
 
 .work-motion.is-revealed .archive-register-lock {
-  animation: archive-lock-release 520ms var(--ease-editorial) 150ms both;
+  animation: archive-lock-release 460ms var(--ease-editorial) 120ms both;
 }
 
 .work-motion.is-revealed .archive-register-lock-b {
-  animation-delay: 190ms;
+  animation-delay: 155ms;
 }
 
 .work-motion.is-revealed .archive-register-lock-c {
-  animation-delay: 230ms;
+  animation-delay: 190ms;
 }
 
 @keyframes archive-register-draw {
@@ -143,9 +145,11 @@
 
 @keyframes archive-lock-release {
   0% { opacity: 0.8; transform: scaleY(1); }
-  55% { opacity: 0.52; transform: scaleY(0.35); }
-  100% { opacity: 0.22; transform: scaleY(0.65); }
+  55% { opacity: 0.5; transform: scaleY(0.3); }
+  100% { opacity: 0.2; transform: scaleY(0.62); }
 }
+
+/* ---------- Archive shell + protective tracing sheet ---------- */
 
 .work-archive {
   position: relative;
@@ -168,7 +172,7 @@
 }
 
 .work-motion.is-revealed .work-archive::before {
-  animation: archive-shell-settle 1120ms var(--ease-editorial) 120ms both;
+  animation: archive-shell-settle 1120ms var(--ease-editorial) 100ms both;
 }
 
 @keyframes archive-shell-settle {
@@ -177,10 +181,10 @@
     transform: scaleY(0.985);
     border-color: rgba(167, 179, 95, 0.12);
   }
-  36% {
-    opacity: 0.72;
-    transform: scaleY(1.008);
-    border-color: rgba(167, 179, 95, 0.38);
+  34% {
+    opacity: 0.7;
+    transform: scaleY(1.006);
+    border-color: rgba(167, 179, 95, 0.36);
   }
   100% {
     opacity: 0.28;
@@ -189,15 +193,16 @@
   }
 }
 
+/* A quiet binding rail remains, but the tracing sheet is now the reveal event. */
 .archive-press-rail {
   position: absolute;
-  z-index: 4;
+  z-index: 7;
   top: 5px;
   right: -6px;
   left: -6px;
   height: 18px;
   pointer-events: none;
-  transform: translateY(7px);
+  transform: translateY(5px);
 }
 
 .archive-press-rail::before,
@@ -214,9 +219,9 @@
   height: 1px;
   background: linear-gradient(
     90deg,
-    rgba(239, 233, 219, 0.16),
-    rgba(167, 179, 95, 0.5) 50%,
-    rgba(239, 233, 219, 0.16)
+    rgba(239, 233, 219, 0.14),
+    rgba(167, 179, 95, 0.46) 50%,
+    rgba(239, 233, 219, 0.14)
   );
 }
 
@@ -225,9 +230,9 @@
   left: 50%;
   width: 44px;
   height: 9px;
-  border-top: 1px solid rgba(167, 179, 95, 0.34);
-  border-right: 1px solid rgba(239, 233, 219, 0.13);
-  border-left: 1px solid rgba(239, 233, 219, 0.13);
+  border-top: 1px solid rgba(167, 179, 95, 0.32);
+  border-right: 1px solid rgba(239, 233, 219, 0.12);
+  border-left: 1px solid rgba(239, 233, 219, 0.12);
   transform: translateX(-50%);
 }
 
@@ -236,20 +241,160 @@
   left: 50%;
   width: 4px;
   height: 4px;
-  border: 1px solid rgba(167, 179, 95, 0.62);
+  border: 1px solid rgba(167, 179, 95, 0.6);
   border-radius: 50%;
   transform: translateX(-50%);
 }
 
 .work-motion.is-revealed .archive-press-rail {
-  animation: archive-rail-release 980ms var(--ease-editorial) 130ms both;
+  animation: archive-rail-release 700ms var(--ease-editorial) 110ms both;
 }
 
 @keyframes archive-rail-release {
-  0% { opacity: 0.62; transform: translateY(7px); }
-  42% { opacity: 1; transform: translateY(-10px); }
-  100% { opacity: 0.52; transform: translateY(0); }
+  0% { opacity: 0.58; transform: translateY(5px); }
+  48% { opacity: 1; transform: translateY(-6px); }
+  100% { opacity: 0.45; transform: translateY(0); }
 }
+
+.archive-tracing-sheet {
+  position: absolute;
+  z-index: 6;
+  inset: 18px -5px -10px;
+  overflow: hidden;
+  border: 1px solid rgba(239, 233, 219, 0.14);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 118px,
+      rgba(239, 233, 219, 0.018) 119px,
+      transparent 120px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 88px,
+      rgba(239, 233, 219, 0.014) 89px,
+      transparent 90px
+    ),
+    linear-gradient(
+      180deg,
+      rgba(31, 36, 25, 0.74),
+      rgba(12, 14, 11, 0.72)
+    );
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(239, 233, 219, 0.025);
+  backdrop-filter: blur(1.4px) saturate(0.68);
+  -webkit-backdrop-filter: blur(1.4px) saturate(0.68);
+  opacity: 0.96;
+  transform: translateY(0) scale(0.998);
+  transform-origin: top center;
+  pointer-events: none;
+}
+
+.archive-tracing-sheet::before,
+.archive-tracing-sheet::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.archive-tracing-sheet::before {
+  top: 18px;
+  right: 18px;
+  width: 24px;
+  height: 24px;
+  border-top: 1px solid rgba(167, 179, 95, 0.5);
+  border-right: 1px solid rgba(167, 179, 95, 0.5);
+}
+
+.archive-tracing-sheet::after {
+  bottom: 18px;
+  left: 18px;
+  width: 24px;
+  height: 24px;
+  border-bottom: 1px solid rgba(239, 233, 219, 0.2);
+  border-left: 1px solid rgba(239, 233, 219, 0.2);
+}
+
+.archive-tracing-art {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  opacity: 0.56;
+}
+
+.archive-trace-stem,
+.archive-trace-branch,
+.archive-trace-guide,
+.archive-trace-cross {
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.archive-trace-stem {
+  stroke: rgba(167, 179, 95, 0.62);
+  stroke-width: 1.1;
+}
+
+.archive-trace-branch {
+  stroke: rgba(167, 179, 95, 0.46);
+  stroke-width: 0.9;
+}
+
+.archive-trace-leaf {
+  fill: rgba(167, 179, 95, 0.045);
+  stroke: rgba(167, 179, 95, 0.54);
+  stroke-width: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+
+.archive-trace-guide {
+  stroke: rgba(239, 233, 219, 0.16);
+  stroke-width: 0.8;
+  stroke-dasharray: 6 9;
+}
+
+.archive-trace-node {
+  fill: rgba(167, 179, 95, 0.72);
+  stroke: none;
+}
+
+.archive-trace-cross {
+  stroke: rgba(239, 233, 219, 0.32);
+  stroke-width: 0.9;
+}
+
+.work-motion.is-revealed .archive-tracing-sheet {
+  animation: archive-tracing-lift 660ms var(--ease-editorial) 180ms both;
+}
+
+@keyframes archive-tracing-lift {
+  0% {
+    opacity: 0.96;
+    transform: translateY(0) scale(0.998);
+    clip-path: inset(0 0 0 0);
+  }
+  28% {
+    opacity: 1;
+    transform: translateY(-8px) scale(0.999);
+  }
+  76% {
+    opacity: 0.62;
+    transform: translateY(-38px) scale(0.996);
+    clip-path: inset(0 0 6% 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-54px) scale(0.994);
+    clip-path: inset(0 0 22% 0);
+  }
+}
+
+/* ---------- Specimen collection ---------- */
 
 .work-archive .work-grid {
   position: relative;
@@ -260,48 +405,58 @@
   --specimen-x: 0px;
   --specimen-y: 0px;
   --specimen-rotate: 0deg;
+  --catalog-delay: 1130ms;
   position: relative;
-  opacity: 0.78;
+  opacity: 0.72;
   transform:
     translate(var(--specimen-x), var(--specimen-y))
     rotate(var(--specimen-rotate))
-    scale(0.985);
+    scale(0.975);
   transform-origin: center center;
   will-change: transform, opacity;
 }
 
 .project-card-motion[data-reveal-slot='0'] {
-  --specimen-x: 72px;
-  --specimen-y: 18px;
-  --specimen-rotate: -0.8deg;
+  --specimen-x: 110px;
+  --specimen-y: 24px;
+  --specimen-rotate: -0.95deg;
+  z-index: 3;
 }
 
 .project-card-motion[data-reveal-slot='1'] {
-  --specimen-y: 8px;
-  --specimen-rotate: 0.45deg;
+  --specimen-y: 10px;
+  --specimen-rotate: 0.55deg;
+  z-index: 4;
 }
 
 .project-card-motion[data-reveal-slot='2'] {
-  --specimen-x: -72px;
-  --specimen-y: 20px;
-  --specimen-rotate: 0.7deg;
+  --specimen-x: -110px;
+  --specimen-y: 25px;
+  --specimen-rotate: 0.9deg;
+  z-index: 3;
 }
 
 .project-card-motion[data-reveal-slot='3'] {
-  --specimen-x: 72px;
-  --specimen-y: -54px;
-  --specimen-rotate: 0.55deg;
+  --specimen-x: 105px;
+  --specimen-y: -78px;
+  --specimen-rotate: 0.65deg;
+  --catalog-delay: 1290ms;
+  z-index: 1;
 }
 
 .project-card-motion[data-reveal-slot='4'] {
-  --specimen-y: -62px;
-  --specimen-rotate: -0.55deg;
+  --specimen-y: -92px;
+  --specimen-rotate: -0.65deg;
+  --catalog-delay: 1290ms;
+  z-index: 2;
 }
 
 .project-card-motion[data-reveal-slot='5'] {
-  --specimen-x: -72px;
-  --specimen-y: -52px;
-  --specimen-rotate: 0.75deg;
+  --specimen-x: -105px;
+  --specimen-y: -76px;
+  --specimen-rotate: 0.85deg;
+  --catalog-delay: 1290ms;
+  z-index: 1;
 }
 
 .project-card-motion::before {
@@ -310,9 +465,9 @@
   z-index: -1;
   inset: -8px -8px -10px;
   border: 1px solid rgba(239, 233, 219, 0.13);
-  background: rgba(14, 16, 12, 0.72);
-  box-shadow: 0 20px 38px rgba(0, 0, 0, 0.22);
-  opacity: 0.9;
+  background: rgba(14, 16, 12, 0.78);
+  box-shadow: 0 20px 38px rgba(0, 0, 0, 0.24);
+  opacity: 0.94;
   pointer-events: none;
 }
 
@@ -332,7 +487,7 @@
 
 .project-card-motion .project-card-topline,
 .project-card-motion .project-info {
-  opacity: 0.24;
+  opacity: 0.16;
 }
 
 .project-card-motion .project-card-topline {
@@ -350,7 +505,7 @@
   border: 1px solid rgba(167, 179, 95, 0.52);
   border-radius: 50%;
   transform: translateY(-50%);
-  opacity: 0.54;
+  opacity: 0.5;
 }
 
 .project-card-motion .project-card-topline::after {
@@ -361,38 +516,39 @@
   left: 14px;
   height: 1px;
   background: linear-gradient(90deg, rgba(167, 179, 95, 0.32), transparent 88%);
-  transform: scaleX(0.32);
+  transform: scaleX(0.2);
   transform-origin: left center;
 }
 
 .work-motion.is-revealed .project-card-motion {
-  animation: specimen-catalogue 900ms var(--ease-editorial) 300ms both;
+  animation: specimen-catalogue 840ms var(--ease-editorial) 420ms both;
 }
 
 .work-motion.is-revealed .project-card-motion::before {
-  animation: specimen-sheet-release 980ms var(--ease-editorial) 300ms both;
+  animation: specimen-sheet-release 940ms var(--ease-editorial) 420ms both;
 }
 
 .work-motion.is-revealed .project-card-motion::after {
-  animation: specimen-registration-settle 620ms var(--ease-editorial) 830ms both;
+  animation: specimen-registration-settle 560ms var(--ease-editorial) 980ms both;
 }
 
 .work-motion.is-revealed .project-card-motion .project-card-topline,
 .work-motion.is-revealed .project-card-motion .project-info {
-  animation: specimen-labels-resolve 520ms var(--ease-editorial) 850ms both;
+  animation: specimen-labels-resolve 420ms var(--ease-editorial) var(--catalog-delay) both;
 }
 
 .work-motion.is-revealed .project-card-motion .project-card-topline::after {
-  animation: specimen-rule-register 560ms var(--ease-editorial) 880ms both;
+  animation: specimen-rule-register 430ms var(--ease-editorial)
+    calc(var(--catalog-delay) + 25ms) both;
 }
 
 @keyframes specimen-catalogue {
   0% {
-    opacity: 0.78;
+    opacity: 0.72;
     transform:
       translate(var(--specimen-x), var(--specimen-y))
       rotate(var(--specimen-rotate))
-      scale(0.985);
+      scale(0.975);
   }
   18% { opacity: 1; }
   100% {
@@ -403,10 +559,10 @@
 
 @keyframes specimen-sheet-release {
   0% {
-    opacity: 0.9;
-    box-shadow: 0 20px 38px rgba(0, 0, 0, 0.22);
+    opacity: 0.94;
+    box-shadow: 0 20px 38px rgba(0, 0, 0, 0.24);
   }
-  58% { opacity: 0.54; }
+  60% { opacity: 0.5; }
   100% {
     opacity: 0;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0);
@@ -419,14 +575,71 @@
 }
 
 @keyframes specimen-labels-resolve {
-  from { opacity: 0.24; }
+  from { opacity: 0.16; }
   to { opacity: 1; }
 }
 
 @keyframes specimen-rule-register {
-  from { transform: scaleX(0.32); }
+  from { transform: scaleX(0.2); }
   to { transform: scaleX(1); }
 }
+
+/* ---------- One-pass archive scanner ---------- */
+
+.archive-scan-line {
+  position: absolute;
+  z-index: 8;
+  top: 24px;
+  right: -8px;
+  left: -8px;
+  height: 1px;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(167, 179, 95, 0.76) 14%,
+    rgba(239, 233, 219, 0.5) 50%,
+    rgba(167, 179, 95, 0.76) 86%,
+    transparent
+  );
+  box-shadow: 0 0 12px rgba(167, 179, 95, 0.14);
+}
+
+.archive-scan-line::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(167, 179, 95, 0.72);
+  border-radius: 50%;
+  background: var(--bg);
+  transform: translateX(-50%);
+}
+
+.work-motion.is-revealed .archive-scan-line {
+  animation: archive-catalogue-scan 620ms ease-in-out 1010ms both;
+}
+
+@keyframes archive-catalogue-scan {
+  0% {
+    top: 24px;
+    opacity: 0;
+  }
+  10% { opacity: 0.78; }
+  82% {
+    top: calc(100% - 20px);
+    opacity: 0.74;
+  }
+  100% {
+    top: calc(100% - 10px);
+    opacity: 0;
+  }
+}
+
+/* ---------- Resting tactile response ---------- */
 
 .project-card-motion .project-trigger {
   transform: none;
@@ -476,35 +689,43 @@
   transform: none;
 }
 
+/* ---------- Responsive choreography ---------- */
+
 @media (max-width: 960px) {
   .project-card-motion[data-reveal-slot='0'] {
-    --specimen-x: 34px;
-    --specimen-y: 12px;
+    --specimen-x: 46px;
+    --specimen-y: 14px;
+    --catalog-delay: 1130ms;
   }
 
   .project-card-motion[data-reveal-slot='1'] {
-    --specimen-x: -34px;
-    --specimen-y: 12px;
+    --specimen-x: -46px;
+    --specimen-y: 14px;
+    --catalog-delay: 1130ms;
   }
 
   .project-card-motion[data-reveal-slot='2'] {
-    --specimen-x: 34px;
-    --specimen-y: -20px;
+    --specimen-x: 46px;
+    --specimen-y: -30px;
+    --catalog-delay: 1230ms;
   }
 
   .project-card-motion[data-reveal-slot='3'] {
-    --specimen-x: -34px;
-    --specimen-y: -20px;
+    --specimen-x: -46px;
+    --specimen-y: -30px;
+    --catalog-delay: 1230ms;
   }
 
   .project-card-motion[data-reveal-slot='4'] {
-    --specimen-x: 34px;
-    --specimen-y: -48px;
+    --specimen-x: 42px;
+    --specimen-y: -58px;
+    --catalog-delay: 1330ms;
   }
 
   .project-card-motion[data-reveal-slot='5'] {
-    --specimen-x: -34px;
-    --specimen-y: -48px;
+    --specimen-x: -42px;
+    --specimen-y: -58px;
+    --catalog-delay: 1330ms;
   }
 }
 
@@ -526,6 +747,14 @@
     left: 0;
   }
 
+  .archive-tracing-sheet {
+    inset: 16px -2px -6px;
+  }
+
+  .archive-tracing-art {
+    opacity: 0.44;
+  }
+
   .project-card-motion .project-card-topline {
     padding-left: 12px;
   }
@@ -536,20 +765,23 @@
 
   .project-card-motion[data-reveal-slot='0'] {
     --specimen-x: 0px;
-    --specimen-y: 12px;
-    --specimen-rotate: -0.5deg;
+    --specimen-y: 14px;
+    --specimen-rotate: -0.55deg;
+    --catalog-delay: 1110ms;
   }
 
   .project-card-motion[data-reveal-slot='1'] {
-    --specimen-x: 8px;
-    --specimen-y: -12px;
-    --specimen-rotate: 0.4deg;
+    --specimen-x: 9px;
+    --specimen-y: -14px;
+    --specimen-rotate: 0.42deg;
+    --catalog-delay: 1190ms;
   }
 
   .project-card-motion[data-reveal-slot='2'] {
-    --specimen-x: -6px;
-    --specimen-y: -32px;
-    --specimen-rotate: -0.35deg;
+    --specimen-x: -7px;
+    --specimen-y: -34px;
+    --specimen-rotate: -0.38deg;
+    --catalog-delay: 1270ms;
   }
 
   .project-card-motion[data-reveal-slot='3'],
@@ -560,10 +792,21 @@
     --specimen-rotate: 0deg;
   }
 
+  .project-card-motion[data-reveal-slot='3'] { --catalog-delay: 1350ms; }
+  .project-card-motion[data-reveal-slot='4'] { --catalog-delay: 1430ms; }
+  .project-card-motion[data-reveal-slot='5'] { --catalog-delay: 1510ms; }
+
   .project-card-motion::before {
     inset: -5px -5px -7px;
   }
+
+  .archive-scan-line {
+    right: 0;
+    left: 0;
+  }
 }
+
+/* ---------- Reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   .work-motion::before,
@@ -574,6 +817,8 @@
   .archive-register-lock,
   .work-archive::before,
   .archive-press-rail,
+  .archive-tracing-sheet,
+  .archive-scan-line,
   .project-card-motion,
   .project-card-motion::before,
   .project-card-motion::after,
@@ -591,7 +836,6 @@
   .section-count-motion,
   .archive-register-node,
   .work-archive::before,
-  .archive-press-rail,
   .project-card-motion,
   .project-card-motion .project-card-topline,
   .project-card-motion .project-info {
@@ -604,15 +848,17 @@
   }
 
   .archive-register-lock {
-    opacity: 0.22;
-    transform: scaleY(0.65);
+    opacity: 0.2;
+    transform: scaleY(0.62);
   }
 
   .project-card-motion {
     transform: none;
   }
 
-  .project-card-motion::before {
+  .project-card-motion::before,
+  .archive-tracing-sheet,
+  .archive-scan-line {
     opacity: 0;
   }
 
