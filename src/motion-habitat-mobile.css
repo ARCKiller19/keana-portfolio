@@ -12,16 +12,16 @@
   .motion-habitat-header p {
     max-width: 38ch;
     margin-top: 5px;
-    color: rgba(239, 233, 219, 0.54);
-    font-size: 8px;
+    color: rgba(239, 233, 219, 0.62);
+    font-size: 10px;
     line-height: 1.55;
   }
 
   .motion-habitat-header p::before {
     content: 'TAP TO EXPLORE · ';
-    color: rgba(205, 221, 111, 0.72);
+    color: rgba(205, 221, 111, 0.76);
     font-family: var(--font-mono);
-    font-size: 6px;
+    font-size: 7.5px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
@@ -60,6 +60,12 @@
     gap: 5px;
   }
 
+  .motion-habitat .motion-habitat-station-copy span,
+  .motion-habitat .motion-habitat-station-copy small,
+  .motion-habitat .motion-habitat-station-copy em {
+    font-size: 7.25px;
+  }
+
   .motion-habitat .motion-habitat-station-copy strong {
     font-size: 16.5px;
     line-height: 1;
@@ -67,18 +73,13 @@
 
   .motion-habitat .motion-habitat-station-copy small {
     overflow: visible;
-    font-size: 6.5px;
     line-height: 1.3;
     white-space: normal;
   }
 
-  .motion-habitat .motion-habitat-station-copy em {
-    font-size: 6.25px;
-  }
-
   .motion-habitat .motion-habitat-station-copy::after {
     content: '> TAP TO APPROACH';
-    font-size: 6.25px;
+    font-size: 7.25px;
   }
 
   .motion-habitat .motion-habitat-station.is-targeted .motion-habitat-station-copy::after {
@@ -100,7 +101,7 @@
   .motion-habitat .motion-habitat-character::before {
     padding: 3px 6px 2px;
     background: rgba(5, 7, 5, 0.96);
-    font-size: 6px;
+    font-size: 6.5px;
   }
 
   /* The panel is the payoff on mobile: let it read like the next deliberate step. */
@@ -125,6 +126,10 @@
     min-width: 0;
   }
 
+  .motion-habitat-panel-head span {
+    font-size: 7.5px;
+  }
+
   .motion-habitat-panel-head strong {
     font-size: clamp(20px, 7.2vw, 28px);
     line-height: 1.04;
@@ -137,6 +142,7 @@
     min-width: 44px;
     min-height: 44px;
     padding: 10px 11px;
+    font-size: 8.5px;
     touch-action: manipulation;
   }
 
@@ -156,11 +162,11 @@
   .motion-habitat-panel-category,
   .motion-habitat-panel-date,
   .motion-habitat-panel-credit {
-    font-size: 7px;
+    font-size: 8px;
   }
 
   .motion-habitat-panel-copy p {
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 1.65;
   }
 
@@ -172,6 +178,7 @@
     width: 100%;
     min-height: 44px;
     padding: 10px 12px;
+    font-size: 8.5px;
     touch-action: manipulation;
   }
 
@@ -183,11 +190,13 @@
   .motion-habitat-panel.has-cuts .motion-habitat-panel-media.motion-screening-media .motion-cut-option {
     min-height: 44px;
     padding-block: 10px;
+    font-size: 8.5px;
     touch-action: manipulation;
   }
 
   .motion-habitat .station-roast::after {
     top: -7px;
+    font-size: 6.25px;
   }
 }
 
