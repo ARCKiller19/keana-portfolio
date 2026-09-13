@@ -150,6 +150,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const walkingRef = useRef(false)
   const facingRef = useRef('right')
   const fallbackTimerRef = useRef(null)
+  const suppressedStationRef = useRef(null)
 
   const isCompact = useMediaQuery('(max-width: 720px)')
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
@@ -197,6 +198,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       awakeIndexRef.current = index
       targetRef.current = null
       pressedKeysRef.current.clear()
+      suppressedStationRef.current = null
 
       setOpenIndex(index)
       setAwakeIndex(index)
@@ -215,6 +217,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const beginAutoWalk = useCallback(
     (index) => {
       if (index < 0 || index >= pieces.length) return
+
+      suppressedStationRef.current = null
 
       if (reducedMotion) {
         activateStation(index)
@@ -252,6 +256,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     positionRef.current = { ...nextLayout.start }
     targetRef.current = null
     pressedKeysRef.current.clear()
+    suppressedStationRef.current = null
     setTargetedIndex(null)
     setWalkingState(false)
     syncCharacter(positionRef.current)
@@ -364,6 +369,13 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         }
       })
 
+      if (suppressedStationRef.current !== null) {
+        const suppressedStation = activeLayout.stations[suppressedStationRef.current]
+        if (distance(next, suppressedStation) > WAKE_RADIUS) {
+          suppressedStationRef.current = null
+        }
+      }
+
       const nextAwake = nearestDistance <= WAKE_RADIUS ? nearestIndex : null
       if (awakeIndexRef.current !== nextAwake) {
         awakeIndexRef.current = nextAwake
@@ -373,7 +385,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       if (
         nearestIndex >= 0 &&
         nearestDistance <= ACTIVATE_RADIUS &&
-        openIndexRef.current !== nearestIndex
+        openIndexRef.current !== nearestIndex &&
+        suppressedStationRef.current !== nearestIndex
       ) {
         activateStation(nearestIndex)
       }
@@ -436,6 +449,12 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     event.preventDefault()
     targetRef.current = null
     setTargetedIndex(null)
+
+    if (fallbackTimerRef.current) {
+      window.clearTimeout(fallbackTimerRef.current)
+      fallbackTimerRef.current = null
+    }
+
     pressedKeysRef.current.add(direction)
     setWalkingState(true)
   }
@@ -464,6 +483,9 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   }
 
   const closePanel = () => {
+    const closingIndex = openIndexRef.current
+    if (closingIndex !== null) suppressedStationRef.current = closingIndex
+
     openIndexRef.current = null
     setOpenIndex(null)
     setTargetedIndex(null)
