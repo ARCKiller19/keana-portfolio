@@ -77,6 +77,7 @@ function NavIcon({ type }) {
 
 function Navbar() {
   const [activeSection, setActiveSection] = useState(null)
+  const [isCompact, setIsCompact] = useState(false)
   const [connectorProgress, setConnectorProgress] = useState(() =>
     navItems.slice(0, -1).map(() => 0),
   )
@@ -94,6 +95,7 @@ function Navbar() {
 
       if (sections.length === 0) {
         setActiveSection(null)
+        setIsCompact(false)
         setConnectorProgress(navItems.slice(0, -1).map(() => 0))
         return
       }
@@ -103,14 +105,24 @@ function Navbar() {
       const atPageEnd =
         window.scrollY + window.innerHeight >=
         document.documentElement.scrollHeight - 2
+      const heroBottom = hero?.getBoundingClientRect().bottom ?? 0
+      const compactThreshold = Math.max(
+        activationLine + 120,
+        window.innerHeight * 0.76,
+      )
+
+      // Compact while the visitor is leaving the hero, before About becomes
+      // the active section. Section highlighting keeps its stricter boundary.
+      setIsCompact(!hero || heroBottom <= compactThreshold)
 
       if (atPageEnd) {
         setActiveSection(navItems[navItems.length - 1].id)
+        setIsCompact(true)
         setConnectorProgress(navItems.slice(0, -1).map(() => 1))
         return
       }
 
-      if (hero && hero.getBoundingClientRect().bottom > activationLine) {
+      if (hero && heroBottom > activationLine) {
         setActiveSection(null)
         setConnectorProgress(navItems.slice(0, -1).map(() => 0))
         return
@@ -160,7 +172,10 @@ function Navbar() {
   }, [])
 
   return (
-    <header className="nav nav-panel" id="top">
+    <header
+      className={`nav nav-panel ${isCompact ? 'is-compact' : ''}`}
+      id="top"
+    >
       <a className="nav-brand" href="#top" onClick={handleSectionNavigation}>
         <span className="nav-mark">KEANA</span>
         <span className="nav-star" aria-hidden="true">✦</span>
