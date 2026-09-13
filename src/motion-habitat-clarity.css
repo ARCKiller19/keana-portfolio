@@ -1,0 +1,442 @@
+/* Motion Habitat interaction clarity: make destinations obvious before adding more atmosphere. */
+
+.motion-habitat .motion-habitat-station {
+  --station-rgb: 167, 179, 95;
+  grid-template-columns: 120px minmax(0, 170px);
+  gap: 16px;
+  width: 324px;
+  min-height: 128px;
+  padding: 15px;
+  border-color: rgba(var(--station-rgb), 0.2);
+  background:
+    linear-gradient(rgba(var(--station-rgb), 0.42), rgba(var(--station-rgb), 0.42)) 9px 9px / 18px 1px no-repeat,
+    linear-gradient(rgba(var(--station-rgb), 0.42), rgba(var(--station-rgb), 0.42)) 9px 9px / 1px 18px no-repeat,
+    linear-gradient(rgba(var(--station-rgb), 0.28), rgba(var(--station-rgb), 0.28)) calc(100% - 27px) calc(100% - 10px) / 18px 1px no-repeat,
+    linear-gradient(rgba(var(--station-rgb), 0.28), rgba(var(--station-rgb), 0.28)) calc(100% - 10px) calc(100% - 27px) / 1px 18px no-repeat,
+    rgba(6, 8, 6, 0.91);
+  box-shadow:
+    inset 0 0 0 1px rgba(239, 233, 219, 0.018),
+    0 14px 34px rgba(0, 0, 0, 0.14);
+  transition:
+    opacity 320ms var(--ease-editorial),
+    border-color 220ms var(--ease-editorial),
+    background-color 220ms var(--ease-editorial),
+    box-shadow 260ms var(--ease-editorial),
+    transform 260ms var(--ease-editorial);
+}
+
+.motion-habitat .station-roast {
+  --station-rgb: 188, 150, 78;
+}
+
+.motion-habitat .station-special {
+  --station-rgb: 167, 179, 95;
+}
+
+.motion-habitat .station-first-love {
+  --station-rgb: 148, 113, 157;
+}
+
+.motion-habitat.is-online .motion-habitat-station {
+  opacity: 0.94;
+}
+
+.motion-habitat .motion-habitat-station:hover,
+.motion-habitat .motion-habitat-station:focus-visible,
+.motion-habitat .motion-habitat-station.is-awake,
+.motion-habitat .motion-habitat-station.is-targeted,
+.motion-habitat .motion-habitat-station.is-open {
+  z-index: 14;
+  opacity: 1;
+  border-color: rgba(var(--station-rgb), 0.62);
+  background:
+    linear-gradient(rgba(var(--station-rgb), 0.82), rgba(var(--station-rgb), 0.82)) 9px 9px / 24px 1px no-repeat,
+    linear-gradient(rgba(var(--station-rgb), 0.82), rgba(var(--station-rgb), 0.82)) 9px 9px / 1px 24px no-repeat,
+    linear-gradient(rgba(var(--station-rgb), 0.58), rgba(var(--station-rgb), 0.58)) calc(100% - 33px) calc(100% - 10px) / 24px 1px no-repeat,
+    linear-gradient(rgba(var(--station-rgb), 0.58), rgba(var(--station-rgb), 0.58)) calc(100% - 10px) calc(100% - 33px) / 1px 24px no-repeat,
+    rgba(7, 9, 7, 0.98);
+  box-shadow:
+    inset 0 0 0 1px rgba(var(--station-rgb), 0.055),
+    0 22px 48px rgba(0, 0, 0, 0.26),
+    0 0 34px rgba(var(--station-rgb), 0.075);
+}
+
+.motion-habitat .motion-habitat-station:hover,
+.motion-habitat .motion-habitat-station:focus-visible {
+  transform: translate(-50%, -50%) translateY(-4px) scale(1.025);
+}
+
+.motion-habitat .motion-habitat-station.is-targeted {
+  transform: translate(-50%, -50%) scale(1.018);
+}
+
+.motion-habitat .motion-habitat-station:focus-visible {
+  outline: 2px solid rgba(var(--station-rgb), 0.88);
+  outline-offset: 5px;
+}
+
+.motion-habitat .motion-habitat-machine {
+  width: 120px;
+  height: 96px;
+  border-color: rgba(var(--station-rgb), 0.32);
+  transition:
+    border-color 220ms var(--ease-editorial),
+    box-shadow 260ms var(--ease-editorial),
+    transform 260ms var(--ease-editorial),
+    background-color 260ms var(--ease-editorial);
+}
+
+.motion-habitat .motion-habitat-machine-screen {
+  width: 82px;
+  height: 50px;
+  transition:
+    border-color 220ms var(--ease-editorial),
+    box-shadow 260ms var(--ease-editorial),
+    transform 260ms var(--ease-editorial),
+    background-color 260ms var(--ease-editorial);
+}
+
+.motion-habitat .motion-habitat-station:hover .motion-habitat-machine,
+.motion-habitat .motion-habitat-station:focus-visible .motion-habitat-machine,
+.motion-habitat .motion-habitat-station.is-awake .motion-habitat-machine,
+.motion-habitat .motion-habitat-station.is-targeted .motion-habitat-machine {
+  border-color: rgba(var(--station-rgb), 0.58);
+  box-shadow:
+    inset 0 0 22px rgba(var(--station-rgb), 0.035),
+    0 0 18px rgba(var(--station-rgb), 0.045);
+}
+
+.motion-habitat .motion-habitat-station:hover .motion-habitat-machine-screen,
+.motion-habitat .motion-habitat-station:focus-visible .motion-habitat-machine-screen,
+.motion-habitat .motion-habitat-station.is-awake .motion-habitat-machine-screen,
+.motion-habitat .motion-habitat-station.is-targeted .motion-habitat-machine-screen {
+  border-color: rgba(var(--station-rgb), 0.64);
+  box-shadow: inset 0 0 18px rgba(var(--station-rgb), 0.055);
+  transform: scale(1.035);
+}
+
+.motion-habitat .motion-habitat-station-copy {
+  gap: 6px;
+}
+
+.motion-habitat .motion-habitat-station-copy strong {
+  font-size: 20px;
+  line-height: 0.98;
+}
+
+.motion-habitat .motion-habitat-station-copy small,
+.motion-habitat .motion-habitat-station-copy em {
+  font-size: 6.75px;
+}
+
+/* A persistent visible signifier: the station itself tells the visitor what clicking does. */
+.motion-habitat .motion-habitat-station-copy::after {
+  content: '> CLICK TO APPROACH';
+  display: block;
+  width: fit-content;
+  margin-top: 4px;
+  padding-top: 5px;
+  border-top: 1px solid rgba(var(--station-rgb), 0.18);
+  color: rgba(var(--station-rgb), 0.72);
+  font-family: var(--font-mono);
+  font-size: 6.5px;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition:
+    color 220ms var(--ease-editorial),
+    letter-spacing 220ms var(--ease-editorial),
+    border-color 220ms var(--ease-editorial),
+    transform 220ms var(--ease-editorial);
+}
+
+.motion-habitat .motion-habitat-station:hover .motion-habitat-station-copy::after,
+.motion-habitat .motion-habitat-station:focus-visible .motion-habitat-station-copy::after {
+  content: '> APPROACH STATION';
+  color: rgba(var(--station-rgb), 0.98);
+  letter-spacing: 0.13em;
+  border-color: rgba(var(--station-rgb), 0.42);
+  transform: translateX(2px);
+}
+
+.motion-habitat .motion-habitat-station.is-targeted .motion-habitat-station-copy::after {
+  content: '> AUTO-WALKING';
+  color: rgba(var(--station-rgb), 0.96);
+}
+
+.motion-habitat .motion-habitat-station.is-awake:not(.is-open):not(.is-targeted) .motion-habitat-station-copy::after {
+  content: '> SIGNAL READY';
+  color: rgba(var(--station-rgb), 0.96);
+}
+
+.motion-habitat .motion-habitat-station.is-open .motion-habitat-station-copy::after {
+  content: '> PANEL OPEN';
+  color: rgba(var(--station-rgb), 0.98);
+}
+
+/* Roast: make the field-recorder identity obvious at a glance. */
+.motion-habitat .station-roast .accent-warm {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: auto;
+  height: auto;
+  background: none;
+}
+
+.motion-habitat .station-roast .accent-warm::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(188, 150, 78, 0.5);
+  box-shadow: 0 0 0 3px rgba(188, 150, 78, 0.045);
+}
+
+.motion-habitat .station-roast .accent-warm::after {
+  content: 'REC';
+  color: rgba(205, 176, 108, 0.52);
+  font-family: var(--font-mono);
+  font-size: 5px;
+  letter-spacing: 0.08em;
+}
+
+.motion-habitat .station-roast:hover .accent-warm::before,
+.motion-habitat .station-roast:focus-visible .accent-warm::before,
+.motion-habitat .station-roast.is-awake .accent-warm::before,
+.motion-habitat .station-roast.is-open .accent-warm::before {
+  background: rgba(205, 176, 108, 0.96);
+  box-shadow:
+    0 0 0 3px rgba(188, 150, 78, 0.07),
+    0 0 12px rgba(188, 150, 78, 0.22);
+}
+
+/* Special Singer: the machine behaves like a living rhythm monitor. */
+.motion-habitat .station-special .accent-pulse {
+  width: 34px;
+  height: 10px;
+  opacity: 0.65;
+}
+
+.motion-habitat .station-special:hover .motion-habitat-machine-screen::before,
+.motion-habitat .station-special:focus-visible .motion-habitat-machine-screen::before,
+.motion-habitat .station-special.is-awake .motion-habitat-machine-screen::before,
+.motion-habitat .station-special.is-open .motion-habitat-machine-screen::before {
+  animation: habitat-rhythm-wake 900ms ease-in-out infinite alternate;
+}
+
+@keyframes habitat-rhythm-wake {
+  from { transform: translateX(-2px) scaleY(0.92); opacity: 0.58; }
+  to { transform: translateX(2px) scaleY(1.08); opacity: 0.9; }
+}
+
+/* First Love: preserve the cute layered memory terminal, but let its chapters wake strongly. */
+.motion-habitat .station-first-love .accent-chapters {
+  gap: 4px;
+}
+
+.motion-habitat .station-first-love .accent-chapters i {
+  width: 6px;
+  height: 6px;
+  box-shadow: 0 0 0 1px rgba(239, 233, 219, 0.04);
+}
+
+.motion-habitat .station-first-love:hover .accent-chapters i,
+.motion-habitat .station-first-love:focus-visible .accent-chapters i,
+.motion-habitat .station-first-love.is-awake .accent-chapters i,
+.motion-habitat .station-first-love.is-open .accent-chapters i {
+  opacity: 1;
+  box-shadow: 0 0 9px currentColor;
+}
+
+/* ---------- Clearer two-path onboarding ---------- */
+
+.motion-habitat-guide {
+  width: min(520px, calc(100% - 48px));
+  padding: 20px 22px 18px;
+}
+
+.motion-habitat-guide-intro {
+  margin: -3px 0 14px;
+  color: rgba(239, 233, 219, 0.48);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.motion-habitat-guide-paths {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.motion-habitat-guide-path {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 9px;
+  min-height: 126px;
+  padding: 13px;
+  border: 1px solid rgba(239, 233, 219, 0.08);
+  background: rgba(239, 233, 219, 0.014);
+}
+
+.motion-habitat-guide-path-title {
+  color: rgba(205, 221, 111, 0.7);
+  font-family: var(--font-mono);
+  font-size: 6.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.motion-habitat-guide-path-copy {
+  color: rgba(239, 233, 219, 0.34);
+  font-family: var(--font-mono);
+  font-size: 6px;
+  line-height: 1.45;
+  letter-spacing: 0.07em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.motion-habitat-guide-manual-keys {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.motion-habitat-guide-manual-keys .motion-habitat-guide-key-grid {
+  grid-template-columns: repeat(3, 23px);
+  gap: 3px;
+}
+
+.motion-habitat-guide-manual-keys .motion-habitat-guide-key-grid kbd {
+  width: 23px;
+  height: 23px;
+  font-size: 8px;
+}
+
+.motion-habitat-guide-path-separator {
+  align-self: center;
+  color: rgba(239, 233, 219, 0.18);
+  font-family: var(--font-mono);
+  font-size: 6px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.motion-habitat-guide-station-demo {
+  position: relative;
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 8px;
+  align-items: center;
+  width: min(100%, 160px);
+  padding: 8px;
+  border: 1px solid rgba(167, 179, 95, 0.26);
+  background: rgba(6, 8, 6, 0.86);
+}
+
+.motion-habitat-guide-station-demo::before {
+  content: '';
+  width: 42px;
+  height: 32px;
+  border: 1px solid rgba(167, 179, 95, 0.26);
+  background:
+    linear-gradient(90deg, transparent 49%, rgba(167, 179, 95, 0.14) 50%, transparent 51%),
+    linear-gradient(transparent 49%, rgba(167, 179, 95, 0.12) 50%, transparent 51%);
+}
+
+.motion-habitat-guide-station-demo strong,
+.motion-habitat-guide-station-demo span {
+  display: block;
+  font-family: var(--font-mono);
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.motion-habitat-guide-station-demo strong {
+  color: rgba(239, 233, 219, 0.72);
+  font-size: 6.5px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+.motion-habitat-guide-station-demo span {
+  margin-top: 4px;
+  color: rgba(167, 179, 95, 0.68);
+  font-size: 5.5px;
+  letter-spacing: 0.08em;
+}
+
+.motion-habitat-guide-dismiss {
+  margin: 12px 0 0;
+  color: rgba(239, 233, 219, 0.24);
+  font-family: var(--font-mono);
+  font-size: 5.5px;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (max-width: 980px) {
+  .motion-habitat .motion-habitat-station {
+    grid-template-columns: 100px minmax(0, 148px);
+    width: 282px;
+    min-height: 116px;
+    padding: 12px;
+  }
+
+  .motion-habitat .motion-habitat-machine {
+    width: 100px;
+    height: 80px;
+  }
+
+  .motion-habitat .motion-habitat-machine-screen {
+    width: 68px;
+    height: 41px;
+  }
+
+  .motion-habitat .motion-habitat-station-copy strong {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 720px) {
+  .motion-habitat .motion-habitat-station {
+    grid-template-columns: 76px minmax(0, 1fr);
+    width: min(88vw, 310px);
+    min-height: 94px;
+    padding: 10px;
+  }
+
+  .motion-habitat .motion-habitat-machine {
+    width: 76px;
+    height: 64px;
+  }
+
+  .motion-habitat .motion-habitat-machine-screen {
+    width: 50px;
+    height: 31px;
+  }
+
+  .motion-habitat .motion-habitat-station-copy::after {
+    font-size: 6px;
+  }
+
+  .motion-habitat-guide {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-habitat .station-special .motion-habitat-machine-screen::before {
+    animation: none !important;
+  }
+}
