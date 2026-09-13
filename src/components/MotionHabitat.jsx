@@ -490,6 +490,12 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     setOpenIndex(null)
     setTargetedIndex(null)
     setStatusMessage('Viewing panel closed. Continue exploring the Motion Habitat.')
+
+    if (!isCompact && !reducedMotion) {
+      window.requestAnimationFrame(() => {
+        worldRef.current?.focus({ preventScroll: true })
+      })
+    }
   }
 
   const paths = layout.stations.map((station, index) => {
