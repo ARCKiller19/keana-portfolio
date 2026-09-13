@@ -13,6 +13,7 @@ import './botanical-motion.css'
 import './intro-navbar-guard.css'
 import './intro-vine-exit.css'
 import './selected-work-arrival.css'
+import './motion-reel-side-previews.css'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
