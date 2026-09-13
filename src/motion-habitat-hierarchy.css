@@ -17,6 +17,16 @@
   opacity: 0.28;
 }
 
+/* Replace the decorative crossed ellipses with one route that actually connects the three stations. */
+@media (min-width: 721px) {
+  .motion-habitat .motion-habitat-grid {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDU2MCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CjxwYXRoIGQ9Ik0xNzYgMjEwIEMzMTAgMTA1IDU0MCAyNTUgODA2IDE1OCBDOTAwIDIyMCA5MTAgMzE1IDc5MiAzOTgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E3YjM1ZiIgc3Ryb2tlLW9wYWNpdHk9Ii4xMiIgc3Ryb2tlLXdpZHRoPSIxMCIgdmVjdG9yLWVmZmVjdD0ibm9uLXNjYWxpbmctc3Ryb2tlIi8+CjxwYXRoIGQ9Ik0xNzYgMjEwIEMzMTAgMTA1IDU0MCAyNTUgODA2IDE1OCBDOTAwIDIyMCA5MTAgMzE1IDc5MiAzOTgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E3YjM1ZiIgc3Ryb2tlLW9wYWNpdHk9Ii41MiIgc3Ryb2tlLXdpZHRoPSIxLjYiIHZlY3Rvci1lZmZlY3Q9Im5vbi1zY2FsaW5nLXN0cm9rZSIvPgo8Y2lyY2xlIGN4PSIxNzYiIGN5PSIyMTAiIHI9IjMuMiIgZmlsbD0iI2NkZGQ2ZiIgZmlsbC1vcGFjaXR5PSIuNzUiLz4KPGNpcmNsZSBjeD0iODA2IiBjeT0iMTU4IiByPSIzLjIiIGZpbGw9IiNjZGRkNmYiIGZpbGwtb3BhY2l0eT0iLjc1Ii8+CjxjaXJjbGUgY3g9Ijc5MiIgY3k9IjM5OCIgcj0iMy4yIiBmaWxsPSIjY2RkZDZmIiBmaWxsLW9wYWNpdHk9Ii43NSIvPgo8L3N2Zz4=");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+}
+
 .motion-habitat .motion-habitat-signal:not(.is-live):not(.is-open) {
   stroke: rgba(167, 179, 95, 0.055);
 }
