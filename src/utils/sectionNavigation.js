@@ -6,26 +6,18 @@ export function getSectionActivationLine() {
 }
 
 function getWorkArrivalTop(target) {
-  const workbench = target.querySelector('.specimen-workbench')
+  const sectionHead = target.querySelector('.specimen-section-head')
 
-  if (!workbench || window.innerWidth <= 920) return null
+  if (!sectionHead || window.innerWidth <= 920) return null
 
   const nav = document.querySelector('.nav')
   const navRect = nav?.getBoundingClientRect()
   const activationLine = getSectionActivationLine()
   const navBottom = navRect?.bottom ?? activationLine
-  const reservedTop = Math.max(navBottom + 70, activationLine + 54)
-  const viewportBottom = window.innerHeight - 18
-  const usableHeight = Math.max(viewportBottom - reservedTop, 0)
-  const desiredCenter = reservedTop + usableHeight / 2
-  const workbenchRect = workbench.getBoundingClientRect()
+  const desiredHeadTop = Math.max(navBottom + 12, activationLine)
+  const headRect = sectionHead.getBoundingClientRect()
 
-  return (
-    window.scrollY +
-    workbenchRect.top +
-    workbenchRect.height / 2 -
-    desiredCenter
-  )
+  return window.scrollY + headRect.top - desiredHeadTop
 }
 
 export function handleSectionNavigation(event) {
@@ -43,6 +35,10 @@ export function handleSectionNavigation(event) {
   if (sectionId === 'top') {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   } else {
+    if (sectionId === 'work') {
+      window.dispatchEvent(new CustomEvent('keana:work-arrival'))
+    }
+
     const workArrivalTop =
       sectionId === 'work' ? getWorkArrivalTop(target) : null
     const activationLine = getSectionActivationLine()
