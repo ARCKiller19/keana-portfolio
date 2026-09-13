@@ -1,28 +1,26 @@
-/* Motion Habitat onboarding, character scale, and deployed-control polish. */
+/* Motion Habitat onboarding, station identity, character scale, and deployed-control polish. */
 
-.motion-habitat .motion-habitat-world::after {
-  content: 'CLICK INSIDE TO EXPLORE\A USE W A S D TO MOVE\A ARROWS ALSO WORK · OR CLICK ANY STATION';
+/* ---------- First-entry control guide ---------- */
+
+.motion-habitat-guide {
   position: absolute;
   z-index: 24;
   top: 52%;
   left: 50%;
-  width: min(360px, calc(100% - 48px));
-  padding: 16px 20px;
-  border: 1px solid rgba(205, 221, 111, 0.28);
+  display: grid;
+  justify-items: center;
+  width: min(430px, calc(100% - 48px));
+  padding: 18px 22px 16px;
+  border: 1px solid rgba(205, 221, 111, 0.3);
   background:
-    linear-gradient(180deg, rgba(167, 179, 95, 0.045), rgba(6, 8, 6, 0.94)),
-    rgba(6, 8, 6, 0.96);
+    linear-gradient(180deg, rgba(167, 179, 95, 0.05), rgba(6, 8, 6, 0.96)),
+    rgba(6, 8, 6, 0.98);
   box-shadow:
-    0 22px 54px rgba(0, 0, 0, 0.38),
+    0 24px 58px rgba(0, 0, 0, 0.42),
     inset 0 0 0 1px rgba(239, 233, 219, 0.025),
-    0 0 34px rgba(167, 179, 95, 0.055);
+    0 0 40px rgba(167, 179, 95, 0.06);
   color: rgba(239, 233, 219, 0.74);
   font-family: var(--font-mono);
-  font-size: clamp(8px, 0.78vw, 10px);
-  line-height: 1.85;
-  letter-spacing: 0.12em;
-  text-align: center;
-  white-space: pre-line;
   pointer-events: none;
   opacity: 0;
   transform: translate(-50%, -46%) scale(0.985);
@@ -31,9 +29,358 @@
     transform 320ms var(--ease-editorial);
 }
 
-.motion-habitat .motion-habitat-world.show-control-guide::after {
+.motion-habitat-guide.is-visible {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
+}
+
+.motion-habitat-guide-eyebrow {
+  margin-bottom: 12px;
+  color: rgba(205, 221, 111, 0.72);
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.motion-habitat-guide-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.motion-habitat-guide-key-group {
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+}
+
+.motion-habitat-guide-key-group > span:last-child {
+  color: rgba(239, 233, 219, 0.38);
+  font-size: 6.5px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.motion-habitat-guide-key-grid,
+.motion-habitat-arrow-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 28px);
+  grid-template-areas:
+    '. up .'
+    'left down right';
+  gap: 4px;
+}
+
+.motion-habitat-guide-key-grid kbd,
+.motion-habitat-arrow-keys b,
+.motion-habitat-keys b {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(239, 233, 219, 0.17);
+  border-bottom-color: rgba(239, 233, 219, 0.27);
+  background:
+    linear-gradient(180deg, rgba(239, 233, 219, 0.045), rgba(0, 0, 0, 0.1)),
+    rgba(8, 10, 8, 0.9);
+  box-shadow:
+    inset 0 -2px 0 rgba(0, 0, 0, 0.28),
+    0 4px 10px rgba(0, 0, 0, 0.16);
+  color: rgba(239, 233, 219, 0.72);
+  font-family: var(--font-mono);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.motion-habitat-guide-key-grid kbd {
+  width: 28px;
+  height: 28px;
+  font-size: 10px;
+}
+
+.motion-habitat-guide-key-grid kbd:nth-child(1),
+.motion-habitat-arrow-keys b:nth-child(1) { grid-area: up; }
+.motion-habitat-guide-key-grid kbd:nth-child(2),
+.motion-habitat-arrow-keys b:nth-child(2) { grid-area: left; }
+.motion-habitat-guide-key-grid kbd:nth-child(3),
+.motion-habitat-arrow-keys b:nth-child(3) { grid-area: down; }
+.motion-habitat-guide-key-grid kbd:nth-child(4),
+.motion-habitat-arrow-keys b:nth-child(4) { grid-area: right; }
+
+.motion-habitat-guide-key-grid.is-wasd kbd:nth-child(1) { grid-area: up; }
+.motion-habitat-guide-key-grid.is-wasd kbd:nth-child(2) { grid-area: left; }
+.motion-habitat-guide-key-grid.is-wasd kbd:nth-child(3) { grid-area: down; }
+.motion-habitat-guide-key-grid.is-wasd kbd:nth-child(4) { grid-area: right; }
+
+.motion-habitat-guide-or {
+  color: rgba(239, 233, 219, 0.22);
+  font-size: 7px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.motion-habitat-guide p {
+  margin: 13px 0 0;
+  color: rgba(239, 233, 219, 0.46);
+  font-size: 7px;
+  line-height: 1.5;
+  letter-spacing: 0.09em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ---------- Persistent movement reminder ---------- */
+
+.motion-habitat .motion-habitat-controls {
+  gap: 8px;
+}
+
+.motion-habitat .motion-habitat-keys,
+.motion-habitat .motion-habitat-arrow-keys {
+  grid-template-columns: repeat(3, 15px);
+  grid-template-areas:
+    '. up .'
+    'left down right';
+  gap: 2px;
+  flex: 0 0 auto;
+}
+
+.motion-habitat .motion-habitat-keys b,
+.motion-habitat .motion-habitat-arrow-keys b {
+  width: 15px;
+  height: 15px;
+  font-size: 6px;
+}
+
+.motion-habitat .motion-habitat-keys b:nth-child(1) { grid-area: up; }
+.motion-habitat .motion-habitat-keys b:nth-child(2) { grid-area: left; }
+.motion-habitat .motion-habitat-keys b:nth-child(3) { grid-area: down; }
+.motion-habitat .motion-habitat-keys b:nth-child(4) { grid-area: right; }
+
+.motion-habitat-control-or {
+  color: rgba(239, 233, 219, 0.16);
+  font-size: 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.motion-habitat-control-copy {
+  color: rgba(239, 233, 219, 0.28);
+  font-size: 6.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------- Larger, recognizably different stations ---------- */
+
+.motion-habitat .motion-habitat-station {
+  grid-template-columns: 108px minmax(0, 150px);
+  gap: 15px;
+  width: 292px;
+  min-height: 112px;
+  padding: 13px;
+  opacity: 0;
+}
+
+.motion-habitat.is-online .motion-habitat-station {
+  opacity: 0.86;
+}
+
+.motion-habitat .motion-habitat-machine {
+  width: 108px;
+  height: 86px;
+}
+
+.motion-habitat .motion-habitat-machine-screen {
+  position: relative;
+  width: 74px;
+  height: 44px;
+  overflow: hidden;
+}
+
+.motion-habitat .motion-habitat-station-copy {
+  gap: 5px;
+}
+
+.motion-habitat .motion-habitat-station-copy span {
+  font-size: 7px;
+}
+
+.motion-habitat .motion-habitat-station-copy strong {
+  font-size: 19px;
+  line-height: 0.98;
+}
+
+.motion-habitat .motion-habitat-station-copy small,
+.motion-habitat .motion-habitat-station-copy em {
+  font-size: 6.5px;
+}
+
+.motion-habitat .motion-habitat-station-number {
+  top: 8px;
+  right: 9px;
+  font-size: 7.5px;
+}
+
+.motion-habitat .motion-habitat-station::before {
+  position: absolute;
+  z-index: 2;
+  top: -7px;
+  left: 13px;
+  padding: 2px 6px;
+  border: 1px solid rgba(239, 233, 219, 0.08);
+  background: #070907;
+  font-family: var(--font-mono);
+  font-size: 5.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Roast — field monitor / recorder. */
+.motion-habitat .station-roast {
+  border-left-color: rgba(188, 150, 78, 0.42);
+  box-shadow: inset 3px 0 0 rgba(188, 150, 78, 0.12);
+}
+
+.motion-habitat .station-roast::before {
+  content: 'FIELD RECORDER';
+  color: rgba(205, 176, 108, 0.6);
+}
+
+.motion-habitat .station-roast .motion-habitat-machine {
+  border-color: rgba(188, 150, 78, 0.24);
+}
+
+.motion-habitat .station-roast .motion-habitat-machine-screen {
+  border-color: rgba(188, 150, 78, 0.3);
+  background:
+    linear-gradient(90deg, transparent 49%, rgba(188, 150, 78, 0.15) 50%, transparent 51%),
+    linear-gradient(transparent 49%, rgba(188, 150, 78, 0.12) 50%, transparent 51%),
+    rgba(188, 150, 78, 0.025);
+}
+
+.motion-habitat .station-roast .motion-habitat-machine-screen::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(188, 150, 78, 0.22);
+  clip-path: polygon(0 0, 24% 0, 24% 2px, 2px 2px, 2px 24%, 0 24%, 0 0, 100% 0, 100% 24%, calc(100% - 2px) 24%, calc(100% - 2px) 2px, 76% 2px, 76% 0, 100% 0, 100% 100%, 76% 100%, 76% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 76%, 100% 76%, 100% 100%, 0 100%, 0 76%, 2px 76%, 2px calc(100% - 2px), 24% calc(100% - 2px), 24% 100%, 0 100%);
+  background: rgba(188, 150, 78, 0.16);
+}
+
+.motion-habitat .station-roast .motion-habitat-machine-screen::after {
+  content: 'REC';
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  color: rgba(205, 176, 108, 0.72);
+  font-family: var(--font-mono);
+  font-size: 4.5px;
+  letter-spacing: 0.08em;
+}
+
+/* Special Singer — rhythm console. */
+.motion-habitat .station-special {
+  border-top-color: rgba(167, 179, 95, 0.42);
+  box-shadow: inset 0 3px 0 rgba(167, 179, 95, 0.1);
+}
+
+.motion-habitat .station-special::before {
+  content: 'RHYTHM CONSOLE';
+  color: rgba(205, 221, 111, 0.58);
+}
+
+.motion-habitat .station-special .motion-habitat-machine {
+  border-color: rgba(167, 179, 95, 0.28);
+}
+
+.motion-habitat .station-special .motion-habitat-machine-screen {
+  border-radius: 9px 2px 9px 2px;
+  background: rgba(167, 179, 95, 0.025);
+}
+
+.motion-habitat .station-special .motion-habitat-machine-screen::before {
+  content: '';
+  position: absolute;
+  inset: 8px 7px;
+  opacity: 0.68;
+  background:
+    linear-gradient(90deg,
+      transparent 0 4%, rgba(167, 179, 95, 0.26) 4% 9%, transparent 9% 16%,
+      rgba(167, 179, 95, 0.4) 16% 22%, transparent 22% 29%,
+      rgba(167, 179, 95, 0.2) 29% 34%, transparent 34% 42%,
+      rgba(205, 221, 111, 0.42) 42% 48%, transparent 48% 56%,
+      rgba(167, 179, 95, 0.26) 56% 61%, transparent 61% 70%,
+      rgba(205, 221, 111, 0.5) 70% 75%, transparent 75% 84%,
+      rgba(167, 179, 95, 0.24) 84% 89%, transparent 89% 100%);
+  clip-path: polygon(0 46%, 6% 25%, 13% 67%, 21% 38%, 29% 57%, 38% 17%, 47% 72%, 57% 32%, 66% 61%, 75% 20%, 84% 68%, 92% 40%, 100% 52%, 100% 58%, 92% 46%, 84% 74%, 75% 26%, 66% 67%, 57% 38%, 47% 78%, 38% 23%, 29% 63%, 21% 44%, 13% 73%, 6% 31%, 0 52%);
+}
+
+.motion-habitat .station-special .motion-habitat-machine-screen::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  right: 7px;
+  top: 50%;
+  height: 1px;
+  background: rgba(167, 179, 95, 0.15);
+}
+
+/* First Love — layered memory / color terminal. */
+.motion-habitat .station-first-love {
+  border-right-color: rgba(130, 104, 139, 0.42);
+  box-shadow: inset -3px 0 0 rgba(130, 104, 139, 0.1);
+}
+
+.motion-habitat .station-first-love::before {
+  content: 'MEMORY TERMINAL';
+  color: rgba(176, 151, 183, 0.58);
+}
+
+.motion-habitat .station-first-love .motion-habitat-machine {
+  border-color: rgba(130, 104, 139, 0.28);
+  box-shadow:
+    5px -5px 0 -1px rgba(7, 9, 7, 1),
+    5px -5px 0 rgba(130, 104, 139, 0.12),
+    10px -10px 0 -1px rgba(7, 9, 7, 1),
+    10px -10px 0 rgba(130, 104, 139, 0.07);
+}
+
+.motion-habitat .station-first-love .motion-habitat-machine-screen {
+  background:
+    linear-gradient(90deg,
+      rgba(132, 63, 63, 0.12) 0 31%, transparent 31% 34%,
+      rgba(103, 80, 117, 0.12) 34% 65%, transparent 65% 68%,
+      rgba(143, 126, 62, 0.1) 68% 100%);
+}
+
+.motion-habitat .station-first-love .motion-habitat-machine-screen::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  right: 7px;
+  bottom: 6px;
+  height: 3px;
+  background: linear-gradient(90deg, #9b4545 0 30%, transparent 30% 35%, #6e557f 35% 65%, transparent 65% 70%, #9d8d48 70% 100%);
+  opacity: 0.58;
+}
+
+.motion-habitat .station-first-love .motion-habitat-machine-screen::after {
+  content: 'R  P  Y';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 7px;
+  color: rgba(239, 233, 219, 0.28);
+  font-family: var(--font-mono);
+  font-size: 4.5px;
+  letter-spacing: 0.18em;
+  text-align: center;
+}
+
+.motion-habitat .motion-habitat-station.is-awake,
+.motion-habitat .motion-habitat-station.is-targeted,
+.motion-habitat .motion-habitat-station.is-open {
+  transform: translate(-50%, -50%) scale(1.025);
 }
 
 /* Make the visitor easier to notice without letting it dominate the habitat. */
@@ -43,7 +390,8 @@
   transform-origin: 50% 100%;
 }
 
-/* Roast versions belong to the media, but should not collide with the copy column. */
+/* ---------- Roast versions above its media ---------- */
+
 .motion-habitat-panel.has-cuts .motion-habitat-panel-media.motion-screening-media {
   display: flex;
   flex-direction: column;
@@ -79,9 +427,54 @@
   left: 11px;
 }
 
+@media (max-width: 980px) {
+  .motion-habitat .motion-habitat-station {
+    grid-template-columns: 88px minmax(0, 132px);
+    gap: 12px;
+    width: 250px;
+    min-height: 96px;
+    padding: 11px;
+  }
+
+  .motion-habitat .motion-habitat-machine {
+    width: 88px;
+    height: 72px;
+  }
+
+  .motion-habitat .motion-habitat-machine-screen {
+    width: 60px;
+    height: 36px;
+  }
+
+  .motion-habitat .motion-habitat-station-copy strong {
+    font-size: 17px;
+  }
+}
+
 @media (max-width: 720px) {
-  .motion-habitat .motion-habitat-world::after {
+  .motion-habitat-guide {
     display: none;
+  }
+
+  .motion-habitat .motion-habitat-station {
+    grid-template-columns: 74px minmax(0, 1fr);
+    width: min(82vw, 300px);
+    min-height: 84px;
+    padding: 9px;
+  }
+
+  .motion-habitat .motion-habitat-machine {
+    width: 74px;
+    height: 62px;
+  }
+
+  .motion-habitat .motion-habitat-machine-screen {
+    width: 48px;
+    height: 29px;
+  }
+
+  .motion-habitat .motion-habitat-station-copy strong {
+    font-size: 16px;
   }
 
   .motion-habitat .motion-habitat-character {
@@ -95,7 +488,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .motion-habitat .motion-habitat-world::after {
+  .motion-habitat-guide {
     display: none;
   }
 }
