@@ -4,6 +4,21 @@
   --intro-vine-settle-scale: 0.62;
 }
 
+/*
+ * During the cinematic intro, let the KEANA heading shrink-wrap to the rendered
+ * word instead of inheriting the wider hero text column. Hero.jsx measures this
+ * element to calculate --intro-x / --intro-y, so centering the intrinsic word
+ * box keeps the visible letters aligned with the viewport center.
+ */
+.hero-motion.intro-waiting .hero-mark,
+.hero-motion.intro-holding .hero-mark,
+.hero-motion.intro-vining .hero-mark,
+.hero-motion.intro-settling .hero-mark,
+.hero-motion.intro-furling .hero-mark {
+  width: max-content;
+  max-width: none;
+}
+
 .hero-motion.intro-settling .hero-intro-botanical,
 .hero-motion.intro-furling .hero-intro-botanical {
   transform:
