@@ -1,123 +1,141 @@
-/* Contact Signal Bloom — a calm, scroll-grown communication network for desktop. */
+/* Contact Orbit Bloom — strict circular contact geometry for desktop. */
 
-@media (min-width: 821px) {
+@media (min-width: 901px) {
   .footer {
-    --contact-line: rgba(167, 179, 95, 0.28);
-    --contact-line-live: rgba(205, 221, 111, 0.86);
-    --contact-node: rgba(239, 233, 219, 0.72);
-    padding-top: clamp(92px, 9vw, 132px);
+    --orbit-line: rgba(167, 179, 95, 0.28);
+    --orbit-live: rgba(205, 221, 111, 0.9);
+    --orbit-cream: rgba(239, 233, 219, 0.78);
+    padding-top: clamp(82px, 7vw, 112px);
     background:
-      radial-gradient(circle at 47% 47%, rgba(167, 179, 95, 0.055), transparent 24%),
-      linear-gradient(180deg, rgba(167, 179, 95, 0.02), transparent 34%),
+      radial-gradient(circle at 76% 48%, rgba(167, 179, 95, 0.045), transparent 25%),
+      linear-gradient(180deg, rgba(167, 179, 95, 0.018), transparent 32%),
       var(--bg);
   }
 
   .footer-kicker {
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
 
   .footer-top {
-    position: relative;
-    display: block;
-    min-height: clamp(600px, 52vw, 690px);
-    margin-bottom: 42px;
-    isolation: isolate;
-  }
-
-  /* Main signal stem. Its growth is tied to scroll in supporting browsers. */
-  .footer-top::before {
-    content: '';
-    position: absolute;
-    z-index: 0;
-    top: -25px;
-    left: 47%;
-    width: 1px;
-    height: 51%;
-    background: linear-gradient(
-      180deg,
-      rgba(167, 179, 95, 0.05),
-      rgba(167, 179, 95, 0.52) 52%,
-      rgba(205, 221, 111, 0.72)
-    );
-    box-shadow: 0 0 10px rgba(167, 179, 95, 0.08);
-    transform-origin: top center;
-    pointer-events: none;
-  }
-
-  .footer-top::after {
-    content: '';
-    position: absolute;
-    z-index: 0;
-    top: calc(51% - 29px);
-    left: calc(47% - 27px);
-    width: 54px;
-    height: 54px;
-    border: 1px solid rgba(167, 179, 95, 0.34);
-    border-radius: 50%;
-    box-shadow:
-      inset 0 0 0 7px rgba(167, 179, 95, 0.018),
-      0 0 0 1px rgba(239, 233, 219, 0.018);
-    pointer-events: none;
+    display: grid;
+    grid-template-columns: minmax(320px, 0.78fr) minmax(520px, 1.22fr);
+    gap: clamp(46px, 6vw, 92px);
+    align-items: center;
+    min-height: 580px;
+    margin-bottom: 36px;
   }
 
   .footer-message {
-    position: absolute;
-    z-index: 3;
-    top: 10%;
-    left: 0;
-    width: min(44%, 500px);
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    min-width: 0;
   }
 
   .footer-eyebrow {
-    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    margin-bottom: 14px;
   }
 
   .footer-eyebrow::before {
     content: '';
-    width: 20px;
+    width: 22px;
     height: 1px;
     background: rgba(205, 221, 111, 0.72);
   }
 
   .footer-top h2 {
-    max-width: 8.6ch;
-    font-size: clamp(58px, 7vw, 96px);
+    max-width: 8.4ch;
+    font-family: var(--font-hero);
+    font-size: clamp(58px, 6.2vw, 88px);
+    font-weight: 300;
+    line-height: 0.93;
+    letter-spacing: -0.035em;
   }
 
   .footer-contact-panel {
-    position: static;
+    position: relative;
     display: block;
+    justify-self: end;
+    width: min(46vw, 560px);
+    aspect-ratio: 1;
     padding: 0;
+    isolation: isolate;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(167, 179, 95, 0.055), transparent 24%),
+      radial-gradient(circle at 50% 50%, transparent 0 46%, rgba(167, 179, 95, 0.018) 46% 46.5%, transparent 46.5%);
   }
 
-  /* The email is the central communication node. */
+  /* One strict orbit. The four social nodes sit exactly on this circumference. */
+  .footer-contact-panel::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    inset: 100px;
+    border: 1px solid rgba(167, 179, 95, 0.27);
+    border-radius: 50%;
+    box-shadow:
+      inset 0 0 34px rgba(167, 179, 95, 0.012),
+      0 0 24px rgba(167, 179, 95, 0.025);
+    pointer-events: none;
+  }
+
+  .footer-contact-panel::after {
+    content: 'ORBIT 04 · CONTACT BLOOM';
+    position: absolute;
+    z-index: 1;
+    right: 8px;
+    bottom: 5px;
+    color: rgba(167, 179, 95, 0.42);
+    font-family: var(--font-mono);
+    font-size: 6.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  /* Email is the sun/core, not another petal. */
   .footer-email {
     position: absolute;
     z-index: 5;
-    top: 46%;
-    left: 33%;
-    width: min(38%, 450px);
-    min-height: 64px;
-    padding: 17px 18px;
-    border: 1px solid rgba(167, 179, 95, 0.42);
-    background: rgba(7, 9, 7, 0.94);
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 190px;
+    height: 190px;
+    min-height: 0;
+    padding: 26px 18px;
+    overflow: visible;
+    border: 1px solid rgba(205, 221, 111, 0.48);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 50% 42%, rgba(167, 179, 95, 0.08), transparent 58%),
+      rgba(7, 9, 7, 0.97);
     box-shadow:
-      inset 0 0 0 1px rgba(239, 233, 219, 0.018),
-      0 16px 34px rgba(0, 0, 0, 0.2);
+      inset 0 0 0 12px rgba(167, 179, 95, 0.018),
+      0 18px 42px rgba(0, 0, 0, 0.2);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    text-align: center;
+    transform: translate(-50%, -50%);
   }
 
   .footer-email::before {
-    content: 'PRIMARY SIGNAL · EMAIL';
-    position: absolute;
-    bottom: calc(100% + 9px);
-    left: 0;
-    color: rgba(205, 221, 111, 0.68);
+    content: 'PRIMARY SIGNAL';
+    position: static;
+    color: rgba(205, 221, 111, 0.7);
     font-family: var(--font-mono);
-    font-size: 7px;
-    letter-spacing: 0.11em;
+    font-size: 6.5px;
+    line-height: 1;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     white-space: nowrap;
   }
@@ -125,65 +143,42 @@
   .footer-email::after {
     content: '';
     position: absolute;
-    top: 50%;
-    left: -22px;
-    width: 8px;
-    height: 8px;
-    border: 1px solid rgba(205, 221, 111, 0.68);
+    inset: 15px;
+    border: 1px solid rgba(239, 233, 219, 0.045);
     border-radius: 50%;
-    background: var(--bg);
-    box-shadow: 0 0 0 4px rgba(167, 179, 95, 0.04);
-    transform: translateY(-50%);
+    pointer-events: none;
     transition:
       border-color var(--motion-fast) var(--ease-editorial),
-      background-color var(--motion-fast) var(--ease-editorial),
       box-shadow var(--motion-fast) var(--ease-editorial);
+  }
+
+  .footer-email > span:first-child {
+    max-width: 150px;
+    overflow-wrap: normal;
+    color: rgba(239, 233, 219, 0.9);
+  }
+
+  .footer-email > span:last-child {
+    color: rgba(205, 221, 111, 0.74);
+    font-size: 13px;
   }
 
   .footer-email:hover,
   .footer-email:focus-visible {
-    border-color: rgba(205, 221, 111, 0.78);
-    background: rgba(10, 13, 9, 0.98);
-    text-shadow: 0 0 16px rgba(167, 179, 95, 0.12);
+    border-color: rgba(205, 221, 111, 0.86);
+    background:
+      radial-gradient(circle at 50% 42%, rgba(167, 179, 95, 0.12), transparent 60%),
+      rgba(9, 12, 8, 0.99);
+    text-shadow: none;
   }
 
   .footer-email:hover::after,
   .footer-email:focus-visible::after {
-    border-color: rgba(205, 221, 111, 0.96);
-    background: rgba(167, 179, 95, 0.72);
-    box-shadow: 0 0 12px rgba(167, 179, 95, 0.18);
+    border-color: rgba(205, 221, 111, 0.18);
+    box-shadow: inset 0 0 22px rgba(167, 179, 95, 0.04);
   }
 
-  /* Two restrained botanical leaves at the signal junction. */
-  .footer-contact-panel::before,
-  .footer-contact-panel::after {
-    content: '';
-    position: absolute;
-    z-index: 1;
-    top: 36%;
-    width: 24px;
-    height: 45px;
-    border: 1px solid rgba(167, 179, 95, 0.28);
-    pointer-events: none;
-  }
-
-  .footer-contact-panel::before {
-    left: calc(47% - 29px);
-    border-right: 0;
-    border-bottom: 0;
-    border-radius: 100% 0 100% 0;
-    transform: rotate(-32deg);
-  }
-
-  .footer-contact-panel::after {
-    left: calc(47% + 7px);
-    border-left: 0;
-    border-bottom: 0;
-    border-radius: 0 100% 0 100%;
-    transform: rotate(31deg);
-  }
-
-  /* Social channels become branch endpoints instead of a generic grid. */
+  /* Satellites are equal-size circular petals placed at 12 / 3 / 6 / 9 o'clock. */
   .footer-links {
     position: static;
     display: block;
@@ -191,125 +186,179 @@
     border: 0;
   }
 
-  .footer-links a {
+  .footer-links a,
+  .footer-links a:nth-child(2n),
+  .footer-links a:nth-last-child(-n + 2) {
     position: absolute;
     z-index: 4;
     display: grid;
-    grid-template-columns: auto 1fr auto;
-    width: 190px;
-    min-height: 58px;
-    padding: 9px 12px;
-    border: 1px solid rgba(239, 233, 219, 0.11);
-    background: rgba(7, 9, 7, 0.9);
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
+    grid-template-columns: 1fr;
+    grid-auto-rows: min-content;
+    place-content: center;
+    place-items: center;
+    gap: 6px;
+    width: 108px;
+    height: 108px;
+    min-height: 0;
+    padding: 12px;
     overflow: visible;
+    border: 1px solid rgba(239, 233, 219, 0.14);
+    border-radius: 50%;
+    background: rgba(7, 9, 7, 0.95);
+    color: rgba(239, 233, 219, 0.58);
+    text-align: center;
+    transform-origin: center;
+    transition:
+      color var(--motion-fast) var(--ease-editorial),
+      border-color var(--motion-fast) var(--ease-editorial),
+      background-color var(--motion-fast) var(--ease-editorial),
+      box-shadow var(--motion-fast) var(--ease-editorial),
+      scale var(--motion-fast) var(--ease-editorial);
   }
 
   .footer-links a:nth-child(1) {
-    top: 11%;
-    right: 2%;
+    top: 46px;
+    left: calc(50% - 54px);
   }
 
   .footer-links a:nth-child(2) {
-    top: 39%;
-    right: 0;
+    top: calc(50% - 54px);
+    right: 46px;
   }
 
   .footer-links a:nth-child(3) {
-    right: 7%;
-    bottom: 12%;
+    bottom: 46px;
+    left: calc(50% - 54px);
   }
 
   .footer-links a:nth-child(4) {
-    left: 58%;
-    bottom: 0;
+    top: calc(50% - 54px);
+    left: 46px;
   }
 
   .footer-link-icon {
-    width: 34px;
-    height: 34px;
-    background: rgba(167, 179, 95, 0.015);
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    color: rgba(205, 221, 111, 0.8);
+    border: 1px solid rgba(167, 179, 95, 0.28);
+    border-radius: 50%;
+    background: rgba(167, 179, 95, 0.018);
+  }
+
+  .footer-link-icon svg {
+    width: 15px;
+    height: 15px;
   }
 
   .footer-link-label {
     display: grid;
     gap: 2px;
+    font-size: 8px;
+    line-height: 1.1;
   }
 
   .footer-link-label::before {
-    color: rgba(167, 179, 95, 0.46);
-    font-size: 6px;
-    letter-spacing: 0.1em;
+    color: rgba(167, 179, 95, 0.44);
+    font-size: 5.5px;
+    letter-spacing: 0.11em;
   }
 
-  .footer-links a:nth-child(1) .footer-link-label::before { content: 'CH 01'; }
-  .footer-links a:nth-child(2) .footer-link-label::before { content: 'CH 02'; }
-  .footer-links a:nth-child(3) .footer-link-label::before { content: 'CH 03'; }
-  .footer-links a:nth-child(4) .footer-link-label::before { content: 'CH 04'; }
+  .footer-links a:nth-child(1) .footer-link-label::before { content: '12 · CH 01'; }
+  .footer-links a:nth-child(2) .footer-link-label::before { content: '03 · CH 02'; }
+  .footer-links a:nth-child(3) .footer-link-label::before { content: '06 · CH 03'; }
+  .footer-links a:nth-child(4) .footer-link-label::before { content: '09 · CH 04'; }
 
-  /* Each node grows a technical branch back toward the email core. */
+  .footer-link-arrow {
+    display: none;
+  }
+
+  /* Short radial spokes only. No diagonal network lines. */
   .footer-links a::after {
     content: '';
     display: block;
     position: absolute;
     z-index: -1;
-    top: 50%;
-    right: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(167, 179, 95, 0.12), rgba(167, 179, 95, 0.48));
-    box-shadow: 0 0 8px rgba(167, 179, 95, 0.04);
-    transform-origin: right center;
+    margin: 0;
+    background: rgba(167, 179, 95, 0.26);
+    box-shadow: none;
+    opacity: 1;
+    transform: none;
+    transform-origin: center;
     pointer-events: none;
     transition:
       background-color var(--motion-fast) var(--ease-editorial),
-      box-shadow var(--motion-fast) var(--ease-editorial),
-      opacity var(--motion-fast) var(--ease-editorial);
+      box-shadow var(--motion-fast) var(--ease-editorial);
   }
 
   .footer-links a:nth-child(1)::after {
-    width: clamp(270px, 29vw, 410px);
-    transform: rotate(-18deg);
+    top: 100%;
+    left: 50%;
+    width: 1px;
+    height: 76px;
   }
 
   .footer-links a:nth-child(2)::after {
-    width: clamp(320px, 34vw, 470px);
-    transform: rotate(-2deg);
+    top: 50%;
+    right: 100%;
+    width: 76px;
+    height: 1px;
   }
 
   .footer-links a:nth-child(3)::after {
-    width: clamp(270px, 30vw, 430px);
-    transform: rotate(17deg);
+    bottom: 100%;
+    left: 50%;
+    width: 1px;
+    height: 76px;
   }
 
   .footer-links a:nth-child(4)::after {
-    width: clamp(95px, 12vw, 180px);
-    transform: rotate(48deg);
+    top: 50%;
+    left: 100%;
+    width: 76px;
+    height: 1px;
   }
 
   .footer-links a:hover,
-  .footer-links a:focus-visible {
-    border-color: rgba(205, 221, 111, 0.52);
-    background: rgba(10, 13, 9, 0.98);
+  .footer-links a:focus-visible,
+  .footer-links a:nth-child(2n):hover,
+  .footer-links a:nth-child(2n):focus-visible,
+  .footer-links a:nth-last-child(-n + 2):hover,
+  .footer-links a:nth-last-child(-n + 2):focus-visible {
+    scale: 1.035;
+    color: var(--cream);
+    border-color: rgba(205, 221, 111, 0.64);
+    background: rgba(10, 13, 9, 0.99);
     box-shadow:
-      inset 0 0 22px rgba(167, 179, 95, 0.025),
-      0 12px 30px rgba(0, 0, 0, 0.18);
+      inset 0 0 24px rgba(167, 179, 95, 0.03),
+      0 0 22px rgba(167, 179, 95, 0.04);
   }
 
   .footer-links a:hover::after,
   .footer-links a:focus-visible::after {
-    background: rgba(205, 221, 111, 0.82);
-    box-shadow: 0 0 10px rgba(167, 179, 95, 0.2);
+    background: rgba(205, 221, 111, 0.88);
+    box-shadow: 0 0 10px rgba(167, 179, 95, 0.15);
   }
 
   .footer-links a:hover .footer-link-icon,
   .footer-links a:focus-visible .footer-link-icon {
-    border-color: rgba(205, 221, 111, 0.62);
+    border-color: rgba(205, 221, 111, 0.58);
+    color: rgba(205, 221, 111, 0.98);
+  }
+
+  .footer-contact-panel:has(.footer-email:hover)::before,
+  .footer-contact-panel:has(.footer-email:focus-visible)::before {
+    border-color: rgba(205, 221, 111, 0.46);
+    box-shadow:
+      inset 0 0 34px rgba(167, 179, 95, 0.018),
+      0 0 28px rgba(167, 179, 95, 0.05);
   }
 
   .footer-bottom {
     position: relative;
-    padding: 22px 18px 0;
-    border-top-color: rgba(167, 179, 95, 0.2);
+    padding: 20px 16px 0;
+    border-top-color: rgba(167, 179, 95, 0.18);
   }
 
   .footer-bottom::before,
@@ -317,110 +366,100 @@
     content: '';
     position: absolute;
     top: -1px;
-    width: 32px;
-    height: 9px;
-    border-top: 1px solid rgba(205, 221, 111, 0.48);
+    width: 30px;
+    height: 8px;
+    border-top: 1px solid rgba(205, 221, 111, 0.42);
   }
 
   .footer-bottom::before {
     left: 0;
-    border-left: 1px solid rgba(205, 221, 111, 0.48);
+    border-left: 1px solid rgba(205, 221, 111, 0.42);
   }
 
   .footer-bottom::after {
     right: 0;
-    border-right: 1px solid rgba(205, 221, 111, 0.48);
-  }
-
-  /* Hovering the primary channel wakes the stem rather than the whole page. */
-  .footer:has(.footer-email:hover) .footer-top::before,
-  .footer:has(.footer-email:focus-visible) .footer-top::before {
-    background: linear-gradient(180deg, rgba(167, 179, 95, 0.12), rgba(205, 221, 111, 0.94));
-    box-shadow: 0 0 12px rgba(167, 179, 95, 0.18);
+    border-right: 1px solid rgba(205, 221, 111, 0.42);
   }
 }
 
-/* Scroll-linked growth: calm at rest, expressive only while the page is moving. */
+/* Scroll entry resolves the orbit and its satellites; nothing loops after arrival. */
 @supports (animation-timeline: view()) {
-  @media (min-width: 821px) and (prefers-reduced-motion: no-preference) {
-    .footer-top::before {
-      animation: contact-stem-grow linear both;
+  @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+    .footer-contact-panel::before {
+      animation: contact-orbit-resolve linear both;
       animation-timeline: view();
-      animation-range: entry 0% cover 54%;
+      animation-range: entry 4% cover 52%;
     }
 
-    .footer-top::after,
-    .footer-contact-panel::before,
-    .footer-contact-panel::after {
+    .footer-email {
       animation: contact-core-resolve linear both;
       animation-timeline: view();
       animation-range: entry 18% cover 58%;
     }
 
-    .footer-links a::after {
-      animation: contact-branch-draw linear both;
+    .footer-links a:nth-child(1) {
+      animation: contact-satellite-resolve linear both;
       animation-timeline: view();
-      animation-range: entry 20% cover 64%;
+      animation-range: entry 24% cover 54%;
     }
 
-    .footer-links a {
-      animation: contact-node-resolve linear both;
+    .footer-links a:nth-child(2) {
+      animation: contact-satellite-resolve linear both;
       animation-timeline: view();
-      animation-range: entry 28% cover 68%;
+      animation-range: entry 30% cover 60%;
+    }
+
+    .footer-links a:nth-child(3) {
+      animation: contact-satellite-resolve linear both;
+      animation-timeline: view();
+      animation-range: entry 36% cover 66%;
+    }
+
+    .footer-links a:nth-child(4) {
+      animation: contact-satellite-resolve linear both;
+      animation-timeline: view();
+      animation-range: entry 42% cover 72%;
     }
   }
 }
 
-@keyframes contact-stem-grow {
+@keyframes contact-orbit-resolve {
   from {
-    opacity: 0.18;
-    transform: scaleY(0);
+    opacity: 0.14;
+    transform: scale(0.9);
   }
   to {
     opacity: 1;
-    transform: scaleY(1);
+    transform: scale(1);
   }
 }
 
 @keyframes contact-core-resolve {
   from {
-    opacity: 0.08;
-    clip-path: inset(50% 50% 50% 50%);
+    opacity: 0.25;
+    transform: translate(-50%, -50%) scale(0.88);
   }
   to {
     opacity: 1;
-    clip-path: inset(0 0 0 0);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
-@keyframes contact-branch-draw {
+@keyframes contact-satellite-resolve {
   from {
-    opacity: 0.12;
-    clip-path: inset(0 100% 0 0);
+    opacity: 0.15;
+    scale: 0.86;
   }
   to {
     opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-@keyframes contact-node-resolve {
-  from {
-    opacity: 0.34;
-  }
-  to {
-    opacity: 1;
+    scale: 1;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .footer-top::before,
-  .footer-top::after,
   .footer-contact-panel::before,
-  .footer-contact-panel::after,
-  .footer-links a,
-  .footer-links a::after {
+  .footer-email,
+  .footer-links a {
     animation: none !important;
-    clip-path: none !important;
   }
 }
