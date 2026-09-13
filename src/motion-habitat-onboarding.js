@@ -41,37 +41,75 @@ function createGuide(world) {
   eyebrow.className = 'motion-habitat-guide-eyebrow'
   eyebrow.textContent = 'Explore the habitat'
 
-  const controls = document.createElement('div')
-  controls.className = 'motion-habitat-guide-controls'
+  const intro = document.createElement('p')
+  intro.className = 'motion-habitat-guide-intro'
+  intro.textContent = 'Choose how you want to move through the motion archive.'
 
-  const wasdGroup = document.createElement('div')
-  wasdGroup.className = 'motion-habitat-guide-key-group'
-  wasdGroup.appendChild(
+  const paths = document.createElement('div')
+  paths.className = 'motion-habitat-guide-paths'
+
+  const manualPath = document.createElement('div')
+  manualPath.className = 'motion-habitat-guide-path is-manual'
+
+  const manualTitle = document.createElement('span')
+  manualTitle.className = 'motion-habitat-guide-path-title'
+  manualTitle.textContent = 'Move manually'
+
+  const manualKeys = document.createElement('div')
+  manualKeys.className = 'motion-habitat-guide-manual-keys'
+  manualKeys.appendChild(
     createKeyGrid(['W', 'A', 'S', 'D'], 'motion-habitat-guide-key-grid is-wasd'),
   )
-  const wasdLabel = document.createElement('span')
-  wasdLabel.textContent = 'WASD'
-  wasdGroup.appendChild(wasdLabel)
 
-  const separator = document.createElement('span')
-  separator.className = 'motion-habitat-guide-or'
-  separator.textContent = 'or'
+  const manualOr = document.createElement('span')
+  manualOr.className = 'motion-habitat-guide-or'
+  manualOr.textContent = 'or'
+  manualKeys.appendChild(manualOr)
 
-  const arrowGroup = document.createElement('div')
-  arrowGroup.className = 'motion-habitat-guide-key-group'
-  arrowGroup.appendChild(
+  manualKeys.appendChild(
     createKeyGrid(['↑', '←', '↓', '→'], 'motion-habitat-guide-key-grid is-arrows'),
   )
-  const arrowLabel = document.createElement('span')
-  arrowLabel.textContent = 'Arrow keys'
-  arrowGroup.appendChild(arrowLabel)
 
-  controls.append(wasdGroup, separator, arrowGroup)
+  const manualCopy = document.createElement('span')
+  manualCopy.className = 'motion-habitat-guide-path-copy'
+  manualCopy.textContent = 'Click inside the habitat first, then use the keys.'
 
-  const instruction = document.createElement('p')
-  instruction.textContent = 'Click inside, then move · or click any station to auto-walk there'
+  manualPath.append(manualTitle, manualKeys, manualCopy)
 
-  guide.append(eyebrow, controls, instruction)
+  const separator = document.createElement('span')
+  separator.className = 'motion-habitat-guide-path-separator'
+  separator.textContent = 'or'
+
+  const stationPath = document.createElement('div')
+  stationPath.className = 'motion-habitat-guide-path is-station'
+
+  const stationTitle = document.createElement('span')
+  stationTitle.className = 'motion-habitat-guide-path-title'
+  stationTitle.textContent = 'Click any station'
+
+  const stationDemo = document.createElement('div')
+  stationDemo.className = 'motion-habitat-guide-station-demo'
+
+  const stationDemoCopy = document.createElement('div')
+  const stationDemoTitle = document.createElement('strong')
+  stationDemoTitle.textContent = 'Signal station'
+  const stationDemoAction = document.createElement('span')
+  stationDemoAction.textContent = '> Click to approach'
+  stationDemoCopy.append(stationDemoTitle, stationDemoAction)
+  stationDemo.appendChild(stationDemoCopy)
+
+  const stationCopy = document.createElement('span')
+  stationCopy.className = 'motion-habitat-guide-path-copy'
+  stationCopy.textContent = 'The visitor will auto-walk there and open the work.'
+
+  stationPath.append(stationTitle, stationDemo, stationCopy)
+  paths.append(manualPath, separator, stationPath)
+
+  const dismiss = document.createElement('p')
+  dismiss.className = 'motion-habitat-guide-dismiss'
+  dismiss.textContent = 'Any click or movement key closes this guide.'
+
+  guide.append(eyebrow, intro, paths, dismiss)
   world.appendChild(guide)
   return guide
 }
