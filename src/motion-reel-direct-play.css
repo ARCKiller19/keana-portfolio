@@ -1,0 +1,46 @@
+/* Follow-up interaction pass: source footage is the thumbnail and the active reel itself is the play target. */
+
+.motion .motion-reel-active:not(.is-playing) {
+  cursor: pointer;
+  transition:
+    border-color var(--motion-fast) var(--ease-editorial),
+    box-shadow var(--motion-fast) var(--ease-editorial),
+    transform var(--motion-fast) var(--ease-editorial);
+}
+
+.motion .motion-reel-active:not(.is-playing) .motion-reel-video {
+  pointer-events: none;
+}
+
+.motion .motion-reel-active:not(.is-playing):focus-visible {
+  outline: 1px solid rgba(167, 179, 95, 0.86);
+  outline-offset: 5px;
+  border-color: rgba(167, 179, 95, 0.62);
+}
+
+.motion .motion-reel-neighbor-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  background: #050604;
+}
+
+@media (hover: hover) {
+  .motion .motion-reel-active:not(.is-playing):hover {
+    border-color: rgba(167, 179, 95, 0.58);
+    box-shadow:
+      0 30px 62px rgba(0, 0, 0, 0.34),
+      0 0 0 1px rgba(167, 179, 95, 0.11),
+      0 0 34px rgba(167, 179, 95, 0.045);
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion .motion-reel-active:not(.is-playing) {
+    transition: none;
+    transform: none !important;
+  }
+}
