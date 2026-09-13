@@ -49,10 +49,10 @@ function Projects() {
       },
       {
         threshold: 0.01,
-        // Wait until the archive reaches the upper part of the viewport. This
-        // lets the hero CTA finish most of its smooth travel before the side
-        // specimens release, so the visitor can actually watch the sequence.
-        rootMargin: '0px 0px -72% 0px',
+        // Trigger as the stage reaches the upper 40% of the viewport. The
+        // hero CTA is nearly finished by then, while the entire side-mounted
+        // composition is still visible for the release into the grid.
+        rootMargin: '0px 0px -60% 0px',
       },
     )
 
