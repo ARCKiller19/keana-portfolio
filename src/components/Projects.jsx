@@ -3,6 +3,7 @@ import projects from '../data/projects.js'
 import '../projects.css'
 import '../selected-work-motion.css'
 import '../selected-work-inspection-polish.css'
+import '../selected-work-specimen-record.css'
 import ProjectModal from './ProjectModal.jsx'
 
 function handleSpecimenImageError(event, project) {
