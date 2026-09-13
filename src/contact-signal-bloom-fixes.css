@@ -148,21 +148,3 @@
     transform: none;
   }
 }
-
-/* A quiet botanical bridge keeps the headline and orbit compositionally related on wide screens. */
-@media (min-width: 1100px) {
-  .footer .footer-message::after {
-    content: '';
-    position: absolute;
-    top: 42%;
-    left: calc(100% + clamp(20px, 2.2vw, 34px));
-    width: clamp(150px, 15vw, 220px);
-    height: 120px;
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMjAgMTIwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj4KICA8cGF0aCBkPSJNNiA4MiBDNDggODIgNzIgNjQgMTAxIDUwIEMxMjYgMzggMTU2IDQ3IDE4MSAzMSBDMTk0IDIzIDIwMyAxNyAyMTQgMTIiCiAgICAgICAgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYTdiMzVmIiBzdHJva2Utb3BhY2l0eT0iLjQyIiBzdHJva2Utd2lkdGg9IjEuMSIKICAgICAgICBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8cGF0aCBkPSJNMTAxIDUwIEM5NCA0MiA5NCAzMyAxMDMgMjkgQzExMCAzNiAxMDkgNDQgMTAxIDUwIgogICAgICAgIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E3YjM1ZiIgc3Ryb2tlLW9wYWNpdHk9Ii4yOCIgc3Ryb2tlLXdpZHRoPSIuOSIvPgogIDxwYXRoIGQ9Ik0xNTMgNDQgQzE1OSAzNSAxNjggMzMgMTc0IDM5IEMxNjggNDcgMTYwIDQ5IDE1MyA0NCIKICAgICAgICBmaWxsPSJub25lIiBzdHJva2U9IiNhN2IzNWYiIHN0cm9rZS1vcGFjaXR5PSIuMjMiIHN0cm9rZS13aWR0aD0iLjkiLz4KICA8Y2lyY2xlIGN4PSI2IiBjeT0iODIiIHI9IjIuMiIgZmlsbD0iI2NkZGQ2ZiIgZmlsbC1vcGFjaXR5PSIuNjIiLz4KICA8Y2lyY2xlIGN4PSIxMDEiIGN5PSI1MCIgcj0iMS43IiBmaWxsPSIjY2RkZDZmIiBmaWxsLW9wYWNpdHk9Ii4zOCIvPgogIDxjaXJjbGUgY3g9IjE4MSIgY3k9IjMxIiByPSIxLjciIGZpbGw9IiNjZGRkNmYiIGZpbGwtb3BhY2l0eT0iLjM0Ii8+Cjwvc3ZnPg==");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    opacity: 0.68;
-    pointer-events: none;
-  }
-}
