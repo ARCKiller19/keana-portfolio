@@ -1,0 +1,56 @@
+/* Film Garden leaf cleanup: keep only leaves that visibly belong to a branch. */
+
+/* Remove decorative leaves that float around the active screening area. */
+.motion-screening-selector::after,
+.motion-screening-media::before,
+.motion-screening-media::after {
+  display: none;
+}
+
+/* The three remaining leaves belong to the three selector branches. */
+.motion-screening-choice::after {
+  width: 9px;
+  height: 14px;
+  opacity: 0.58;
+  border-color: rgba(167, 179, 95, 0.42);
+  background: rgba(8, 9, 7, 0.96);
+  transform-origin: 0 50%;
+}
+
+/* Left bloom: leaf sits directly on the branch that travels toward the center stem. */
+.motion-screening-choice:nth-child(1)::after {
+  top: 154px;
+  right: auto;
+  left: calc(73% + 23px);
+  transform: rotate(10deg);
+}
+
+/* Center bloom: leaf grows from the right side of the vertical stem. */
+.motion-screening-choice:nth-child(2)::after {
+  top: 183px;
+  left: calc(50% + 1px);
+  transform: rotate(-42deg);
+}
+
+/* Right bloom mirrors the left branch. */
+.motion-screening-choice:nth-child(3)::after {
+  top: 154px;
+  right: calc(73% + 23px);
+  left: auto;
+  transform: scaleX(-1) rotate(10deg);
+}
+
+.motion-screening-choice.is-active::after {
+  opacity: 0.92;
+  border-color: rgba(205, 221, 111, 0.82);
+  background: rgba(167, 179, 95, 0.5);
+  box-shadow:
+    0 0 0 3px rgba(167, 179, 95, 0.04),
+    0 0 18px rgba(167, 179, 95, 0.12);
+}
+
+@media (max-width: 720px) {
+  .motion-screening-choice::after {
+    display: none;
+  }
+}
