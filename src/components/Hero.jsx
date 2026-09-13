@@ -47,17 +47,44 @@ function Hero({ motionReady = false, onIntroComplete }) {
     if (!hero || !mark) return undefined
 
     const body = document.body
-    const previousOverflow = body.style.overflow
-    const previousPaddingRight = body.style.paddingRight
-    const scrollbarWidth = Math.max(
-      window.innerWidth - document.documentElement.clientWidth,
-      0,
-    )
-    const bodyPaddingRight =
-      Number.parseFloat(window.getComputedStyle(body).paddingRight) || 0
-
     let cancelled = false
+    let scrollLocked = false
     const timers = []
+    const blockedScrollKeys = new Set([
+      'ArrowUp',
+      'ArrowDown',
+      'PageUp',
+      'PageDown',
+      'Home',
+      'End',
+      ' ',
+    ])
+
+    const preventScroll = (event) => {
+      event.preventDefault()
+    }
+
+    const preventScrollKey = (event) => {
+      if (blockedScrollKeys.has(event.key)) {
+        event.preventDefault()
+      }
+    }
+
+    const lockScrollWithoutReflow = () => {
+      if (scrollLocked) return
+      scrollLocked = true
+      window.addEventListener('wheel', preventScroll, { passive: false })
+      window.addEventListener('touchmove', preventScroll, { passive: false })
+      window.addEventListener('keydown', preventScrollKey)
+    }
+
+    const releaseScrollLock = () => {
+      if (!scrollLocked) return
+      scrollLocked = false
+      window.removeEventListener('wheel', preventScroll)
+      window.removeEventListener('touchmove', preventScroll)
+      window.removeEventListener('keydown', preventScrollKey)
+    }
 
     const measureIntro = () => {
       const markRect = mark.getBoundingClientRect()
@@ -76,10 +103,10 @@ function Hero({ motionReady = false, onIntroComplete }) {
 
     const startIntro = async () => {
       body.classList.add('botanical-intro-active')
-      body.style.overflow = 'hidden'
+      lockScrollWithoutReflow()
 
-      if (scrollbarWidth > 0) {
-        body.style.paddingRight = `${bodyPaddingRight + scrollbarWidth}px`
+      if (window.scrollY !== 0 || window.scrollX !== 0) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
       }
 
       try {
@@ -116,8 +143,7 @@ function Hero({ motionReady = false, onIntroComplete }) {
             'botanical-intro-active',
             'botanical-intro-settling',
           )
-          body.style.overflow = previousOverflow
-          body.style.paddingRight = previousPaddingRight
+          releaseScrollLock()
           setIntroPhase('ready')
         }, 1980),
       )
@@ -130,12 +156,11 @@ function Hero({ motionReady = false, onIntroComplete }) {
       cancelled = true
       timers.forEach((timer) => window.clearTimeout(timer))
       window.removeEventListener('resize', measureIntro)
+      releaseScrollLock()
       body.classList.remove(
         'botanical-intro-active',
         'botanical-intro-settling',
       )
-      body.style.overflow = previousOverflow
-      body.style.paddingRight = previousPaddingRight
     }
   }, [skipIntro])
 
@@ -236,11 +261,26 @@ function Hero({ motionReady = false, onIntroComplete }) {
           />
         </g>
 
-        <path className="intro-leaf intro-leaf-a" d="M151 209C165 194 181 196 187 208C174 217 160 220 151 209Z" />
-        <path className="intro-leaf intro-leaf-b" d="M244 92C256 77 270 80 276 91C266 101 254 105 244 92Z" />
-        <path className="intro-leaf intro-leaf-c" d="M649 163C660 147 676 149 683 160C673 171 660 176 649 163Z" />
-        <path className="intro-leaf intro-leaf-d" d="M588 211C600 196 615 199 621 211C610 220 597 223 588 211Z" />
-        <path className="intro-leaf intro-leaf-e" d="M211 178C200 164 187 167 182 178C191 187 203 190 211 178Z" />
+        <path
+          className="intro-leaf intro-leaf-a"
+          d="M151 209C165 194 181 196 187 208C174 217 160 220 151 209Z"
+        />
+        <path
+          className="intro-leaf intro-leaf-b"
+          d="M244 92C256 77 270 80 276 91C266 101 254 105 244 92Z"
+        />
+        <path
+          className="intro-leaf intro-leaf-c"
+          d="M649 163C660 147 676 149 683 160C673 171 660 176 649 163Z"
+        />
+        <path
+          className="intro-leaf intro-leaf-d"
+          d="M588 211C600 196 615 199 621 211C610 220 597 223 588 211Z"
+        />
+        <path
+          className="intro-leaf intro-leaf-e"
+          d="M211 178C200 164 187 167 182 178C191 187 203 190 211 178Z"
+        />
 
         <circle className="intro-node intro-node-a" cx="295" cy="205" r="3" />
         <circle className="intro-node intro-node-b" cx="667" cy="171" r="3" />
@@ -251,7 +291,9 @@ function Hero({ motionReady = false, onIntroComplete }) {
         <p className="eyebrow">
           UI/UX Designer · Graphic Designer · Multimedia Creative
         </p>
-        <h1 className="hero-mark" ref={markRef}>KEANA</h1>
+        <h1 className="hero-mark" ref={markRef}>
+          KEANA
+        </h1>
         <p className="hero-tagline">
           Multidisciplinary designer working across UI/UX, graphic design,
           multimedia, and digital experience.
@@ -355,8 +397,12 @@ function Hero({ motionReady = false, onIntroComplete }) {
 
         <div className="hero-dot-field hero-dot-field-a" data-parallax="16" />
         <div className="hero-dot-field hero-dot-field-b" data-parallax="11" />
-        <span className="hero-cross hero-cross-a" data-parallax="20">+</span>
-        <span className="hero-cross hero-cross-b" data-parallax="15">+</span>
+        <span className="hero-cross hero-cross-a" data-parallax="20">
+          +
+        </span>
+        <span className="hero-cross hero-cross-b" data-parallax="15">
+          +
+        </span>
         <span className="hero-collage-label" data-parallax="9">
           Botanical systems · visual studies
         </span>
