@@ -1,0 +1,187 @@
+/* Selected Work: mount the selected project's identity directly to the inspection plate. */
+
+.inspection-record-head {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 18px;
+  width: min(100%, 620px);
+  height: 86px;
+  margin-bottom: 12px;
+  padding: 8px 8px 13px;
+}
+
+.inspection-record-head::before,
+.inspection-record-head::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.inspection-record-head::after {
+  right: 8px;
+  bottom: 0;
+  left: 8px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(167, 179, 95, 0.5),
+    rgba(239, 233, 219, 0.1) 38%,
+    rgba(239, 233, 219, 0.04)
+  );
+}
+
+.inspection-record-head::before {
+  bottom: -2px;
+  left: 8px;
+  z-index: 1;
+  width: 5px;
+  height: 5px;
+  border: 1px solid rgba(167, 179, 95, 0.7);
+  border-radius: 50%;
+  background: var(--bg);
+}
+
+.inspection-record-copy {
+  min-width: 0;
+}
+
+.inspection-record-kicker,
+.inspection-record-year,
+.inspection-record-placeholder {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.inspection-record-kicker {
+  display: block;
+  margin-bottom: 6px;
+  color: rgba(167, 179, 95, 0.72);
+  font-size: 7px;
+  line-height: 1;
+  letter-spacing: 0.1em;
+}
+
+.inspection-record-head h3 {
+  display: -webkit-box;
+  overflow: hidden;
+  max-width: 28ch;
+  margin: 0;
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.75vw, 26px);
+  font-weight: 450;
+  line-height: 0.98;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.inspection-record-year {
+  align-self: end;
+  padding-bottom: 2px;
+  color: rgba(239, 233, 219, 0.42);
+  font-size: 8px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+
+.inspection-record-placeholder {
+  grid-column: 1 / -1;
+  align-self: end;
+  padding-bottom: 2px;
+  color: rgba(239, 233, 219, 0.28);
+  font-size: 8px;
+  line-height: 1.4;
+  letter-spacing: 0.07em;
+}
+
+/* The plate now owns the project title. Keep the area below it focused on
+   classification and actions instead of repeating a second large headline. */
+.inspection-meta {
+  min-height: 82px;
+  padding-top: 12px;
+}
+
+.inspection-meta-category {
+  margin: 0;
+  color: rgba(239, 233, 219, 0.58);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.inspection-actions {
+  margin-top: 10px;
+}
+
+.inspection-idle-note {
+  padding-top: 0;
+}
+
+@media (max-width: 1180px) {
+  .inspection-record-head {
+    height: 82px;
+  }
+
+  .inspection-record-head h3 {
+    font-size: clamp(19px, 2vw, 24px);
+  }
+}
+
+@media (max-width: 920px) {
+  .inspection-record-head {
+    height: 80px;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .inspection-record-head {
+    height: 78px;
+    gap: 12px;
+    padding-inline: 2px;
+  }
+
+  .inspection-record-head::after {
+    right: 2px;
+    left: 2px;
+  }
+
+  .inspection-record-head::before {
+    left: 2px;
+  }
+
+  .inspection-record-head h3 {
+    font-size: 20px;
+  }
+
+  .inspection-record-year {
+    font-size: 7px;
+  }
+
+  .inspection-meta-category {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 440px) {
+  .inspection-record-head {
+    height: 74px;
+  }
+
+  .inspection-record-kicker {
+    margin-bottom: 5px;
+    font-size: 6px;
+  }
+
+  .inspection-record-head h3 {
+    font-size: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inspection-record-head,
+  .inspection-record-head * {
+    transition: none !important;
+  }
+}
