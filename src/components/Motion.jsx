@@ -9,6 +9,7 @@ import '../motion-section-order.css'
 import '../latest-motion.css'
 import '../motion-cuts.css'
 import '../motion-reel-station.css'
+import '../motion-screening-room.css'
 
 function useDeferredVideoMetadata(rootMargin = '1400px 200px') {
   const videoRef = useRef(null)
@@ -319,6 +320,130 @@ function AutomotiveReelStation({ pieces }) {
   )
 }
 
+function ScreeningSourcePreview({ piece }) {
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return undefined
+
+    const seekPreview = () => {
+      if (!Number.isFinite(video.duration) || video.duration <= 0) return
+      video.currentTime = Math.min(0.18, Math.max(0, video.duration - 0.01))
+    }
+
+    video.addEventListener('loadedmetadata', seekPreview, { once: true })
+    video.load()
+
+    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
+      seekPreview()
+    }
+
+    return () => video.removeEventListener('loadedmetadata', seekPreview)
+  }, [piece.src])
+
+  return (
+    <video
+      ref={videoRef}
+      src={piece.src}
+      muted
+      playsInline
+      preload="metadata"
+      aria-hidden="true"
+      tabIndex={-1}
+    />
+  )
+}
+
+function MotionScreeningRoom({ pieces, onOpenNotes }) {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const activePiece = pieces[activeIndex]
+  const total = String(pieces.length).padStart(2, '0')
+
+  return (
+    <div className="motion-screening-room">
+      <div
+        className="motion-screening-selector"
+        role="group"
+        aria-label="Choose a motion piece to screen"
+      >
+        {pieces.map((piece, index) => {
+          const isActive = index === activeIndex
+
+          return (
+            <button
+              className={`motion-screening-choice ${isActive ? 'is-active' : ''}`}
+              type="button"
+              key={piece.id}
+              aria-pressed={isActive}
+              onClick={() => setActiveIndex(index)}
+            >
+              <span className="motion-screening-thumb" aria-hidden="true">
+                <ScreeningSourcePreview piece={piece} />
+                <span className="motion-screening-choice-number">{piece.number}</span>
+              </span>
+
+              <span className="motion-screening-choice-copy">
+                <span className="motion-screening-choice-state">
+                  {isActive ? 'Now screening' : 'Select film'}
+                </span>
+                <span className="motion-screening-choice-title">{piece.title}</span>
+                <span className="motion-screening-choice-category">{piece.category}</span>
+              </span>
+            </button>
+          )
+        })}
+      </div>
+
+      <article className="motion-screening-stage" key={activePiece.id}>
+        <div
+          className={`motion-screening-media ${
+            activePiece.layout === 'portrait' ? 'is-portrait' : ''
+          }`}
+        >
+          <div className="motion-screening-media-meta">
+            <span>Current screening</span>
+            <span>
+              {activePiece.number} / {total}
+            </span>
+          </div>
+
+          <MotionCutPlayer key={activePiece.id} piece={activePiece} />
+        </div>
+
+        <div className="motion-screening-copy" aria-live="polite">
+          <div className="motion-screening-label">
+            <span>
+              {activePiece.latest
+                ? `Latest work · ${activePiece.dateLabel}`
+                : 'Motion study'}
+            </span>
+            <span>{activePiece.category}</span>
+          </div>
+
+          <h3>{activePiece.title}</h3>
+
+          {activePiece.credit && (
+            <span className="motion-screening-credit">{activePiece.credit}</span>
+          )}
+
+          <p>{activePiece.reflection}</p>
+
+          {activePiece.creationNotes && (
+            <button
+              className="motion-screening-notes"
+              type="button"
+              onClick={() => onOpenNotes(activePiece)}
+            >
+              Read creation notes <span aria-hidden="true">↗</span>
+            </button>
+          )}
+        </div>
+      </article>
+    </div>
+  )
+}
+
 function Motion() {
   const [selectedNotesPiece, setSelectedNotesPiece] = useState(null)
   const closeNotes = useCallback(() => setSelectedNotesPiece(null), [])
@@ -400,52 +525,10 @@ function Motion() {
             Filmmaking, animation, video editing, and commercial work.
           </p>
 
-          <div className="motion-featured">
-            {featuredMotion.map((piece, index) => (
-              <article
-                className={`motion-piece ${
-                  index % 2 === 1 ? 'motion-piece-reverse' : ''
-                } ${piece.latest ? 'motion-piece-latest' : ''}`.trim()}
-                key={piece.id}
-              >
-                <div
-                  className={`motion-piece-media ${
-                    piece.layout === 'portrait' ? 'motion-piece-media-portrait' : ''
-                  }`}
-                >
-                  <div className="motion-meta">
-                    <span className="motion-index">{piece.number}</span>
-                    <span>{piece.category}</span>
-                  </div>
-
-                  <MotionCutPlayer piece={piece} />
-                </div>
-
-                <div className="motion-piece-copy">
-                  <span className="motion-piece-label">
-                    {piece.latest
-                      ? `Latest work · ${piece.dateLabel}`
-                      : 'Behind the edit'}
-                  </span>
-                  <h3>{piece.title}</h3>
-                  {piece.credit && (
-                    <span className="motion-piece-credit">{piece.credit}</span>
-                  )}
-                  <p>{piece.reflection}</p>
-
-                  {piece.creationNotes && (
-                    <button
-                      className="motion-notes-trigger"
-                      type="button"
-                      onClick={() => setSelectedNotesPiece(piece)}
-                    >
-                      Read creation notes <span aria-hidden="true">↗</span>
-                    </button>
-                  )}
-                </div>
-              </article>
-            ))}
-          </div>
+          <MotionScreeningRoom
+            pieces={featuredMotion}
+            onOpenNotes={setSelectedNotesPiece}
+          />
         </div>
       </section>
 
