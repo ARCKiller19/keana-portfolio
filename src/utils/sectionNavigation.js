@@ -6,18 +6,26 @@ export function getSectionActivationLine() {
 }
 
 function getWorkArrivalTop(target) {
-  const sectionHead = target.querySelector('.specimen-section-head')
+  const workbench = target.querySelector('.specimen-workbench')
 
-  if (!sectionHead || window.innerWidth <= 920) return null
+  if (!workbench || window.innerWidth <= 920) return null
 
   const nav = document.querySelector('.nav')
   const navRect = nav?.getBoundingClientRect()
   const activationLine = getSectionActivationLine()
   const navBottom = navRect?.bottom ?? activationLine
-  const desiredHeadTop = Math.max(navBottom + 12, activationLine)
-  const headRect = sectionHead.getBoundingClientRect()
+  const reservedTop = Math.max(navBottom + 70, activationLine + 54)
+  const viewportBottom = window.innerHeight - 18
+  const usableHeight = Math.max(viewportBottom - reservedTop, 0)
+  const desiredCenter = reservedTop + usableHeight / 2
+  const workbenchRect = workbench.getBoundingClientRect()
 
-  return window.scrollY + headRect.top - desiredHeadTop
+  return (
+    window.scrollY +
+    workbenchRect.top +
+    workbenchRect.height / 2 -
+    desiredCenter
+  )
 }
 
 export function handleSectionNavigation(event) {
