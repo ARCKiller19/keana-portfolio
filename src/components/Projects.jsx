@@ -13,6 +13,7 @@ function handleSpecimenImageError(event, project) {
 }
 
 function SpecimenCard({ project, index, side, isSelected, onSelect }) {
+  const projectNumber = String(index + 1).padStart(2, '0')
   const inspectLabel = side === 'left' ? 'Inspect →' : '← Inspect'
 
   return (
@@ -22,6 +23,7 @@ function SpecimenCard({ project, index, side, isSelected, onSelect }) {
       }`}
       type="button"
       onClick={() => onSelect(index)}
+      aria-label={`Inspect ${projectNumber} ${project.title}`}
       aria-pressed={isSelected}
       aria-controls="work-inspection-panel"
       data-specimen-index={index}
@@ -42,9 +44,7 @@ function SpecimenCard({ project, index, side, isSelected, onSelect }) {
       </span>
 
       <span className="specimen-card-copy">
-        <span className="specimen-card-index">
-          {String(index + 1).padStart(2, '0')}
-        </span>
+        <span className="specimen-card-index">{projectNumber}</span>
         <span className="specimen-card-title">{project.title}</span>
         <span className="specimen-card-year">{project.year}</span>
         <span className="specimen-card-action" aria-hidden="true">
@@ -246,8 +246,7 @@ function Projects() {
                 </>
               ) : (
                 <p className="inspection-idle-note">
-                  Hover to browse. Select a project to move it onto the inspection
-                  plate.
+                  Choose a specimen to move it onto the inspection plate.
                 </p>
               )}
             </div>
