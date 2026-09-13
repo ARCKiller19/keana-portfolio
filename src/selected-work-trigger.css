@@ -1,16 +1,2 @@
-.work-motion.is-revealed .project-card-motion .project-card-topline,
-.work-motion.is-revealed .project-card-motion .project-info {
-  animation: specimen-labels-resolve 520ms var(--ease-editorial) 850ms both;
-}
-
-.work-motion.is-revealed .project-card-motion .project-card-topline::after {
-  animation: specimen-rule-register 560ms var(--ease-editorial) 880ms both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .work-motion.is-revealed .project-card-motion .project-card-topline,
-  .work-motion.is-revealed .project-card-motion .project-card-topline::after,
-  .work-motion.is-revealed .project-card-motion .project-info {
-    animation: none !important;
-  }
-}
+/* Legacy compatibility file intentionally left quiet.
+   Selected Work choreography now lives in selected-work-motion.css. */
