@@ -6,6 +6,11 @@
     min-height: 630px;
   }
 
+  /* Give the closing statement breathing room from the decorative left rail without changing the grid. */
+  .footer .footer-message {
+    transform: translateX(clamp(28px, 3vw, 52px));
+  }
+
   .footer .footer-contact-panel {
     width: min(51.5vw, 627px);
   }
