@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { handleSectionNavigation } from '../utils/sectionNavigation.js'
 
-const INTRO_SESSION_KEY = 'keana-botanical-intro-v3-seen'
+const INTRO_SESSION_KEY = 'keana-botanical-intro-v4-seen'
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max)
@@ -133,6 +133,9 @@ function Hero({ motionReady = false, onIntroComplete }) {
           onIntroCompleteRef.current?.()
         }, 1080),
         window.setTimeout(() => {
+          setIntroPhase('furling')
+        }, 1900),
+        window.setTimeout(() => {
           try {
             window.sessionStorage.setItem(INTRO_SESSION_KEY, 'true')
           } catch {
@@ -145,7 +148,7 @@ function Hero({ motionReady = false, onIntroComplete }) {
           )
           releaseScrollLock()
           setIntroPhase('ready')
-        }, 1980),
+        }, 2600),
       )
     }
 
