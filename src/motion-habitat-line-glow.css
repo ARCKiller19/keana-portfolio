@@ -1,0 +1,90 @@
+/* Motion Habitat idle line glow: keep stations legible without bringing back heavy effects. */
+
+/* Resting stations should read as interactive terminals even before hover/proximity. */
+.motion-habitat.is-online .motion-habitat-station:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) {
+  border-color: rgba(var(--station-rgb), 0.4);
+  background:
+    linear-gradient(rgba(var(--station-rgb), 0.72), rgba(var(--station-rgb), 0.72)) 9px 9px / 18px 1px no-repeat,
+    linear-gradient(rgba(var(--station-rgb), 0.72), rgba(var(--station-rgb), 0.72)) 9px 9px / 1px 18px no-repeat,
+    linear-gradient(rgba(var(--station-rgb), 0.5), rgba(var(--station-rgb), 0.5)) calc(100% - 27px) calc(100% - 10px) / 18px 1px no-repeat,
+    linear-gradient(rgba(var(--station-rgb), 0.5), rgba(var(--station-rgb), 0.5)) calc(100% - 10px) calc(100% - 27px) / 1px 18px no-repeat,
+    rgba(6, 8, 6, 0.93);
+  box-shadow:
+    inset 0 0 0 1px rgba(var(--station-rgb), 0.035),
+    0 0 0 1px rgba(var(--station-rgb), 0.035),
+    0 12px 28px rgba(0, 0, 0, 0.16),
+    0 0 10px rgba(var(--station-rgb), 0.028);
+}
+
+.motion-habitat.is-online .motion-habitat-station:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .motion-habitat-machine {
+  border-color: rgba(var(--station-rgb), 0.5);
+  box-shadow:
+    inset 0 0 0 1px rgba(var(--station-rgb), 0.05),
+    0 0 8px rgba(var(--station-rgb), 0.025);
+}
+
+.motion-habitat.is-online .motion-habitat-station:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .motion-habitat-machine-screen {
+  border-color: rgba(var(--station-rgb), 0.52);
+  box-shadow:
+    inset 0 0 0 1px rgba(var(--station-rgb), 0.035),
+    inset 0 0 12px rgba(var(--station-rgb), 0.018);
+}
+
+.motion-habitat.is-online .motion-habitat-station:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .motion-habitat-machine-node {
+  border-color: rgba(var(--station-rgb), 0.56);
+  background: rgba(var(--station-rgb), 0.12);
+}
+
+/* The machine identity should remain visible at rest. */
+.motion-habitat.is-online .station-roast:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .accent-warm::before {
+  background: rgba(205, 176, 108, 0.72);
+  box-shadow: 0 0 0 2px rgba(188, 150, 78, 0.05);
+}
+
+.motion-habitat.is-online .station-roast:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .accent-warm::after {
+  color: rgba(205, 176, 108, 0.7);
+}
+
+.motion-habitat.is-online .station-special:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .motion-habitat-machine-screen::before {
+  opacity: 0.76;
+}
+
+.motion-habitat.is-online .station-first-love:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .accent-chapters i {
+  opacity: 0.72;
+}
+
+/* Give the text enough contrast to separate from the quieter environment. */
+.motion-habitat.is-online .motion-habitat-station:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .motion-habitat-station-copy strong {
+  color: rgba(239, 233, 219, 0.88);
+}
+
+.motion-habitat.is-online .motion-habitat-station:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .motion-habitat-station-copy::after {
+  color: rgba(var(--station-rgb), 0.88);
+  border-top-color: rgba(var(--station-rgb), 0.3);
+}
+
+.motion-habitat.is-online .motion-habitat-station:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .motion-habitat-station-copy span {
+  color: rgba(var(--station-rgb), 0.62);
+}
+
+/* Keep dormant signal cables restrained so the terminals, not the background, own the glow. */
+.motion-habitat .motion-habitat-signal:not(.is-live):not(.is-open) {
+  stroke: rgba(167, 179, 95, 0.07);
+}
+
+@media (max-width: 720px) {
+  .motion-habitat.is-online .motion-habitat-station:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) {
+    box-shadow:
+      inset 0 0 0 1px rgba(var(--station-rgb), 0.03),
+      0 0 0 1px rgba(var(--station-rgb), 0.03),
+      0 8px 20px rgba(0, 0, 0, 0.14);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-habitat .motion-habitat-station,
+  .motion-habitat .motion-habitat-machine,
+  .motion-habitat .motion-habitat-machine-screen {
+    transition: none !important;
+  }
+}
