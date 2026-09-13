@@ -1,0 +1,284 @@
+/* Follow-up experiment: make reel navigation visually obvious by placing the adjacent reels beside the active one. */
+
+.motion .motion-reel-station {
+  grid-template-columns:
+    minmax(140px, 0.38fr)
+    minmax(520px, 1.45fr)
+    minmax(235px, 0.66fr);
+  gap: clamp(24px, 3vw, 42px);
+}
+
+.motion .motion-reel-projector {
+  width: min(100%, 650px);
+}
+
+.motion .motion-reel-stack {
+  display: grid;
+  grid-template-columns:
+    minmax(110px, 0.72fr)
+    minmax(230px, 1.2fr)
+    minmax(110px, 0.72fr);
+  align-items: center;
+  gap: clamp(14px, 1.6vw, 22px);
+  min-height: 520px;
+  place-items: initial;
+}
+
+.motion .motion-reel-spine {
+  top: 50%;
+  right: 4%;
+  bottom: auto;
+  left: 4%;
+  width: auto;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(167, 179, 95, 0.2) 18%,
+    rgba(239, 233, 219, 0.07) 50%,
+    rgba(167, 179, 95, 0.2) 82%,
+    transparent
+  );
+}
+
+.motion .motion-reel-active {
+  grid-column: 2;
+  grid-row: 1;
+  width: min(100%, 280px);
+  justify-self: center;
+}
+
+.motion .motion-reel-neighbor {
+  position: relative;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  width: min(100%, 155px);
+  height: auto;
+  aspect-ratio: 9 / 16;
+  opacity: 0.68;
+  filter: saturate(0.76) brightness(0.78);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+}
+
+.motion .motion-reel-neighbor::before {
+  position: absolute;
+  z-index: 3;
+  top: 9px;
+  left: 9px;
+  padding: 6px 7px;
+  border: 1px solid rgba(239, 233, 219, 0.14);
+  background: rgba(7, 8, 6, 0.8);
+  color: rgba(239, 233, 219, 0.78);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.motion .motion-reel-neighbor-prev {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: end;
+  transform: scale(0.94) rotate(-0.35deg);
+  transform-origin: center center;
+}
+
+.motion .motion-reel-neighbor-prev::before {
+  content: '← Previous';
+}
+
+.motion .motion-reel-neighbor-next {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: start;
+  transform: scale(0.94) rotate(0.35deg);
+  transform-origin: center center;
+}
+
+.motion .motion-reel-neighbor-next::before {
+  content: 'Next →';
+}
+
+.motion .motion-reel-neighbor span {
+  right: 9px;
+  bottom: 9px;
+  left: 9px;
+  padding: 7px 8px;
+  background: rgba(7, 8, 6, 0.82);
+  font-size: 7px;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.motion .motion-reel-step-controls {
+  display: none;
+}
+
+@media (hover: hover) {
+  .motion .motion-reel-neighbor:hover,
+  .motion .motion-reel-neighbor:focus-visible {
+    opacity: 0.92;
+    filter: saturate(0.95) brightness(0.94);
+    border-color: rgba(167, 179, 95, 0.56);
+  }
+
+  .motion .motion-reel-neighbor-prev:hover,
+  .motion .motion-reel-neighbor-prev:focus-visible {
+    transform: translateX(-5px) scale(0.98) rotate(-0.15deg);
+  }
+
+  .motion .motion-reel-neighbor-next:hover,
+  .motion .motion-reel-neighbor-next:focus-visible {
+    transform: translateX(5px) scale(0.98) rotate(0.15deg);
+  }
+}
+
+@media (max-width: 1120px) {
+  .motion .motion-reel-station {
+    grid-template-columns:
+      minmax(120px, 0.35fr)
+      minmax(460px, 1.35fr)
+      minmax(210px, 0.62fr);
+    gap: 24px;
+  }
+
+  .motion .motion-reel-projector {
+    width: min(100%, 560px);
+  }
+
+  .motion .motion-reel-stack {
+    grid-template-columns:
+      minmax(90px, 0.62fr)
+      minmax(220px, 1.16fr)
+      minmax(90px, 0.62fr);
+    gap: 14px;
+    min-height: 490px;
+  }
+
+  .motion .motion-reel-active {
+    width: min(100%, 255px);
+  }
+
+  .motion .motion-reel-neighbor {
+    width: min(100%, 132px);
+  }
+}
+
+@media (max-width: 980px) {
+  .motion .motion-reel-station {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .motion .motion-reel-index {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+    overflow-x: auto;
+    padding: 24px 0 6px;
+    scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+  }
+
+  .motion .motion-reel-index-label {
+    top: 0;
+    left: 0;
+  }
+
+  .motion .motion-reel-index-track,
+  .motion .motion-reel-index-node {
+    display: none;
+  }
+
+  .motion .motion-reel-index-item {
+    flex: 0 0 min(38vw, 205px);
+    min-height: 54px;
+    border: 1px solid rgba(239, 233, 219, 0.08);
+    scroll-snap-align: start;
+  }
+
+  .motion .motion-reel-index-item:first-of-type {
+    border-top: 1px solid rgba(239, 233, 219, 0.08);
+  }
+
+  .motion .motion-reel-index-item.is-active {
+    transform: none;
+    border-color: rgba(167, 179, 95, 0.44);
+  }
+
+  .motion .motion-reel-projector {
+    width: min(100%, 620px);
+  }
+
+  .motion .motion-reel-story {
+    width: min(100%, 620px);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 720px) {
+  .motion .motion-reel-projector {
+    width: min(100%, 340px);
+  }
+
+  .motion .motion-reel-stack {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .motion .motion-reel-spine,
+  .motion .motion-reel-neighbor {
+    display: none;
+  }
+
+  .motion .motion-reel-active {
+    grid-column: 1;
+    width: min(72vw, 260px);
+  }
+
+  .motion .motion-reel-step-controls {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 10px 0;
+    border-top: 1px solid rgba(239, 233, 219, 0.09);
+    border-bottom: 1px solid rgba(239, 233, 219, 0.09);
+  }
+
+  .motion .motion-reel-step-controls button {
+    min-height: 44px;
+    padding: 0 10px;
+    border: 1px solid rgba(239, 233, 219, 0.12);
+    background: rgba(167, 179, 95, 0.025);
+    color: rgba(239, 233, 219, 0.72);
+    font-size: 8px;
+  }
+
+  .motion .motion-reel-step-controls button:hover,
+  .motion .motion-reel-step-controls button:focus-visible {
+    border-color: rgba(167, 179, 95, 0.5);
+    color: var(--cream);
+  }
+
+  .motion .motion-reel-step-controls button:disabled {
+    opacity: 0.28;
+  }
+
+  .motion .motion-reel-index-item {
+    flex-basis: min(58vw, 210px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion .motion-reel-neighbor,
+  .motion .motion-reel-neighbor-prev,
+  .motion .motion-reel-neighbor-next {
+    transform: none !important;
+  }
+}
