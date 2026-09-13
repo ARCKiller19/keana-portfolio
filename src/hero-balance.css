@@ -1,5 +1,14 @@
 /* Keep the hero readable as the landing view without changing its composition. */
 
+/* Size the real KEANA heading to its text instead of the full hero-copy column.
+   The botanical intro measures this element before translating it to viewport
+   center, so a content-sized box centers the visible word rather than an
+   invisible block that extends past the lettering. */
+.hero-motion .hero-mark {
+  width: max-content;
+  max-width: 100%;
+}
+
 /* The About section itself is container-width, so draw its divider at viewport width
    to match the full-width section rules used elsewhere. */
 .about {

@@ -1,131 +1,61 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
-import { motionAlternateCuts } from '../data/motion-cuts.js'
+import MotionHabitat from './MotionHabitat.jsx'
 import MotionNotesModal from './MotionNotesModal.jsx'
+import useDeferredVideoMetadata from '../hooks/useDeferredVideoMetadata.js'
 import '../motion.css'
 import '../automotive-notes.css'
 import '../automotive-story-overlay.css'
 import '../motion-section-order.css'
 import '../latest-motion.css'
 import '../motion-cuts.css'
+import '../motion-reel-station.css'
 
-function useDeferredVideoMetadata(rootMargin = '1400px 200px') {
-  const videoRef = useRef(null)
-  const [shouldPreload, setShouldPreload] = useState(false)
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return undefined
-
-    if (!('IntersectionObserver' in window)) {
-      setShouldPreload(true)
-      return undefined
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return
-
-        setShouldPreload(true)
-        observer.disconnect()
-      },
-      { rootMargin },
-    )
-
-    observer.observe(video)
-
-    return () => observer.disconnect()
-  }, [rootMargin])
-
-  useEffect(() => {
-    if (shouldPreload) {
-      videoRef.current?.load()
-    }
-  }, [shouldPreload])
-
-  return {
-    videoRef,
-    preload: shouldPreload ? 'metadata' : 'none',
-  }
-}
-
-function VideoPlayer({ src, title, className = '' }) {
-  const { videoRef, preload } = useDeferredVideoMetadata('2200px 260px')
-
+function ReelSourcePreview({ piece, className = '' }) {
   return (
     <video
-      ref={videoRef}
-      className={`motion-video ${className}`.trim()}
-      controls
+      className={className}
+      muted
       playsInline
-      preload={preload}
-      aria-label={title}
+      preload="metadata"
+      aria-hidden="true"
+      tabIndex={-1}
     >
-      <source src={src} type="video/mp4" />
-      Your browser does not support HTML video.
+      <source src={piece.src} type="video/mp4" />
     </video>
   )
 }
 
-function MotionCutPlayer({ piece }) {
-  const cuts = [
-    { id: 'full', label: 'Full edit', src: piece.src },
-    ...(motionAlternateCuts[piece.id] ?? []),
-  ]
-  const [activeCutId, setActiveCutId] = useState('full')
-  const activeCut = cuts.find((cut) => cut.id === activeCutId) ?? cuts[0]
-
-  return (
-    <>
-      <div
-        className={`motion-frame ${
-          piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
-        }`}
-      >
-        <VideoPlayer
-          key={activeCut.src}
-          src={activeCut.src}
-          title={`${piece.title} ${activeCut.label}`}
-        />
-      </div>
-
-      {cuts.length > 1 && (
-        <div className="motion-cut-switcher">
-          <span className="motion-cut-switcher-label">Available cuts</span>
-          <div
-            className="motion-cut-options"
-            role="group"
-            aria-label={`Choose ${piece.title} cut`}
-          >
-            {cuts.map((cut) => {
-              const isActive = cut.id === activeCut.id
-
-              return (
-                <button
-                  className={`motion-cut-option ${isActive ? 'is-active' : ''}`}
-                  type="button"
-                  key={cut.id}
-                  aria-pressed={isActive}
-                  onClick={() => setActiveCutId(cut.id)}
-                >
-                  {cut.label}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-      )}
-    </>
-  )
-}
-
-function AutomotiveStoryCard({ piece, total }) {
-  const { videoRef, preload } = useDeferredVideoMetadata('1400px 240px')
+function AutomotiveReelStation({ pieces }) {
+  const { videoRef, preload } = useDeferredVideoMetadata('1600px 260px')
+  const [activeIndex, setActiveIndex] = useState(0)
   const [hasStarted, setHasStarted] = useState(false)
+
+  const activePiece = pieces[activeIndex]
+  const previousPiece = activeIndex > 0 ? pieces[activeIndex - 1] : null
+  const nextPiece = activeIndex < pieces.length - 1 ? pieces[activeIndex + 1] : null
+  const total = String(pieces.length).padStart(2, '0')
+
+  const stopVideo = useCallback(() => {
+    const video = videoRef.current
+
+    if (video) {
+      video.pause()
+      video.currentTime = 0
+    }
+
+    setHasStarted(false)
+  }, [videoRef])
+
+  const selectPiece = (index) => {
+    if (index === activeIndex) return
+    stopVideo()
+    setActiveIndex(index)
+  }
 
   const playVideo = async () => {
     const video = videoRef.current
-    if (!video) return
+    if (!video || hasStarted) return
 
     setHasStarted(true)
 
@@ -136,90 +66,147 @@ function AutomotiveStoryCard({ piece, total }) {
     }
   }
 
-  const returnToStory = () => {
-    const video = videoRef.current
+  const handleActiveKeyDown = (event) => {
+    if (hasStarted || (event.key !== 'Enter' && event.key !== ' ')) return
 
-    if (video) {
-      video.pause()
-      video.currentTime = 0
-    }
+    event.preventDefault()
+    playVideo()
+  }
 
-    setHasStarted(false)
+  const stepReel = (direction) => {
+    const nextIndex = activeIndex + direction
+    if (nextIndex < 0 || nextIndex >= pieces.length) return
+    selectPiece(nextIndex)
   }
 
   return (
-    <article
-      className={`automotive-story-card ${hasStarted ? 'is-playing' : ''}`}
-      role="listitem"
-    >
-      <div className="automotive-story-frame">
-        <video
-          ref={videoRef}
-          className="motion-video automotive-story-video"
-          controls={hasStarted}
-          playsInline
-          preload={preload}
-          poster={piece.cover}
-          aria-label={piece.title}
-        >
-          <source src={piece.src} type="video/mp4" />
-          Your browser does not support HTML video.
-        </video>
+    <div className="motion-reel-station">
+      <nav className="motion-reel-index" aria-label="Choose automotive video edit">
+        <span className="motion-reel-index-label">Reel index</span>
+        <div className="motion-reel-index-track" aria-hidden="true" />
 
-        {!hasStarted && (
-          <>
-            <img
-              className="automotive-story-cover-image"
-              src={piece.cover}
-              alt=""
-              loading="lazy"
-            />
-            <div className="automotive-story-cover-film" aria-hidden="true" />
+        {pieces.map((piece, index) => {
+          const isActive = index === activeIndex
 
-            <div className="automotive-note-overlay" aria-hidden="true">
-              <div className="automotive-note-meta">
-                <span>Creation note</span>
-                <span>
-                  {piece.number} / {String(total).padStart(2, '0')}
-                </span>
-              </div>
-
-              <div className="automotive-note-copy">
-                <h4>{piece.title}</h4>
-                <p>{piece.note}</p>
-              </div>
-            </div>
-
+          return (
             <button
-              className="automotive-story-play"
+              className={`motion-reel-index-item ${isActive ? 'is-active' : ''}`}
               type="button"
-              onClick={playVideo}
-              aria-label={`Play ${piece.title}`}
+              key={piece.id}
+              aria-pressed={isActive}
+              onClick={() => selectPiece(index)}
             >
-              <span className="automotive-story-play-prompt">
-                <span className="automotive-story-play-desktop">
-                  Click to play video
-                </span>
-                <span className="automotive-story-play-touch">Play video</span>
-                <span aria-hidden="true">↗</span>
+              <span className="motion-reel-index-number">{piece.number}</span>
+              <span className="motion-reel-index-title">{piece.title}</span>
+              <span className="motion-reel-index-node" aria-hidden="true" />
+            </button>
+          )
+        })}
+      </nav>
+
+      <div className="motion-reel-projector">
+        <div className="motion-reel-projector-meta" aria-hidden="true">
+          <span>Moving image</span>
+          <span>
+            {activePiece.number} / {total}
+          </span>
+        </div>
+
+        <div className="motion-reel-stack">
+          <span className="motion-reel-spine" aria-hidden="true" />
+
+          {previousPiece && (
+            <button
+              className="motion-reel-neighbor motion-reel-neighbor-prev"
+              type="button"
+              onClick={() => stepReel(-1)}
+              aria-label={`Previous reel: ${previousPiece.title}`}
+            >
+              <ReelSourcePreview
+                piece={previousPiece}
+                className="motion-reel-neighbor-video"
+              />
+              <span aria-hidden="true">
+                {previousPiece.number} · {previousPiece.title}
               </span>
             </button>
-          </>
-        )}
+          )}
+
+          <div
+            className={`motion-reel-active ${hasStarted ? 'is-playing' : ''}`}
+            key={activePiece.id}
+            role={hasStarted ? undefined : 'button'}
+            tabIndex={hasStarted ? -1 : 0}
+            aria-label={hasStarted ? undefined : `Play ${activePiece.title}`}
+            onClick={playVideo}
+            onKeyDown={handleActiveKeyDown}
+          >
+            <video
+              ref={videoRef}
+              className="motion-reel-video"
+              controls={hasStarted}
+              playsInline
+              preload={preload}
+              aria-label={activePiece.title}
+              onEnded={() => {
+                if (videoRef.current) videoRef.current.currentTime = 0
+                setHasStarted(false)
+              }}
+            >
+              <source src={activePiece.src} type="video/mp4" />
+              Your browser does not support HTML video.
+            </video>
+          </div>
+
+          {nextPiece && (
+            <button
+              className="motion-reel-neighbor motion-reel-neighbor-next"
+              type="button"
+              onClick={() => stepReel(1)}
+              aria-label={`Next reel: ${nextPiece.title}`}
+            >
+              <ReelSourcePreview
+                piece={nextPiece}
+                className="motion-reel-neighbor-video"
+              />
+              <span aria-hidden="true">
+                {nextPiece.number} · {nextPiece.title}
+              </span>
+            </button>
+          )}
+        </div>
+
+        <div className="motion-reel-step-controls" aria-label="Reel navigation">
+          <button
+            type="button"
+            onClick={() => stepReel(-1)}
+            disabled={!previousPiece}
+          >
+            <span aria-hidden="true">↑</span> Previous
+          </button>
+          <span aria-hidden="true">{activePiece.number}</span>
+          <button
+            type="button"
+            onClick={() => stepReel(1)}
+            disabled={!nextPiece}
+          >
+            Next <span aria-hidden="true">↓</span>
+          </button>
+        </div>
       </div>
 
-      <button
-        className={`automotive-story-control ${hasStarted ? 'is-back' : ''}`}
-        type="button"
-        onClick={hasStarted ? returnToStory : playVideo}
-        aria-label={
-          hasStarted ? `Back to story for ${piece.title}` : `Play ${piece.title}`
-        }
-      >
-        <span>{hasStarted ? 'Back to story' : 'Play video'}</span>
-        <span aria-hidden="true">{hasStarted ? '↙' : '↗'}</span>
-      </button>
-    </article>
+      <aside className="motion-reel-story" aria-live="polite">
+        <div className="motion-reel-story-meta">
+          <span>Creation note</span>
+          <span>
+            {activePiece.number} / {total}
+          </span>
+        </div>
+        <span className="motion-reel-story-category">{activePiece.category}</span>
+        <h3>{activePiece.title}</h3>
+        <p>{activePiece.note}</p>
+      </aside>
+    </div>
   )
 }
 
@@ -279,19 +266,7 @@ function Motion() {
             </div>
           </div>
 
-          <div
-            className="automotive-reel"
-            role="list"
-            aria-label="Automotive story reel"
-          >
-            {automotiveMotion.map((piece) => (
-              <AutomotiveStoryCard
-                piece={piece}
-                key={piece.id}
-                total={automotiveMotion.length}
-              />
-            ))}
-          </div>
+          <AutomotiveReelStation pieces={automotiveMotion} />
 
           <blockquote className="automotive-process-quote">
             <p>
@@ -316,52 +291,10 @@ function Motion() {
             Filmmaking, animation, video editing, and commercial work.
           </p>
 
-          <div className="motion-featured">
-            {featuredMotion.map((piece, index) => (
-              <article
-                className={`motion-piece ${
-                  index % 2 === 1 ? 'motion-piece-reverse' : ''
-                } ${piece.latest ? 'motion-piece-latest' : ''}`.trim()}
-                key={piece.id}
-              >
-                <div
-                  className={`motion-piece-media ${
-                    piece.layout === 'portrait' ? 'motion-piece-media-portrait' : ''
-                  }`}
-                >
-                  <div className="motion-meta">
-                    <span className="motion-index">{piece.number}</span>
-                    <span>{piece.category}</span>
-                  </div>
-
-                  <MotionCutPlayer piece={piece} />
-                </div>
-
-                <div className="motion-piece-copy">
-                  <span className="motion-piece-label">
-                    {piece.latest
-                      ? `Latest work · ${piece.dateLabel}`
-                      : 'Behind the edit'}
-                  </span>
-                  <h3>{piece.title}</h3>
-                  {piece.credit && (
-                    <span className="motion-piece-credit">{piece.credit}</span>
-                  )}
-                  <p>{piece.reflection}</p>
-
-                  {piece.creationNotes && (
-                    <button
-                      className="motion-notes-trigger"
-                      type="button"
-                      onClick={() => setSelectedNotesPiece(piece)}
-                    >
-                      Read creation notes <span aria-hidden="true">↗</span>
-                    </button>
-                  )}
-                </div>
-              </article>
-            ))}
-          </div>
+          <MotionHabitat
+            pieces={featuredMotion}
+            onOpenNotes={setSelectedNotesPiece}
+          />
         </div>
       </section>
 
