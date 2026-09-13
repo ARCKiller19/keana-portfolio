@@ -120,6 +120,21 @@ function MotionCutPlayer({ piece }) {
   )
 }
 
+function ReelSourcePreview({ piece, className = '' }) {
+  return (
+    <video
+      className={className}
+      muted
+      playsInline
+      preload="metadata"
+      aria-hidden="true"
+      tabIndex={-1}
+    >
+      <source src={piece.src} type="video/mp4" />
+    </video>
+  )
+}
+
 function AutomotiveReelStation({ pieces }) {
   const { videoRef, preload } = useDeferredVideoMetadata('1600px 260px')
   const [activeIndex, setActiveIndex] = useState(0)
@@ -149,7 +164,7 @@ function AutomotiveReelStation({ pieces }) {
 
   const playVideo = async () => {
     const video = videoRef.current
-    if (!video) return
+    if (!video || hasStarted) return
 
     setHasStarted(true)
 
@@ -158,6 +173,13 @@ function AutomotiveReelStation({ pieces }) {
     } catch {
       setHasStarted(false)
     }
+  }
+
+  const handleActiveKeyDown = (event) => {
+    if (hasStarted || (event.key !== 'Enter' && event.key !== ' ')) return
+
+    event.preventDefault()
+    playVideo()
   }
 
   const stepReel = (direction) => {
@@ -209,7 +231,10 @@ function AutomotiveReelStation({ pieces }) {
               onClick={() => stepReel(-1)}
               aria-label={`Previous reel: ${previousPiece.title}`}
             >
-              <img src={previousPiece.cover} alt="" loading="lazy" />
+              <ReelSourcePreview
+                piece={previousPiece}
+                className="motion-reel-neighbor-video"
+              />
               <span aria-hidden="true">
                 {previousPiece.number} · {previousPiece.title}
               </span>
@@ -219,6 +244,11 @@ function AutomotiveReelStation({ pieces }) {
           <div
             className={`motion-reel-active ${hasStarted ? 'is-playing' : ''}`}
             key={activePiece.id}
+            role={hasStarted ? undefined : 'button'}
+            tabIndex={hasStarted ? -1 : 0}
+            aria-label={hasStarted ? undefined : `Play ${activePiece.title}`}
+            onClick={playVideo}
+            onKeyDown={handleActiveKeyDown}
           >
             <video
               ref={videoRef}
@@ -226,36 +256,15 @@ function AutomotiveReelStation({ pieces }) {
               controls={hasStarted}
               playsInline
               preload={preload}
-              poster={activePiece.cover}
               aria-label={activePiece.title}
-              onEnded={() => setHasStarted(false)}
+              onEnded={() => {
+                if (videoRef.current) videoRef.current.currentTime = 0
+                setHasStarted(false)
+              }}
             >
               <source src={activePiece.src} type="video/mp4" />
               Your browser does not support HTML video.
             </video>
-
-            {!hasStarted && (
-              <>
-                <img
-                  className="motion-reel-poster"
-                  src={activePiece.cover}
-                  alt=""
-                  loading="eager"
-                />
-                <span className="motion-reel-film" aria-hidden="true" />
-                <button
-                  className="motion-reel-play"
-                  type="button"
-                  onClick={playVideo}
-                  aria-label={`Play ${activePiece.title}`}
-                >
-                  <span className="motion-reel-play-icon" aria-hidden="true">
-                    ▶
-                  </span>
-                  <span>Play reel</span>
-                </button>
-              </>
-            )}
           </div>
 
           {nextPiece && (
@@ -265,7 +274,10 @@ function AutomotiveReelStation({ pieces }) {
               onClick={() => stepReel(1)}
               aria-label={`Next reel: ${nextPiece.title}`}
             >
-              <img src={nextPiece.cover} alt="" loading="lazy" />
+              <ReelSourcePreview
+                piece={nextPiece}
+                className="motion-reel-neighbor-video"
+              />
               <span aria-hidden="true">
                 {nextPiece.number} · {nextPiece.title}
               </span>
@@ -302,15 +314,6 @@ function AutomotiveReelStation({ pieces }) {
         <span className="motion-reel-story-category">{activePiece.category}</span>
         <h3>{activePiece.title}</h3>
         <p>{activePiece.note}</p>
-
-        <button
-          className="motion-reel-story-action"
-          type="button"
-          onClick={hasStarted ? stopVideo : playVideo}
-        >
-          <span>{hasStarted ? 'Back to poster' : 'Play reel'}</span>
-          <span aria-hidden="true">{hasStarted ? '↙' : '↗'}</span>
-        </button>
       </aside>
     </div>
   )
