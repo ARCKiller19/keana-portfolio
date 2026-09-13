@@ -17,12 +17,95 @@ let installed = false
 let habitatObserver = null
 let mountObserver = null
 let activeWorld = null
+let guideElement = null
+
+function createKeyGrid(labels, className, keyTag = 'kbd') {
+  const grid = document.createElement('span')
+  grid.className = className
+
+  labels.forEach((label) => {
+    const key = document.createElement(keyTag)
+    key.textContent = label
+    grid.appendChild(key)
+  })
+
+  return grid
+}
+
+function createGuide(world) {
+  const guide = document.createElement('div')
+  guide.className = 'motion-habitat-guide'
+  guide.setAttribute('aria-hidden', 'true')
+
+  const eyebrow = document.createElement('span')
+  eyebrow.className = 'motion-habitat-guide-eyebrow'
+  eyebrow.textContent = 'Explore the habitat'
+
+  const controls = document.createElement('div')
+  controls.className = 'motion-habitat-guide-controls'
+
+  const wasdGroup = document.createElement('div')
+  wasdGroup.className = 'motion-habitat-guide-key-group'
+  wasdGroup.appendChild(
+    createKeyGrid(['W', 'A', 'S', 'D'], 'motion-habitat-guide-key-grid is-wasd'),
+  )
+  const wasdLabel = document.createElement('span')
+  wasdLabel.textContent = 'WASD'
+  wasdGroup.appendChild(wasdLabel)
+
+  const separator = document.createElement('span')
+  separator.className = 'motion-habitat-guide-or'
+  separator.textContent = 'or'
+
+  const arrowGroup = document.createElement('div')
+  arrowGroup.className = 'motion-habitat-guide-key-group'
+  arrowGroup.appendChild(
+    createKeyGrid(['↑', '←', '↓', '→'], 'motion-habitat-guide-key-grid is-arrows'),
+  )
+  const arrowLabel = document.createElement('span')
+  arrowLabel.textContent = 'Arrow keys'
+  arrowGroup.appendChild(arrowLabel)
+
+  controls.append(wasdGroup, separator, arrowGroup)
+
+  const instruction = document.createElement('p')
+  instruction.textContent = 'Click inside, then move · or click any station to auto-walk there'
+
+  guide.append(eyebrow, controls, instruction)
+  world.appendChild(guide)
+  return guide
+}
+
+function enhancePersistentControls(habitat) {
+  const controls = habitat.querySelector('.motion-habitat-controls')
+  if (!controls || controls.dataset.keycapsEnhanced === 'true') return
+
+  const copy = controls.lastElementChild
+  if (!copy) return
+
+  const separator = document.createElement('span')
+  separator.className = 'motion-habitat-control-or'
+  separator.textContent = 'or'
+
+  const arrows = createKeyGrid(
+    ['↑', '←', '↓', '→'],
+    'motion-habitat-arrow-keys',
+    'b',
+  )
+
+  copy.className = 'motion-habitat-control-copy'
+  copy.textContent = 'Move · click station = auto-walk'
+
+  controls.insertBefore(separator, copy)
+  controls.insertBefore(arrows, copy)
+  controls.dataset.keycapsEnhanced = 'true'
+}
 
 function hideGuide() {
   if (dismissed) return
   dismissed = true
 
-  activeWorld?.classList.remove('show-control-guide')
+  guideElement?.classList.remove('is-visible')
   document.removeEventListener('pointerdown', handlePointerDown, true)
   document.removeEventListener('keydown', handleKeyDown, true)
   habitatObserver?.disconnect()
@@ -42,7 +125,12 @@ function showGuide(world) {
   if (dismissed || compactQuery.matches || reducedMotionQuery.matches) return
 
   activeWorld = world
-  world.classList.add('show-control-guide')
+  guideElement ??= createGuide(world)
+
+  requestAnimationFrame(() => {
+    guideElement?.classList.add('is-visible')
+  })
+
   document.addEventListener('pointerdown', handlePointerDown, true)
   document.addEventListener('keydown', handleKeyDown, true)
 }
@@ -55,6 +143,7 @@ function installGuide() {
   if (!habitat || !world) return false
 
   installed = true
+  enhancePersistentControls(habitat)
 
   if (compactQuery.matches || reducedMotionQuery.matches) return true
 
@@ -96,6 +185,9 @@ window.addEventListener(
     mountObserver?.disconnect()
     document.removeEventListener('pointerdown', handlePointerDown, true)
     document.removeEventListener('keydown', handleKeyDown, true)
+    guideElement?.remove()
+    guideElement = null
+    activeWorld = null
   },
   { once: true },
 )
