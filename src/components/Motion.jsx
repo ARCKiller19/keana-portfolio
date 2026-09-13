@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { automotiveMotion, featuredMotion } from '../data/videos.js'
-import { motionAlternateCuts } from '../data/motion-cuts.js'
+import MotionHabitat from './MotionHabitat.jsx'
 import MotionNotesModal from './MotionNotesModal.jsx'
+import useDeferredVideoMetadata from '../hooks/useDeferredVideoMetadata.js'
 import '../motion.css'
 import '../automotive-notes.css'
 import '../automotive-story-overlay.css'
@@ -9,117 +10,6 @@ import '../motion-section-order.css'
 import '../latest-motion.css'
 import '../motion-cuts.css'
 import '../motion-reel-station.css'
-import '../motion-screening-room.css'
-
-function useDeferredVideoMetadata(rootMargin = '1400px 200px') {
-  const videoRef = useRef(null)
-  const [shouldPreload, setShouldPreload] = useState(false)
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return undefined
-
-    if (!('IntersectionObserver' in window)) {
-      setShouldPreload(true)
-      return undefined
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return
-
-        setShouldPreload(true)
-        observer.disconnect()
-      },
-      { rootMargin },
-    )
-
-    observer.observe(video)
-
-    return () => observer.disconnect()
-  }, [rootMargin])
-
-  useEffect(() => {
-    if (shouldPreload) {
-      videoRef.current?.load()
-    }
-  }, [shouldPreload])
-
-  return {
-    videoRef,
-    preload: shouldPreload ? 'metadata' : 'none',
-  }
-}
-
-function VideoPlayer({ src, title, className = '' }) {
-  const { videoRef, preload } = useDeferredVideoMetadata('2200px 260px')
-
-  return (
-    <video
-      ref={videoRef}
-      className={`motion-video ${className}`.trim()}
-      controls
-      playsInline
-      preload={preload}
-      aria-label={title}
-    >
-      <source src={src} type="video/mp4" />
-      Your browser does not support HTML video.
-    </video>
-  )
-}
-
-function MotionCutPlayer({ piece }) {
-  const cuts = [
-    { id: 'full', label: 'Full edit', src: piece.src },
-    ...(motionAlternateCuts[piece.id] ?? []),
-  ]
-  const [activeCutId, setActiveCutId] = useState('full')
-  const activeCut = cuts.find((cut) => cut.id === activeCutId) ?? cuts[0]
-
-  return (
-    <>
-      <div
-        className={`motion-frame ${
-          piece.layout === 'portrait' ? 'motion-frame-portrait' : ''
-        }`}
-      >
-        <VideoPlayer
-          key={activeCut.src}
-          src={activeCut.src}
-          title={`${piece.title} ${activeCut.label}`}
-        />
-      </div>
-
-      {cuts.length > 1 && (
-        <div className="motion-cut-switcher">
-          <span className="motion-cut-switcher-label">Available cuts</span>
-          <div
-            className="motion-cut-options"
-            role="group"
-            aria-label={`Choose ${piece.title} cut`}
-          >
-            {cuts.map((cut) => {
-              const isActive = cut.id === activeCut.id
-
-              return (
-                <button
-                  className={`motion-cut-option ${isActive ? 'is-active' : ''}`}
-                  type="button"
-                  key={cut.id}
-                  aria-pressed={isActive}
-                  onClick={() => setActiveCutId(cut.id)}
-                >
-                  {cut.label}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-      )}
-    </>
-  )
-}
 
 function ReelSourcePreview({ piece, className = '' }) {
   return (
@@ -320,130 +210,6 @@ function AutomotiveReelStation({ pieces }) {
   )
 }
 
-function ScreeningSourcePreview({ piece }) {
-  const videoRef = useRef(null)
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return undefined
-
-    const seekPreview = () => {
-      if (!Number.isFinite(video.duration) || video.duration <= 0) return
-      video.currentTime = Math.min(0.18, Math.max(0, video.duration - 0.01))
-    }
-
-    video.addEventListener('loadedmetadata', seekPreview, { once: true })
-    video.load()
-
-    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
-      seekPreview()
-    }
-
-    return () => video.removeEventListener('loadedmetadata', seekPreview)
-  }, [piece.src])
-
-  return (
-    <video
-      ref={videoRef}
-      src={piece.src}
-      muted
-      playsInline
-      preload="metadata"
-      aria-hidden="true"
-      tabIndex={-1}
-    />
-  )
-}
-
-function MotionScreeningRoom({ pieces, onOpenNotes }) {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const activePiece = pieces[activeIndex]
-  const total = String(pieces.length).padStart(2, '0')
-
-  return (
-    <div className="motion-screening-room">
-      <div
-        className="motion-screening-selector"
-        role="group"
-        aria-label="Choose a motion piece to screen"
-      >
-        {pieces.map((piece, index) => {
-          const isActive = index === activeIndex
-
-          return (
-            <button
-              className={`motion-screening-choice ${isActive ? 'is-active' : ''}`}
-              type="button"
-              key={piece.id}
-              aria-pressed={isActive}
-              onClick={() => setActiveIndex(index)}
-            >
-              <span className="motion-screening-thumb" aria-hidden="true">
-                <ScreeningSourcePreview piece={piece} />
-                <span className="motion-screening-choice-number">{piece.number}</span>
-              </span>
-
-              <span className="motion-screening-choice-copy">
-                <span className="motion-screening-choice-state">
-                  {isActive ? 'Now screening' : 'Select film'}
-                </span>
-                <span className="motion-screening-choice-title">{piece.title}</span>
-                <span className="motion-screening-choice-category">{piece.category}</span>
-              </span>
-            </button>
-          )
-        })}
-      </div>
-
-      <article className="motion-screening-stage" key={activePiece.id}>
-        <div
-          className={`motion-screening-media ${
-            activePiece.layout === 'portrait' ? 'is-portrait' : ''
-          }`}
-        >
-          <div className="motion-screening-media-meta">
-            <span>Current screening</span>
-            <span>
-              {activePiece.number} / {total}
-            </span>
-          </div>
-
-          <MotionCutPlayer key={activePiece.id} piece={activePiece} />
-        </div>
-
-        <div className="motion-screening-copy" aria-live="polite">
-          <div className="motion-screening-label">
-            <span>
-              {activePiece.latest
-                ? `Latest work · ${activePiece.dateLabel}`
-                : 'Motion study'}
-            </span>
-            <span>{activePiece.category}</span>
-          </div>
-
-          <h3>{activePiece.title}</h3>
-
-          {activePiece.credit && (
-            <span className="motion-screening-credit">{activePiece.credit}</span>
-          )}
-
-          <p>{activePiece.reflection}</p>
-
-          {activePiece.creationNotes && (
-            <button
-              className="motion-screening-notes"
-              type="button"
-              onClick={() => onOpenNotes(activePiece)}
-            >
-              Read creation notes <span aria-hidden="true">↗</span>
-            </button>
-          )}
-        </div>
-      </article>
-    </div>
-  )
-}
-
 function Motion() {
   const [selectedNotesPiece, setSelectedNotesPiece] = useState(null)
   const closeNotes = useCallback(() => setSelectedNotesPiece(null), [])
@@ -525,7 +291,7 @@ function Motion() {
             Filmmaking, animation, video editing, and commercial work.
           </p>
 
-          <MotionScreeningRoom
+          <MotionHabitat
             pieces={featuredMotion}
             onOpenNotes={setSelectedNotesPiece}
           />
