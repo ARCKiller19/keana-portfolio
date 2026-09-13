@@ -519,7 +519,13 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       <header className="motion-habitat-header">
         <div>
           <span className="motion-habitat-kicker">Motion Habitat · 03 Signal Stations</span>
-          <p>A quiet cyber-botanical lab for Keana&apos;s motion work.</p>
+          <p>
+            {isCompact
+              ? reducedMotion
+                ? 'Tap a station to open its video below.'
+                : 'Tap a station and Keana will walk there. The selected video opens below.'
+              : 'A quiet cyber-botanical lab for Keana\'s motion work.'}
+          </p>
         </div>
         <span className="motion-habitat-system" aria-hidden="true">
           GRID 07-B · SIGNAL READY
@@ -529,17 +535,19 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       <div
         ref={worldRef}
         className="motion-habitat-world"
-        tabIndex={0}
+        tabIndex={isCompact || reducedMotion ? -1 : 0}
         role="group"
         aria-label={
-          isCompact
-            ? 'Tap a motion station to move the character and open its video.'
-            : 'Use W A S D or arrow keys while this habitat is focused, or choose any station directly.'
+          reducedMotion
+            ? 'Choose a motion station to open its video.'
+            : isCompact
+              ? 'Tap a motion station to move Keana toward it and open its video below.'
+              : 'Use W A S D or arrow keys while this habitat is focused, or choose any station directly.'
         }
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
         onBlur={handleWorldBlur}
-        onPointerDown={handleWorldPointerDown}
+        onPointerDown={isCompact || reducedMotion ? undefined : handleWorldPointerDown}
       >
         <div className="motion-habitat-grid" aria-hidden="true" />
 
@@ -615,7 +623,11 @@ function MotionHabitat({ pieces, onOpenNotes }) {
                       ? 'SIGNAL DETECTED'
                       : isTargeted
                         ? 'APPROACHING'
-                        : 'DORMANT'}
+                        : isCompact
+                          ? reducedMotion
+                            ? 'TAP TO OPEN'
+                            : 'TAP TO EXPLORE'
+                          : 'DORMANT'}
                 </em>
               </span>
             </button>
