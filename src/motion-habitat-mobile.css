@@ -1,0 +1,245 @@
+/* Motion Habitat mobile pass: make the touch flow intentional instead of a compressed desktop game. */
+
+@media (max-width: 720px) {
+  .motion-habitat {
+    padding: 16px 12px 14px;
+  }
+
+  .motion-habitat-header {
+    margin-bottom: 10px;
+  }
+
+  .motion-habitat-header p {
+    max-width: 38ch;
+    margin-top: 5px;
+    color: rgba(239, 233, 219, 0.62);
+    font-size: 10px;
+    line-height: 1.55;
+  }
+
+  .motion-habitat-header p::before {
+    content: 'TAP TO EXPLORE · ';
+    color: rgba(205, 221, 111, 0.76);
+    font-family: var(--font-mono);
+    font-size: 7.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* A compact vertical strip keeps the selected panel close to the interaction. */
+  .motion-habitat-world {
+    min-height: 570px;
+    height: 570px;
+    border-color: rgba(167, 179, 95, 0.18);
+  }
+
+  .motion-habitat.is-online .motion-habitat-grid {
+    opacity: 0.18;
+  }
+
+  .motion-habitat .motion-habitat-station {
+    grid-template-columns: 82px minmax(0, 1fr);
+    gap: 10px;
+    width: min(90vw, 316px);
+    min-height: 100px;
+    padding: 10px 11px;
+    touch-action: manipulation;
+  }
+
+  .motion-habitat .motion-habitat-machine {
+    width: 82px;
+    height: 68px;
+  }
+
+  .motion-habitat .motion-habitat-machine-screen {
+    width: 54px;
+    height: 33px;
+  }
+
+  .motion-habitat .motion-habitat-station-copy {
+    gap: 5px;
+  }
+
+  .motion-habitat .motion-habitat-station-copy span,
+  .motion-habitat .motion-habitat-station-copy small,
+  .motion-habitat .motion-habitat-station-copy em {
+    font-size: 7.25px;
+  }
+
+  .motion-habitat .motion-habitat-station-copy strong {
+    font-size: 16.5px;
+    line-height: 1;
+  }
+
+  .motion-habitat .motion-habitat-station-copy small {
+    overflow: visible;
+    line-height: 1.3;
+    white-space: normal;
+  }
+
+  .motion-habitat .motion-habitat-station-copy::after {
+    content: '> TAP TO APPROACH';
+    font-size: 7.25px;
+  }
+
+  .motion-habitat .motion-habitat-station.is-targeted .motion-habitat-station-copy::after {
+    content: '> AUTO-WALKING';
+  }
+
+  .motion-habitat .motion-habitat-station.is-awake:not(.is-open):not(.is-targeted) .motion-habitat-station-copy::after {
+    content: '> SIGNAL READY';
+  }
+
+  .motion-habitat .motion-habitat-station.is-open .motion-habitat-station-copy::after {
+    content: '> PANEL OPEN';
+  }
+
+  .motion-habitat.is-reduced .motion-habitat-station:not(.is-open) .motion-habitat-station-copy::after {
+    content: '> TAP TO OPEN';
+  }
+
+  .motion-habitat .motion-habitat-character::before {
+    padding: 3px 6px 2px;
+    background: rgba(5, 7, 5, 0.96);
+    font-size: 6.5px;
+  }
+
+  /* The panel is the payoff on mobile: let it read like the next deliberate step. */
+  .motion-habitat-panel {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border-color: rgba(205, 221, 111, 0.42);
+    scroll-margin-top: 72px;
+  }
+
+  .motion-habitat-panel-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: start;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+
+  .motion-habitat-panel-head > div {
+    min-width: 0;
+  }
+
+  .motion-habitat-panel-head span {
+    font-size: 7.5px;
+  }
+
+  .motion-habitat-panel-head strong {
+    font-size: clamp(20px, 7.2vw, 28px);
+    line-height: 1.04;
+  }
+
+  .motion-habitat-panel-head button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px 11px;
+    font-size: 8.5px;
+    touch-action: manipulation;
+  }
+
+  .motion-habitat-panel-body,
+  .motion-habitat-panel.is-portrait .motion-habitat-panel-body {
+    gap: 14px;
+  }
+
+  .motion-habitat-panel.is-portrait .motion-habitat-panel-media .motion-frame-portrait {
+    width: min(100%, 300px);
+  }
+
+  .motion-habitat-panel-copy {
+    gap: 9px;
+  }
+
+  .motion-habitat-panel-category,
+  .motion-habitat-panel-date,
+  .motion-habitat-panel-credit {
+    font-size: 8px;
+  }
+
+  .motion-habitat-panel-copy p {
+    font-size: 12.5px;
+    line-height: 1.65;
+  }
+
+  .motion-habitat-notes {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    justify-self: stretch;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 8.5px;
+    touch-action: manipulation;
+  }
+
+  .motion-habitat-panel.has-cuts .motion-habitat-panel-media.motion-screening-media .motion-cut-switcher {
+    width: min(100%, 280px);
+    margin-bottom: 10px;
+  }
+
+  .motion-habitat-panel.has-cuts .motion-habitat-panel-media.motion-screening-media .motion-cut-option {
+    min-height: 44px;
+    padding-block: 10px;
+    font-size: 8.5px;
+    touch-action: manipulation;
+  }
+
+  .motion-habitat .station-roast::after {
+    top: -7px;
+    font-size: 6.25px;
+  }
+}
+
+@media (max-width: 380px) {
+  .motion-habitat .motion-habitat-station {
+    grid-template-columns: 74px minmax(0, 1fr);
+    width: min(90vw, 292px);
+    min-height: 96px;
+    padding-inline: 9px;
+  }
+
+  .motion-habitat .motion-habitat-machine {
+    width: 74px;
+    height: 62px;
+  }
+
+  .motion-habitat .motion-habitat-machine-screen {
+    width: 48px;
+    height: 30px;
+  }
+
+  .motion-habitat .motion-habitat-station-copy strong {
+    font-size: 15.5px;
+  }
+
+  .motion-habitat-panel-head strong {
+    font-size: clamp(19px, 7vw, 25px);
+  }
+}
+
+@media (max-width: 720px) and (hover: none) and (pointer: coarse) {
+  /* Avoid desktop-style hover lift becoming a sticky touch state. */
+  .motion-habitat .motion-habitat-station:hover:not(.is-awake):not(.is-targeted):not(.is-open) {
+    transform: translate(-50%, -50%);
+  }
+
+  .motion-habitat .motion-habitat-station:hover:not(.is-awake):not(.is-targeted):not(.is-open) .motion-habitat-station-copy::after {
+    content: '> TAP TO APPROACH';
+  }
+}
+
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+  .motion-habitat-header p::before {
+    content: 'TAP TO VIEW · ';
+  }
+}
