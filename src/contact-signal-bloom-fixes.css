@@ -1,14 +1,38 @@
 /* Cascade safeguards for the desktop Contact orbit. */
 
 @media (min-width: 901px) {
+  /* Scale the full orbital system together so the 12 / 3 / 6 / 9 geometry stays exact. */
+  .footer .footer-top {
+    min-height: 630px;
+  }
+
+  .footer .footer-contact-panel {
+    width: min(51.5vw, 627px);
+  }
+
+  .footer .footer-contact-panel::before {
+    inset: 112px;
+    border-color: rgba(167, 179, 95, 0.34);
+  }
+
   .footer .footer-top h2 {
     max-width: 8.4ch;
     font-size: clamp(58px, 6.2vw, 88px);
     line-height: 0.93;
   }
 
+  .footer .footer-email {
+    width: 213px;
+    height: 213px;
+    padding: 29px 20px;
+  }
+
+  .footer .footer-email::after {
+    inset: 17px;
+  }
+
   .footer .footer-email > span:first-child {
-    max-width: 150px;
+    max-width: 168px;
     overflow-wrap: normal;
   }
 
@@ -16,6 +40,8 @@
   .footer .footer-links a:nth-child(2n),
   .footer .footer-links a:nth-last-child(-n + 2) {
     position: absolute;
+    width: 121px;
+    height: 121px;
     color: rgba(239, 233, 219, 0.58);
     border: 1px solid rgba(239, 233, 219, 0.14);
     transition:
@@ -24,6 +50,36 @@
       background-color var(--motion-fast) var(--ease-editorial),
       box-shadow var(--motion-fast) var(--ease-editorial),
       scale var(--motion-fast) var(--ease-editorial);
+  }
+
+  .footer .footer-links a:nth-child(1) {
+    top: 52px;
+    left: calc(50% - 60.5px);
+  }
+
+  .footer .footer-links a:nth-child(2) {
+    top: calc(50% - 60.5px);
+    right: 52px;
+  }
+
+  .footer .footer-links a:nth-child(3) {
+    bottom: 52px;
+    left: calc(50% - 60.5px);
+  }
+
+  .footer .footer-links a:nth-child(4) {
+    top: calc(50% - 60.5px);
+    left: 52px;
+  }
+
+  .footer .footer-link-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .footer .footer-link-icon svg {
+    width: 17px;
+    height: 17px;
   }
 
   .footer .footer-links a:hover,
@@ -56,13 +112,13 @@
     top: 100%;
     left: 50%;
     width: 1px;
-    height: 76px;
+    height: 85px;
   }
 
   .footer .footer-links a:nth-child(2)::after {
     top: 50%;
     right: 100%;
-    width: 76px;
+    width: 85px;
     height: 1px;
   }
 
@@ -70,13 +126,13 @@
     bottom: 100%;
     left: 50%;
     width: 1px;
-    height: 76px;
+    height: 85px;
   }
 
   .footer .footer-links a:nth-child(4)::after {
     top: 50%;
     left: 100%;
-    width: 76px;
+    width: 85px;
     height: 1px;
   }
 
