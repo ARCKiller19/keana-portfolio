@@ -1,0 +1,426 @@
+/* Contact Signal Bloom — a calm, scroll-grown communication network for desktop. */
+
+@media (min-width: 821px) {
+  .footer {
+    --contact-line: rgba(167, 179, 95, 0.28);
+    --contact-line-live: rgba(205, 221, 111, 0.86);
+    --contact-node: rgba(239, 233, 219, 0.72);
+    padding-top: clamp(92px, 9vw, 132px);
+    background:
+      radial-gradient(circle at 47% 47%, rgba(167, 179, 95, 0.055), transparent 24%),
+      linear-gradient(180deg, rgba(167, 179, 95, 0.02), transparent 34%),
+      var(--bg);
+  }
+
+  .footer-kicker {
+    margin-bottom: 24px;
+  }
+
+  .footer-top {
+    position: relative;
+    display: block;
+    min-height: clamp(600px, 52vw, 690px);
+    margin-bottom: 42px;
+    isolation: isolate;
+  }
+
+  /* Main signal stem. Its growth is tied to scroll in supporting browsers. */
+  .footer-top::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: -25px;
+    left: 47%;
+    width: 1px;
+    height: 51%;
+    background: linear-gradient(
+      180deg,
+      rgba(167, 179, 95, 0.05),
+      rgba(167, 179, 95, 0.52) 52%,
+      rgba(205, 221, 111, 0.72)
+    );
+    box-shadow: 0 0 10px rgba(167, 179, 95, 0.08);
+    transform-origin: top center;
+    pointer-events: none;
+  }
+
+  .footer-top::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: calc(51% - 29px);
+    left: calc(47% - 27px);
+    width: 54px;
+    height: 54px;
+    border: 1px solid rgba(167, 179, 95, 0.34);
+    border-radius: 50%;
+    box-shadow:
+      inset 0 0 0 7px rgba(167, 179, 95, 0.018),
+      0 0 0 1px rgba(239, 233, 219, 0.018);
+    pointer-events: none;
+  }
+
+  .footer-message {
+    position: absolute;
+    z-index: 3;
+    top: 10%;
+    left: 0;
+    width: min(44%, 500px);
+  }
+
+  .footer-eyebrow {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer-eyebrow::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: rgba(205, 221, 111, 0.72);
+  }
+
+  .footer-top h2 {
+    max-width: 8.6ch;
+    font-size: clamp(58px, 7vw, 96px);
+  }
+
+  .footer-contact-panel {
+    position: static;
+    display: block;
+    padding: 0;
+  }
+
+  /* The email is the central communication node. */
+  .footer-email {
+    position: absolute;
+    z-index: 5;
+    top: 46%;
+    left: 33%;
+    width: min(38%, 450px);
+    min-height: 64px;
+    padding: 17px 18px;
+    border: 1px solid rgba(167, 179, 95, 0.42);
+    background: rgba(7, 9, 7, 0.94);
+    box-shadow:
+      inset 0 0 0 1px rgba(239, 233, 219, 0.018),
+      0 16px 34px rgba(0, 0, 0, 0.2);
+  }
+
+  .footer-email::before {
+    content: 'PRIMARY SIGNAL · EMAIL';
+    position: absolute;
+    bottom: calc(100% + 9px);
+    left: 0;
+    color: rgba(205, 221, 111, 0.68);
+    font-family: var(--font-mono);
+    font-size: 7px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .footer-email::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -22px;
+    width: 8px;
+    height: 8px;
+    border: 1px solid rgba(205, 221, 111, 0.68);
+    border-radius: 50%;
+    background: var(--bg);
+    box-shadow: 0 0 0 4px rgba(167, 179, 95, 0.04);
+    transform: translateY(-50%);
+    transition:
+      border-color var(--motion-fast) var(--ease-editorial),
+      background-color var(--motion-fast) var(--ease-editorial),
+      box-shadow var(--motion-fast) var(--ease-editorial);
+  }
+
+  .footer-email:hover,
+  .footer-email:focus-visible {
+    border-color: rgba(205, 221, 111, 0.78);
+    background: rgba(10, 13, 9, 0.98);
+    text-shadow: 0 0 16px rgba(167, 179, 95, 0.12);
+  }
+
+  .footer-email:hover::after,
+  .footer-email:focus-visible::after {
+    border-color: rgba(205, 221, 111, 0.96);
+    background: rgba(167, 179, 95, 0.72);
+    box-shadow: 0 0 12px rgba(167, 179, 95, 0.18);
+  }
+
+  /* Two restrained botanical leaves at the signal junction. */
+  .footer-contact-panel::before,
+  .footer-contact-panel::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 36%;
+    width: 24px;
+    height: 45px;
+    border: 1px solid rgba(167, 179, 95, 0.28);
+    pointer-events: none;
+  }
+
+  .footer-contact-panel::before {
+    left: calc(47% - 29px);
+    border-right: 0;
+    border-bottom: 0;
+    border-radius: 100% 0 100% 0;
+    transform: rotate(-32deg);
+  }
+
+  .footer-contact-panel::after {
+    left: calc(47% + 7px);
+    border-left: 0;
+    border-bottom: 0;
+    border-radius: 0 100% 0 100%;
+    transform: rotate(31deg);
+  }
+
+  /* Social channels become branch endpoints instead of a generic grid. */
+  .footer-links {
+    position: static;
+    display: block;
+    margin: 0;
+    border: 0;
+  }
+
+  .footer-links a {
+    position: absolute;
+    z-index: 4;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    width: 190px;
+    min-height: 58px;
+    padding: 9px 12px;
+    border: 1px solid rgba(239, 233, 219, 0.11);
+    background: rgba(7, 9, 7, 0.9);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
+    overflow: visible;
+  }
+
+  .footer-links a:nth-child(1) {
+    top: 11%;
+    right: 2%;
+  }
+
+  .footer-links a:nth-child(2) {
+    top: 39%;
+    right: 0;
+  }
+
+  .footer-links a:nth-child(3) {
+    right: 7%;
+    bottom: 12%;
+  }
+
+  .footer-links a:nth-child(4) {
+    left: 58%;
+    bottom: 0;
+  }
+
+  .footer-link-icon {
+    width: 34px;
+    height: 34px;
+    background: rgba(167, 179, 95, 0.015);
+  }
+
+  .footer-link-label {
+    display: grid;
+    gap: 2px;
+  }
+
+  .footer-link-label::before {
+    color: rgba(167, 179, 95, 0.46);
+    font-size: 6px;
+    letter-spacing: 0.1em;
+  }
+
+  .footer-links a:nth-child(1) .footer-link-label::before { content: 'CH 01'; }
+  .footer-links a:nth-child(2) .footer-link-label::before { content: 'CH 02'; }
+  .footer-links a:nth-child(3) .footer-link-label::before { content: 'CH 03'; }
+  .footer-links a:nth-child(4) .footer-link-label::before { content: 'CH 04'; }
+
+  /* Each node grows a technical branch back toward the email core. */
+  .footer-links a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    right: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(167, 179, 95, 0.12), rgba(167, 179, 95, 0.48));
+    box-shadow: 0 0 8px rgba(167, 179, 95, 0.04);
+    transform-origin: right center;
+    pointer-events: none;
+    transition:
+      background-color var(--motion-fast) var(--ease-editorial),
+      box-shadow var(--motion-fast) var(--ease-editorial),
+      opacity var(--motion-fast) var(--ease-editorial);
+  }
+
+  .footer-links a:nth-child(1)::after {
+    width: clamp(270px, 29vw, 410px);
+    transform: rotate(-18deg);
+  }
+
+  .footer-links a:nth-child(2)::after {
+    width: clamp(320px, 34vw, 470px);
+    transform: rotate(-2deg);
+  }
+
+  .footer-links a:nth-child(3)::after {
+    width: clamp(270px, 30vw, 430px);
+    transform: rotate(17deg);
+  }
+
+  .footer-links a:nth-child(4)::after {
+    width: clamp(95px, 12vw, 180px);
+    transform: rotate(48deg);
+  }
+
+  .footer-links a:hover,
+  .footer-links a:focus-visible {
+    border-color: rgba(205, 221, 111, 0.52);
+    background: rgba(10, 13, 9, 0.98);
+    box-shadow:
+      inset 0 0 22px rgba(167, 179, 95, 0.025),
+      0 12px 30px rgba(0, 0, 0, 0.18);
+  }
+
+  .footer-links a:hover::after,
+  .footer-links a:focus-visible::after {
+    background: rgba(205, 221, 111, 0.82);
+    box-shadow: 0 0 10px rgba(167, 179, 95, 0.2);
+  }
+
+  .footer-links a:hover .footer-link-icon,
+  .footer-links a:focus-visible .footer-link-icon {
+    border-color: rgba(205, 221, 111, 0.62);
+  }
+
+  .footer-bottom {
+    position: relative;
+    padding: 22px 18px 0;
+    border-top-color: rgba(167, 179, 95, 0.2);
+  }
+
+  .footer-bottom::before,
+  .footer-bottom::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    width: 32px;
+    height: 9px;
+    border-top: 1px solid rgba(205, 221, 111, 0.48);
+  }
+
+  .footer-bottom::before {
+    left: 0;
+    border-left: 1px solid rgba(205, 221, 111, 0.48);
+  }
+
+  .footer-bottom::after {
+    right: 0;
+    border-right: 1px solid rgba(205, 221, 111, 0.48);
+  }
+
+  /* Hovering the primary channel wakes the stem rather than the whole page. */
+  .footer:has(.footer-email:hover) .footer-top::before,
+  .footer:has(.footer-email:focus-visible) .footer-top::before {
+    background: linear-gradient(180deg, rgba(167, 179, 95, 0.12), rgba(205, 221, 111, 0.94));
+    box-shadow: 0 0 12px rgba(167, 179, 95, 0.18);
+  }
+}
+
+/* Scroll-linked growth: calm at rest, expressive only while the page is moving. */
+@supports (animation-timeline: view()) {
+  @media (min-width: 821px) and (prefers-reduced-motion: no-preference) {
+    .footer-top::before {
+      animation: contact-stem-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 54%;
+    }
+
+    .footer-top::after,
+    .footer-contact-panel::before,
+    .footer-contact-panel::after {
+      animation: contact-core-resolve linear both;
+      animation-timeline: view();
+      animation-range: entry 18% cover 58%;
+    }
+
+    .footer-links a::after {
+      animation: contact-branch-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 64%;
+    }
+
+    .footer-links a {
+      animation: contact-node-resolve linear both;
+      animation-timeline: view();
+      animation-range: entry 28% cover 68%;
+    }
+  }
+}
+
+@keyframes contact-stem-grow {
+  from {
+    opacity: 0.18;
+    transform: scaleY(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes contact-core-resolve {
+  from {
+    opacity: 0.08;
+    clip-path: inset(50% 50% 50% 50%);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes contact-branch-draw {
+  from {
+    opacity: 0.12;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes contact-node-resolve {
+  from {
+    opacity: 0.34;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-top::before,
+  .footer-top::after,
+  .footer-contact-panel::before,
+  .footer-contact-panel::after,
+  .footer-links a,
+  .footer-links a::after {
+    animation: none !important;
+    clip-path: none !important;
+  }
+}
