@@ -19,9 +19,7 @@ function Projects() {
   const [archiveMotionReady, setArchiveMotionReady] = useState(() =>
     canUseArchiveMotion(),
   )
-  const [sectionRevealed, setSectionRevealed] = useState(
-    () => !canUseArchiveMotion(),
-  )
+  const [sectionRevealed, setSectionRevealed] = useState(false)
   const stageRef = useRef(null)
 
   useEffect(() => {
@@ -34,7 +32,7 @@ function Projects() {
 
     if (reducedMotion.matches || !('IntersectionObserver' in window)) {
       setArchiveMotionReady(false)
-      setSectionRevealed(true)
+      setSectionRevealed(false)
       return undefined
     }
 
@@ -60,7 +58,7 @@ function Projects() {
       if (!event.matches) return
 
       setArchiveMotionReady(false)
-      setSectionRevealed(true)
+      setSectionRevealed(false)
       observer.disconnect()
     }
 
