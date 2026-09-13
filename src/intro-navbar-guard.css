@@ -1,0 +1,24 @@
+/* Keep navigation out of the cinematic opening from the very first render. */
+body:has(.hero-motion.intro-waiting) .nav-panel,
+body:has(.hero-motion.intro-holding) .nav-panel,
+body:has(.hero-motion.intro-vining) .nav-panel {
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: none;
+  animation: none !important;
+}
+
+body:has(.hero-motion.intro-settling) .nav-panel {
+  visibility: visible;
+  pointer-events: auto;
+  animation: botanical-nav-arrive 720ms var(--ease-editorial) 420ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:has(.hero-motion) .nav-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    animation: none;
+  }
+}
