@@ -13,7 +13,7 @@
     radial-gradient(circle at 50% 46%, rgba(167, 179, 95, 0.075), transparent 34%),
     var(--bg);
   opacity: 1;
-  pointer-events: all;
+  pointer-events: auto;
 }
 
 .site-loader::before,
@@ -251,6 +251,10 @@
   opacity: 0;
 }
 
+.hero-motion:not(.is-motion-ready) .hero-collage::before {
+  opacity: 0;
+}
+
 .hero-motion.is-motion-ready .eyebrow,
 .hero-motion.is-motion-ready .hero-mark,
 .hero-motion.is-motion-ready .hero-tagline,
@@ -334,12 +338,10 @@
   from {
     opacity: 0;
     transform: translateY(12px) scale(0.985);
-    filter: saturate(0.72) brightness(0.84);
   }
   to {
     opacity: var(--hero-target-opacity, 1);
     transform: translateY(0) scale(1);
-    filter: saturate(1) brightness(1);
   }
 }
 
@@ -533,7 +535,10 @@
   .hero-motion .hero-collage::before,
   .nav-panel .nav-tile[aria-current='location']::before {
     animation: none;
-    transform: none;
+  }
+
+  .hero-motion .hero-collage::before {
+    opacity: 1;
   }
 
   .hero-motion .hero-wiring path {
@@ -542,6 +547,7 @@
 
   .hero-motion .hero-wiring circle {
     opacity: 1;
+    transform: scale(1);
   }
 
   .hero-motion [data-parallax] {
