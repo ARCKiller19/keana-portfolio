@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import projects from '../data/projects.js'
 import '../projects.css'
 import '../selected-work-motion.css'
@@ -111,6 +111,19 @@ function InspectionPreview({ project }) {
 function Projects() {
   const [selectedProject, setSelectedProject] = useState(null)
   const [inspectedIndex, setInspectedIndex] = useState(null)
+
+  useEffect(() => {
+    const resetInspection = () => {
+      setInspectedIndex(null)
+      setSelectedProject(null)
+    }
+
+    window.addEventListener('keana:work-arrival', resetInspection)
+
+    return () => {
+      window.removeEventListener('keana:work-arrival', resetInspection)
+    }
+  }, [])
 
   const inspectedProject =
     inspectedIndex === null ? null : projects[inspectedIndex]
