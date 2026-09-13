@@ -109,6 +109,8 @@ function Projects() {
     inspectedIndex === null ? null : projects[inspectedIndex]
   const inspectionSide =
     inspectedIndex === null ? null : inspectedIndex < 3 ? 'left' : 'right'
+  const inspectionNumber =
+    inspectedIndex === null ? null : String(inspectedIndex + 1).padStart(2, '0')
 
   return (
     <>
@@ -154,10 +156,35 @@ function Projects() {
             <div className="inspection-bench-topline" aria-hidden="true">
               <span>Inspection plate</span>
               <span>
-                {inspectedIndex === null
-                  ? '—'
-                  : String(inspectedIndex + 1).padStart(2, '0')}
+                {inspectionNumber
+                  ? `${inspectionNumber} / selected specimen`
+                  : 'Awaiting specimen'}
               </span>
+            </div>
+
+            <div
+              className={`inspection-record-head ${
+                inspectedProject ? 'has-record' : 'is-empty'
+              }`}
+              aria-live="polite"
+            >
+              {inspectedProject ? (
+                <>
+                  <div className="inspection-record-copy">
+                    <span className="inspection-record-kicker">
+                      {inspectionNumber} / selected specimen
+                    </span>
+                    <h3>{inspectedProject.title}</h3>
+                  </div>
+                  <span className="inspection-record-year">
+                    {inspectedProject.year}
+                  </span>
+                </>
+              ) : (
+                <span className="inspection-record-placeholder">
+                  Select a project specimen for examination
+                </span>
+              )}
             </div>
 
             <div className="inspection-plate">
@@ -202,15 +229,6 @@ function Projects() {
             <div className="inspection-meta" aria-live="polite">
               {inspectedProject ? (
                 <>
-                  <div className="inspection-meta-heading">
-                    <span className="inspection-meta-index">
-                      {String(inspectedIndex + 1).padStart(2, '0')}
-                    </span>
-                    <span className="inspection-meta-year">
-                      {inspectedProject.year}
-                    </span>
-                  </div>
-                  <h3>{inspectedProject.title}</h3>
                   <p className="inspection-meta-category">
                     {inspectedProject.category}
                   </p>
