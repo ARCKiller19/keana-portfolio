@@ -15,6 +15,7 @@ import './intro-vine-exit.css'
 import './selected-work-arrival.css'
 import './motion-reel-side-previews.css'
 import './motion-reel-direct-play.css'
+import './motion-reel-preview-prime.js'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
