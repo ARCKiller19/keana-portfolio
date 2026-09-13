@@ -1,0 +1,57 @@
+/* Motion Habitat performance guardrails: keep movement readable without repaint-heavy glow. */
+
+/* Isolate the moving avatar as much as possible while the current movement loop updates its position. */
+.motion-habitat .motion-habitat-character {
+  will-change: left, top, transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Keep the player label stable while it moves. The identity matters more than a moving glow. */
+.motion-habitat .motion-habitat-character::before {
+  border-color: rgba(205, 221, 111, 0.22);
+  color: rgba(239, 233, 219, 0.74);
+  box-shadow: none;
+  transition: none;
+}
+
+.motion-habitat .motion-habitat-character.is-walking::before {
+  border-color: rgba(205, 221, 111, 0.22);
+  color: rgba(239, 233, 219, 0.74);
+  box-shadow: none;
+}
+
+.motion-habitat .motion-habitat-character::after,
+.motion-habitat .motion-habitat-character.is-walking::after {
+  border-top-color: rgba(205, 221, 111, 0.26);
+}
+
+/* Proximity should wake a station, but reserve the heavier visual treatment for hover/focus/open states. */
+.motion-habitat .motion-habitat-station.is-awake:not(.is-open):not(:hover):not(:focus-visible),
+.motion-habitat .motion-habitat-station.is-targeted:not(.is-open):not(:hover):not(:focus-visible) {
+  box-shadow:
+    inset 0 0 0 1px rgba(var(--station-rgb), 0.04),
+    0 12px 26px rgba(0, 0, 0, 0.18);
+}
+
+.motion-habitat .motion-habitat-station.is-awake:not(.is-open):not(:hover):not(:focus-visible) .motion-habitat-machine,
+.motion-habitat .motion-habitat-station.is-targeted:not(.is-open):not(:hover):not(:focus-visible) .motion-habitat-machine {
+  box-shadow: inset 0 0 14px rgba(var(--station-rgb), 0.025);
+}
+
+.motion-habitat .motion-habitat-station.is-awake:not(.is-open):not(:hover):not(:focus-visible) .motion-habitat-machine-screen,
+.motion-habitat .motion-habitat-station.is-targeted:not(.is-open):not(:hover):not(:focus-visible) .motion-habitat-machine-screen {
+  box-shadow: inset 0 0 10px rgba(var(--station-rgb), 0.035);
+}
+
+/* Do not run the rhythm animation just because KEANA passes through its wake radius. */
+.motion-habitat .station-special.is-awake:not(.is-open):not(:hover):not(:focus-visible) .motion-habitat-machine-screen::before,
+.motion-habitat .station-special.is-targeted:not(.is-open):not(:hover):not(:focus-visible) .motion-habitat-machine-screen::before {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-habitat .motion-habitat-character {
+    will-change: auto;
+  }
+}
