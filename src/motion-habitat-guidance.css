@@ -1,0 +1,101 @@
+/* Motion Habitat onboarding, character scale, and deployed-control polish. */
+
+.motion-habitat .motion-habitat-world::after {
+  content: 'CLICK INSIDE TO EXPLORE\A USE W A S D TO MOVE\A ARROWS ALSO WORK · OR CLICK ANY STATION';
+  position: absolute;
+  z-index: 24;
+  top: 52%;
+  left: 50%;
+  width: min(360px, calc(100% - 48px));
+  padding: 16px 20px;
+  border: 1px solid rgba(205, 221, 111, 0.28);
+  background:
+    linear-gradient(180deg, rgba(167, 179, 95, 0.045), rgba(6, 8, 6, 0.94)),
+    rgba(6, 8, 6, 0.96);
+  box-shadow:
+    0 22px 54px rgba(0, 0, 0, 0.38),
+    inset 0 0 0 1px rgba(239, 233, 219, 0.025),
+    0 0 34px rgba(167, 179, 95, 0.055);
+  color: rgba(239, 233, 219, 0.74);
+  font-family: var(--font-mono);
+  font-size: clamp(8px, 0.78vw, 10px);
+  line-height: 1.85;
+  letter-spacing: 0.12em;
+  text-align: center;
+  white-space: pre-line;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -46%) scale(0.985);
+  transition:
+    opacity 260ms var(--ease-editorial),
+    transform 320ms var(--ease-editorial);
+}
+
+.motion-habitat .motion-habitat-world.show-control-guide::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Make the visitor easier to notice without letting it dominate the habitat. */
+.motion-habitat .motion-habitat-character {
+  z-index: 14;
+  transform: translate(-50%, -100%) scale(1.32);
+  transform-origin: 50% 100%;
+}
+
+/* Roast versions belong to the media, but should not collide with the copy column. */
+.motion-habitat-panel.has-cuts .motion-habitat-panel-media.motion-screening-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.motion-habitat-panel.has-cuts .motion-habitat-panel-media.motion-screening-media .motion-cut-switcher {
+  position: static;
+  order: -1;
+  width: min(100%, 248px);
+  margin: 0 auto 12px;
+  transform: none;
+}
+
+.motion-habitat-panel.has-cuts .motion-habitat-panel-media.motion-screening-media .motion-cut-switcher-label {
+  margin: 0 0 6px;
+  text-align: left;
+}
+
+.motion-habitat-panel.has-cuts .motion-habitat-panel-media.motion-screening-media .motion-cut-options {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 3px;
+}
+
+.motion-habitat-panel.has-cuts .motion-habitat-panel-media.motion-screening-media .motion-cut-option {
+  min-height: 30px;
+  padding: 8px 10px 8px 27px;
+  text-align: left;
+}
+
+.motion-habitat-panel.has-cuts .motion-habitat-panel-media.motion-screening-media .motion-cut-option::after {
+  left: 11px;
+}
+
+@media (max-width: 720px) {
+  .motion-habitat .motion-habitat-world::after {
+    display: none;
+  }
+
+  .motion-habitat .motion-habitat-character {
+    transform: translate(-50%, -100%) scale(1.18);
+  }
+
+  .motion-habitat-panel.has-cuts .motion-habitat-panel-media.motion-screening-media .motion-cut-switcher {
+    width: min(100%, 240px);
+    margin-bottom: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-habitat .motion-habitat-world::after {
+    display: none;
+  }
+}
