@@ -1,11 +1,19 @@
 const REEL_PREVIEW_SELECTOR = '.motion-reel-neighbor-video'
 const PREVIEW_TIME_SECONDS = 0.08
 
+function getPreviewSource(video) {
+  const source = video.querySelector('source')
+  return source?.getAttribute('src') ?? video.getAttribute('src') ?? ''
+}
+
 function primeReelPreview(video) {
   if (!(video instanceof HTMLVideoElement)) return
-  if (video.dataset.reelPreviewPrimed === 'true') return
 
-  video.dataset.reelPreviewPrimed = 'true'
+  const source = getPreviewSource(video)
+  if (!source || video.dataset.reelPreviewSource === source) return
+
+  video.dataset.reelPreviewSource = source
+  video.pause()
   video.preload = 'auto'
 
   const seekToPreviewFrame = () => {
@@ -19,20 +27,19 @@ function primeReelPreview(video) {
     try {
       video.currentTime = previewTime
     } catch {
-      // The next metadata/data event will give the browser another chance.
+      // The browser can retry after the next source change/load cycle.
     }
   }
 
-  if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
-    seekToPreviewFrame()
-  } else {
-    video.addEventListener('loadedmetadata', seekToPreviewFrame, { once: true })
-  }
-
+  video.addEventListener('loadedmetadata', seekToPreviewFrame, { once: true })
   video.load()
 }
 
 function scanForReelPreviews(root = document) {
+  if (root instanceof HTMLVideoElement && root.matches(REEL_PREVIEW_SELECTOR)) {
+    primeReelPreview(root)
+  }
+
   root.querySelectorAll?.(REEL_PREVIEW_SELECTOR).forEach(primeReelPreview)
 }
 
@@ -42,13 +49,27 @@ if (typeof document !== 'undefined') {
 
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (!(node instanceof Element)) return
+        if (mutation.type === 'attributes') {
+          const target = mutation.target
+          const video =
+            target instanceof HTMLVideoElement
+              ? target
+              : target instanceof HTMLSourceElement
+                ? target.parentElement
+                : null
 
-          if (node.matches(REEL_PREVIEW_SELECTOR)) {
-            primeReelPreview(node)
+          if (
+            video instanceof HTMLVideoElement &&
+            video.matches(REEL_PREVIEW_SELECTOR)
+          ) {
+            primeReelPreview(video)
           }
 
+          return
+        }
+
+        mutation.addedNodes.forEach((node) => {
+          if (!(node instanceof Element)) return
           scanForReelPreviews(node)
         })
       })
@@ -57,6 +78,8 @@ if (typeof document !== 'undefined') {
     observer.observe(document.body, {
       childList: true,
       subtree: true,
+      attributes: true,
+      attributeFilter: ['src'],
     })
   }
 
