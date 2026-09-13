@@ -59,6 +59,9 @@ function SpecimenCard({ project, index, side, isSelected, onSelect }) {
 }
 
 function InspectionPreview({ project }) {
+  const inspectionObjectFit =
+    project.id === 'orange-engineers' ? 'cover' : project.imageFit ?? 'cover'
+
   const slide = (
     <div className="inspection-slide">
       <img
@@ -67,8 +70,11 @@ function InspectionPreview({ project }) {
         decoding="async"
         onError={(event) => handleSpecimenImageError(event, project)}
         style={{
-          objectFit: project.imageFit ?? 'cover',
-          objectPosition: project.imagePosition ?? 'center top',
+          objectFit: inspectionObjectFit,
+          objectPosition:
+            project.id === 'orange-engineers'
+              ? 'center center'
+              : project.imagePosition ?? 'center top',
         }}
       />
       <span
@@ -163,31 +169,6 @@ function Projects() {
               </span>
             </div>
 
-            <div
-              className={`inspection-record-head ${
-                inspectedProject ? 'has-record' : 'is-empty'
-              }`}
-              aria-live="polite"
-            >
-              {inspectedProject ? (
-                <>
-                  <div className="inspection-record-copy">
-                    <span className="inspection-record-kicker">
-                      {inspectionNumber} / selected specimen
-                    </span>
-                    <h3>{inspectedProject.title}</h3>
-                  </div>
-                  <span className="inspection-record-year">
-                    {inspectedProject.year}
-                  </span>
-                </>
-              ) : (
-                <span className="inspection-record-placeholder">
-                  Select a project specimen for examination
-                </span>
-              )}
-            </div>
-
             <div className="inspection-plate">
               <span
                 className="inspection-ring inspection-ring-outer"
@@ -210,9 +191,56 @@ function Projects() {
               {inspectedProject ? (
                 <div
                   key={inspectedProject.id}
-                  className={`inspection-specimen inspection-specimen-from-${inspectionSide}`}
+                  className={`inspection-record inspection-record-from-${inspectionSide}`}
+                  aria-live="polite"
                 >
-                  <InspectionPreview project={inspectedProject} />
+                  <header className="inspection-record-head">
+                    <h3>{inspectedProject.title}</h3>
+                    <span className="inspection-record-year">
+                      {inspectedProject.year}
+                    </span>
+                  </header>
+
+                  <div
+                    className={`inspection-specimen inspection-specimen-from-${inspectionSide}`}
+                  >
+                    <InspectionPreview project={inspectedProject} />
+                  </div>
+
+                  <div className="inspection-record-body">
+                    <p className="inspection-meta-category">
+                      {inspectedProject.category}
+                    </p>
+
+                    <div className="inspection-actions">
+                      {inspectedProject.link && (
+                        <a
+                          className="inspection-action inspection-action-live"
+                          href={inspectedProject.link}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {inspectedProject.linkLabel ?? 'View live'}
+                          <span aria-hidden="true">↗</span>
+                        </a>
+                      )}
+
+                      <button
+                        className="inspection-action inspection-action-details"
+                        type="button"
+                        onClick={() => setSelectedProject(inspectedProject)}
+                      >
+                        Inspect details <span aria-hidden="true">+</span>
+                      </button>
+                    </div>
+
+                    {!inspectedProject.link && (
+                      <p className="inspection-unavailable">
+                        {inspectedProject.liveStatus ??
+                          'No public build available yet.'}
+                      </p>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div className="inspection-empty-state">
@@ -224,49 +252,6 @@ function Projects() {
                     Choose a project from either archive rack to inspect it here.
                   </span>
                 </div>
-              )}
-            </div>
-
-            <div className="inspection-meta" aria-live="polite">
-              {inspectedProject ? (
-                <>
-                  <p className="inspection-meta-category">
-                    {inspectedProject.category}
-                  </p>
-
-                  <div className="inspection-actions">
-                    {inspectedProject.link && (
-                      <a
-                        className="inspection-action inspection-action-live"
-                        href={inspectedProject.link}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {inspectedProject.linkLabel ?? 'View live'}
-                        <span aria-hidden="true">↗</span>
-                      </a>
-                    )}
-
-                    <button
-                      className="inspection-action inspection-action-details"
-                      type="button"
-                      onClick={() => setSelectedProject(inspectedProject)}
-                    >
-                      Inspect details <span aria-hidden="true">+</span>
-                    </button>
-                  </div>
-
-                  {!inspectedProject.link && (
-                    <p className="inspection-unavailable">
-                      {inspectedProject.liveStatus ??
-                        'No public build available yet.'}
-                    </p>
-                  )}
-                </>
-              ) : (
-                <p className="inspection-idle-note">
-                  Choose a specimen to move it onto the inspection plate.
-                </p>
               )}
             </div>
           </div>
