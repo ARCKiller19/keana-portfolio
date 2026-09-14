@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react'
 
+const spriteAssets = {
+  zhangi: '/images/playground/zhangi-sprites.png?v=2846824',
+  hanzo: '/images/playground/pixel-sprites.png?v=aa0894f',
+}
+
 const pieces = [
   {
-    src: '/images/playground/zhangi-sprites.png',
+    src: spriteAssets.zhangi,
     alt: 'Zhang’i original pixel sprite sheet showing four directions with four frames each',
     label: 'Zhang’i Sprite Sheet',
     spriteTemplate: true,
   },
   {
-    src: '/images/playground/pixel-sprites.png',
+    src: spriteAssets.hanzo,
     alt: 'Hanzo original pixel sprite sheet showing four directions with four frames each',
     label: 'Hanzo Sprite Sheet',
     spriteTemplate: true,
@@ -32,13 +37,13 @@ const characters = [
   {
     id: 'zhangi',
     label: 'Zhang’i',
-    sheet: '/images/playground/zhangi-sprites.png',
+    sheet: spriteAssets.zhangi,
     alt: 'Zhang’i purple-haired pixel character sprite sheet',
   },
   {
     id: 'hanzo',
     label: 'Hanzo',
-    sheet: '/images/playground/pixel-sprites.png',
+    sheet: spriteAssets.hanzo,
     alt: 'Hanzo ninja pixel character sprite sheet',
   },
 ]
