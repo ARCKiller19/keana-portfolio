@@ -69,36 +69,51 @@
   }
 }
 
-/* On iPad-sized layouts, mount the selected project on top of the inspection plate
-   instead of trapping it inside the ellipse. */
+/* On iPad-sized layouts, the ellipse is a background surface and the selected
+   project is a foreground mount that visibly crosses the plate silhouette. */
 @media (min-width: 921px) and (max-width: 1180px) {
   .inspection-plate {
     overflow: visible;
+    isolation: isolate;
   }
 
   .inspection-record {
-    z-index: 8;
-    width: min(78%, 420px);
-    padding: 14px 16px 13px;
-    border: 1px solid rgba(167, 179, 95, 0.2);
+    z-index: 12;
+    width: min(calc(100% + 38px), 640px);
+    max-width: none;
+    padding: 18px 20px 16px;
+    border: 1px solid rgba(167, 179, 95, 0.28);
     background:
-      linear-gradient(180deg, rgba(167, 179, 95, 0.025), transparent 48%),
-      rgba(7, 9, 7, 0.95);
+      linear-gradient(180deg, rgba(167, 179, 95, 0.035), transparent 46%),
+      rgba(6, 8, 6, 0.975);
     box-shadow:
-      0 28px 64px rgba(0, 0, 0, 0.34),
-      0 0 0 1px rgba(239, 233, 219, 0.018);
+      0 34px 82px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(239, 233, 219, 0.025),
+      0 0 34px rgba(167, 179, 95, 0.045);
+    transform: translateY(-8px);
+  }
+
+  .inspection-record::before {
+    content: '';
+    position: absolute;
+    inset: -9px;
+    z-index: -1;
+    pointer-events: none;
+    border: 1px solid rgba(167, 179, 95, 0.08);
+    background: rgba(5, 7, 5, 0.42);
   }
 
   .inspection-record .inspection-slide {
     box-shadow:
-      0 22px 44px rgba(0, 0, 0, 0.32),
-      0 0 0 1px rgba(167, 179, 95, 0.035);
+      0 24px 52px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(167, 179, 95, 0.055);
   }
 
   .inspection-record-head,
-  .inspection-record-body {
+  .inspection-record-body,
+  .inspection-record .inspection-specimen {
     position: relative;
-    z-index: 9;
+    z-index: 13;
   }
 
   .inspection-plate::before,
