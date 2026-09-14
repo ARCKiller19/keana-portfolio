@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const pieces = [
   {
@@ -16,17 +16,65 @@ const pieces = [
   },
 ]
 
-const directions = [
-  { id: 'down', glyph: '↓', label: 'Down' },
-  { id: 'right', glyph: '→', label: 'Right' },
-  { id: 'left', glyph: '←', label: 'Left' },
-  { id: 'up', glyph: '↑', label: 'Up' },
+const characters = [
+  {
+    id: 'zhangi',
+    label: 'Zhang’i',
+    sheet: '/images/playground/zhangi-sprites.png',
+    alt: 'Zhang’i purple-haired pixel character sprite sheet',
+  },
+  {
+    id: 'hanzo',
+    label: 'Hanzo',
+    sheet: '/images/playground/pixel-sprites.png',
+    alt: 'Hanzo ninja pixel character sprite sheet',
+  },
 ]
 
+const directions = [
+  { id: 'down', glyph: '↓', label: 'Down', row: 0 },
+  { id: 'right', glyph: '→', label: 'Right', row: 2 },
+  { id: 'left', glyph: '←', label: 'Left', row: 1 },
+  { id: 'up', glyph: '↑', label: 'Up', row: 3 },
+]
+
+const FRAME_COUNT = 4
+const FRAME_STEP = 100 / (FRAME_COUNT - 1)
+
 function Playground() {
+  const [character, setCharacter] = useState('zhangi')
   const [direction, setDirection] = useState('down')
   const [pace, setPace] = useState('walk')
+  const [frameIndex, setFrameIndex] = useState(0)
   const [showFrames, setShowFrames] = useState(false)
+  const [reducedMotion, setReducedMotion] = useState(false)
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const syncPreference = () => setReducedMotion(media.matches)
+
+    syncPreference()
+    media.addEventListener?.('change', syncPreference)
+
+    return () => media.removeEventListener?.('change', syncPreference)
+  }, [])
+
+  useEffect(() => {
+    setFrameIndex(0)
+
+    if (reducedMotion) return undefined
+
+    const frameDuration = pace === 'run' ? 105 : 190
+    const timer = window.setInterval(() => {
+      setFrameIndex((current) => (current + 1) % FRAME_COUNT)
+    }, frameDuration)
+
+    return () => window.clearInterval(timer)
+  }, [character, direction, pace, reducedMotion])
+
+  const activeCharacter = characters.find((item) => item.id === character) ?? characters[0]
+  const activeDirection = directions.find((item) => item.id === direction) ?? directions[0]
+  const backgroundPosition = `${frameIndex * FRAME_STEP}% ${activeDirection.row * FRAME_STEP}%`
 
   return (
     <section className="playground" id="playground" aria-label="Playground">
@@ -42,20 +90,20 @@ function Playground() {
       <article className="playground-sprite-lab" aria-labelledby="sprite-lab-title">
         <div className="playground-sprite-copy">
           <span className="playground-sprite-kicker">PIXEL STUDY · 01</span>
-          <h3 id="sprite-lab-title">Keana Walk Cycle</h3>
+          <h3 id="sprite-lab-title">Character Walk Cycles</h3>
           <p>
-            A directional character study shown as movement first, with the original
-            frame sheet available underneath.
+            Directional sprite studies shown as live frame-by-frame movement, with both
+            original 4 × 4 sheets available for comparison.
           </p>
 
           <dl className="playground-sprite-meta">
             <div>
-              <dt>Source</dt>
-              <dd>4 × 4 sprite sheet</dd>
+              <dt>Character</dt>
+              <dd>{activeCharacter.label}</dd>
             </div>
             <div>
               <dt>Preview</dt>
-              <dd>{pace === 'walk' ? 'Walk' : 'Run'} · {direction}</dd>
+              <dd>{pace === 'walk' ? 'Walk' : 'Run'} · {direction} · {frameIndex + 1}/4</dd>
             </div>
           </dl>
         </div>
@@ -63,19 +111,19 @@ function Playground() {
         <div className="playground-sprite-console">
           <div className="playground-sprite-stage">
             <div className="playground-sprite-stage-head">
-              <span>LIVE SPRITE PREVIEW</span>
-              <span>16 FRAMES / 04 DIRECTIONS</span>
+              <span>LIVE FRAME PREVIEW</span>
+              <span>{activeCharacter.label} · 04 FRAMES</span>
             </div>
 
             <div className="playground-sprite-track" aria-hidden="true">
               <span className="playground-sprite-origin" />
-              <div
-                className={`playground-sprite-window is-${direction} is-${pace}`}
-              >
-                <img
-                  src="/images/playground/pixel-sprites.png"
-                  alt=""
-                  decoding="async"
+              <div className="playground-sprite-window">
+                <span
+                  className="playground-sprite-frame"
+                  style={{
+                    backgroundImage: `url(${activeCharacter.sheet})`,
+                    backgroundPosition,
+                  }}
                 />
               </div>
               <span className="playground-sprite-ground" />
@@ -83,6 +131,23 @@ function Playground() {
           </div>
 
           <div className="playground-sprite-controls">
+            <div className="playground-control-group playground-character-group" role="group" aria-label="Sprite character">
+              <span className="playground-control-label">CHARACTER</span>
+              <div className="playground-character-buttons">
+                {characters.map((item) => (
+                  <button
+                    type="button"
+                    className={character === item.id ? 'is-active' : ''}
+                    aria-pressed={character === item.id}
+                    onClick={() => setCharacter(item.id)}
+                    key={item.id}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="playground-control-group" role="group" aria-label="Sprite direction">
               <span className="playground-control-label">DIRECTION</span>
               <div className="playground-direction-buttons">
@@ -130,25 +195,36 @@ function Playground() {
               aria-controls="playground-sprite-frames"
               onClick={() => setShowFrames((current) => !current)}
             >
-              {showFrames ? 'Hide frames' : 'View frames'}
+              {showFrames ? 'Hide original sheets' : 'View original sheets'}
               <span aria-hidden="true">{showFrames ? '−' : '+'}</span>
             </button>
           </div>
         </div>
 
         {showFrames && (
-          <figure className="playground-sprite-frames" id="playground-sprite-frames">
-            <figcaption>
-              <span>ORIGINAL FRAME SHEET</span>
-              <span>PROCESS VIEW · 4 DIRECTIONS × 4 FRAMES</span>
-            </figcaption>
-            <img
-              src="/images/playground/pixel-sprites.png"
-              alt="Keana pixel sprite sheet showing four directional movement frames"
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
+          <div className="playground-sprite-frames" id="playground-sprite-frames">
+            <div className="playground-sprite-frames-heading">
+              <span>ORIGINAL SPRITE SHEETS</span>
+              <span>PROCESS VIEW · BOTH 4 × 4 TEMPLATES</span>
+            </div>
+
+            <div className="playground-original-sheets">
+              {characters.map((item) => (
+                <figure className={character === item.id ? 'is-active' : ''} key={item.id}>
+                  <figcaption>
+                    <span>{item.label}</span>
+                    <span>04 DIRECTIONS × 04 FRAMES</span>
+                  </figcaption>
+                  <img
+                    src={item.sheet}
+                    alt={item.alt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              ))}
+            </div>
+          </div>
         )}
       </article>
 

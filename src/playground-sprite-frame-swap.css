@@ -1,0 +1,153 @@
+/* Playground sprite preview: discrete frame swaps for Zhang’i and Hanzo. */
+
+.playground-sprite-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 400% 400%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  transition: none !important;
+  animation: none !important;
+  will-change: auto;
+}
+
+.playground-character-group {
+  grid-column: 1 / -1;
+}
+
+.playground-character-buttons {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.playground-character-buttons button {
+  min-height: 38px;
+  min-width: 92px;
+  appearance: none;
+  border: 1px solid rgba(239, 233, 219, 0.14);
+  background: rgba(5, 7, 5, 0.74);
+  color: rgba(239, 233, 219, 0.54);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color var(--motion-fast) var(--ease-editorial),
+    background-color var(--motion-fast) var(--ease-editorial),
+    color var(--motion-fast) var(--ease-editorial);
+}
+
+.playground-character-buttons button:hover,
+.playground-character-buttons button:focus-visible,
+.playground-character-buttons button.is-active {
+  border-color: rgba(167, 179, 95, 0.62);
+  background: rgba(167, 179, 95, 0.075);
+  color: var(--cream);
+}
+
+.playground-character-buttons button.is-active {
+  box-shadow: inset 0 -1px 0 var(--moss);
+}
+
+.playground-sprite-frames {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.playground-sprite-frames-heading {
+  display: grid;
+  gap: 6px;
+  padding-top: 3px;
+  color: rgba(239, 233, 219, 0.48);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.playground-sprite-frames-heading span:first-child {
+  color: var(--moss);
+}
+
+.playground-original-sheets {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.playground-original-sheets figure {
+  margin: 0;
+  padding: 12px;
+  border: 1px solid rgba(239, 233, 219, 0.11);
+  background: rgba(5, 7, 5, 0.52);
+}
+
+.playground-original-sheets figure.is-active {
+  border-color: rgba(167, 179, 95, 0.34);
+}
+
+.playground-original-sheets figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: rgba(239, 233, 219, 0.34);
+  font-family: var(--font-mono);
+  font-size: 6.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.playground-original-sheets figcaption span:first-child {
+  color: rgba(239, 233, 219, 0.7);
+}
+
+.playground-original-sheets img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border: 1px solid rgba(239, 233, 219, 0.08);
+  background: #f4f4f2;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+@media (max-width: 980px) {
+  .playground-sprite-frames {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .playground-character-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .playground-character-buttons button {
+    min-width: 0;
+    min-height: 42px;
+  }
+
+  .playground-original-sheets {
+    grid-template-columns: 1fr;
+  }
+
+  .playground-original-sheets figcaption {
+    font-size: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .playground-sprite-frame {
+    transition: none !important;
+    animation: none !important;
+  }
+}
