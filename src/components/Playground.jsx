@@ -2,6 +2,18 @@ import { useEffect, useState } from 'react'
 
 const pieces = [
   {
+    src: '/images/playground/zhangi-sprites.png',
+    alt: 'Zhang’i original pixel sprite sheet showing four directions with four frames each',
+    label: 'Zhang’i Sprite Sheet',
+    spriteTemplate: true,
+  },
+  {
+    src: '/images/playground/pixel-sprites.png',
+    alt: 'Hanzo original pixel sprite sheet showing four directions with four frames each',
+    label: 'Hanzo Sprite Sheet',
+    spriteTemplate: true,
+  },
+  {
     src: '/images/playground/pixel-keana.png',
     alt: 'Pixel art portrait of Keana',
   },
@@ -231,8 +243,8 @@ function Playground() {
       <div className="playground-grid playground-grid-secondary">
         {pieces.map((piece, index) => (
           <figure
-            className={`playground-tile ${piece.wide ? 'playground-tile-wide' : ''}`}
-            key={piece.src}
+            className={`playground-tile ${piece.wide ? 'playground-tile-wide' : ''} ${piece.spriteTemplate ? 'playground-template-tile' : ''}`}
+            key={`${piece.src}-${piece.label ?? index}`}
           >
             <span className="tile-index">
               {String(index + 2).padStart(2, '0')}
@@ -244,6 +256,13 @@ function Playground() {
               loading="lazy"
               decoding="async"
             />
+
+            {piece.label && (
+              <figcaption className="playground-template-caption">
+                <span>{piece.label}</span>
+                <span>Original 4 × 4 sheet</span>
+              </figcaption>
+            )}
           </figure>
         ))}
       </div>

@@ -119,6 +119,50 @@
   image-rendering: crisp-edges;
 }
 
+/* Keep both source sprite templates visible in the regular Playground archive too. */
+.playground-template-tile {
+  background:
+    linear-gradient(180deg, rgba(167, 179, 95, 0.025), transparent 48%),
+    rgba(8, 10, 8, 0.96);
+}
+
+.playground-template-tile img {
+  padding: clamp(28px, 3vw, 44px) clamp(24px, 2.4vw, 36px) clamp(52px, 4vw, 64px);
+  object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.playground-template-tile:hover img,
+.playground-template-tile:focus-within img {
+  transform: none;
+  opacity: 1;
+}
+
+.playground-template-caption {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  left: 14px;
+  z-index: 2;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(239, 233, 219, 0.1);
+  color: rgba(239, 233, 219, 0.36);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.playground-template-caption span:first-child {
+  color: rgba(239, 233, 219, 0.74);
+}
+
 @media (max-width: 980px) {
   .playground-sprite-frames {
     grid-template-columns: 1fr;
@@ -140,8 +184,13 @@
     grid-template-columns: 1fr;
   }
 
-  .playground-original-sheets figcaption {
+  .playground-original-sheets figcaption,
+  .playground-template-caption {
     font-size: 6px;
+  }
+
+  .playground-template-tile img {
+    padding: 24px 20px 50px;
   }
 }
 
