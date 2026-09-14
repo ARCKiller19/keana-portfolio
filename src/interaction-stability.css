@@ -69,6 +69,47 @@
   }
 }
 
+/* On iPad-sized layouts, mount the selected project on top of the inspection plate
+   instead of trapping it inside the ellipse. */
+@media (min-width: 921px) and (max-width: 1180px) {
+  .inspection-plate {
+    overflow: visible;
+  }
+
+  .inspection-record {
+    z-index: 8;
+    width: min(78%, 420px);
+    padding: 14px 16px 13px;
+    border: 1px solid rgba(167, 179, 95, 0.2);
+    background:
+      linear-gradient(180deg, rgba(167, 179, 95, 0.025), transparent 48%),
+      rgba(7, 9, 7, 0.95);
+    box-shadow:
+      0 28px 64px rgba(0, 0, 0, 0.34),
+      0 0 0 1px rgba(239, 233, 219, 0.018);
+  }
+
+  .inspection-record .inspection-slide {
+    box-shadow:
+      0 22px 44px rgba(0, 0, 0, 0.32),
+      0 0 0 1px rgba(167, 179, 95, 0.035);
+  }
+
+  .inspection-record-head,
+  .inspection-record-body {
+    position: relative;
+    z-index: 9;
+  }
+
+  .inspection-plate::before,
+  .inspection-plate::after,
+  .inspection-plate .inspection-ring,
+  .inspection-plate .inspection-axis,
+  .inspection-plate .inspection-plate-node {
+    z-index: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .inspection-specimen-from-left,
   .inspection-specimen-from-right {
