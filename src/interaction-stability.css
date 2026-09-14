@@ -1,0 +1,77 @@
+/* Final interaction stability pass: keep touch/hover feedback from moving targets. */
+
+/* Give the left Motion Habitat station the same breathing room as the right-side stations. */
+@media (min-width: 721px) {
+  .motion-habitat .station-roast {
+    left: calc(var(--station-x) + clamp(24px, 2.2vw, 36px));
+  }
+}
+
+/* Selected Work should remain spatially stable while a specimen is inspected. */
+.specimen-card,
+.specimen-card-left.is-selected,
+.specimen-card-right.is-selected,
+.specimen-card-left:hover,
+.specimen-card-right:hover,
+.specimen-card-left:focus-visible,
+.specimen-card-right:focus-visible,
+.specimen-card-left.is-selected:hover,
+.specimen-card-right.is-selected:hover,
+.specimen-card-left.is-selected:focus-visible,
+.specimen-card-right.is-selected:focus-visible {
+  transform: none !important;
+}
+
+.specimen-card {
+  transition:
+    border-color var(--motion-fast) var(--ease-editorial),
+    background-color var(--motion-fast) var(--ease-editorial),
+    box-shadow 260ms var(--ease-editorial);
+}
+
+/* Keep the transfer cue, but remove the overshoot/rotation that read as shaking on touch devices. */
+@keyframes specimen-transfer-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-24px) scale(0.985);
+    filter: none;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: none;
+  }
+}
+
+@keyframes specimen-transfer-right {
+  0% {
+    opacity: 0;
+    transform: translateX(24px) scale(0.985);
+    filter: none;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: none;
+  }
+}
+
+/* The Selected Work chapter heading no longer pins itself under the navbar. */
+@media (min-width: 921px) {
+  .work-motion .specimen-section-head {
+    position: relative;
+    top: auto;
+    z-index: 1;
+    margin-bottom: clamp(24px, 3vw, 36px);
+    padding: 0;
+    pointer-events: auto;
+    background: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inspection-specimen-from-left,
+  .inspection-specimen-from-right {
+    animation: none !important;
+  }
+}
