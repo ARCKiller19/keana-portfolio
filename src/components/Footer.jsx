@@ -37,11 +37,11 @@ function SocialIcon({ name }) {
   if (name === 'linkedin') {
     return (
       <svg {...commonProps}>
-        <path d="M7 9v8" />
-        <path d="M7 6.5v.1" />
-        <path d="M11 17v-4.6c0-2.2 3-2.4 3 0V17" />
-        <path d="M11 9v8" />
         <rect x="3.5" y="3.5" width="17" height="17" rx="1.5" />
+        <circle cx="7.25" cy="7.1" r=".72" fill="currentColor" stroke="none" />
+        <path d="M7.25 10v7" />
+        <path d="M11.25 17v-7" />
+        <path d="M11.25 13c0-1.9 1.15-3 2.75-3 1.75 0 2.85 1.2 2.85 3.35V17" />
       </svg>
     )
   }
