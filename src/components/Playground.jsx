@@ -16,19 +16,45 @@ const characters = [
     label: 'Zhang’i',
     sheet: spriteAssets.zhangi,
     alt: 'Zhang’i original pixel sprite sheet',
-    frames: ['2.2', '1', '2.4', '3'].map(
-      (frame) => `${ZHANGI_FRAME_ROOT}/LEFT/${frame}.png`,
-    ),
+    frames: {
+      down: [1, 2, 3, 4].map((frame) => `${ZHANGI_FRAME_ROOT}/FRONT/${frame}.png`),
+      right: ['2.2', '1', '2.4', '3'].map(
+        (frame) => `${ZHANGI_FRAME_ROOT}/RIGHT/${frame}.png`,
+      ),
+      left: ['2.2', '1', '2.4', '3'].map(
+        (frame) => `${ZHANGI_FRAME_ROOT}/LEFT/${frame}.png`,
+      ),
+      up: [
+        `${ZHANGI_FRAME_ROOT}/BACK/1.png`,
+        `${ZHANGI_FRAME_ROOT}/BACK/1 orig.png`,
+        `${ZHANGI_FRAME_ROOT}/BACK/3.png`,
+        `${ZHANGI_FRAME_ROOT}/BACK/4.png`,
+      ],
+    },
   },
   {
     id: 'hanzo',
     label: 'Hanzo',
     sheet: spriteAssets.hanzo,
     alt: 'Hanzo original pixel sprite sheet',
-    frames: ['2', '3', '4', '3'].map(
-      (frame) => `${HANZO_FRAME_ROOT}/LEFT H/${frame}.png`,
-    ),
+    frames: {
+      down: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/FRONT H/${frame}.png`),
+      right: ['2', '3', '4', '3'].map(
+        (frame) => `${HANZO_FRAME_ROOT}/RIGHT H/${frame}.png`,
+      ),
+      left: ['2', '3', '4', '3'].map(
+        (frame) => `${HANZO_FRAME_ROOT}/LEFT H/${frame}.png`,
+      ),
+      up: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/BACK H/${frame}.png`),
+    },
   },
+]
+
+const directions = [
+  { id: 'down', glyph: '↓', label: 'Down' },
+  { id: 'right', glyph: '→', label: 'Right' },
+  { id: 'left', glyph: '←', label: 'Left' },
+  { id: 'up', glyph: '↑', label: 'Up' },
 ]
 
 const popupSequences = {
@@ -96,6 +122,8 @@ const archivePieces = [
 
 function Playground() {
   const [character, setCharacter] = useState('zhangi')
+  const [direction, setDirection] = useState('down')
+  const [pace, setPace] = useState('walk')
   const [frameIndex, setFrameIndex] = useState(0)
   const [showFrames, setShowFrames] = useState(false)
   const [popupMode, setPopupMode] = useState('walk')
@@ -103,7 +131,7 @@ function Playground() {
   const [reducedMotion, setReducedMotion] = useState(false)
 
   const activeCharacter = characters.find((item) => item.id === character) ?? characters[0]
-  const activeFrames = activeCharacter.frames
+  const activeFrames = activeCharacter.frames[direction] ?? activeCharacter.frames.down
   const safeFrameIndex = frameIndex % activeFrames.length
   const activeFrame = activeFrames[safeFrameIndex]
   const popupFrames = popupSequences[popupMode]
@@ -121,7 +149,7 @@ function Playground() {
 
   useEffect(() => {
     const frameSources = [
-      ...characters.flatMap((item) => item.frames),
+      ...characters.flatMap((item) => Object.values(item.frames).flat()),
       ...Object.values(popupSequences).flat(),
     ]
 
@@ -141,7 +169,7 @@ function Playground() {
     }, WALK_FRAME_DURATION)
 
     return () => window.clearInterval(timer)
-  }, [character, reducedMotion, activeFrames.length])
+  }, [character, direction, pace, reducedMotion, activeFrames.length])
 
   useEffect(() => {
     setPopupFrameIndex(0)
@@ -183,7 +211,7 @@ function Playground() {
             </div>
             <div>
               <dt>Preview</dt>
-              <dd>Walk loop · {safeFrameIndex + 1}/{activeFrames.length} · {WALK_FRAME_DURATION} ms</dd>
+              <dd>{pace === 'walk' ? 'Walk' : 'Run'} · {direction} · {safeFrameIndex + 1}/{activeFrames.length} · {WALK_FRAME_DURATION} ms</dd>
             </div>
           </dl>
         </div>
@@ -226,6 +254,46 @@ function Playground() {
                     {item.label}
                   </button>
                 ))}
+              </div>
+            </div>
+
+            <div className="playground-control-group" role="group" aria-label="Sprite direction">
+              <span className="playground-control-label">DIRECTION</span>
+              <div className="playground-direction-buttons">
+                {directions.map((item) => (
+                  <button
+                    type="button"
+                    className={direction === item.id ? 'is-active' : ''}
+                    aria-pressed={direction === item.id}
+                    onClick={() => setDirection(item.id)}
+                    key={item.id}
+                  >
+                    <span aria-hidden="true">{item.glyph}</span>
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="playground-control-group" role="group" aria-label="Sprite playback speed">
+              <span className="playground-control-label">PACE</span>
+              <div className="playground-pace-buttons">
+                <button
+                  type="button"
+                  className={pace === 'walk' ? 'is-active' : ''}
+                  aria-pressed={pace === 'walk'}
+                  onClick={() => setPace('walk')}
+                >
+                  Walk
+                </button>
+                <button
+                  type="button"
+                  className={pace === 'run' ? 'is-active' : ''}
+                  aria-pressed={pace === 'run'}
+                  onClick={() => setPace('run')}
+                >
+                  Run
+                </button>
               </div>
             </div>
 
