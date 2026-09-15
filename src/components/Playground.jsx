@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
 const spriteAssets = {
-  zhangi: '/images/playground/zhangi-sprites.png?v=2846824',
-  hanzo: '/images/playground/pixel-sprites.png?v=aa0894f',
+  zhangi: '/images/playground/zhangi-sprites.png?v=source3',
+  hanzo: '/images/playground/pixel-hanzo.png?v=source3',
 }
 
-const ZHANGI_FRAME_ROOT = '/images/playground/sprite-frames/zhang%27i'
+const ZHANGI_FRAME_ROOT = "/images/playground/sprite-frames/zhang'i"
 const HANZO_FRAME_ROOT = '/images/playground/sprite-frames/hanzo/HANZO'
 
 const pieces = [
@@ -16,17 +16,13 @@ const pieces = [
     spriteTemplate: true,
   },
   {
-    src: '/images/playground/pixel-keana.png',
-    alt: 'Pixel art portrait of Keana',
-  },
-  {
-    src: '/images/playground/green-creature.png',
-    alt: 'Green creature pixel artwork',
+    src: '/images/playground/green-matcha-tea.png',
+    alt: 'Green matcha tea pixel character artwork',
     wide: true,
   },
   {
-    src: '/images/playground/other-art.png',
-    alt: 'Additional visual experiment',
+    src: "/images/playground/pop-up-zhang'i.png",
+    alt: 'Zhang’i pop-up battle character artwork',
   },
 ]
 
@@ -61,7 +57,7 @@ const characters = [
       ],
       up: [
         `${ZHANGI_FRAME_ROOT}/BACK/1.png`,
-        `${ZHANGI_FRAME_ROOT}/BACK/1%20orig.png`,
+        `${ZHANGI_FRAME_ROOT}/BACK/1 orig.png`,
         `${ZHANGI_FRAME_ROOT}/BACK/3.png`,
         `${ZHANGI_FRAME_ROOT}/BACK/4.png`,
       ],
@@ -73,10 +69,10 @@ const characters = [
     sheet: spriteAssets.hanzo,
     alt: 'Hanzo ninja pixel character sprite sheet',
     frames: {
-      down: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/FRONT%20H/${frame}.png`),
-      right: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/RIGHT%20H/${frame}.png`),
-      left: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/LEFT%20H/${frame}.png`),
-      up: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/BACK%20H/${frame}.png`),
+      down: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/FRONT H/${frame}.png`),
+      right: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/RIGHT H/${frame}.png`),
+      left: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/LEFT H/${frame}.png`),
+      up: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/BACK H/${frame}.png`),
     },
   },
 ]
@@ -175,13 +171,13 @@ function Playground() {
             <div className="playground-sprite-track" aria-hidden="true">
               <span className="playground-sprite-origin" />
               <div className="playground-sprite-window">
-                <span
+                <img
                   className="playground-sprite-frame"
-                  style={{
-                    backgroundImage: `url(${activeFrame})`,
-                    backgroundPosition: 'center',
-                    backgroundSize: 'contain',
-                  }}
+                  key={activeFrame}
+                  src={activeFrame}
+                  alt=""
+                  draggable="false"
+                  style={{ objectFit: 'contain' }}
                 />
               </div>
               <span className="playground-sprite-ground" />
