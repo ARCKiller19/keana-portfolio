@@ -26,10 +26,10 @@ const characters = [
         (frame) => `${ZHANGI_FRAME_ROOT}/LEFT/${frame}.png`,
       ),
       up: [
-        `${ZHANGI_FRAME_ROOT}/BACK/1.png`,
         `${ZHANGI_FRAME_ROOT}/BACK/1 orig.png`,
-        `${ZHANGI_FRAME_ROOT}/BACK/3.png`,
         `${ZHANGI_FRAME_ROOT}/BACK/4.png`,
+        `${ZHANGI_FRAME_ROOT}/BACK/3.png`,
+        `${ZHANGI_FRAME_ROOT}/BACK/1.png`,
       ],
     },
   },
