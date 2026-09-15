@@ -87,6 +87,7 @@ function Navbar() {
       .map(({ id }) => document.getElementById(id))
       .filter(Boolean)
     const hero = document.querySelector('.hero')
+    const aboutSection = sections.find((section) => section.id === 'about')
 
     let frameId = null
 
@@ -106,13 +107,19 @@ function Navbar() {
         window.scrollY + window.innerHeight >=
         document.documentElement.scrollHeight - 2
       const heroBottom = hero?.getBoundingClientRect().bottom ?? 0
+      const aboutTop = aboutSection?.getBoundingClientRect().top ?? Infinity
+      const aboutActivationThreshold = Math.max(
+        activationLine + 96,
+        window.innerHeight * 0.32,
+      )
       const compactThreshold = Math.max(
         activationLine + 120,
         window.innerHeight * 0.76,
       )
 
-      // Compact while the visitor is leaving the hero, before About becomes
-      // the active section. Section highlighting keeps its stricter boundary.
+      // Compact while the visitor is leaving the hero. About can become active
+      // a little before its top reaches the strict section activation line so
+      // the nav reflects the content already dominating the viewport.
       setIsCompact(!hero || heroBottom <= compactThreshold)
 
       if (atPageEnd) {
@@ -122,7 +129,11 @@ function Navbar() {
         return
       }
 
-      if (hero && heroBottom > activationLine) {
+      if (
+        hero &&
+        ((aboutSection && aboutTop > aboutActivationThreshold) ||
+          (!aboutSection && heroBottom > activationLine))
+      ) {
         setActiveSection(null)
         setConnectorProgress(navItems.slice(0, -1).map(() => 0))
         return
