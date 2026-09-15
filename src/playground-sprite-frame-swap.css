@@ -1,16 +1,29 @@
-/* Playground sprite preview: discrete frame swaps for Zhang’i and Hanzo. */
+/* Playground pixel studies: individual frame playback, secondary motion studies, and archive. */
 
-.playground-sprite-frame {
+/* The original lab animated an entire sprite sheet at 400% width. The live preview now
+   swaps real 16 × 16 PNG frames, so keep one fixed canvas and never translate the image. */
+.playground-sprite-window {
+  width: 96px;
+  height: 96px;
+  aspect-ratio: auto;
+  overflow: visible;
+  display: grid;
+  place-items: center;
+}
+
+.playground-sprite-window .playground-sprite-frame {
   display: block;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-size: 400% 400%;
+  width: 96px !important;
+  height: 96px !important;
+  max-width: none !important;
+  object-fit: contain;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
-  transition: none !important;
+  transform: none !important;
+  transform-origin: center;
   animation: none !important;
-  will-change: auto;
+  transition: none !important;
+  will-change: auto !important;
 }
 
 .playground-character-group {
@@ -23,7 +36,8 @@
   flex-wrap: wrap;
 }
 
-.playground-character-buttons button {
+.playground-character-buttons button,
+.playground-study-controls button {
   min-height: 38px;
   min-width: 92px;
   appearance: none;
@@ -44,13 +58,17 @@
 
 .playground-character-buttons button:hover,
 .playground-character-buttons button:focus-visible,
-.playground-character-buttons button.is-active {
+.playground-character-buttons button.is-active,
+.playground-study-controls button:hover,
+.playground-study-controls button:focus-visible,
+.playground-study-controls button.is-active {
   border-color: rgba(167, 179, 95, 0.62);
   background: rgba(167, 179, 95, 0.075);
   color: var(--cream);
 }
 
-.playground-character-buttons button.is-active {
+.playground-character-buttons button.is-active,
+.playground-study-controls button.is-active {
   box-shadow: inset 0 -1px 0 var(--moss);
 }
 
@@ -119,22 +137,228 @@
   image-rendering: crisp-edges;
 }
 
-/* Keep both source sprite templates visible in the regular Playground archive too. */
-.playground-template-tile {
-  background:
-    linear-gradient(180deg, rgba(167, 179, 95, 0.025), transparent 48%),
-    rgba(8, 10, 8, 0.96);
+/* Secondary study stack */
+.playground-study-stack {
+  display: grid;
+  gap: 22px;
+  width: min(100%, var(--container));
+  margin: 0 auto 44px;
 }
 
-.playground-template-tile img {
-  padding: clamp(28px, 3vw, 44px) clamp(24px, 2.4vw, 36px) clamp(52px, 4vw, 64px);
+.playground-feature-study {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(420px, 1.28fr);
+  min-height: 330px;
+  overflow: hidden;
+  border: 1px solid rgba(239, 233, 219, 0.13);
+  background:
+    linear-gradient(90deg, rgba(167, 179, 95, 0.025), transparent 42%),
+    rgba(8, 10, 8, 0.88);
+}
+
+.playground-feature-study::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(239, 233, 219, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(239, 233, 219, 0.014) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(90deg, transparent 2%, black 38%, black 100%);
+}
+
+.playground-study-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(24px, 3vw, 38px);
+  border-right: 1px solid rgba(239, 233, 219, 0.09);
+}
+
+.playground-study-copy h3,
+.playground-archive-head h3 {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1;
+}
+
+.playground-study-copy p {
+  max-width: 38ch;
+  margin: 0;
+  color: rgba(239, 233, 219, 0.56);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.playground-study-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 24px;
+}
+
+.playground-study-stage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  min-height: 330px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(167, 179, 95, 0.06), transparent 28%),
+    rgba(5, 7, 5, 0.58);
+}
+
+.playground-study-stage::before {
+  content: '';
+  position: absolute;
+  inset: 14% 8%;
+  border: 1px solid rgba(239, 233, 219, 0.055);
+  pointer-events: none;
+}
+
+.playground-study-label {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  color: rgba(239, 233, 219, 0.36);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.playground-pop-up-frame {
+  position: relative;
+  z-index: 2;
+  width: 128px;
+  height: 128px;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.35));
+}
+
+.playground-pop-up-frame img {
+  width: 128px;
+  height: 128px;
+  max-width: none;
   object-fit: contain;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
 
-.playground-template-tile:hover img,
-.playground-template-tile:focus-within img {
+.playground-study-ground {
+  position: absolute;
+  right: 24%;
+  bottom: 60px;
+  left: 24%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(167, 179, 95, 0.38), transparent);
+}
+
+.playground-matcha-media {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(170px, 0.65fr);
+  gap: 14px;
+  align-items: stretch;
+  padding: clamp(20px, 2.6vw, 32px);
+}
+
+.playground-matcha-preview,
+.playground-matcha-frames {
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  border: 1px solid rgba(239, 233, 219, 0.1);
+  background: rgba(5, 7, 5, 0.66);
+}
+
+.playground-matcha-preview figcaption,
+.playground-matcha-frames figcaption {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(239, 233, 219, 0.08);
+  color: rgba(239, 233, 219, 0.4);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.09em;
+}
+
+.playground-matcha-preview video,
+.playground-matcha-preview img,
+.playground-matcha-frames img {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  object-fit: contain;
+  background: rgba(7, 9, 7, 0.82);
+}
+
+.playground-matcha-preview img,
+.playground-matcha-frames img {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Visual archive */
+.playground-archive-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  width: min(100%, var(--container));
+  margin: 0 auto 18px;
+  padding-top: 6px;
+}
+
+.playground-archive-head h3 {
+  margin-bottom: 0;
+}
+
+.playground-archive-head > span {
+  padding-bottom: 4px;
+  color: rgba(239, 233, 219, 0.36);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.playground-grid.playground-grid-secondary.playground-archive-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.playground-archive-tile {
+  background:
+    linear-gradient(180deg, rgba(167, 179, 95, 0.02), transparent 50%),
+    rgba(8, 10, 8, 0.96);
+}
+
+.playground-archive-tile > img {
+  width: 100%;
+  height: 100%;
+  padding: 26px 18px 56px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.playground-template-tile > img {
+  padding: clamp(28px, 3vw, 44px) clamp(24px, 2.4vw, 36px) clamp(56px, 4vw, 66px);
+}
+
+.playground-archive-tile:hover > img,
+.playground-archive-tile:focus-within > img,
+.playground-template-tile:hover > img,
+.playground-template-tile:focus-within > img {
   transform: none;
   opacity: 1;
 }
@@ -163,40 +387,132 @@
   color: rgba(239, 233, 219, 0.74);
 }
 
+.playground-collection-tile {
+  display: grid;
+  place-items: center;
+  padding: 34px 24px 60px;
+}
+
+.playground-fairy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.playground-fairy-grid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.playground-orb-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 12px;
+  width: min(100%, 640px);
+}
+
+.playground-orb-grid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
 @media (max-width: 980px) {
-  .playground-sprite-frames {
+  .playground-sprite-frames,
+  .playground-feature-study {
     grid-template-columns: 1fr;
+  }
+
+  .playground-study-copy {
+    border-right: 0;
+    border-bottom: 1px solid rgba(239, 233, 219, 0.09);
+  }
+
+  .playground-matcha-media {
+    grid-template-columns: 1fr 0.7fr;
+  }
+
+  .playground-grid.playground-grid-secondary.playground-archive-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 640px) {
+  .playground-sprite-window,
+  .playground-sprite-window .playground-sprite-frame {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
   .playground-character-buttons {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .playground-character-buttons button {
+  .playground-character-buttons button,
+  .playground-study-controls button {
     min-width: 0;
     min-height: 42px;
   }
 
-  .playground-original-sheets {
+  .playground-original-sheets,
+  .playground-matcha-media,
+  .playground-grid.playground-grid-secondary.playground-archive-grid {
     grid-template-columns: 1fr;
   }
 
-  .playground-original-sheets figcaption,
-  .playground-template-caption {
-    font-size: 6px;
+  .playground-feature-study,
+  .playground-study-stage {
+    min-height: 280px;
   }
 
-  .playground-template-tile img {
-    padding: 24px 20px 50px;
+  .playground-pop-up-frame,
+  .playground-pop-up-frame img {
+    width: 112px;
+    height: 112px;
+  }
+
+  .playground-matcha-preview video,
+  .playground-matcha-preview img,
+  .playground-matcha-frames img {
+    min-height: 200px;
+  }
+
+  .playground-archive-head {
+    align-items: start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .playground-archive-head > span {
+    padding-bottom: 0;
+  }
+
+  .playground-fairy-grid {
+    gap: 8px;
+  }
+
+  .playground-orb-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .playground-template-caption {
+    font-size: 6px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .playground-sprite-frame {
-    transition: none !important;
+  .playground-sprite-window .playground-sprite-frame,
+  .playground-pop-up-frame img {
     animation: none !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
