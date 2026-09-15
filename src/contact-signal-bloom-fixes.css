@@ -113,8 +113,9 @@
     transform-origin: center;
   }
 
+  /* Spokes extend away from the core so each line follows the node's spatial direction. */
   .footer .footer-links a:nth-child(1)::after {
-    top: 100%;
+    bottom: 100%;
     left: 50%;
     width: 1px;
     height: 85px;
@@ -122,13 +123,13 @@
 
   .footer .footer-links a:nth-child(2)::after {
     top: 50%;
-    right: 100%;
+    left: 100%;
     width: 85px;
     height: 1px;
   }
 
   .footer .footer-links a:nth-child(3)::after {
-    bottom: 100%;
+    top: 100%;
     left: 50%;
     width: 1px;
     height: 85px;
@@ -136,7 +137,7 @@
 
   .footer .footer-links a:nth-child(4)::after {
     top: 50%;
-    left: 100%;
+    right: 100%;
     width: 85px;
     height: 1px;
   }
