@@ -27,8 +27,10 @@ import './motion-habitat-mobile.css'
 import './interaction-stability.css'
 import './playground-sprite-lab.css'
 import './playground-sprite-frame-swap.css'
+import './playground-archive-viewer.css'
 import './motion-habitat-onboarding.js'
 import './motion-reel-preview-prime.js'
+import './playground-archive-viewer.js'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
