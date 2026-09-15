@@ -39,14 +39,18 @@ const characters = [
     sheet: spriteAssets.hanzo,
     alt: 'Hanzo original pixel sprite sheet',
     frames: {
-      down: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/FRONT H/${frame}.png`),
+      down: ['2', '3', '4', '3'].map(
+        (frame) => `${HANZO_FRAME_ROOT}/FRONT H/${frame}.png`,
+      ),
       right: ['2', '3', '4', '3'].map(
         (frame) => `${HANZO_FRAME_ROOT}/RIGHT H/${frame}.png`,
       ),
       left: ['2', '3', '4', '3'].map(
         (frame) => `${HANZO_FRAME_ROOT}/LEFT H/${frame}.png`,
       ),
-      up: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/BACK H/${frame}.png`),
+      up: ['2', '3', '4', '3'].map(
+        (frame) => `${HANZO_FRAME_ROOT}/BACK H/${frame}.png`,
+      ),
     },
   },
 ]
