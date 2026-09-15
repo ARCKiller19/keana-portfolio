@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import '../clickmate-instagram.css'
 import '../clickmate-owner.css'
 import '../wordoria-project-cta.css'
+import { getSectionActivationLine } from '../utils/sectionNavigation.js'
 
 function LeafMark() {
   return (
@@ -283,7 +284,8 @@ function ProjectModal({ project, onClose }) {
   const handleWordoriaJump = (event) => {
     event.preventDefault()
 
-    const target = document.getElementById('sprite-lab-title')
+    const target = document.getElementById('playground')
+    const focusTarget = document.getElementById('sprite-lab-title')
     if (!target) return
 
     const dialog = dialogRef.current
@@ -293,18 +295,26 @@ function ProjectModal({ project, onClose }) {
 
     const moveToCharacterStudy = () => {
       requestAnimationFrame(() => {
-        window.history.replaceState(null, '', '#sprite-lab-title')
-        target.tabIndex = -1
-        target.focus({ preventScroll: true })
-        target.scrollIntoView({
+        const activationLine = getSectionActivationLine()
+        const targetTop =
+          window.scrollY + target.getBoundingClientRect().top - activationLine
+
+        window.history.replaceState(null, '', '#playground')
+
+        if (focusTarget) {
+          focusTarget.tabIndex = -1
+          focusTarget.focus({ preventScroll: true })
+          focusTarget.addEventListener(
+            'blur',
+            () => focusTarget.removeAttribute('tabindex'),
+            { once: true },
+          )
+        }
+
+        window.scrollTo({
+          top: Math.max(targetTop, 0),
           behavior: reducedMotion ? 'auto' : 'smooth',
-          block: 'start',
         })
-        target.addEventListener(
-          'blur',
-          () => target.removeAttribute('tabindex'),
-          { once: true },
-        )
       })
     }
 
@@ -475,7 +485,7 @@ function ProjectModal({ project, onClose }) {
                   {project.id === 'wordoria' && (
                     <a
                       className="project-live-link project-wordoria-motion-link"
-                      href="#sprite-lab-title"
+                      href="#playground"
                       onClick={handleWordoriaJump}
                     >
                       See Characters in Motion
