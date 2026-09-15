@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import '../clickmate-instagram.css'
 import '../clickmate-owner.css'
+import '../wordoria-project-cta.css'
 
 function LeafMark() {
   return (
@@ -279,6 +280,43 @@ function ProjectModal({ project, onClose }) {
     dialogRef.current?.close()
   }
 
+  const handleWordoriaJump = (event) => {
+    event.preventDefault()
+
+    const target = document.getElementById('sprite-lab-title')
+    if (!target) return
+
+    const dialog = dialogRef.current
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches
+
+    const moveToCharacterStudy = () => {
+      requestAnimationFrame(() => {
+        window.history.replaceState(null, '', '#sprite-lab-title')
+        target.tabIndex = -1
+        target.focus({ preventScroll: true })
+        target.scrollIntoView({
+          behavior: reducedMotion ? 'auto' : 'smooth',
+          block: 'start',
+        })
+        target.addEventListener(
+          'blur',
+          () => target.removeAttribute('tabindex'),
+          { once: true },
+        )
+      })
+    }
+
+    if (dialog?.open) {
+      dialog.addEventListener('close', moveToCharacterStudy, { once: true })
+      dialog.close()
+      return
+    }
+
+    moveToCharacterStudy()
+  }
+
   const handleBackdropClick = (event) => {
     if (event.target === event.currentTarget) {
       closeDialog()
@@ -429,7 +467,22 @@ function ProjectModal({ project, onClose }) {
               </dl>
 
               {!project.link && (
-                <div className="project-modal-action-row">
+                <div
+                  className={`project-modal-action-row ${
+                    project.id === 'wordoria' ? 'project-wordoria-actions' : ''
+                  }`}
+                >
+                  {project.id === 'wordoria' && (
+                    <a
+                      className="project-live-link project-wordoria-motion-link"
+                      href="#sprite-lab-title"
+                      onClick={handleWordoriaJump}
+                    >
+                      See Characters in Motion
+                      <span aria-hidden="true"> →</span>
+                    </a>
+                  )}
+
                   <p className="project-live-unavailable">
                     {project.liveStatus ?? 'No public build available yet.'}
                   </p>
