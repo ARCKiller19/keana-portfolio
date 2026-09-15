@@ -261,6 +261,27 @@
   }
 }
 
+/* Keep the staggered arrival, but let every node finish resolving while the footer is fully in view. */
+@supports (animation-timeline: view()) {
+  @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+    .footer .footer-links a:nth-child(1) {
+      animation-range: entry 22% cover 44%;
+    }
+
+    .footer .footer-links a:nth-child(2) {
+      animation-range: entry 26% cover 46%;
+    }
+
+    .footer .footer-links a:nth-child(3) {
+      animation-range: entry 30% cover 48%;
+    }
+
+    .footer .footer-links a:nth-child(4) {
+      animation-range: entry 34% cover 50%;
+    }
+  }
+}
+
 @keyframes contact-orbit-idle {
   to {
     transform: rotate(360deg);
