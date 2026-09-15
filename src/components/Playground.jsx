@@ -95,12 +95,6 @@ const archivePieces = [
     template: true,
   },
   {
-    src: "/images/playground/pixel-zhang'i.png",
-    alt: 'Zhang’i pixel art process capture in the sprite editor',
-    label: 'Zhang’i Process Capture',
-    meta: 'Sprite editor · process view',
-  },
-  {
     src: "/images/playground/pop-up-zhang'i.png",
     alt: 'Zhang’i pop-up battle sprite process capture',
     label: 'Pop-up Battle Frames',
@@ -430,22 +424,8 @@ function Playground() {
       </div>
 
       <div className="playground-grid playground-grid-secondary playground-archive-grid">
-        {archivePieces.map((piece, index) => (
-          <figure
-            className={`playground-tile playground-archive-tile ${piece.wide ? 'playground-tile-wide' : ''} ${piece.template ? 'playground-template-tile' : ''}`}
-            key={`${piece.src}-${piece.label}`}
-          >
-            <span className="tile-index">{String(index + 4).padStart(2, '0')}</span>
-            <img src={piece.src} alt={piece.alt} loading="lazy" decoding="async" />
-            <figcaption className="playground-template-caption">
-              <span>{piece.label}</span>
-              <span>{piece.meta}</span>
-            </figcaption>
-          </figure>
-        ))}
-
         <figure className="playground-tile playground-archive-tile playground-collection-tile playground-fairy-collection">
-          <span className="tile-index">{String(archivePieces.length + 4).padStart(2, '0')}</span>
+          <span className="tile-index">04</span>
           <div className="playground-fairy-grid">
             {fairyPieces.map((piece) => (
               <img src={piece.src} alt={piece.alt} loading="lazy" decoding="async" key={piece.src} />
@@ -456,6 +436,20 @@ function Playground() {
             <span>Character variations</span>
           </figcaption>
         </figure>
+
+        {archivePieces.map((piece, index) => (
+          <figure
+            className={`playground-tile playground-archive-tile ${piece.wide ? 'playground-tile-wide' : ''} ${piece.template ? 'playground-template-tile' : ''}`}
+            key={`${piece.src}-${piece.label}`}
+          >
+            <span className="tile-index">{String(index + 5).padStart(2, '0')}</span>
+            <img src={piece.src} alt={piece.alt} loading="lazy" decoding="async" />
+            <figcaption className="playground-template-caption">
+              <span>{piece.label}</span>
+              <span>{piece.meta}</span>
+            </figcaption>
+          </figure>
+        ))}
 
         <figure className="playground-tile playground-archive-tile playground-collection-tile playground-orb-collection playground-tile-wide">
           <span className="tile-index">{String(archivePieces.length + 5).padStart(2, '0')}</span>
