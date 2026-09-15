@@ -225,7 +225,14 @@ function Playground() {
               </span>
             </div>
 
-            <div className="playground-sprite-track" aria-hidden="true">
+            <div
+              className="playground-sprite-track"
+              aria-hidden="true"
+              style={{
+                background:
+                  'radial-gradient(ellipse 142px 122px at 50% 50%, rgba(167, 179, 95, 0.055) 0%, rgba(167, 179, 95, 0.026) 46%, transparent 74%)',
+              }}
+            >
               <span className="playground-sprite-origin" />
               <div className="playground-sprite-window">
                 <img
@@ -381,8 +388,9 @@ function Playground() {
             <span className="playground-sprite-kicker">PIXEL STUDY · 03</span>
             <h3 id="matcha-study-title">Green Matcha Idle Study</h3>
             <p>
-              A small breathing and bounce loop for the matcha character. The original two-frame
-              sheet stays visible beside the motion reference.
+              I wanted to make something green and cute that could shoot a projectile. I’m still
+              deciding whether it becomes a weapon or a rideable mount, so this idle study captures
+              the idea while its final role is still evolving.
             </p>
           </div>
 
