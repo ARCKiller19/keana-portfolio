@@ -249,11 +249,11 @@
     opacity: 0.9;
   }
 
-  /* The bead gets its own larger canvas so its center can ride directly over the visible orbit stroke. */
+  /* Keep the full bead visible, with its center riding inside the orbit stroke rather than outside it. */
   .footer .footer-links::after {
-    inset: 104px;
+    inset: 108px;
     background: radial-gradient(
-      circle 4px at 50% 4px,
+      circle 4px at 50% 5px,
       rgba(229, 241, 150, 0.98) 0 42%,
       rgba(205, 221, 111, 0.76) 43% 62%,
       rgba(167, 179, 95, 0.2) 70%,
