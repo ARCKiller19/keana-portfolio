@@ -5,13 +5,10 @@ const spriteAssets = {
   hanzo: '/images/playground/pixel-sprites.png?v=aa0894f',
 }
 
+const ZHANGI_FRAME_ROOT = '/images/playground/sprite-frames/zhang%27i'
+const HANZO_FRAME_ROOT = '/images/playground/sprite-frames/hanzo/HANZO'
+
 const pieces = [
-  {
-    src: spriteAssets.zhangi,
-    alt: 'Zhang’i original pixel sprite sheet showing four directions with four frames each',
-    label: 'Zhang’i Sprite Sheet',
-    spriteTemplate: true,
-  },
   {
     src: spriteAssets.hanzo,
     alt: 'Hanzo original pixel sprite sheet showing four directions with four frames each',
@@ -39,24 +36,57 @@ const characters = [
     label: 'Zhang’i',
     sheet: spriteAssets.zhangi,
     alt: 'Zhang’i purple-haired pixel character sprite sheet',
+    frames: {
+      down: [
+        `${ZHANGI_FRAME_ROOT}/FRONT/1.png`,
+        `${ZHANGI_FRAME_ROOT}/FRONT/2.png`,
+        `${ZHANGI_FRAME_ROOT}/FRONT/3.png`,
+        `${ZHANGI_FRAME_ROOT}/FRONT/4.png`,
+      ],
+      right: [
+        `${ZHANGI_FRAME_ROOT}/RIGHT/1.png`,
+        `${ZHANGI_FRAME_ROOT}/RIGHT/2.png`,
+        `${ZHANGI_FRAME_ROOT}/RIGHT/2.2.png`,
+        `${ZHANGI_FRAME_ROOT}/RIGHT/2.4.png`,
+        `${ZHANGI_FRAME_ROOT}/RIGHT/3.png`,
+        `${ZHANGI_FRAME_ROOT}/RIGHT/4.png`,
+      ],
+      left: [
+        `${ZHANGI_FRAME_ROOT}/LEFT/1.png`,
+        `${ZHANGI_FRAME_ROOT}/LEFT/2.png`,
+        `${ZHANGI_FRAME_ROOT}/LEFT/2.2.png`,
+        `${ZHANGI_FRAME_ROOT}/LEFT/2.4.png`,
+        `${ZHANGI_FRAME_ROOT}/LEFT/3.png`,
+        `${ZHANGI_FRAME_ROOT}/LEFT/4.png`,
+      ],
+      up: [
+        `${ZHANGI_FRAME_ROOT}/BACK/1.png`,
+        `${ZHANGI_FRAME_ROOT}/BACK/1%20orig.png`,
+        `${ZHANGI_FRAME_ROOT}/BACK/3.png`,
+        `${ZHANGI_FRAME_ROOT}/BACK/4.png`,
+      ],
+    },
   },
   {
     id: 'hanzo',
     label: 'Hanzo',
     sheet: spriteAssets.hanzo,
     alt: 'Hanzo ninja pixel character sprite sheet',
+    frames: {
+      down: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/FRONT%20H/${frame}.png`),
+      right: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/RIGHT%20H/${frame}.png`),
+      left: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/LEFT%20H/${frame}.png`),
+      up: [1, 2, 3, 4].map((frame) => `${HANZO_FRAME_ROOT}/BACK%20H/${frame}.png`),
+    },
   },
 ]
 
 const directions = [
-  { id: 'down', glyph: '↓', label: 'Down', row: 0 },
-  { id: 'right', glyph: '→', label: 'Right', row: 2 },
-  { id: 'left', glyph: '←', label: 'Left', row: 1 },
-  { id: 'up', glyph: '↑', label: 'Up', row: 3 },
+  { id: 'down', glyph: '↓', label: 'Down' },
+  { id: 'right', glyph: '→', label: 'Right' },
+  { id: 'left', glyph: '←', label: 'Left' },
+  { id: 'up', glyph: '↑', label: 'Up' },
 ]
-
-const FRAME_COUNT = 4
-const FRAME_STEP = 100 / (FRAME_COUNT - 1)
 
 function Playground() {
   const [character, setCharacter] = useState('zhangi')
@@ -65,6 +95,11 @@ function Playground() {
   const [frameIndex, setFrameIndex] = useState(0)
   const [showFrames, setShowFrames] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
+
+  const activeCharacter = characters.find((item) => item.id === character) ?? characters[0]
+  const activeFrames = activeCharacter.frames[direction] ?? activeCharacter.frames.down
+  const safeFrameIndex = frameIndex % activeFrames.length
+  const activeFrame = activeFrames[safeFrameIndex]
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -77,21 +112,26 @@ function Playground() {
   }, [])
 
   useEffect(() => {
+    const frameSources = characters.flatMap((item) => Object.values(item.frames).flat())
+
+    frameSources.forEach((src) => {
+      const image = new Image()
+      image.src = src
+    })
+  }, [])
+
+  useEffect(() => {
     setFrameIndex(0)
 
     if (reducedMotion) return undefined
 
     const frameDuration = pace === 'run' ? 105 : 190
     const timer = window.setInterval(() => {
-      setFrameIndex((current) => (current + 1) % FRAME_COUNT)
+      setFrameIndex((current) => (current + 1) % activeFrames.length)
     }, frameDuration)
 
     return () => window.clearInterval(timer)
-  }, [character, direction, pace, reducedMotion])
-
-  const activeCharacter = characters.find((item) => item.id === character) ?? characters[0]
-  const activeDirection = directions.find((item) => item.id === direction) ?? directions[0]
-  const backgroundPosition = `${frameIndex * FRAME_STEP}% ${activeDirection.row * FRAME_STEP}%`
+  }, [character, direction, pace, reducedMotion, activeFrames.length])
 
   return (
     <section className="playground" id="playground" aria-label="Playground">
@@ -110,7 +150,7 @@ function Playground() {
           <h3 id="sprite-lab-title">Character Walk Cycles</h3>
           <p>
             Directional sprite studies shown as live frame-by-frame movement, with both
-            original 4 × 4 sheets available for comparison.
+            original sprite sheets available for comparison.
           </p>
 
           <dl className="playground-sprite-meta">
@@ -120,7 +160,7 @@ function Playground() {
             </div>
             <div>
               <dt>Preview</dt>
-              <dd>{pace === 'walk' ? 'Walk' : 'Run'} · {direction} · {frameIndex + 1}/4</dd>
+              <dd>{pace === 'walk' ? 'Walk' : 'Run'} · {direction} · {safeFrameIndex + 1}/{activeFrames.length}</dd>
             </div>
           </dl>
         </div>
@@ -129,7 +169,7 @@ function Playground() {
           <div className="playground-sprite-stage">
             <div className="playground-sprite-stage-head">
               <span>LIVE FRAME PREVIEW</span>
-              <span>{activeCharacter.label} · 04 FRAMES</span>
+              <span>{activeCharacter.label} · {String(activeFrames.length).padStart(2, '0')} FRAMES</span>
             </div>
 
             <div className="playground-sprite-track" aria-hidden="true">
@@ -138,8 +178,9 @@ function Playground() {
                 <span
                   className="playground-sprite-frame"
                   style={{
-                    backgroundImage: `url(${activeCharacter.sheet})`,
-                    backgroundPosition,
+                    backgroundImage: `url(${activeFrame})`,
+                    backgroundPosition: 'center',
+                    backgroundSize: 'contain',
                   }}
                 />
               </div>
@@ -222,7 +263,7 @@ function Playground() {
           <div className="playground-sprite-frames" id="playground-sprite-frames">
             <div className="playground-sprite-frames-heading">
               <span>ORIGINAL SPRITE SHEETS</span>
-              <span>PROCESS VIEW · BOTH 4 × 4 TEMPLATES</span>
+              <span>PROCESS VIEW · SOURCE TEMPLATES</span>
             </div>
 
             <div className="playground-original-sheets">
@@ -230,7 +271,7 @@ function Playground() {
                 <figure className={character === item.id ? 'is-active' : ''} key={item.id}>
                   <figcaption>
                     <span>{item.label}</span>
-                    <span>04 DIRECTIONS × 04 FRAMES</span>
+                    <span>ORIGINAL FRAME SHEET</span>
                   </figcaption>
                   <img
                     src={item.sheet}
