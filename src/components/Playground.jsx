@@ -201,7 +201,7 @@ function Playground() {
           <h3 id="sprite-lab-title">Character Walk Cycles</h3>
           <p>
             Zhang’i and Hanzo shown through their original 16 × 16 animation frames,
-            switched one PNG at a time instead of sliding a sprite sheet.
+            with controls for direction and pace.
           </p>
 
           <dl className="playground-sprite-meta">

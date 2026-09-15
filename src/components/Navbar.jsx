@@ -112,15 +112,15 @@ function Navbar() {
         activationLine + 96,
         window.innerHeight * 0.32,
       )
-      const compactThreshold = Math.max(
-        activationLine + 120,
-        window.innerHeight * 0.76,
+      const aboutHasArrived = !hero || (
+        aboutSection
+          ? aboutTop <= aboutActivationThreshold
+          : heroBottom <= activationLine
       )
 
-      // Compact while the visitor is leaving the hero. About can become active
-      // a little before its top reaches the strict section activation line so
-      // the nav reflects the content already dominating the viewport.
-      setIsCompact(!hero || heroBottom <= compactThreshold)
+      // Keep the full navbar through the hero. Compact at the exact same
+      // transition that activates About so the two visual states stay in sync.
+      setIsCompact(aboutHasArrived)
 
       if (atPageEnd) {
         setActiveSection(navItems[navItems.length - 1].id)
