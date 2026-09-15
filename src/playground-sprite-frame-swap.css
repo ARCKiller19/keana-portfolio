@@ -11,6 +11,32 @@
   place-items: center;
 }
 
+/* Disable the earlier window-level halo. Stage lighting should sit behind the sprite,
+   never inside the sprite box where it can visually wash over the pixels. */
+.playground-sprite-window::before {
+  content: none;
+}
+
+/* Keep only a quiet hint of moss light behind the regular walk-cycle preview. */
+.playground-sprite-track::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  width: 124px;
+  height: 108px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(167, 179, 95, 0.07) 0%,
+    rgba(167, 179, 95, 0.035) 42%,
+    transparent 74%
+  );
+  filter: blur(8px);
+  transform: translate(-50%, -50%);
+}
+
 .playground-sprite-window .playground-sprite-frame {
   display: block;
   width: 96px !important;
@@ -212,6 +238,20 @@
   overflow: hidden;
   background:
     radial-gradient(circle at 50% 50%, rgba(167, 179, 95, 0.06), transparent 28%),
+    rgba(5, 7, 5, 0.58);
+}
+
+/* The pop-up Zhang’i needs the stronger contrast treatment. This is the stage
+   background itself, so the green light always renders behind the PNG. */
+.playground-pop-up-stage {
+  background:
+    radial-gradient(
+      ellipse 150px 130px at 50% 50%,
+      rgba(167, 179, 95, 0.15) 0%,
+      rgba(167, 179, 95, 0.075) 40%,
+      rgba(167, 179, 95, 0.025) 60%,
+      transparent 78%
+    ),
     rgba(5, 7, 5, 0.58);
 }
 
