@@ -1,0 +1,4 @@
+/* Balance the source-sheet framing without shifting the left-side spacing. */
+.playground-matcha-frames img {
+  padding-right: 18px;
+}

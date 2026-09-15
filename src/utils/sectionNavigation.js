@@ -28,6 +28,19 @@ function getWorkArrivalTop(target) {
   )
 }
 
+function getPlaygroundArrivalTop(target) {
+  const headingRow = target.querySelector('.section-head')
+  if (!headingRow) return null
+
+  const landingLine = getSectionActivationLine() + 28
+
+  return (
+    window.scrollY +
+    headingRow.getBoundingClientRect().top -
+    landingLine
+  )
+}
+
 export function handleSectionNavigation(event) {
   const href = event.currentTarget.getAttribute('href')
 
@@ -47,11 +60,15 @@ export function handleSectionNavigation(event) {
       window.dispatchEvent(new CustomEvent('keana:work-arrival'))
     }
 
-    const workArrivalTop =
-      sectionId === 'work' ? getWorkArrivalTop(target) : null
+    const customArrivalTop =
+      sectionId === 'work'
+        ? getWorkArrivalTop(target)
+        : sectionId === 'playground'
+          ? getPlaygroundArrivalTop(target)
+          : null
     const activationLine = getSectionActivationLine()
     const targetTop =
-      workArrivalTop ??
+      customArrivalTop ??
       window.scrollY + target.getBoundingClientRect().top - activationLine
 
     window.scrollTo({
