@@ -18,7 +18,7 @@ const characters = [
     sheet: spriteAssets.zhangi,
     alt: 'Zhang’i original pixel sprite sheet',
     frames: {
-      down: [1, 2, 3, 4].map((frame) => `${ZHANGI_FRAME_ROOT}/FRONT/${frame}.png`),
+      down: ['2', '3', '4', '3'].map((frame) => `${ZHANGI_FRAME_ROOT}/FRONT/${frame}.png`),
       right: ['2.2', '1', '2.4', '3'].map(
         (frame) => `${ZHANGI_FRAME_ROOT}/RIGHT/${frame}.png`,
       ),
