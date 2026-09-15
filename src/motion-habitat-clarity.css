@@ -119,14 +119,16 @@
   gap: 6px;
 }
 
+.motion-habitat .motion-habitat-station-copy span,
+.motion-habitat .motion-habitat-station-copy small,
+.motion-habitat .motion-habitat-station-copy em {
+  font-size: 7.5px;
+  line-height: 1.35;
+}
+
 .motion-habitat .motion-habitat-station-copy strong {
   font-size: 20px;
   line-height: 0.98;
-}
-
-.motion-habitat .motion-habitat-station-copy small,
-.motion-habitat .motion-habitat-station-copy em {
-  font-size: 6.75px;
 }
 
 /* A persistent visible signifier: the station itself tells the visitor what clicking does. */
@@ -134,13 +136,13 @@
   content: '> CLICK TO APPROACH';
   display: block;
   width: fit-content;
-  margin-top: 4px;
-  padding-top: 5px;
+  margin-top: 5px;
+  padding-top: 6px;
   border-top: 1px solid rgba(var(--station-rgb), 0.18);
   color: rgba(var(--station-rgb), 0.72);
   font-family: var(--font-mono);
-  font-size: 6.5px;
-  line-height: 1;
+  font-size: 7.25px;
+  line-height: 1.2;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   transition:
@@ -249,19 +251,82 @@
   box-shadow: 0 0 9px currentColor;
 }
 
+/* ---------- Viewing-panel readability ---------- */
+
+.motion-habitat .motion-habitat-panel {
+  padding: clamp(17px, 2vw, 20px);
+}
+
+.motion-habitat .motion-habitat-panel-head {
+  margin-bottom: 15px;
+  padding-bottom: 12px;
+}
+
+.motion-habitat .motion-habitat-panel-head > div {
+  gap: 6px;
+}
+
+.motion-habitat .motion-habitat-panel-head span {
+  font-size: 7.5px;
+  line-height: 1.4;
+}
+
+.motion-habitat .motion-habitat-panel-head button {
+  padding: 9px 10px;
+  font-size: 8px;
+}
+
+.motion-habitat .motion-habitat-panel-copy {
+  gap: 12px;
+}
+
+.motion-habitat .motion-habitat-panel-category,
+.motion-habitat .motion-habitat-panel-date,
+.motion-habitat .motion-habitat-panel-credit {
+  font-size: 7.5px;
+  line-height: 1.5;
+}
+
+.motion-habitat .motion-habitat-panel-copy p {
+  margin: 3px 0 1px;
+  font-size: clamp(12px, 1.05vw, 14px);
+  line-height: 1.66;
+}
+
+.motion-habitat .motion-habitat-notes {
+  margin-top: 3px;
+  padding: 10px 11px;
+  font-size: 8px;
+}
+
+.motion-habitat .motion-habitat-control-copy {
+  font-size: 7.25px;
+  line-height: 1.35;
+}
+
+.motion-habitat .motion-habitat-control-or {
+  font-size: 6.5px;
+}
+
 /* ---------- Clearer two-path onboarding ---------- */
 
 .motion-habitat-guide {
   width: min(520px, calc(100% - 48px));
-  padding: 20px 22px 18px;
+  padding: 22px 24px 20px;
 }
 
-.motion-habitat-guide-intro {
-  margin: -3px 0 14px;
-  color: rgba(239, 233, 219, 0.48);
+.motion-habitat-guide-eyebrow {
+  margin-bottom: 10px;
+  font-size: 7.5px;
+}
+
+/* Two classes intentionally beat the generic .motion-habitat-guide p rule. */
+.motion-habitat-guide .motion-habitat-guide-intro {
+  margin: 0 0 20px;
+  color: rgba(239, 233, 219, 0.52);
   font-family: var(--font-mono);
-  font-size: 7px;
-  line-height: 1.5;
+  font-size: 8px;
+  line-height: 1.55;
   letter-spacing: 0.08em;
   text-align: center;
   text-transform: uppercase;
@@ -270,7 +335,7 @@
 .motion-habitat-guide-paths {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  gap: 14px;
+  gap: 16px;
   align-items: stretch;
   width: 100%;
 }
@@ -279,9 +344,9 @@
   display: grid;
   align-content: center;
   justify-items: center;
-  gap: 9px;
-  min-height: 126px;
-  padding: 13px;
+  gap: 10px;
+  min-height: 134px;
+  padding: 15px 14px;
   border: 1px solid rgba(239, 233, 219, 0.08);
   background: rgba(239, 233, 219, 0.014);
 }
@@ -289,16 +354,16 @@
 .motion-habitat-guide-path-title {
   color: rgba(205, 221, 111, 0.7);
   font-family: var(--font-mono);
-  font-size: 6.5px;
+  font-size: 7.25px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .motion-habitat-guide-path-copy {
-  color: rgba(239, 233, 219, 0.34);
+  color: rgba(239, 233, 219, 0.38);
   font-family: var(--font-mono);
-  font-size: 6px;
-  line-height: 1.45;
+  font-size: 6.75px;
+  line-height: 1.5;
   letter-spacing: 0.07em;
   text-align: center;
   text-transform: uppercase;
@@ -312,21 +377,21 @@
 }
 
 .motion-habitat-guide-manual-keys .motion-habitat-guide-key-grid {
-  grid-template-columns: repeat(3, 23px);
+  grid-template-columns: repeat(3, 24px);
   gap: 3px;
 }
 
 .motion-habitat-guide-manual-keys .motion-habitat-guide-key-grid kbd {
-  width: 23px;
-  height: 23px;
-  font-size: 8px;
+  width: 24px;
+  height: 24px;
+  font-size: 8.5px;
 }
 
 .motion-habitat-guide-path-separator {
   align-self: center;
-  color: rgba(239, 233, 219, 0.18);
+  color: rgba(239, 233, 219, 0.2);
   font-family: var(--font-mono);
-  font-size: 6px;
+  font-size: 6.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -335,10 +400,10 @@
   position: relative;
   display: grid;
   grid-template-columns: 42px 1fr;
-  gap: 8px;
+  gap: 9px;
   align-items: center;
-  width: min(100%, 160px);
-  padding: 8px;
+  width: min(100%, 166px);
+  padding: 9px;
   border: 1px solid rgba(167, 179, 95, 0.26);
   background: rgba(6, 8, 6, 0.86);
 }
@@ -363,7 +428,7 @@
 
 .motion-habitat-guide-station-demo strong {
   color: rgba(239, 233, 219, 0.72);
-  font-size: 6.5px;
+  font-size: 7px;
   font-weight: 400;
   letter-spacing: 0.08em;
 }
@@ -371,15 +436,16 @@
 .motion-habitat-guide-station-demo span {
   margin-top: 4px;
   color: rgba(167, 179, 95, 0.68);
-  font-size: 5.5px;
+  font-size: 6.25px;
   letter-spacing: 0.08em;
 }
 
-.motion-habitat-guide-dismiss {
-  margin: 12px 0 0;
-  color: rgba(239, 233, 219, 0.24);
+.motion-habitat-guide .motion-habitat-guide-dismiss {
+  margin: 14px 0 0;
+  color: rgba(239, 233, 219, 0.28);
   font-family: var(--font-mono);
-  font-size: 5.5px;
+  font-size: 6.25px;
+  line-height: 1.45;
   letter-spacing: 0.08em;
   text-align: center;
   text-transform: uppercase;
