@@ -37,6 +37,10 @@ function About() {
             <dt>Founder &amp; Owner</dt>
             <dd>ClickMate Rentals</dd>
           </div>
+          <div>
+            <dt>Education</dt>
+            <dd>Ateneo de Davao University · AB Psychology · 2026</dd>
+          </div>
         </dl>
       </div>
 
