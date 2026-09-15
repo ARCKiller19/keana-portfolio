@@ -214,19 +214,50 @@
     transform: scaleY(1);
   }
 
-  /* A restrained tracer gives the stationary contact system a slow orbital pulse. */
-  .footer .footer-links::before {
+  /* A visible but restrained signal bead and short trail travel around the orbit. */
+  .footer .footer-links::before,
+  .footer .footer-links::after {
     content: '';
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     inset: 112px;
-    border: 1px solid transparent;
-    border-top-color: rgba(205, 221, 111, 0.4);
-    border-right-color: rgba(205, 221, 111, 0.08);
     border-radius: 50%;
-    opacity: 0.72;
     pointer-events: none;
-    animation: contact-orbit-idle 28s linear infinite;
+    transform-origin: center;
+    animation: contact-orbit-idle 18s linear infinite;
+  }
+
+  .footer .footer-links::before {
+    background: conic-gradient(
+      from -16deg,
+      transparent 0deg 320deg,
+      rgba(205, 221, 111, 0.02) 326deg,
+      rgba(205, 221, 111, 0.16) 340deg,
+      rgba(205, 221, 111, 0.58) 354deg,
+      transparent 360deg
+    );
+    -webkit-mask: radial-gradient(
+      farthest-side,
+      transparent calc(100% - 3px),
+      #000 calc(100% - 2px)
+    );
+    mask: radial-gradient(
+      farthest-side,
+      transparent calc(100% - 3px),
+      #000 calc(100% - 2px)
+    );
+    opacity: 0.9;
+  }
+
+  .footer .footer-links::after {
+    background: radial-gradient(
+      circle 4px at 50% 0,
+      rgba(229, 241, 150, 0.98) 0 42%,
+      rgba(205, 221, 111, 0.76) 43% 62%,
+      rgba(167, 179, 95, 0.2) 70%,
+      transparent 76%
+    );
+    filter: drop-shadow(0 0 5px rgba(205, 221, 111, 0.52));
   }
 }
 
@@ -237,7 +268,8 @@
 }
 
 @media (min-width: 901px) and (prefers-reduced-motion: reduce) {
-  .footer .footer-links::before {
+  .footer .footer-links::before,
+  .footer .footer-links::after {
     animation: none;
     opacity: 0;
   }
