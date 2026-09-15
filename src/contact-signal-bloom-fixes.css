@@ -251,7 +251,7 @@
 
   .footer .footer-links::after {
     background: radial-gradient(
-      circle 4px at 50% 0,
+      circle 4px at 50% 4px,
       rgba(229, 241, 150, 0.98) 0 42%,
       rgba(205, 221, 111, 0.76) 43% 62%,
       rgba(167, 179, 95, 0.2) 70%,
