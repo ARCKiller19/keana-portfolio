@@ -9,6 +9,7 @@ const ZHANGI_FRAME_ROOT = "/images/playground/sprite-frames/zhang'i"
 const HANZO_FRAME_ROOT = '/images/playground/sprite-frames/hanzo/HANZO'
 const POPUP_FRAME_ROOT = "/images/playground/sprite-frames/zhang'i-pop-up/zhang'i POP UP"
 const WALK_FRAME_DURATION = 200
+const RUN_FRAME_DURATION = 105
 
 const characters = [
   {
@@ -134,6 +135,7 @@ function Playground() {
   const activeFrames = activeCharacter.frames[direction] ?? activeCharacter.frames.down
   const safeFrameIndex = frameIndex % activeFrames.length
   const activeFrame = activeFrames[safeFrameIndex]
+  const activeFrameDuration = pace === 'run' ? RUN_FRAME_DURATION : WALK_FRAME_DURATION
   const popupFrames = popupSequences[popupMode]
   const popupFrame = popupFrames[popupFrameIndex % popupFrames.length]
 
@@ -166,10 +168,10 @@ function Playground() {
 
     const timer = window.setInterval(() => {
       setFrameIndex((current) => (current + 1) % activeFrames.length)
-    }, WALK_FRAME_DURATION)
+    }, activeFrameDuration)
 
     return () => window.clearInterval(timer)
-  }, [character, direction, pace, reducedMotion, activeFrames.length])
+  }, [character, direction, pace, reducedMotion, activeFrames.length, activeFrameDuration])
 
   useEffect(() => {
     setPopupFrameIndex(0)
@@ -211,7 +213,7 @@ function Playground() {
             </div>
             <div>
               <dt>Preview</dt>
-              <dd>{pace === 'walk' ? 'Walk' : 'Run'} · {direction} · {safeFrameIndex + 1}/{activeFrames.length} · {WALK_FRAME_DURATION} ms</dd>
+              <dd>{pace === 'walk' ? 'Walk' : 'Run'} · {direction} · {safeFrameIndex + 1}/{activeFrames.length} · {activeFrameDuration} ms</dd>
             </div>
           </dl>
         </div>
@@ -221,7 +223,7 @@ function Playground() {
             <div className="playground-sprite-stage-head">
               <span>LIVE FRAME PREVIEW</span>
               <span>
-                {activeCharacter.label} · 16 × 16 · {String(activeFrames.length).padStart(2, '0')} FRAMES · {WALK_FRAME_DURATION} MS EACH
+                {activeCharacter.label} · 16 × 16 · {String(activeFrames.length).padStart(2, '0')} FRAMES · {activeFrameDuration} MS EACH
               </span>
             </div>
 
