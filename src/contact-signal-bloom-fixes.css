@@ -97,6 +97,7 @@
     border-color: rgba(205, 221, 111, 0.64);
   }
 
+  /* Keep the permanent spokes inside the orbit, connecting each satellite back to the core. */
   .footer .footer-links a::after {
     content: '';
     display: block;
@@ -113,9 +114,8 @@
     transform-origin: center;
   }
 
-  /* Spokes extend away from the core so each line follows the node's spatial direction. */
   .footer .footer-links a:nth-child(1)::after {
-    bottom: 100%;
+    top: 100%;
     left: 50%;
     width: 1px;
     height: 85px;
@@ -123,13 +123,13 @@
 
   .footer .footer-links a:nth-child(2)::after {
     top: 50%;
-    left: 100%;
+    right: 100%;
     width: 85px;
     height: 1px;
   }
 
   .footer .footer-links a:nth-child(3)::after {
-    top: 100%;
+    bottom: 100%;
     left: 50%;
     width: 1px;
     height: 85px;
@@ -137,7 +137,7 @@
 
   .footer .footer-links a:nth-child(4)::after {
     top: 50%;
-    right: 100%;
+    left: 100%;
     width: 85px;
     height: 1px;
   }
@@ -147,5 +147,98 @@
     background: rgba(205, 221, 111, 0.88);
     box-shadow: 0 0 10px rgba(167, 179, 95, 0.15);
     transform: none;
+  }
+
+  /* The hover accent hugs the outward-facing edge of each circular node. */
+  .footer .footer-links a::before {
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    width: auto;
+    height: auto;
+    opacity: 0;
+    background: var(--led);
+    box-shadow: 0 0 9px rgba(167, 179, 95, 0.48);
+  }
+
+  .footer .footer-links a:nth-child(1)::before {
+    top: -1px;
+    right: 22px;
+    left: 22px;
+    height: 1px;
+    transform: scaleX(0.35);
+    transform-origin: center;
+  }
+
+  .footer .footer-links a:nth-child(2)::before {
+    top: 22px;
+    right: -1px;
+    bottom: 22px;
+    width: 1px;
+    transform: scaleY(0.35);
+    transform-origin: center;
+  }
+
+  .footer .footer-links a:nth-child(3)::before {
+    right: 22px;
+    bottom: -1px;
+    left: 22px;
+    height: 1px;
+    transform: scaleX(0.35);
+    transform-origin: center;
+  }
+
+  .footer .footer-links a:nth-child(4)::before {
+    top: 22px;
+    bottom: 22px;
+    left: -1px;
+    width: 1px;
+    transform: scaleY(0.35);
+    transform-origin: center;
+  }
+
+  .footer .footer-links a:nth-child(1):hover::before,
+  .footer .footer-links a:nth-child(1):focus-visible::before,
+  .footer .footer-links a:nth-child(3):hover::before,
+  .footer .footer-links a:nth-child(3):focus-visible::before {
+    opacity: 0.88;
+    transform: scaleX(1);
+  }
+
+  .footer .footer-links a:nth-child(2):hover::before,
+  .footer .footer-links a:nth-child(2):focus-visible::before,
+  .footer .footer-links a:nth-child(4):hover::before,
+  .footer .footer-links a:nth-child(4):focus-visible::before {
+    opacity: 0.88;
+    transform: scaleY(1);
+  }
+
+  /* A restrained tracer gives the stationary contact system a slow orbital pulse. */
+  .footer .footer-links::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    inset: 112px;
+    border: 1px solid transparent;
+    border-top-color: rgba(205, 221, 111, 0.4);
+    border-right-color: rgba(205, 221, 111, 0.08);
+    border-radius: 50%;
+    opacity: 0.72;
+    pointer-events: none;
+    animation: contact-orbit-idle 28s linear infinite;
+  }
+}
+
+@keyframes contact-orbit-idle {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: reduce) {
+  .footer .footer-links::before {
+    animation: none;
+    opacity: 0;
   }
 }
