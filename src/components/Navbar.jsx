@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   getSectionActivationLine,
   handleSectionNavigation,
@@ -78,6 +78,11 @@ function NavIcon({ type }) {
 function Navbar() {
   const [activeSection, setActiveSection] = useState(null)
   const [isCompact, setIsCompact] = useState(false)
+  const [isMobileViewport, setIsMobileViewport] = useState(() =>
+    window.matchMedia('(max-width: 720px)').matches,
+  )
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const navRef = useRef(null)
   const [connectorProgress, setConnectorProgress] = useState(() =>
     navItems.slice(0, -1).map(() => 0),
   )
@@ -182,23 +187,122 @@ function Navbar() {
     }
   }, [])
 
+  useEffect(() => {
+    const mobileQuery = window.matchMedia('(max-width: 720px)')
+
+    const closeMobileMenuOutside = (event) => {
+      if (
+        mobileQuery.matches &&
+        isMobileMenuOpen &&
+        !navRef.current?.contains(event.target)
+      ) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    const closeMobileMenuWithKeyboard = (event) => {
+      if (mobileQuery.matches && isMobileMenuOpen && event.key === 'Escape') {
+        setIsMobileMenuOpen(false)
+        navRef.current?.querySelector('.mobile-menu-toggle')?.focus()
+      }
+    }
+
+    const closeMobileMenuAboveBreakpoint = (event) => {
+      setIsMobileViewport(event.matches)
+      if (!event.matches) setIsMobileMenuOpen(false)
+    }
+
+    document.addEventListener('pointerdown', closeMobileMenuOutside)
+    document.addEventListener('keydown', closeMobileMenuWithKeyboard)
+
+    if (mobileQuery.addEventListener) {
+      mobileQuery.addEventListener('change', closeMobileMenuAboveBreakpoint)
+    } else {
+      mobileQuery.addListener(closeMobileMenuAboveBreakpoint)
+    }
+
+    return () => {
+      document.removeEventListener('pointerdown', closeMobileMenuOutside)
+      document.removeEventListener('keydown', closeMobileMenuWithKeyboard)
+
+      if (mobileQuery.removeEventListener) {
+        mobileQuery.removeEventListener('change', closeMobileMenuAboveBreakpoint)
+      } else {
+        mobileQuery.removeListener(closeMobileMenuAboveBreakpoint)
+      }
+    }
+  }, [isMobileMenuOpen])
+
+  const handleNavigation = (event) => {
+    const mobileQuery = window.matchMedia('(max-width: 720px)')
+
+    if (!mobileQuery.matches || !isMobileMenuOpen) {
+      handleSectionNavigation(event)
+      return
+    }
+
+    event.preventDefault()
+    const target = event.currentTarget
+    setIsMobileMenuOpen(false)
+
+    window.requestAnimationFrame(() => {
+      navRef.current?.querySelector('.mobile-menu-toggle')?.focus({
+        preventScroll: true,
+      })
+      handleSectionNavigation({
+        currentTarget: target,
+        preventDefault() {},
+      })
+    })
+  }
+
+  const activeLabel =
+    navItems.find((item) => item.id === activeSection)?.label ?? 'Portfolio'
+
   return (
     <header
       className={`nav nav-panel ${isCompact ? 'is-compact' : ''}`}
       id="top"
+      ref={navRef}
+      data-mobile-open={isMobileMenuOpen ? 'true' : 'false'}
     >
-      <a className="nav-brand" href="#top" onClick={handleSectionNavigation}>
+      <a className="nav-brand" href="#top" onClick={handleNavigation}>
         <span className="nav-mark">KEANA</span>
         <span className="nav-star" aria-hidden="true">✦</span>
       </a>
 
-      <nav className="nav-links nav-tiles" aria-label="Primary">
+      {isMobileViewport && (
+        <>
+          <span className="mobile-nav-current" aria-hidden="true">
+            {activeLabel}
+          </span>
+
+          <button
+            className="mobile-menu-toggle"
+            type="button"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="primary-navigation"
+            onClick={() => setIsMobileMenuOpen((current) => !current)}
+          >
+            <span className="mobile-menu-toggle-icon" aria-hidden="true">
+              <NavIcon type="leaf" />
+            </span>
+            <span>{isMobileMenuOpen ? 'Close' : 'Index'}</span>
+          </button>
+        </>
+      )}
+
+      <nav
+        className="nav-links nav-tiles"
+        id="primary-navigation"
+        aria-label="Primary"
+      >
         {navItems.map((item, index) => (
           <span className="nav-path-stop" key={item.id}>
             <a
               className="nav-tile"
               href={`#${item.id}`}
-              onClick={handleSectionNavigation}
+              onClick={handleNavigation}
               aria-current={activeSection === item.id ? 'location' : undefined}
             >
               <span className="nav-tile-icon">

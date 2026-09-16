@@ -1,0 +1,192 @@
+/* Mobile-only portfolio index. Desktop and tablet retain the existing botanical path. */
+
+@media (max-width: 720px) {
+  .nav.nav-panel,
+  .nav.nav-panel.is-compact {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'brand current toggle'
+      'links links links';
+    align-items: center;
+    gap: 0 10px;
+    top: max(8px, env(safe-area-inset-top));
+    width: calc(100% - 16px);
+    min-height: 0;
+    margin-top: 8px;
+    padding: 7px 9px;
+    border-radius: 14px;
+  }
+
+  .nav-panel .nav-brand,
+  .nav.nav-panel.is-compact .nav-brand {
+    grid-area: brand;
+    min-width: 0;
+    padding: 9px 10px 8px;
+  }
+
+  .nav-panel .nav-mark {
+    font-size: 18px;
+  }
+
+  .nav-panel .nav-star {
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+  }
+
+  .nav-panel .nav-brand::before {
+    width: 29px;
+    height: 18px;
+  }
+
+  .nav-panel .nav-brand::after {
+    width: 25px;
+    height: 15px;
+  }
+
+  .mobile-nav-current {
+    grid-area: current;
+    min-width: 0;
+    overflow: hidden;
+    color: rgba(239, 233, 219, 0.58);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-align: right;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .mobile-menu-toggle {
+    grid-area: toggle;
+    display: inline-grid;
+    grid-template-columns: 19px auto;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 76px;
+    min-height: 44px;
+    padding: 0 10px;
+    border: 1px solid rgba(167, 179, 95, 0.3);
+    border-radius: 10px;
+    background: rgba(39, 54, 29, 0.3);
+    color: rgba(239, 233, 219, 0.84);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .mobile-menu-toggle-icon {
+    display: grid;
+    place-items: center;
+    width: 19px;
+    height: 19px;
+    color: var(--led);
+  }
+
+  .mobile-menu-toggle-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.15;
+  }
+
+  .nav-panel .nav-status {
+    display: none;
+  }
+
+  .nav-panel .nav-links.nav-tiles {
+    grid-area: links;
+    display: none;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-top: 7px;
+    padding: 7px 0 1px;
+    overflow: visible;
+    border-top: 1px solid rgba(239, 233, 219, 0.09);
+  }
+
+  .nav.nav-panel[data-mobile-open='true'] .nav-links.nav-tiles {
+    display: grid;
+  }
+
+  .nav-panel .nav-path-stop {
+    display: block;
+    min-width: 0;
+  }
+
+  .nav-panel .nav-tile {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    grid-template-rows: 1fr;
+    place-items: center start;
+    gap: 10px;
+    width: 100%;
+    min-height: 46px;
+    padding: 0 11px 0 7px;
+    border-bottom: 1px solid rgba(239, 233, 219, 0.07);
+    color: rgba(239, 233, 219, 0.68);
+  }
+
+  .nav-panel .nav-path-stop:last-child .nav-tile {
+    border-bottom: 0;
+  }
+
+  .nav-panel .nav-tile::before {
+    position: static;
+    grid-column: 3;
+    grid-row: 1;
+    width: 5px;
+    height: 5px;
+    justify-self: end;
+    border-color: rgba(167, 179, 95, 0.62);
+    transform: none;
+  }
+
+  .nav-panel .nav-tile[aria-current='location'] {
+    background: linear-gradient(
+      90deg,
+      rgba(167, 179, 95, 0.09),
+      rgba(167, 179, 95, 0.015)
+    );
+    color: var(--cream);
+  }
+
+  .nav-panel .nav-tile[aria-current='location']::before {
+    width: 7px;
+    height: 7px;
+    border-color: var(--led);
+    background: var(--led);
+  }
+
+  .nav-panel .nav-tile-icon,
+  .nav-panel .nav-tile:hover .nav-tile-icon,
+  .nav-panel .nav-tile:focus-visible .nav-tile-icon,
+  .nav-panel .nav-tile[aria-current='location'] .nav-tile-icon {
+    grid-column: 1;
+    grid-row: 1;
+    width: 27px;
+    height: 27px;
+    margin: 0;
+    transform: none;
+  }
+
+  .nav-panel .nav-tile-label {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-align: left;
+  }
+
+  .nav-panel .nav-connector {
+    display: none;
+  }
+}

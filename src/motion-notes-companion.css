@@ -2,7 +2,7 @@
   display: none;
 }
 
-@media (min-width: 720px) and (min-height: 650px) {
+@media (min-width: 721px) and (min-height: 650px) {
   .motion-notes-body {
     grid-template-columns: minmax(164px, 0.28fr) minmax(0, 1fr);
     gap: clamp(28px, 5vw, 64px);
@@ -126,7 +126,7 @@
   }
 }
 
-@media (min-width: 720px) and (max-width: 979px) and (min-height: 650px) {
+@media (min-width: 721px) and (max-width: 979px) and (min-height: 650px) {
   .motion-notes-body {
     gap: 28px;
   }
@@ -140,7 +140,7 @@
   }
 }
 
-@media (max-width: 719px), (max-height: 649px) {
+@media (max-width: 720px), (max-height: 649px) {
   .motion-notes-rail,
   .motion-notes-rail-sticky {
     display: contents;
