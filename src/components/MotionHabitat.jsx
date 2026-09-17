@@ -73,11 +73,12 @@ function HabitatVideoPlayer({ src, title }) {
 }
 
 function HabitatCutPlayer({ piece }) {
+  const alternateCuts = motionAlternateCuts[piece.id] ?? []
   const cuts = [
+    ...alternateCuts,
     { id: 'full', label: 'Full edit', src: piece.src },
-    ...(motionAlternateCuts[piece.id] ?? []),
   ]
-  const [activeCutId, setActiveCutId] = useState('full')
+  const [activeCutId, setActiveCutId] = useState(alternateCuts[0]?.id ?? 'full')
   const activeCut = cuts.find((cut) => cut.id === activeCutId) ?? cuts[0]
 
   return (
@@ -496,238 +497,155 @@ function MotionHabitat({ pieces, onOpenNotes }) {
 
   const closePanel = () => {
     const closingIndex = openIndexRef.current
-    if (closingIndex !== null) suppressedStationRef.current = closingIndex
-
     openIndexRef.current = null
+    targetRef.current = null
+    pressedKeysRef.current.clear()
+    suppressedStationRef.current = closingIndex
+
     setOpenIndex(null)
     setTargetedIndex(null)
-    setStatusMessage('Viewing panel closed. Continue exploring the Motion Habitat.')
+    setWalkingState(false)
+    setStatusMessage('Panel closed. Choose another signal station.')
 
-    if (!isCompact && !reducedMotion) {
-      window.requestAnimationFrame(() => {
-        worldRef.current?.focus({ preventScroll: true })
-      })
+    if (fallbackTimerRef.current) {
+      window.clearTimeout(fallbackTimerRef.current)
+      fallbackTimerRef.current = null
     }
   }
 
-  const paths = layout.stations.map((station, index) => {
-    const bendX = (station.x + layout.dock.x) / 2
-    const bendY = station.y < layout.dock.y ? station.y + 70 : station.y - 70
-
-    return {
-      index,
-      d: `M ${station.x} ${station.y} Q ${bendX} ${bendY} ${layout.dock.x} ${layout.dock.y}`,
-    }
-  })
-
   return (
-    <section
-      ref={roomRef}
+    <div
       className={`motion-habitat ${isOnline ? 'is-online' : ''} ${
-        reducedMotion ? 'is-reduced' : ''
-      } ${activePiece ? 'has-open-panel' : ''}`}
-      aria-label="Motion Habitat interactive project archive"
+        isCompact ? 'is-compact' : ''
+      }`}
+      ref={roomRef}
     >
-      <header className="motion-habitat-header">
-        <div>
-          <span className="motion-habitat-kicker">Motion Habitat · 03 Signal Stations</span>
-          <p>
-            {isCompact
-              ? reducedMotion
-                ? 'Tap a station to open its video below.'
-                : 'Tap a station and Keana will walk there. The selected video opens below.'
-              : 'A quiet cyber-botanical lab for Keana\'s motion work.'}
-          </p>
-        </div>
-        <span className="motion-habitat-system" aria-hidden="true">
-          GRID 07-B · SIGNAL READY
-        </span>
-      </header>
+      <div className="motion-habitat-status" aria-hidden="true">
+        <span>Motion habitat · 03 signal stations</span>
+        <span>Grid 07-B · {isOnline ? 'signal ready' : 'initializing'}</span>
+      </div>
 
       <div
-        ref={worldRef}
         className="motion-habitat-world"
+        ref={worldRef}
         tabIndex={isCompact || reducedMotion ? -1 : 0}
-        role="group"
-        aria-label={
-          reducedMotion
-            ? 'Choose a motion station to open its video.'
-            : isCompact
-              ? 'Tap a motion station to move Keana toward it and open its video below.'
-              : 'Use W A S D or arrow keys while this habitat is focused, or choose any station directly.'
-        }
+        aria-label="Interactive motion habitat. Use WASD or arrow keys to move, or choose a signal station."
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
         onBlur={handleWorldBlur}
-        onPointerDown={isCompact || reducedMotion ? undefined : handleWorldPointerDown}
+        onPointerDown={handleWorldPointerDown}
       >
         <div className="motion-habitat-grid" aria-hidden="true" />
+        <div className="motion-habitat-rail" aria-hidden="true" />
+        <div className="motion-habitat-dock" aria-hidden="true" />
 
-        <svg
-          className="motion-habitat-signals"
-          viewBox={`0 0 ${layout.width} ${layout.height}`}
-          preserveAspectRatio="none"
+        <div
+          className={`motion-habitat-character ${isWalking ? 'is-walking' : ''} is-facing-${facing}`}
+          ref={characterRef}
+          style={{
+            left: `${(layout.start.x / layout.width) * 100}%`,
+            top: `${(layout.start.y / layout.height) * 100}%`,
+          }}
           aria-hidden="true"
         >
-          {paths.map(({ index, d }) => (
-            <path
-              key={pieces[index].id}
-              className={`motion-habitat-signal ${
-                awakeIndex === index || targetedIndex === index || openIndex === index
-                  ? 'is-live'
-                  : ''
-              } ${openIndex === index ? 'is-open' : ''}`}
-              d={d}
-            />
-          ))}
-          <circle
-            className={`motion-habitat-dock ${activePiece ? 'is-live' : ''}`}
-            cx={layout.dock.x}
-            cy={layout.dock.y}
-            r="8"
-          />
-        </svg>
+          <span className="motion-character-head" />
+          <span className="motion-character-body" />
+          <span className="motion-character-leg motion-character-leg-left" />
+          <span className="motion-character-leg motion-character-leg-right" />
+        </div>
 
         {pieces.map((piece, index) => {
           const station = layout.stations[index]
           const meta = STATION_META[index]
-          const isAwake = awakeIndex === index
+          const isAwake = awakeIndex === index || openIndex === index
           const isTargeted = targetedIndex === index
-          const isOpen = openIndex === index
 
           return (
             <button
-              className={`motion-habitat-station station-${meta.slug} ${
+              className={`motion-habitat-station motion-habitat-station-${meta.accent} ${
                 isAwake ? 'is-awake' : ''
-              } ${isTargeted ? 'is-targeted' : ''} ${isOpen ? 'is-open' : ''}`}
+              } ${isTargeted ? 'is-targeted' : ''}`}
               type="button"
               key={piece.id}
               style={{
-                '--station-x': `${(station.x / layout.width) * 100}%`,
-                '--station-y': `${(station.y / layout.height) * 100}%`,
+                left: `${(station.x / layout.width) * 100}%`,
+                top: `${(station.y / layout.height) * 100}%`,
               }}
-              aria-pressed={isOpen}
-              aria-label={`Open ${piece.title}`}
               onClick={() => beginAutoWalk(index)}
+              aria-label={`Open ${piece.title}`}
             >
-              <span className="motion-habitat-station-number">{piece.number}</span>
-              <span className="motion-habitat-machine" aria-hidden="true">
-                <span className="motion-habitat-machine-screen" />
-                <span className="motion-habitat-machine-node" />
-                <span className={`motion-habitat-machine-accent accent-${meta.accent}`}>
-                  {meta.accent === 'chapters' && (
-                    <>
-                      <i className="chapter-red" />
-                      <i className="chapter-purple" />
-                      <i className="chapter-yellow" />
-                    </>
-                  )}
-                </span>
+              <span className="motion-station-index">0{index + 1}</span>
+              <span className="motion-station-preview" aria-hidden="true">
+                <span className="motion-station-preview-frame" />
               </span>
-              <span className="motion-habitat-station-copy">
-                <span>{meta.system}</span>
-                <strong>{piece.title}</strong>
-                <small>{piece.category}</small>
-                <em>
-                  {isOpen
-                    ? 'VIEWING PANEL OPEN'
-                    : isAwake
-                      ? 'SIGNAL DETECTED'
-                      : isTargeted
-                        ? 'APPROACHING'
-                        : isCompact
-                          ? reducedMotion
-                            ? 'TAP TO OPEN'
-                            : 'TAP TO EXPLORE'
-                          : 'DORMANT'}
-                </em>
-              </span>
+              <span className="motion-station-system">{meta.system}</span>
+              <span className="motion-station-title">{piece.title}</span>
+              <span className="motion-station-signal" aria-hidden="true" />
             </button>
           )
         })}
 
         <div
-          ref={characterRef}
-          className={`motion-habitat-character ${isWalking ? 'is-walking' : ''}`}
-          data-facing={facing}
-          aria-hidden="true"
+          className={`motion-habitat-panel ${activePiece ? 'is-open' : ''}`}
+          aria-hidden={!activePiece}
         >
-          <span className="motion-habitat-character-head" />
-          <span className="motion-habitat-character-body" />
-          <span className="motion-habitat-character-leg leg-one" />
-          <span className="motion-habitat-character-leg leg-two" />
-        </div>
-
-        {!isCompact && !reducedMotion && (
-          <div className="motion-habitat-controls" aria-hidden="true">
-            <span className="motion-habitat-keys">
-              <b>W</b>
-              <b>A</b>
-              <b>S</b>
-              <b>D</b>
-            </span>
-            <span>MOVE · ARROWS ALSO WORK</span>
-          </div>
-        )}
-
-        <div className="motion-habitat-coordinate" aria-hidden="true">
-          X 47.0 · Y 81.5 · NODE SCAN
-        </div>
-      </div>
-
-      {activePiece && (
-        <article
-          className={`motion-habitat-panel ${
-            activePiece.layout === 'portrait' ? 'is-portrait' : ''
-          } ${motionAlternateCuts[activePiece.id] ? 'has-cuts' : ''}`}
-          key={activePiece.id}
-          aria-label={`${activePiece.title} viewing panel`}
-        >
-          <header className="motion-habitat-panel-head">
-            <div>
-              <span>
-                SIGNAL {activePiece.number} · {activeMeta?.system}
-              </span>
-              <strong>{activePiece.title}</strong>
-            </div>
-            <button type="button" onClick={closePanel} aria-label="Close viewing panel">
-              Close <span aria-hidden="true">×</span>
-            </button>
-          </header>
-
-          <div className="motion-habitat-panel-body">
-            <div className="motion-screening-media motion-habitat-panel-media">
-              <HabitatCutPlayer key={activePiece.id} piece={activePiece} />
-            </div>
-
-            <div className="motion-habitat-panel-copy">
-              <span className="motion-habitat-panel-category">{activePiece.category}</span>
-              {activePiece.latest && activePiece.dateLabel && (
-                <span className="motion-habitat-panel-date">Latest work · {activePiece.dateLabel}</span>
-              )}
-              {activePiece.credit && (
-                <span className="motion-habitat-panel-credit">{activePiece.credit}</span>
-              )}
-              <p>{activePiece.reflection}</p>
-
-              {activePiece.creationNotes && (
-                <button
-                  className="motion-habitat-notes"
-                  type="button"
-                  onClick={() => onOpenNotes(activePiece)}
-                >
-                  Read creation notes <span aria-hidden="true">↗</span>
+          {activePiece && (
+            <>
+              <div className="motion-panel-head">
+                <div>
+                  <span>
+                    Signal 0{openIndex + 1} · {activeMeta.system}
+                  </span>
+                  <h3>{activePiece.title}</h3>
+                </div>
+                <button type="button" onClick={closePanel}>
+                  Close ×
                 </button>
-              )}
-            </div>
-          </div>
-        </article>
-      )}
+              </div>
 
-      <p className="motion-habitat-status" role="status" aria-live="polite">
-        {statusMessage}
-      </p>
-    </section>
+              <div className="motion-panel-body">
+                <div className="motion-panel-media">
+                  <HabitatCutPlayer piece={activePiece} />
+                </div>
+
+                <div className="motion-panel-story">
+                  <div className="motion-panel-meta">
+                    <span>{activePiece.category}</span>
+                    <span>Latest work · Sep 2026</span>
+                    <span>Filmed &amp; edited by Patricia Keana Roma</span>
+                  </div>
+                  <p>{activePiece.note}</p>
+                  <button
+                    className="motion-notes-button"
+                    type="button"
+                    onClick={() => onOpenNotes(activePiece)}
+                  >
+                    Read creation notes ↗
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className="motion-habitat-controls" aria-hidden="true">
+          <span>W</span>
+          <span>A</span>
+          <span>S</span>
+          <span>D</span>
+          <small>or</small>
+          <span>←</span>
+          <span>↓</span>
+          <span>↑</span>
+          <span>→</span>
+          <small>move · click station · auto-walk</small>
+        </div>
+
+        <p className="sr-only" aria-live="polite">
+          {statusMessage}
+        </p>
+      </div>
+    </div>
   )
 }
 
