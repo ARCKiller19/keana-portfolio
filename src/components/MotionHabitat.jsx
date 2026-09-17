@@ -73,11 +73,16 @@ function HabitatVideoPlayer({ src, title }) {
 }
 
 function HabitatCutPlayer({ piece }) {
-  const cuts = [
-    { id: 'full', label: 'Full edit', src: piece.src },
-    ...(motionAlternateCuts[piece.id] ?? []),
-  ]
-  const [activeCutId, setActiveCutId] = useState('full')
+  const alternateCuts = motionAlternateCuts[piece.id] ?? []
+  const fullCut = { id: 'full', label: 'Full edit', src: piece.src }
+  const roastShortCut =
+    piece.id === 'roast-live-action'
+      ? alternateCuts.find((cut) => cut.id === 'short')
+      : null
+  const cuts = roastShortCut
+    ? [roastShortCut, fullCut, ...alternateCuts.filter((cut) => cut.id !== 'short')]
+    : [fullCut, ...alternateCuts]
+  const [activeCutId, setActiveCutId] = useState(roastShortCut ? 'short' : 'full')
   const activeCut = cuts.find((cut) => cut.id === activeCutId) ?? cuts[0]
 
   return (
