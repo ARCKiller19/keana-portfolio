@@ -270,7 +270,7 @@
 .motion-habitat .motion-habitat-joystick {
   position: absolute;
   z-index: 19;
-  bottom: 34px;
+  bottom: 50px;
   left: calc(21% - 31px);
   width: 96px;
   height: 96px;
