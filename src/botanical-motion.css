@@ -467,10 +467,17 @@ body.botanical-intro-settling .nav-panel {
 }
 
 .scroll-stem-node.is-reached {
+  fill: rgba(167, 179, 95, 0.42);
+  stroke: rgba(205, 221, 111, 0.72);
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 3px rgba(167, 179, 95, 0.2));
+}
+
+.scroll-stem-node.is-current {
   fill: var(--led);
   stroke: var(--led);
-  transform: scale(1.22);
-  filter: drop-shadow(0 0 5px rgba(167, 179, 95, 0.42));
+  transform: scale(1.28);
+  filter: drop-shadow(0 0 6px rgba(167, 179, 95, 0.48));
   animation: stem-node-arrive 520ms var(--ease-editorial) both;
 }
 

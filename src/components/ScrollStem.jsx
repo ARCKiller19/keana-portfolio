@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
+import { getSectionActivationLine } from '../utils/sectionNavigation.js'
 
 const sectionIds = ['about', 'work', 'motion', 'playground', 'contact']
+const nodeProgress = [0.176, 0.349, 0.518, 0.699, 0.926]
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max)
@@ -27,22 +29,86 @@ function ScrollStem({ active }) {
     const updateStem = () => {
       frameId = null
 
-      const scrollRange = Math.max(
-        document.documentElement.scrollHeight - window.innerHeight,
-        1,
+      const sections = sectionIds
+        .map((id) => document.getElementById(id))
+        .filter(Boolean)
+
+      if (!sections.length) return
+
+      const scrollY = window.scrollY
+      const scrollHeight = document.documentElement.scrollHeight
+      const scrollRange = Math.max(scrollHeight - window.innerHeight, 1)
+      const activationLine = Math.max(
+        getSectionActivationLine() + 24,
+        window.innerHeight * 0.42,
       )
-      const progress = clamp(window.scrollY / scrollRange, 0, 1)
+      const atPageEnd =
+        scrollY + window.innerHeight >= scrollHeight - 2
 
-      stem.style.setProperty('--stem-progress', progress.toFixed(4))
+      const activationScrolls = sections.map((section) =>
+        Math.max(
+          0,
+          scrollY + section.getBoundingClientRect().top - activationLine,
+        ),
+      )
 
-      sectionIds.forEach((id, index) => {
-        const section = document.getElementById(id)
-        const node = nodes[index]
-        if (!section || !node) return
+      let currentIndex = -1
 
-        const threshold = clamp(section.offsetTop / scrollRange - 0.025, 0, 1)
-        node.classList.toggle('is-reached', progress >= threshold)
+      activationScrolls.forEach((activationScroll, index) => {
+        if (scrollY + 1 >= activationScroll) currentIndex = index
       })
+
+      if (atPageEnd) currentIndex = sections.length - 1
+
+      nodes.forEach((node, index) => {
+        const isReached = index <= currentIndex
+        const isCurrent = index === currentIndex
+
+        node.classList.toggle('is-reached', isReached)
+        node.classList.toggle('is-current', isCurrent)
+      })
+
+      let progress = 0
+
+      if (currentIndex < 0) {
+        const firstActivation = Math.max(activationScrolls[0] ?? scrollRange, 1)
+        progress =
+          nodeProgress[0] * clamp(scrollY / firstActivation, 0, 1)
+      } else if (currentIndex >= sections.length - 1) {
+        const lastIndex = sections.length - 1
+        const lastActivation = activationScrolls[lastIndex] ?? scrollY
+        const remaining = Math.max(scrollRange - lastActivation, 1)
+        const localProgress = clamp(
+          (scrollY - lastActivation) / remaining,
+          0,
+          1,
+        )
+
+        progress =
+          nodeProgress[lastIndex] +
+          (1 - nodeProgress[lastIndex]) * localProgress
+      } else {
+        const startScroll = activationScrolls[currentIndex]
+        const endScroll = activationScrolls[currentIndex + 1]
+        const span = Math.max(endScroll - startScroll, 1)
+        const localProgress = clamp(
+          (scrollY - startScroll) / span,
+          0,
+          1,
+        )
+
+        progress =
+          nodeProgress[currentIndex] +
+          (nodeProgress[currentIndex + 1] - nodeProgress[currentIndex]) *
+            localProgress
+      }
+
+      if (atPageEnd) progress = 1
+
+      stem.style.setProperty(
+        '--stem-progress',
+        clamp(progress, 0, 1).toFixed(4),
+      )
     }
 
     const requestStemUpdate = () => {
