@@ -452,12 +452,25 @@ function MotionHabitat({ pieces, onOpenNotes }) {
 
       let nearestIndex = -1
       let nearestDistance = Number.POSITIVE_INFINITY
+      let nearestSignalIndex = -1
+      let nearestSignalDistance = Number.POSITIVE_INFINITY
 
       activeLayout.stations.forEach((station, index) => {
         const stationDistance = distance(next, station)
         if (stationDistance < nearestDistance) {
           nearestDistance = stationDistance
           nearestIndex = index
+        }
+
+        const approachDistance = distance(next, {
+          x: station.standX,
+          y: station.standY,
+        })
+        const signalDistance = Math.min(stationDistance, approachDistance)
+
+        if (signalDistance < nearestSignalDistance) {
+          nearestSignalDistance = signalDistance
+          nearestSignalIndex = index
         }
       })
 
@@ -468,7 +481,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         }
       }
 
-      const nextAwake = nearestDistance <= WAKE_RADIUS ? nearestIndex : null
+      const nextAwake =
+        nearestSignalDistance <= WAKE_RADIUS ? nearestSignalIndex : null
       if (awakeIndexRef.current !== nextAwake) {
         awakeIndexRef.current = nextAwake
         setAwakeIndex(nextAwake)
