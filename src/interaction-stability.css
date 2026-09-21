@@ -25,6 +25,40 @@
   }
 }
 
+/* The signal owns KEANA's arm direction. The arm anchors to the torso side
+   nearest the active station and rotates toward the same point as the energy line. */
+.motion-habitat .motion-habitat-character.has-station-energy[data-energy-side='right'] .motion-habitat-character-body::after {
+  right: -5px;
+  left: auto;
+  transform-origin: left center;
+  transform: rotate(var(--energy-arm-rotation, 22deg));
+}
+
+.motion-habitat .motion-habitat-character.has-station-energy[data-energy-side='left'] .motion-habitat-character-body::after {
+  right: auto;
+  left: -5px;
+  transform-origin: right center;
+  transform: rotate(var(--energy-arm-rotation, -22deg));
+}
+
+/* Side-facing seated poses have stronger legacy selectors, so repeat the live
+   signal rule at matching specificity. Up/down remain hidden by their seat rules. */
+.motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched.has-station-energy[data-energy-side='right'] .motion-habitat-character-body::after {
+  top: 5px;
+  right: -5px;
+  left: auto;
+  transform-origin: left center;
+  transform: rotate(var(--energy-arm-rotation, 32deg));
+}
+
+.motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched.has-station-energy[data-energy-side='left'] .motion-habitat-character-body::after {
+  top: 5px;
+  right: auto;
+  left: -5px;
+  transform-origin: right center;
+  transform: rotate(var(--energy-arm-rotation, -32deg));
+}
+
 /* Selected Work should remain spatially stable while a specimen is inspected. */
 .specimen-card,
 .specimen-card-left.is-selected,
