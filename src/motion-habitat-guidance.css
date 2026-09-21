@@ -270,10 +270,11 @@
 .motion-habitat .motion-habitat-joystick {
   position: absolute;
   z-index: 19;
-  bottom: 18px;
-  left: 18px;
-  width: 104px;
-  height: 104px;
+  bottom: 14px;
+  left: 21%;
+  width: 96px;
+  height: 96px;
+  transform: translateX(-50%);
   border: 1px solid rgba(205, 221, 111, 0.2);
   border-radius: 50%;
   background:
@@ -360,10 +361,6 @@
     min-height: 32px;
   }
 
-  .motion-habitat .motion-habitat-joystick {
-    width: 96px;
-    height: 96px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -138,7 +138,7 @@ function createGuide(world) {
   const joystickCopy = document.createElement('span')
   joystickCopy.className = 'motion-habitat-guide-path-copy'
   joystickCopy.textContent =
-    'Toggle JOYSTICK at the top right beside SIGNAL READY, then drag the pad to move.'
+    'Toggle JOYSTICK at the top right beside SIGNAL READY. The pad appears below the lower-left station.'
 
   joystickPath.append(joystickTitle, joystickDemo, joystickCopy)
   paths.append(
