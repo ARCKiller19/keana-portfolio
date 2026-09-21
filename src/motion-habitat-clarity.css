@@ -400,7 +400,7 @@
 /* ---------- Clearer two-path onboarding ---------- */
 
 .motion-habitat-guide {
-  width: min(520px, calc(100% - 48px));
+  width: min(760px, calc(100% - 48px));
   padding: 22px 24px 20px;
 }
 
@@ -423,8 +423,11 @@
 
 .motion-habitat-guide-paths {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  gap: 16px;
+  grid-template-columns:
+    minmax(0, 1fr) auto
+    minmax(0, 1fr) auto
+    minmax(0, 1fr);
+  gap: 12px;
   align-items: stretch;
   width: 100%;
 }
@@ -529,6 +532,66 @@
   letter-spacing: 0.08em;
 }
 
+.motion-habitat-guide-joystick-demo {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+}
+
+.motion-habitat-guide-joystick-toggle-demo {
+  padding: 6px 7px;
+  border: 1px solid rgba(205, 221, 111, 0.3);
+  background: rgba(7, 9, 7, 0.9);
+  color: rgba(239, 233, 219, 0.66);
+  font-family: var(--font-mono);
+  font-size: 6.25px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.motion-habitat-guide-joystick-pad-demo {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(205, 221, 111, 0.22);
+  border-radius: 50%;
+  background: rgba(167, 179, 95, 0.035);
+}
+
+.motion-habitat-guide-joystick-pad-demo::before,
+.motion-habitat-guide-joystick-pad-demo::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: rgba(167, 179, 95, 0.1);
+  transform: translate(-50%, -50%);
+}
+
+.motion-habitat-guide-joystick-pad-demo::before {
+  width: 26px;
+  height: 1px;
+}
+
+.motion-habitat-guide-joystick-pad-demo::after {
+  width: 1px;
+  height: 26px;
+}
+
+.motion-habitat-guide-joystick-pad-demo i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  border: 1px solid rgba(205, 221, 111, 0.42);
+  border-radius: 50%;
+  background: rgba(23, 29, 18, 0.96);
+  transform: translate(-50%, -50%);
+}
+
 .motion-habitat-guide .motion-habitat-guide-dismiss {
   margin: 14px 0 0;
   color: rgba(239, 233, 219, 0.28);
@@ -538,6 +601,25 @@
   letter-spacing: 0.08em;
   text-align: center;
   text-transform: uppercase;
+}
+
+@media (min-width: 721px) and (max-width: 860px) {
+  .motion-habitat-guide {
+    width: min(680px, calc(100% - 32px));
+    padding-inline: 16px;
+  }
+
+  .motion-habitat-guide-paths {
+    gap: 8px;
+  }
+
+  .motion-habitat-guide-path {
+    padding-inline: 9px;
+  }
+
+  .motion-habitat-guide-joystick-demo {
+    gap: 7px;
+  }
 }
 
 @media (min-width: 721px) {

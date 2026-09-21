@@ -109,7 +109,45 @@ function createGuide(world) {
   stationCopy.textContent = 'The visitor will auto-walk there and open the work.'
 
   stationPath.append(stationTitle, stationDemo, stationCopy)
-  paths.append(manualPath, separator, stationPath)
+
+  const joystickSeparator = document.createElement('span')
+  joystickSeparator.className = 'motion-habitat-guide-path-separator'
+  joystickSeparator.textContent = 'or'
+
+  const joystickPath = document.createElement('div')
+  joystickPath.className = 'motion-habitat-guide-path is-joystick'
+
+  const joystickTitle = document.createElement('span')
+  joystickTitle.className = 'motion-habitat-guide-path-title'
+  joystickTitle.textContent = 'Use joystick'
+
+  const joystickDemo = document.createElement('div')
+  joystickDemo.className = 'motion-habitat-guide-joystick-demo'
+
+  const joystickToggle = document.createElement('span')
+  joystickToggle.className = 'motion-habitat-guide-joystick-toggle-demo'
+  joystickToggle.textContent = '◉ JOYSTICK'
+
+  const joystickPad = document.createElement('span')
+  joystickPad.className = 'motion-habitat-guide-joystick-pad-demo'
+  const joystickKnob = document.createElement('i')
+  joystickPad.appendChild(joystickKnob)
+
+  joystickDemo.append(joystickToggle, joystickPad)
+
+  const joystickCopy = document.createElement('span')
+  joystickCopy.className = 'motion-habitat-guide-path-copy'
+  joystickCopy.textContent =
+    'Toggle JOYSTICK beside SIGNAL READY, then drag the pad to move.'
+
+  joystickPath.append(joystickTitle, joystickDemo, joystickCopy)
+  paths.append(
+    manualPath,
+    separator,
+    stationPath,
+    joystickSeparator,
+    joystickPath,
+  )
 
   const dismiss = document.createElement('p')
   dismiss.className = 'motion-habitat-guide-dismiss'

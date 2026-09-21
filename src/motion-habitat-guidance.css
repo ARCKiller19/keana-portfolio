@@ -286,6 +286,19 @@
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  opacity: 0.78;
+  transition:
+    opacity 220ms var(--ease-editorial),
+    filter 220ms var(--ease-editorial);
+}
+
+.motion-habitat .motion-habitat-joystick:hover {
+  opacity: 0.94;
+}
+
+.motion-habitat .motion-habitat-joystick.is-engaged {
+  opacity: 0.24;
+  filter: saturate(0.72);
 }
 
 .motion-habitat .motion-habitat-joystick::before,
@@ -354,7 +367,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .motion-habitat-joystick-toggle {
+  .motion-habitat-joystick-toggle,
+  .motion-habitat .motion-habitat-joystick {
     transition: none !important;
   }
 }

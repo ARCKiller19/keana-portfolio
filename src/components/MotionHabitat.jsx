@@ -282,6 +282,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     joystickPointerRef.current = null
     joystickVectorRef.current = { x: 0, y: 0 }
 
+    joystickPadRef.current?.classList.remove('is-engaged')
+
     const knob = joystickKnobRef.current
     if (knob) knob.style.transform = 'translate(-50%, -50%)'
   }, [])
@@ -724,6 +726,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     }
 
     joystickPointerRef.current = event.pointerId
+    event.currentTarget.classList.add('is-engaged')
     event.currentTarget.setPointerCapture?.(event.pointerId)
     updateJoystick(event)
     worldRef.current?.focus({ preventScroll: true })
