@@ -2,6 +2,16 @@ const compactQuery = window.matchMedia('(max-width: 720px)')
 const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
 
 const modifierKeys = new Set(['Shift', 'Control', 'Alt', 'Meta', 'AltGraph', 'OS'])
+const movementKeys = new Set([
+  'w',
+  'a',
+  's',
+  'd',
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+])
 
 let dismissed = false
 let installed = false
@@ -145,7 +155,11 @@ function hideGuide() {
 }
 
 function handlePointerDown() {
+  const key = event.key.length === 1 ? event.key.toLowerCase() : event.key
+  if (movementKeys.has(key)) event.preventDefault()
+
   hideGuide()
+  activeWorld?.focus({ preventScroll: true })
 }
 
 function handleKeyDown(event) {

@@ -1,21 +1,35 @@
 /* Motion Habitat onboarding, station identity, character scale, and deployed-control polish. */
 
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('/fonts/Press_Start_2P/PressStart2P-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 /* ---------- First-entry control guide ---------- */
 
 .motion-habitat-guide-start {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 24px);
   display: block;
-  margin: 0 0 12px;
+  width: max-content;
+  max-width: calc(100vw - 48px);
   color: rgba(239, 233, 219, 0.98);
-  font-family: var(--font-mono);
-  font-size: clamp(26px, 3vw, 36px);
+  font-family: 'Press Start 2P', var(--font-mono);
+  font-size: clamp(22px, 2.7vw, 34px);
   font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0.15em;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
   text-align: center;
   text-transform: uppercase;
   text-shadow:
     0 0 14px rgba(239, 233, 219, 0.055),
     0 0 26px rgba(167, 179, 95, 0.075);
+  transform: translateX(-50%);
+  white-space: nowrap;
   animation: habitat-guide-start-breathe 2.6s ease-in-out infinite;
 }
 
@@ -269,36 +283,36 @@
   text-transform: uppercase;
 }
 
-/* Roast — field monitor / recorder. */
+/* Roast — blue field monitor / recorder. */
 .motion-habitat .station-roast {
-  border-left-color: rgba(188, 150, 78, 0.42);
-  box-shadow: inset 3px 0 0 rgba(188, 150, 78, 0.12);
+  border-left-color: rgba(93, 156, 201, 0.56);
+  box-shadow: inset 3px 0 0 rgba(93, 156, 201, 0.16);
 }
 
 .motion-habitat .station-roast::before {
   content: 'FIELD RECORDER';
-  color: rgba(205, 176, 108, 0.6);
+  color: rgba(145, 195, 229, 0.72);
 }
 
 .motion-habitat .station-roast .motion-habitat-machine {
-  border-color: rgba(188, 150, 78, 0.24);
+  border-color: rgba(93, 156, 201, 0.34);
 }
 
 .motion-habitat .station-roast .motion-habitat-machine-screen {
-  border-color: rgba(188, 150, 78, 0.3);
+  border-color: rgba(93, 156, 201, 0.42);
   background:
-    linear-gradient(90deg, transparent 49%, rgba(188, 150, 78, 0.15) 50%, transparent 51%),
-    linear-gradient(transparent 49%, rgba(188, 150, 78, 0.12) 50%, transparent 51%),
-    rgba(188, 150, 78, 0.025);
+    linear-gradient(90deg, transparent 49%, rgba(93, 156, 201, 0.18) 50%, transparent 51%),
+    linear-gradient(transparent 49%, rgba(93, 156, 201, 0.15) 50%, transparent 51%),
+    rgba(93, 156, 201, 0.03);
 }
 
 .motion-habitat .station-roast .motion-habitat-machine-screen::before {
   content: '';
   position: absolute;
   inset: 7px;
-  border: 1px solid rgba(188, 150, 78, 0.22);
+  border: 1px solid rgba(93, 156, 201, 0.3);
   clip-path: polygon(0 0, 24% 0, 24% 2px, 2px 2px, 2px 24%, 0 24%, 0 0, 100% 0, 100% 24%, calc(100% - 2px) 24%, calc(100% - 2px) 2px, 76% 2px, 76% 0, 100% 0, 100% 100%, 76% 100%, 76% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 76%, 100% 76%, 100% 100%, 0 100%, 0 76%, 2px 76%, 2px calc(100% - 2px), 24% calc(100% - 2px), 24% 100%, 0 100%);
-  background: rgba(188, 150, 78, 0.16);
+  background: rgba(93, 156, 201, 0.18);
 }
 
 .motion-habitat .station-roast .motion-habitat-machine-screen::after {
@@ -306,41 +320,41 @@
   position: absolute;
   top: 4px;
   right: 5px;
-  color: rgba(205, 176, 108, 0.72);
+  color: rgba(145, 195, 229, 0.84);
   font-family: var(--font-mono);
   font-size: 4.5px;
   letter-spacing: 0.08em;
 }
 
-/* Kove — ambient venue monitor. */
+/* Kove — orange ambient venue monitor. */
 .motion-habitat .station-kove {
-  border-top-color: rgba(190, 164, 100, 0.46);
-  box-shadow: inset 0 3px 0 rgba(190, 164, 100, 0.11);
+  border-top-color: rgba(214, 139, 66, 0.58);
+  box-shadow: inset 0 3px 0 rgba(214, 139, 66, 0.16);
 }
 
 .motion-habitat .station-kove::before {
   content: 'VENUE MONITOR';
-  color: rgba(222, 198, 132, 0.66);
+  color: rgba(234, 174, 102, 0.76);
 }
 
 .motion-habitat .station-kove .motion-habitat-machine {
-  border-color: rgba(190, 164, 100, 0.32);
+  border-color: rgba(214, 139, 66, 0.38);
 }
 
 .motion-habitat .station-kove .motion-habitat-machine-screen {
-  border-color: rgba(190, 164, 100, 0.34);
+  border-color: rgba(214, 139, 66, 0.44);
   background:
-    linear-gradient(180deg, rgba(190, 164, 100, 0.07), transparent 56%),
-    linear-gradient(90deg, transparent 47%, rgba(222, 198, 132, 0.12) 48% 52%, transparent 53%),
-    rgba(190, 164, 100, 0.025);
+    linear-gradient(180deg, rgba(214, 139, 66, 0.09), transparent 56%),
+    linear-gradient(90deg, transparent 47%, rgba(234, 174, 102, 0.15) 48% 52%, transparent 53%),
+    rgba(214, 139, 66, 0.03);
 }
 
 .motion-habitat .station-kove .motion-habitat-machine-screen::before {
   content: '';
   position: absolute;
   inset: 8px;
-  border: 1px solid rgba(190, 164, 100, 0.2);
-  box-shadow: inset 0 0 12px rgba(190, 164, 100, 0.035);
+  border: 1px solid rgba(214, 139, 66, 0.28);
+  box-shadow: inset 0 0 12px rgba(214, 139, 66, 0.05);
 }
 
 .motion-habitat .station-kove .motion-habitat-machine-screen::after {
@@ -348,7 +362,7 @@
   position: absolute;
   right: 6px;
   bottom: 5px;
-  color: rgba(222, 198, 132, 0.72);
+  color: rgba(234, 174, 102, 0.86);
   font-family: var(--font-mono);
   font-size: 4.5px;
   letter-spacing: 0.1em;
@@ -357,17 +371,17 @@
 .motion-habitat .station-kove .accent-ambient {
   width: 30px;
   height: 8px;
-  opacity: 0.78;
+  opacity: 0.82;
   background:
     linear-gradient(
       90deg,
-      rgba(222, 198, 132, 0.68) 0 4px,
+      rgba(234, 174, 102, 0.8) 0 4px,
       transparent 4px 7px,
-      rgba(190, 164, 100, 0.42) 7px 13px,
+      rgba(214, 139, 66, 0.54) 7px 13px,
       transparent 13px 16px,
-      rgba(222, 198, 132, 0.58) 16px 22px,
+      rgba(234, 174, 102, 0.7) 16px 22px,
       transparent 22px 25px,
-      rgba(190, 164, 100, 0.34) 25px 30px
+      rgba(214, 139, 66, 0.44) 25px 30px
     );
 }
 

@@ -58,7 +58,7 @@
   top: -8px;
   right: 9px;
   padding: 3px 6px 2px;
-  border: 1px solid rgba(188, 150, 78, 0.3);
+  border: 1px solid rgba(93, 156, 201, 0.34);
   background: #070907;
   color: rgba(214, 185, 116, 0.82);
   font-family: var(--font-mono);
@@ -73,8 +73,8 @@
 .motion-habitat .station-roast:focus-visible::after,
 .motion-habitat .station-roast.is-awake::after,
 .motion-habitat .station-roast.is-open::after {
-  border-color: rgba(214, 185, 116, 0.54);
-  color: rgba(239, 216, 160, 0.98);
+  border-color: rgba(145, 195, 229, 0.58);
+  color: rgba(187, 220, 243, 0.98);
 }
 
 @media (max-width: 720px) {
