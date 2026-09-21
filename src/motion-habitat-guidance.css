@@ -552,15 +552,16 @@
 /* Proximity energy: the nearest station sends a restrained electric signal to KEANA. */
 .motion-habitat .motion-habitat-energy {
   fill: none;
-  stroke: rgba(var(--energy-rgb), 0.82);
-  stroke-width: 1.35;
+  stroke: rgba(var(--energy-rgb), 0.94);
+  stroke-width: 1.45;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-dasharray: 3 5;
   vector-effect: non-scaling-stroke;
   pointer-events: none;
   opacity: 0;
-  filter: drop-shadow(0 0 3px rgba(var(--energy-rgb), 0.42));
+  filter:
+    drop-shadow(0 0 2px rgba(var(--energy-rgb), 0.78))
+    drop-shadow(0 0 7px rgba(var(--energy-rgb), 0.38));
   transition:
     opacity 150ms var(--ease-editorial),
     stroke 180ms var(--ease-editorial),
@@ -568,10 +569,8 @@
 }
 
 .motion-habitat .motion-habitat-energy.is-live {
-  opacity: 0.9;
-  animation:
-    habitat-energy-flow 620ms linear infinite,
-    habitat-energy-flicker 1.15s steps(2, end) infinite;
+  opacity: 0.96;
+  animation: habitat-energy-flicker 900ms steps(2, end) infinite;
 }
 
 .motion-habitat .motion-habitat-character.has-station-energy .motion-habitat-character-body::after {
@@ -580,12 +579,6 @@
     0 0 5px rgba(var(--energy-rgb), 0.42),
     0 0 10px rgba(var(--energy-rgb), 0.16);
   animation: habitat-hand-charge 860ms ease-in-out infinite alternate;
-}
-
-@keyframes habitat-energy-flow {
-  to {
-    stroke-dashoffset: -32;
-  }
 }
 
 @keyframes habitat-energy-flicker {
@@ -677,18 +670,23 @@
 }
 
 .motion-habitat .motion-habitat-character.is-center-perched .motion-habitat-character-leg {
-  top: 23px;
-  height: 6px;
   animation: none;
 }
 
-.motion-habitat .motion-habitat-character.is-center-perched .motion-habitat-character-leg.leg-one,
-.motion-habitat .motion-habitat-character.is-center-perched .motion-habitat-character-leg.leg-two {
+.motion-habitat .motion-habitat-character.is-center-perched .motion-habitat-character-leg.leg-one {
+  top: 23px;
+  left: 8px;
+  width: 2px;
+  height: 8px;
   transform: none;
 }
 
+.motion-habitat .motion-habitat-character.is-center-perched .motion-habitat-character-leg.leg-two {
+  display: none;
+}
+
 /* Once onboarding is gone, the center perch follows KEANA's actual movement
-   direction. Side-facing sits use two short horizontal leg lines extending toward the
+   direction. Side-facing sits use one joined horizontal leg line extending toward the
    facing side; there is no head projection, so the profile stays clean. */
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='right'] .motion-habitat-character-head {
   left: 57%;
@@ -707,21 +705,16 @@
 }
 
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='right'] .motion-habitat-character-leg.leg-one {
-  top: 23px;
+  top: 24px;
   right: auto;
   left: 9px;
-  width: 7px;
-  height: 1px;
+  width: 10px;
+  height: 2px;
   transform: none;
 }
 
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='right'] .motion-habitat-character-leg.leg-two {
-  top: 26px;
-  right: auto;
-  left: 9px;
-  width: 6px;
-  height: 1px;
-  transform: none;
+  display: none;
 }
 
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='left'] .motion-habitat-character-head {
@@ -741,26 +734,32 @@
 }
 
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='left'] .motion-habitat-character-leg.leg-one {
-  top: 23px;
+  top: 24px;
   right: 9px;
   left: auto;
-  width: 7px;
-  height: 1px;
+  width: 10px;
+  height: 2px;
   transform: none;
 }
 
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='left'] .motion-habitat-character-leg.leg-two {
-  top: 26px;
-  right: 9px;
-  left: auto;
-  width: 6px;
-  height: 1px;
-  transform: none;
+  display: none;
 }
 
 /* When moving upward across the cushion, the body is viewed from behind/top-down.
    Hiding the legs keeps the seated silhouette clean instead of implying a front view. */
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='up'] .motion-habitat-character-leg {
+  display: none;
+}
+
+.motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='down'] .motion-habitat-character-leg.leg-one {
+  top: 23px;
+  left: 8px;
+  width: 2px;
+  height: 8px;
+}
+
+.motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='down'] .motion-habitat-character-leg.leg-two {
   display: none;
 }
 

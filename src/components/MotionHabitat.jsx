@@ -41,7 +41,6 @@ const AUTO_SPEED = 620
 const WAKE_RADIUS = 145
 const ACTIVATE_RADIUS = 82
 const CENTER_PERCH_RADIUS = 34
-const ENERGY_RADIUS = 230
 
 function useMediaQuery(query) {
   const [matches, setMatches] = useState(false)
@@ -469,8 +468,13 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         }
       }
 
-      const nextEnergyIndex =
-        !isCompact && nearestDistance <= ENERGY_RADIUS ? nearestIndex : null
+      const nextAwake = nearestDistance <= WAKE_RADIUS ? nearestIndex : null
+      if (awakeIndexRef.current !== nextAwake) {
+        awakeIndexRef.current = nextAwake
+        setAwakeIndex(nextAwake)
+      }
+
+      const nextEnergyIndex = !isCompact ? nextAwake : null
       setEnergyIndexState(nextEnergyIndex)
 
       const energyPath = energyPathRef.current
@@ -484,12 +488,6 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         energyPath.setAttribute('d', createEnergyPath(energyStation, hand))
       } else {
         energyPath?.removeAttribute('d')
-      }
-
-      const nextAwake = nearestDistance <= WAKE_RADIUS ? nearestIndex : null
-      if (awakeIndexRef.current !== nextAwake) {
-        awakeIndexRef.current = nextAwake
-        setAwakeIndex(nextAwake)
       }
 
       if (
