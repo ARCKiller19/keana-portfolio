@@ -31,7 +31,7 @@ const COMPACT_LAYOUT = {
 
 const STATION_META = [
   { slug: 'roast', system: 'LIVE / CAFE', accent: 'warm', rgb: '93, 156, 201' },
-  { slug: 'kove', system: 'LIVE / VENUE', accent: 'ambient', rgb: '214, 139, 66' },
+  { slug: 'kove', system: 'LIVE / CAFE / FRIENDS', accent: 'ambient', rgb: '214, 139, 66' },
   { slug: 'special', system: 'MOTION / RHYTHM', accent: 'pulse', rgb: '167, 179, 95' },
   { slug: 'first-love', system: 'MEMORY / COLOR', accent: 'chapters', rgb: '148, 113, 157' },
 ]
