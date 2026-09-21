@@ -623,7 +623,23 @@ function MotionHabitat({ pieces, onOpenNotes }) {
             >
               <span className="motion-habitat-station-number">{piece.number}</span>
               <span className="motion-habitat-machine" aria-hidden="true">
-                <span className="motion-habitat-machine-screen" />
+                <span className="motion-habitat-machine-screen">
+                  {meta.accent === 'chapters' && (
+                    <span className="motion-habitat-memory-slides">
+                      {['red', 'purple', 'yellow', 'red', 'purple', 'yellow'].map(
+                        (chapter, slideIndex) => (
+                          <span
+                            className={`motion-habitat-memory-slide chapter-${chapter}`}
+                            key={`${chapter}-${slideIndex}`}
+                          >
+                            <b>{chapter === 'red' ? 'R' : chapter === 'purple' ? 'P' : 'Y'}</b>
+                            <i />
+                          </span>
+                        ),
+                      )}
+                    </span>
+                  )}
+                </span>
                 <span className="motion-habitat-machine-node" />
                 <span className={`motion-habitat-machine-accent accent-${meta.accent}`}>
                   {meta.accent === 'chapters' && (

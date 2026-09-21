@@ -314,13 +314,10 @@
   box-shadow: 0 0 9px currentColor;
 }
 
-/* First Love: chapter colors advance like presentation slides moving to the right. */
-.motion-habitat .station-first-love:hover .motion-habitat-machine-screen::before,
-.motion-habitat .station-first-love:focus-visible .motion-habitat-machine-screen::before,
-.motion-habitat .station-first-love.is-open .motion-habitat-machine-screen::before,
-.motion-habitat .station-first-love:hover .motion-habitat-machine-screen::after,
-.motion-habitat .station-first-love:focus-visible .motion-habitat-machine-screen::after,
-.motion-habitat .station-first-love.is-open .motion-habitat-machine-screen::after {
+/* First Love: the full color cards advance like presentation slides moving to the right. */
+.motion-habitat .station-first-love:hover .motion-habitat-memory-slides,
+.motion-habitat .station-first-love:focus-visible .motion-habitat-memory-slides,
+.motion-habitat .station-first-love.is-open .motion-habitat-memory-slides {
   animation: habitat-first-love-slides 4.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
 
@@ -331,11 +328,11 @@
   }
   28%,
   46% {
-    transform: translateX(16.5%);
+    transform: translateX(16.6667%);
   }
   58%,
   76% {
-    transform: translateX(33%);
+    transform: translateX(33.3333%);
   }
   88%,
   100% {
@@ -627,8 +624,7 @@
   .motion-habitat .station-special .motion-habitat-machine-screen::before,
   .motion-habitat .station-roast .motion-habitat-machine-screen::before,
   .motion-habitat .station-kove .motion-habitat-machine-screen::before,
-  .motion-habitat .station-first-love .motion-habitat-machine-screen::before,
-  .motion-habitat .station-first-love .motion-habitat-machine-screen::after {
+  .motion-habitat .station-first-love .motion-habitat-memory-slides {
     animation: none !important;
   }
 }

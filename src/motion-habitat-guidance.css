@@ -455,41 +455,63 @@
   background: rgba(130, 104, 139, 0.018);
 }
 
-.motion-habitat .station-first-love .motion-habitat-machine-screen::before {
-  content: '';
-  position: absolute;
-  top: 8px;
-  left: calc(-100% + 7px);
-  bottom: 6px;
-  width: calc(200% - 14px);
-  background:
-    linear-gradient(rgba(132, 63, 63, 0.14), rgba(132, 63, 63, 0.14)) 0 0 / 14% 100% no-repeat,
-    linear-gradient(#9b4545, #9b4545) 0 100% / 14% 4px no-repeat,
-    linear-gradient(rgba(103, 80, 117, 0.14), rgba(103, 80, 117, 0.14)) 17% 0 / 14% 100% no-repeat,
-    linear-gradient(#6e557f, #6e557f) 17% 100% / 14% 4px no-repeat,
-    linear-gradient(rgba(143, 126, 62, 0.13), rgba(143, 126, 62, 0.13)) 34% 0 / 14% 100% no-repeat,
-    linear-gradient(#9d8d48, #9d8d48) 34% 100% / 14% 4px no-repeat,
-    linear-gradient(rgba(132, 63, 63, 0.14), rgba(132, 63, 63, 0.14)) 51% 0 / 14% 100% no-repeat,
-    linear-gradient(#9b4545, #9b4545) 51% 100% / 14% 4px no-repeat,
-    linear-gradient(rgba(103, 80, 117, 0.14), rgba(103, 80, 117, 0.14)) 68% 0 / 14% 100% no-repeat,
-    linear-gradient(#6e557f, #6e557f) 68% 100% / 14% 4px no-repeat,
-    linear-gradient(rgba(143, 126, 62, 0.13), rgba(143, 126, 62, 0.13)) 85% 0 / 14% 100% no-repeat,
-    linear-gradient(#9d8d48, #9d8d48) 85% 100% / 14% 4px no-repeat;
-  opacity: 0.78;
-}
-
-.motion-habitat .station-first-love .motion-habitat-machine-screen::after {
-  content: 'R   P   Y      R   P   Y';
+.motion-habitat .motion-habitat-memory-slides {
   position: absolute;
   top: 7px;
+  bottom: 6px;
   left: -100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   width: 200%;
-  color: rgba(239, 233, 219, 0.32);
+  transform: translateX(0);
+  will-change: transform;
+}
+
+.motion-habitat .motion-habitat-memory-slide {
+  --chapter-color: rgba(239, 233, 219, 0.34);
+  --chapter-fill: rgba(239, 233, 219, 0.05);
+  position: relative;
+  min-width: 0;
+  margin: 0 2px;
+  border: 1px solid rgba(var(--station-rgb), 0.12);
+  background: var(--chapter-fill);
+}
+
+.motion-habitat .motion-habitat-memory-slide b {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  color: rgba(239, 233, 219, 0.34);
   font-family: var(--font-mono);
   font-size: 4.5px;
-  letter-spacing: 0.12em;
-  text-align: center;
-  white-space: nowrap;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+
+.motion-habitat .motion-habitat-memory-slide i {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  left: 3px;
+  height: 4px;
+  background: var(--chapter-color);
+  opacity: 0.82;
+}
+
+.motion-habitat .motion-habitat-memory-slide.chapter-red {
+  --chapter-color: #9b4545;
+  --chapter-fill: rgba(132, 63, 63, 0.14);
+}
+
+.motion-habitat .motion-habitat-memory-slide.chapter-purple {
+  --chapter-color: #6e557f;
+  --chapter-fill: rgba(103, 80, 117, 0.14);
+}
+
+.motion-habitat .motion-habitat-memory-slide.chapter-yellow {
+  --chapter-color: #9d8d48;
+  --chapter-fill: rgba(143, 126, 62, 0.13);
 }
 
 .motion-habitat .motion-habitat-station.is-awake,
