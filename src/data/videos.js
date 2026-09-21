@@ -64,7 +64,7 @@ export const featuredMotion = [
     layout: 'portrait',
     src: '/videos/motion/kove.mp4',
     reflection:
-      'A live-action edit built around atmosphere, movement, and environmental details, letting the venue and small moments in the footage carry the rhythm of the piece.',
+      'This was filmed after my friends and I played pickleball and ended up hanging out at the café around 1–2 AM. I thought the place had such a beautiful late-night aesthetic that I wanted to turn the moment into a video too, capturing the atmosphere, the little details, and the feeling of spending time there with friends.',
   },
   {
     id: 'cover-animation',
