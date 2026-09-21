@@ -520,11 +520,85 @@
   transform: translate(-50%, -50%) scale(1.025);
 }
 
+/* The center dock becomes a quiet botanical resting node for the visitor. */
+.motion-habitat .motion-habitat-center-flower {
+  position: absolute;
+  z-index: 3;
+  top: var(--dock-y);
+  left: var(--dock-x);
+  width: clamp(92px, 10.5vw, 124px);
+  height: auto;
+  pointer-events: none;
+  opacity: 0.74;
+  image-rendering: pixelated;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  filter:
+    saturate(0.84)
+    brightness(0.78)
+    drop-shadow(0 8px 15px rgba(0, 0, 0, 0.34))
+    drop-shadow(0 0 8px rgba(167, 179, 95, 0.08));
+  transition:
+    opacity 320ms var(--ease-editorial),
+    filter 320ms var(--ease-editorial),
+    transform 420ms var(--ease-editorial);
+}
+
+.motion-habitat .motion-habitat-world.is-guide-visible .motion-habitat-center-flower {
+  opacity: 0.5;
+  transform: translate(-50%, -50%) scale(0.96);
+}
+
 /* Make the visitor easier to notice without letting it dominate the habitat. */
 .motion-habitat .motion-habitat-character {
   z-index: 14;
   transform: translate(-50%, -100%) scale(1.32);
   transform-origin: 50% 100%;
+}
+
+/* While onboarding is open, KEANA rests on the center flower. Removing the guide
+   returns the existing parts to their standing geometry through these transitions. */
+.motion-habitat .motion-habitat-character-head,
+.motion-habitat .motion-habitat-character-body,
+.motion-habitat .motion-habitat-character-leg {
+  transition:
+    top 420ms var(--ease-editorial),
+    width 420ms var(--ease-editorial),
+    height 420ms var(--ease-editorial),
+    transform 420ms var(--ease-editorial);
+}
+
+.motion-habitat .motion-habitat-world.is-guide-visible .motion-habitat-character-head {
+  top: 7px;
+}
+
+.motion-habitat .motion-habitat-world.is-guide-visible .motion-habitat-character-body {
+  top: 15px;
+  width: 11px;
+  height: 10px;
+  transform: translateX(-50%) scaleY(0.94);
+}
+
+.motion-habitat .motion-habitat-world.is-guide-visible .motion-habitat-character-leg {
+  top: 23px;
+  height: 6px;
+}
+
+.motion-habitat .motion-habitat-world.is-guide-visible .motion-habitat-character-leg.leg-one {
+  transform: rotate(58deg);
+}
+
+.motion-habitat .motion-habitat-world.is-guide-visible .motion-habitat-character-leg.leg-two {
+  transform: rotate(-58deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-habitat .motion-habitat-center-flower,
+  .motion-habitat .motion-habitat-character-head,
+  .motion-habitat .motion-habitat-character-body,
+  .motion-habitat .motion-habitat-character-leg {
+    transition: none !important;
+  }
 }
 
 /* ---------- Roast versions above its media ---------- */

@@ -6,7 +6,7 @@ import '../motion-habitat.css'
 const DESKTOP_LAYOUT = {
   width: 1000,
   height: 560,
-  start: { x: 470, y: 462 },
+  start: { x: 500, y: 282 },
   dock: { x: 500, y: 282 },
   stations: [
     { x: 190, y: 150, standX: 340, standY: 220 },
@@ -572,6 +572,19 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         onPointerDown={isCompact || reducedMotion ? undefined : handleWorldPointerDown}
       >
         <div className="motion-habitat-grid" aria-hidden="true" />
+
+        {!isCompact && (
+          <img
+            className="motion-habitat-center-flower"
+            src="/images/motion-habitat/center-flower.png"
+            alt=""
+            aria-hidden="true"
+            style={{
+              '--dock-x': `${(layout.dock.x / layout.width) * 100}%`,
+              '--dock-y': `${(layout.dock.y / layout.height) * 100}%`,
+            }}
+          />
+        )}
 
         <svg
           className="motion-habitat-signals"

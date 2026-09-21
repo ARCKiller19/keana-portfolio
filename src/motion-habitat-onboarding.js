@@ -149,6 +149,7 @@ function hideGuide() {
   dismissed = true
 
   guideElement?.classList.remove('is-visible')
+  activeWorld?.classList.remove('is-guide-visible')
   document.removeEventListener('pointerdown', handlePointerDown, true)
   document.removeEventListener('keydown', handleKeyDown, true)
   habitatObserver?.disconnect()
@@ -175,7 +176,11 @@ function handleKeyDown(event) {
     return
   }
 
+  const key = event.key.length === 1 ? event.key.toLowerCase() : event.key
+  if (movementKeys.has(key)) event.preventDefault()
+
   hideGuide()
+  activeWorld?.focus({ preventScroll: true })
 }
 
 function showGuide(world) {
@@ -183,6 +188,7 @@ function showGuide(world) {
 
   activeWorld = world
   guideElement ??= createGuide(world)
+  world.classList.add('is-guide-visible')
 
   requestAnimationFrame(() => {
     guideElement?.classList.add('is-visible')
@@ -242,6 +248,7 @@ window.addEventListener(
     mountObserver?.disconnect()
     document.removeEventListener('pointerdown', handlePointerDown, true)
     document.removeEventListener('keydown', handleKeyDown, true)
+    activeWorld?.classList.remove('is-guide-visible')
     guideElement?.remove()
     guideElement = null
     activeWorld = null
