@@ -287,14 +287,14 @@
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
-  opacity: 0.78;
+  opacity: 0.64;
   transition:
     opacity 220ms var(--ease-editorial),
     filter 220ms var(--ease-editorial);
 }
 
 .motion-habitat .motion-habitat-joystick:hover {
-  opacity: 0.94;
+  opacity: 0.82;
 }
 
 .motion-habitat .motion-habitat-joystick.is-engaged {
