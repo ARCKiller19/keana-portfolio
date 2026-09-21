@@ -9,28 +9,31 @@ const DESKTOP_LAYOUT = {
   start: { x: 470, y: 462 },
   dock: { x: 500, y: 282 },
   stations: [
-    { x: 176, y: 210, standX: 286, standY: 238 },
-    { x: 806, y: 158, standX: 690, standY: 224 },
-    { x: 792, y: 398, standX: 676, standY: 392 },
+    { x: 190, y: 150, standX: 340, standY: 220 },
+    { x: 790, y: 150, standX: 660, standY: 220 },
+    { x: 210, y: 400, standX: 340, standY: 392 },
+    { x: 790, y: 400, standX: 660, standY: 392 },
   ],
 }
 
 const COMPACT_LAYOUT = {
   width: 420,
   height: 680,
-  start: { x: 210, y: 610 },
+  start: { x: 210, y: 650 },
   dock: { x: 210, y: 340 },
   stations: [
-    { x: 210, y: 112, standX: 210, standY: 192 },
-    { x: 210, y: 300, standX: 210, standY: 378 },
-    { x: 210, y: 492, standX: 210, standY: 570 },
+    { x: 210, y: 82, standX: 210, standY: 150 },
+    { x: 210, y: 230, standX: 210, standY: 298 },
+    { x: 210, y: 378, standX: 210, standY: 446 },
+    { x: 210, y: 526, standX: 210, standY: 594 },
   ],
 }
 
 const STATION_META = [
-  { slug: 'roast', system: 'LIVE / CAFE', accent: 'warm' },
-  { slug: 'special', system: 'MOTION / RHYTHM', accent: 'pulse' },
-  { slug: 'first-love', system: 'MEMORY / COLOR', accent: 'chapters' },
+  { slug: 'roast', system: 'LIVE / CAFE', accent: 'warm', rgb: '188, 150, 78' },
+  { slug: 'kove', system: 'LIVE / VENUE', accent: 'ambient', rgb: '190, 164, 100' },
+  { slug: 'special', system: 'MOTION / RHYTHM', accent: 'pulse', rgb: '167, 179, 95' },
+  { slug: 'first-love', system: 'MEMORY / COLOR', accent: 'chapters', rgb: '148, 113, 157' },
 ]
 
 const MANUAL_SPEED = 260
@@ -535,7 +538,9 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     >
       <header className="motion-habitat-header">
         <div>
-          <span className="motion-habitat-kicker">Motion Habitat · 03 Signal Stations</span>
+          <span className="motion-habitat-kicker">
+            Motion Habitat · {String(pieces.length).padStart(2, '0')} Signal Stations
+          </span>
           <p>
             {isCompact
               ? reducedMotion
@@ -610,6 +615,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
               style={{
                 '--station-x': `${(station.x / layout.width) * 100}%`,
                 '--station-y': `${(station.y / layout.height) * 100}%`,
+                '--station-rgb': meta.rgb,
               }}
               aria-pressed={isOpen}
               aria-label={`Open ${piece.title}`}

@@ -46,6 +46,26 @@
   background: rgba(var(--station-rgb), 0.3);
 }
 
+/* Live-action work owns the strongest resting color tier. */
+.motion-habitat.is-online .station-roast:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open),
+.motion-habitat.is-online .station-kove:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) {
+  border-color: rgba(var(--station-rgb), 0.86);
+  box-shadow:
+    inset 0 0 0 1px rgba(var(--station-rgb), 0.1),
+    0 0 0 1px rgba(var(--station-rgb), 0.14),
+    0 14px 30px rgba(0, 0, 0, 0.18),
+    0 0 20px rgba(var(--station-rgb), 0.09);
+}
+
+.motion-habitat.is-online .station-special:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open),
+.motion-habitat.is-online .station-first-love:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) {
+  border-color: rgba(var(--station-rgb), 0.5);
+  box-shadow:
+    inset 0 0 0 1px rgba(var(--station-rgb), 0.045),
+    0 10px 24px rgba(0, 0, 0, 0.15),
+    0 0 8px rgba(var(--station-rgb), 0.025);
+}
+
 /* Keep each machine identity clearly visible before the player approaches it. */
 .motion-habitat.is-online .station-roast:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .accent-warm::before {
   background: rgba(205, 176, 108, 0.94);
@@ -54,6 +74,11 @@
 
 .motion-habitat.is-online .station-roast:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .accent-warm::after {
   color: rgba(225, 194, 122, 0.9);
+}
+
+.motion-habitat.is-online .station-kove:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .accent-ambient {
+  opacity: 0.98;
+  filter: brightness(1.08);
 }
 
 .motion-habitat.is-online .station-special:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .motion-habitat-machine-screen::before {

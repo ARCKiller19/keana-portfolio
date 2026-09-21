@@ -1,16 +1,7 @@
 const compactQuery = window.matchMedia('(max-width: 720px)')
 const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
 
-const movementKeys = new Set([
-  'w',
-  'a',
-  's',
-  'd',
-  'ArrowUp',
-  'ArrowDown',
-  'ArrowLeft',
-  'ArrowRight',
-])
+const modifierKeys = new Set(['Shift', 'Control', 'Alt', 'Meta', 'AltGraph', 'OS'])
 
 let dismissed = false
 let installed = false
@@ -36,6 +27,10 @@ function createGuide(world) {
   const guide = document.createElement('div')
   guide.className = 'motion-habitat-guide'
   guide.setAttribute('aria-hidden', 'true')
+
+  const startPrompt = document.createElement('strong')
+  startPrompt.className = 'motion-habitat-guide-start'
+  startPrompt.textContent = 'PRESS ANY KEY'
 
   const eyebrow = document.createElement('span')
   eyebrow.className = 'motion-habitat-guide-eyebrow'
@@ -107,9 +102,9 @@ function createGuide(world) {
 
   const dismiss = document.createElement('p')
   dismiss.className = 'motion-habitat-guide-dismiss'
-  dismiss.textContent = 'Any click or movement key closes this guide.'
+  dismiss.textContent = 'Click anywhere or press a key to begin.'
 
-  guide.append(eyebrow, intro, paths, dismiss)
+  guide.append(startPrompt, eyebrow, intro, paths, dismiss)
   world.appendChild(guide)
   return guide
 }
@@ -154,8 +149,19 @@ function handlePointerDown() {
 }
 
 function handleKeyDown(event) {
-  const key = event.key.length === 1 ? event.key.toLowerCase() : event.key
-  if (!movementKeys.has(key)) return
+  if (
+    event.isComposing ||
+    event.key === 'Dead' ||
+    event.key === 'Process' ||
+    event.key === 'Unidentified' ||
+    modifierKeys.has(event.key) ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.altKey
+  ) {
+    return
+  }
+
   hideGuide()
 }
 

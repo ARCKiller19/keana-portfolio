@@ -57,8 +57,18 @@ export const featuredMotion = [
     },
   },
   {
-    id: 'cover-animation',
+    id: 'kove',
     number: '02',
+    title: 'Kove',
+    category: 'Live Action · Video Editing',
+    layout: 'portrait',
+    src: '/videos/motion/kove.mp4',
+    reflection:
+      'A live-action edit built around atmosphere, movement, and environmental details, letting the venue and small moments in the footage carry the rhythm of the piece.',
+  },
+  {
+    id: 'cover-animation',
+    number: '03',
     title: 'Special Singer Cover Animation Edit',
     category: 'Motion Design · Animation',
     src: '/videos/motion/cover-animation-edit-for-special-singer.mp4',
@@ -67,7 +77,7 @@ export const featuredMotion = [
   },
   {
     id: 'first-love',
-    number: '03',
+    number: '04',
     title: 'First Love Animation Edit',
     category: 'Animation · Video Editing',
     layout: 'portrait',
