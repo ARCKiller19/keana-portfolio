@@ -592,6 +592,38 @@
   transform: rotate(-58deg);
 }
 
+/* Crossing the center cushion changes only KEANA's pose. Her position, speed, and
+   direction continue normally, so she appears to perch while passing over it. */
+.motion-habitat .motion-habitat-character.is-center-perched.is-walking {
+  transform: translate(-50%, -100%) translateY(4px) scale(1.32);
+}
+
+.motion-habitat .motion-habitat-character.is-center-perched.is-walking .motion-habitat-character-head {
+  top: 7px;
+}
+
+.motion-habitat .motion-habitat-character.is-center-perched.is-walking .motion-habitat-character-body {
+  top: 15px;
+  width: 11px;
+  height: 10px;
+  animation: none;
+  transform: translateX(-50%) scaleY(0.94);
+}
+
+.motion-habitat .motion-habitat-character.is-center-perched.is-walking .motion-habitat-character-leg {
+  top: 23px;
+  height: 6px;
+  animation: none;
+}
+
+.motion-habitat .motion-habitat-character.is-center-perched.is-walking .motion-habitat-character-leg.leg-one {
+  transform: rotate(58deg);
+}
+
+.motion-habitat .motion-habitat-character.is-center-perched.is-walking .motion-habitat-character-leg.leg-two {
+  transform: rotate(-58deg);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .motion-habitat .motion-habitat-center-flower,
   .motion-habitat .motion-habitat-character-head,
