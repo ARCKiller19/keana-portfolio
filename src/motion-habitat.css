@@ -364,13 +364,13 @@
 .accent-warm {
   width: 12px;
   height: 2px;
-  background: rgba(93, 156, 201, 0.34);
+  background: rgba(102, 166, 159, 0.34);
 }
 
 .station-roast.is-awake .accent-warm,
 .station-roast.is-open .accent-warm {
-  background: rgba(93, 156, 201, 0.74);
-  box-shadow: 0 0 10px rgba(93, 156, 201, 0.2);
+  background: rgba(102, 166, 159, 0.74);
+  box-shadow: 0 0 10px rgba(102, 166, 159, 0.2);
 }
 
 .accent-pulse {
