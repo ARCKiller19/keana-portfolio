@@ -450,37 +450,30 @@
 }
 
 .motion-habitat .station-first-love .motion-habitat-machine-screen {
-  background:
-    linear-gradient(90deg,
-      rgba(132, 63, 63, 0.12) 0 31%, transparent 31% 34%,
-      rgba(103, 80, 117, 0.12) 34% 65%, transparent 65% 68%,
-      rgba(143, 126, 62, 0.1) 68% 100%);
+  background: rgba(130, 104, 139, 0.018);
 }
 
 .motion-habitat .station-first-love .motion-habitat-machine-screen::before {
   content: '';
   position: absolute;
+  top: 8px;
   left: calc(-100% + 7px);
   bottom: 6px;
   width: calc(200% - 14px);
-  height: 4px;
   background:
-    linear-gradient(
-      90deg,
-      #9b4545 0 14%,
-      transparent 14% 17%,
-      #6e557f 17% 31%,
-      transparent 31% 34%,
-      #9d8d48 34% 48%,
-      transparent 48% 51%,
-      #9b4545 51% 65%,
-      transparent 65% 68%,
-      #6e557f 68% 82%,
-      transparent 82% 85%,
-      #9d8d48 85% 99%,
-      transparent 99% 100%
-    );
-  opacity: 0.7;
+    linear-gradient(rgba(132, 63, 63, 0.14), rgba(132, 63, 63, 0.14)) 0 0 / 14% 100% no-repeat,
+    linear-gradient(#9b4545, #9b4545) 0 100% / 14% 4px no-repeat,
+    linear-gradient(rgba(103, 80, 117, 0.14), rgba(103, 80, 117, 0.14)) 17% 0 / 14% 100% no-repeat,
+    linear-gradient(#6e557f, #6e557f) 17% 100% / 14% 4px no-repeat,
+    linear-gradient(rgba(143, 126, 62, 0.13), rgba(143, 126, 62, 0.13)) 34% 0 / 14% 100% no-repeat,
+    linear-gradient(#9d8d48, #9d8d48) 34% 100% / 14% 4px no-repeat,
+    linear-gradient(rgba(132, 63, 63, 0.14), rgba(132, 63, 63, 0.14)) 51% 0 / 14% 100% no-repeat,
+    linear-gradient(#9b4545, #9b4545) 51% 100% / 14% 4px no-repeat,
+    linear-gradient(rgba(103, 80, 117, 0.14), rgba(103, 80, 117, 0.14)) 68% 0 / 14% 100% no-repeat,
+    linear-gradient(#6e557f, #6e557f) 68% 100% / 14% 4px no-repeat,
+    linear-gradient(rgba(143, 126, 62, 0.13), rgba(143, 126, 62, 0.13)) 85% 0 / 14% 100% no-repeat,
+    linear-gradient(#9d8d48, #9d8d48) 85% 100% / 14% 4px no-repeat;
+  opacity: 0.78;
 }
 
 .motion-habitat .station-first-love .motion-habitat-machine-screen::after {
