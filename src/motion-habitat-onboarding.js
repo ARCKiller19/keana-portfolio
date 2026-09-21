@@ -112,7 +112,7 @@ function createGuide(world) {
 
   const dismiss = document.createElement('p')
   dismiss.className = 'motion-habitat-guide-dismiss'
-  dismiss.textContent = 'Click anywhere or press a key to begin.'
+  dismiss.textContent = 'Click anywhere in the habitat or press a key to begin.'
 
   guide.append(startPrompt, eyebrow, intro, paths, dismiss)
   world.appendChild(guide)
@@ -154,12 +154,11 @@ function hideGuide() {
   habitatObserver?.disconnect()
 }
 
-function handlePointerDown() {
-  const key = event.key.length === 1 ? event.key.toLowerCase() : event.key
-  if (movementKeys.has(key)) event.preventDefault()
+function handlePointerDown(event) {
+  if (!activeWorld?.contains(event.target)) return
 
   hideGuide()
-  activeWorld?.focus({ preventScroll: true })
+  activeWorld.focus({ preventScroll: true })
 }
 
 function handleKeyDown(event) {

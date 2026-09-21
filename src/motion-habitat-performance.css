@@ -69,29 +69,29 @@
 }
 
 .motion-habitat .station-roast::after {
-  border: 1px solid rgba(137, 160, 153, 0.4);
-  color: rgba(185, 204, 198, 0.86);
+  border: 1px solid rgba(166, 174, 174, 0.4);
+  color: rgba(205, 211, 211, 0.86);
 }
 
 .motion-habitat .station-kove::after {
-  border: 1px solid rgba(188, 154, 74, 0.44);
-  color: rgba(221, 192, 116, 0.88);
+  border: 1px solid rgba(191, 119, 58, 0.44);
+  color: rgba(226, 159, 92, 0.88);
 }
 
 .motion-habitat .station-roast:hover::after,
 .motion-habitat .station-roast:focus-visible::after,
 .motion-habitat .station-roast.is-awake::after,
 .motion-habitat .station-roast.is-open::after {
-  border-color: rgba(185, 204, 198, 0.64);
-  color: rgba(220, 230, 226, 0.98);
+  border-color: rgba(205, 211, 211, 0.64);
+  color: rgba(232, 235, 235, 0.98);
 }
 
 .motion-habitat .station-kove:hover::after,
 .motion-habitat .station-kove:focus-visible::after,
 .motion-habitat .station-kove.is-awake::after,
 .motion-habitat .station-kove.is-open::after {
-  border-color: rgba(221, 192, 116, 0.68);
-  color: rgba(241, 220, 164, 0.98);
+  border-color: rgba(226, 159, 92, 0.68);
+  color: rgba(244, 199, 148, 0.98);
 }
 
 @media (max-width: 720px) {
