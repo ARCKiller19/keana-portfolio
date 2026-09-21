@@ -41,6 +41,7 @@ const AUTO_SPEED = 620
 const WAKE_RADIUS = 145
 const ACTIVATE_RADIUS = 82
 const CENTER_PERCH_RADIUS = 34
+const ENERGY_RADIUS = 230
 
 function useMediaQuery(query) {
   const [matches, setMatches] = useState(false)
@@ -147,10 +148,31 @@ function normalizeKey(key) {
   return null
 }
 
+function createEnergyPath(start, end) {
+  const dx = end.x - start.x
+  const dy = end.y - start.y
+  const length = Math.hypot(dx, dy)
+  if (length < 1) return ''
+
+  const normalX = -dy / length
+  const normalY = dx / length
+  const stops = [0, 0.2, 0.38, 0.56, 0.74, 0.9, 1]
+  const offsets = [0, 4, -3, 5, -4, 2.5, 0]
+
+  return stops
+    .map((progress, index) => {
+      const x = start.x + dx * progress + normalX * offsets[index]
+      const y = start.y + dy * progress + normalY * offsets[index]
+      return `${index === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`
+    })
+    .join(' ')
+}
+
 function MotionHabitat({ pieces, onOpenNotes }) {
   const roomRef = useRef(null)
   const worldRef = useRef(null)
   const characterRef = useRef(null)
+  const energyPathRef = useRef(null)
   const positionRef = useRef({ ...DESKTOP_LAYOUT.start })
   const pressedKeysRef = useRef(new Set())
   const targetRef = useRef(null)
@@ -158,6 +180,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const awakeIndexRef = useRef(null)
   const walkingRef = useRef(false)
   const centerPerchedRef = useRef(false)
+  const energyIndexRef = useRef(null)
   const perchDirectionRef = useRef('right')
   const facingRef = useRef('right')
   const fallbackTimerRef = useRef(null)
@@ -173,6 +196,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const [targetedIndex, setTargetedIndex] = useState(null)
   const [isWalking, setIsWalking] = useState(false)
   const [isCenterPerched, setIsCenterPerched] = useState(false)
+  const [energyIndex, setEnergyIndex] = useState(null)
   const [perchDirection, setPerchDirection] = useState('right')
   const [facing, setFacing] = useState('right')
   const [statusMessage, setStatusMessage] = useState(
@@ -181,6 +205,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
 
   const activePiece = openIndex === null ? null : pieces[openIndex]
   const activeMeta = openIndex === null ? null : STATION_META[openIndex]
+  const energyMeta = energyIndex === null ? null : STATION_META[energyIndex]
 
   const syncCharacter = useCallback((position) => {
     const character = characterRef.current
@@ -201,6 +226,12 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     if (centerPerchedRef.current === nextPerched) return
     centerPerchedRef.current = nextPerched
     setIsCenterPerched(nextPerched)
+  }, [])
+
+  const setEnergyIndexState = useCallback((nextIndex) => {
+    if (energyIndexRef.current === nextIndex) return
+    energyIndexRef.current = nextIndex
+    setEnergyIndex(nextIndex)
   }, [])
 
   const setPerchDirectionState = useCallback((nextDirection) => {
@@ -297,11 +328,14 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     setTargetedIndex(null)
     setWalkingState(false)
     setCenterPerchedState(false)
+    setEnergyIndexState(null)
+    energyPathRef.current?.removeAttribute('d')
     setPerchDirectionState('right')
     syncCharacter(positionRef.current)
   }, [
     isCompact,
     setCenterPerchedState,
+    setEnergyIndexState,
     setPerchDirectionState,
     setWalkingState,
     syncCharacter,
@@ -333,6 +367,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     if (reducedMotion) {
       setWalkingState(false)
       setCenterPerchedState(false)
+      setEnergyIndexState(null)
+      energyPathRef.current?.removeAttribute('d')
       targetRef.current = null
       pressedKeysRef.current.clear()
       return undefined
@@ -433,6 +469,23 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         }
       }
 
+      const nextEnergyIndex =
+        !isCompact && nearestDistance <= ENERGY_RADIUS ? nearestIndex : null
+      setEnergyIndexState(nextEnergyIndex)
+
+      const energyPath = energyPathRef.current
+      if (energyPath && nextEnergyIndex !== null) {
+        const energyStation = activeLayout.stations[nextEnergyIndex]
+        const handDirection = facingRef.current === 'left' ? -1 : 1
+        const hand = {
+          x: next.x + handDirection * 11,
+          y: next.y - 16,
+        }
+        energyPath.setAttribute('d', createEnergyPath(energyStation, hand))
+      } else {
+        energyPath?.removeAttribute('d')
+      }
+
       const nextAwake = nearestDistance <= WAKE_RADIUS ? nearestIndex : null
       if (awakeIndexRef.current !== nextAwake) {
         awakeIndexRef.current = nextAwake
@@ -465,6 +518,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       lastTime = 0
       setWalkingState(false)
       setCenterPerchedState(false)
+      setEnergyIndexState(null)
+      energyPathRef.current?.removeAttribute('d')
     }
 
     if (!('IntersectionObserver' in window)) {
@@ -491,6 +546,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     isCompact,
     reducedMotion,
     setCenterPerchedState,
+    setEnergyIndexState,
     setPerchDirectionState,
     setFacingState,
     setWalkingState,
@@ -657,6 +713,13 @@ function MotionHabitat({ pieces, onOpenNotes }) {
             cy={layout.dock.y}
             r="8"
           />
+          <path
+            ref={energyPathRef}
+            className={`motion-habitat-energy ${energyMeta ? 'is-live' : ''}`}
+            style={{
+              '--energy-rgb': energyMeta?.rgb ?? '168, 188, 99',
+            }}
+          />
         </svg>
 
         {pieces.map((piece, index) => {
@@ -738,7 +801,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           ref={characterRef}
           className={`motion-habitat-character ${isWalking ? 'is-walking' : ''} ${
             isCenterPerched ? 'is-center-perched' : ''
-          }`}
+          } ${energyMeta ? 'has-station-energy' : ''}`}
+          style={energyMeta ? { '--energy-rgb': energyMeta.rgb } : undefined}
           data-facing={facing}
           data-perch-direction={perchDirection}
           aria-hidden="true"

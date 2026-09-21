@@ -549,6 +549,74 @@
   transform: translate(-50%, -50%) scale(0.96);
 }
 
+/* Proximity energy: the nearest station sends a restrained electric signal to KEANA. */
+.motion-habitat .motion-habitat-energy {
+  fill: none;
+  stroke: rgba(var(--energy-rgb), 0.82);
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 3 5;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(0 0 3px rgba(var(--energy-rgb), 0.42));
+  transition:
+    opacity 150ms var(--ease-editorial),
+    stroke 180ms var(--ease-editorial),
+    filter 180ms var(--ease-editorial);
+}
+
+.motion-habitat .motion-habitat-energy.is-live {
+  opacity: 0.9;
+  animation:
+    habitat-energy-flow 620ms linear infinite,
+    habitat-energy-flicker 1.15s steps(2, end) infinite;
+}
+
+.motion-habitat .motion-habitat-character.has-station-energy .motion-habitat-character-body::after {
+  background: rgba(var(--energy-rgb), 0.9);
+  box-shadow:
+    0 0 5px rgba(var(--energy-rgb), 0.42),
+    0 0 10px rgba(var(--energy-rgb), 0.16);
+  animation: habitat-hand-charge 860ms ease-in-out infinite alternate;
+}
+
+@keyframes habitat-energy-flow {
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+
+@keyframes habitat-energy-flicker {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  52% {
+    opacity: 0.58;
+  }
+
+  60% {
+    opacity: 0.94;
+  }
+}
+
+@keyframes habitat-hand-charge {
+  from {
+    opacity: 0.72;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 /* Make the visitor easier to notice without letting it dominate the habitat. */
 .motion-habitat .motion-habitat-character {
   z-index: 14;
@@ -697,6 +765,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .motion-habitat .motion-habitat-energy,
+  .motion-habitat .motion-habitat-character.has-station-energy .motion-habitat-character-body::after {
+    animation: none !important;
+  }
+
   .motion-habitat .motion-habitat-center-flower,
   .motion-habitat .motion-habitat-character-head,
   .motion-habitat .motion-habitat-character-body,
