@@ -283,6 +283,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     joystickVectorRef.current = { x: 0, y: 0 }
 
     joystickPadRef.current?.classList.remove('is-engaged')
+    worldRef.current?.classList.remove('is-joystick-dragging')
 
     const knob = joystickKnobRef.current
     if (knob) knob.style.transform = 'translate(-50%, -50%)'
@@ -727,6 +728,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
 
     joystickPointerRef.current = event.pointerId
     event.currentTarget.classList.add('is-engaged')
+    worldRef.current?.classList.add('is-joystick-dragging')
+    window.getSelection?.()?.removeAllRanges()
     event.currentTarget.setPointerCapture?.(event.pointerId)
     updateJoystick(event)
     worldRef.current?.focus({ preventScroll: true })

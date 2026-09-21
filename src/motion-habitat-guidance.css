@@ -302,6 +302,15 @@
   filter: saturate(0.72);
 }
 
+/* iPad/Safari: while the joystick is actively dragged, prevent the Habitat's
+   text and labels from becoming selected underneath the captured pointer. */
+.motion-habitat .motion-habitat-world.is-joystick-dragging,
+.motion-habitat .motion-habitat-world.is-joystick-dragging * {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none;
+}
+
 .motion-habitat .motion-habitat-joystick::before,
 .motion-habitat .motion-habitat-joystick::after {
   content: '';
