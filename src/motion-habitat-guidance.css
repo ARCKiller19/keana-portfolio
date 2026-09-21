@@ -620,8 +620,8 @@
 }
 
 /* Once onboarding is gone, the center perch follows KEANA's actual movement
-   direction. Side-facing sits use the body and arm silhouette only; there is no head
-   projection, so the profile does not read like a beak. */
+   direction. Side-facing sits use two short horizontal leg lines extending toward the
+   facing side; there is no head projection, so the profile stays clean. */
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='right'] .motion-habitat-character-head {
   left: 57%;
 }
@@ -639,16 +639,20 @@
 }
 
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='right'] .motion-habitat-character-leg.leg-one {
+  top: 23px;
   right: auto;
-  left: 8px;
+  left: 9px;
+  width: 7px;
+  height: 1px;
   transform: none;
 }
 
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='right'] .motion-habitat-character-leg.leg-two {
-  top: 23px;
+  top: 26px;
   right: auto;
-  left: 11px;
-  height: 6px;
+  left: 9px;
+  width: 6px;
+  height: 1px;
   transform: none;
 }
 
@@ -669,16 +673,20 @@
 }
 
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='left'] .motion-habitat-character-leg.leg-one {
-  right: 8px;
+  top: 23px;
+  right: 9px;
   left: auto;
+  width: 7px;
+  height: 1px;
   transform: none;
 }
 
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='left'] .motion-habitat-character-leg.leg-two {
-  top: 23px;
-  right: 11px;
+  top: 26px;
+  right: 9px;
   left: auto;
-  height: 6px;
+  width: 6px;
+  height: 1px;
   transform: none;
 }
 
