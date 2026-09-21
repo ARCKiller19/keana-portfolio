@@ -68,12 +68,12 @@
 
 /* Keep each machine identity clearly visible before the player approaches it. */
 .motion-habitat.is-online .station-roast:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .accent-warm::before {
-  background: rgba(150, 210, 201, 0.96);
-  box-shadow: 0 0 0 2px rgba(102, 166, 159, 0.1);
+  background: rgba(185, 204, 198, 0.96);
+  box-shadow: 0 0 0 2px rgba(137, 160, 153, 0.1);
 }
 
 .motion-habitat.is-online .station-roast:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .accent-warm::after {
-  color: rgba(150, 210, 201, 0.92);
+  color: rgba(185, 204, 198, 0.92);
 }
 
 .motion-habitat.is-online .station-kove:not(:hover):not(:focus-visible):not(.is-awake):not(.is-targeted):not(.is-open) .accent-ambient {
