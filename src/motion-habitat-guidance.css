@@ -271,7 +271,7 @@
   position: absolute;
   z-index: 19;
   bottom: 18px;
-  left: 96px;
+  left: calc(21% - 31px);
   width: 96px;
   height: 96px;
   transform: translateX(-50%);
