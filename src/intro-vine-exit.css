@@ -1,7 +1,7 @@
 /* Refine the intro handoff so the botanical linework settles, then furls away. */
 
 .hero-motion {
-  --intro-vine-settle-scale: 0.62;
+  --intro-vine-settle-scale: 0.56;
 }
 
 /*
@@ -68,6 +68,16 @@
   animation: none;
   opacity: 0.7;
   transform: rotate(45deg) scale(1);
+}
+
+.hero-motion.intro-settling .intro-particle {
+  animation: none;
+  opacity: 0.2;
+}
+
+.hero-motion.intro-settling .intro-tip-glow {
+  animation: none;
+  opacity: 0.4;
 }
 
 /* Then reverse the growth instead of snapping the drawing away. */
@@ -141,6 +151,19 @@
   animation: intro-cross-furl 380ms var(--ease-editorial) 90ms forwards;
 }
 
+.hero-motion.intro-furling .intro-particle,
+.hero-motion.intro-furling .intro-tip-glow {
+  opacity: 0.32;
+  animation: intro-atmosphere-furl 420ms var(--ease-editorial) forwards;
+}
+
+@keyframes intro-atmosphere-furl {
+  to {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.45);
+  }
+}
+
 @keyframes intro-cross-furl {
   from { opacity: 0.7; transform: rotate(45deg) scale(1); }
   to { opacity: 0; transform: rotate(75deg) scale(0.45); }
@@ -148,7 +171,7 @@
 
 @media (max-width: 720px) {
   .hero-motion {
-    --intro-vine-settle-scale: 0.48;
+    --intro-vine-settle-scale: 0.44;
   }
 }
 
@@ -157,7 +180,9 @@
   .hero-motion.intro-furling .intro-vine,
   .hero-motion.intro-furling .intro-leaf,
   .hero-motion.intro-furling .intro-node,
-  .hero-motion.intro-furling .intro-cross {
+  .hero-motion.intro-furling .intro-cross,
+  .hero-motion.intro-furling .intro-particle,
+  .hero-motion.intro-furling .intro-tip-glow {
     animation: none;
     transition: none;
   }

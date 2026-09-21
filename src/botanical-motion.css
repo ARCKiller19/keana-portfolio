@@ -8,7 +8,10 @@ body.botanical-intro-active::before {
   z-index: 900;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 50%, rgba(167, 179, 95, 0.018), transparent 36%),
+    radial-gradient(circle at 18% 26%, rgba(167, 179, 95, 0.035), transparent 11%),
+    radial-gradient(circle at 78% 24%, rgba(205, 221, 111, 0.025), transparent 13%),
+    radial-gradient(circle at 63% 76%, rgba(167, 179, 95, 0.028), transparent 12%),
+    radial-gradient(circle at 50% 50%, rgba(167, 179, 95, 0.024), transparent 38%),
     var(--bg);
   opacity: 1;
   pointer-events: none;
@@ -59,6 +62,9 @@ body.botanical-intro-settling .nav-panel {
 .hero-motion.intro-vining .hero-mark {
   opacity: 1;
   filter: blur(0);
+  text-shadow:
+    0 0 22px rgba(239, 233, 219, 0.055),
+    0 0 44px rgba(167, 179, 95, 0.045);
 }
 
 .hero-motion.intro-settling .hero-mark,
@@ -88,7 +94,7 @@ body.botanical-intro-settling .nav-panel {
   z-index: 1001;
   top: 50%;
   left: 50%;
-  width: min(88vw, 760px);
+  width: min(92vw, 860px);
   height: auto;
   overflow: visible;
   fill: none;
@@ -127,7 +133,7 @@ body.botanical-intro-settling .nav-panel {
 
 .hero-intro-vine-lines {
   stroke: rgba(167, 179, 95, 0.9);
-  stroke-width: 1.15;
+  stroke-width: 1.05;
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
@@ -141,22 +147,22 @@ body.botanical-intro-settling .nav-panel {
 
 .hero-motion.intro-vining .intro-vine-a,
 .hero-motion.intro-settling .intro-vine-a {
-  animation: intro-vine-draw 650ms var(--ease-editorial) forwards;
+  animation: intro-vine-draw 1120ms var(--ease-editorial) forwards;
 }
 
 .hero-motion.intro-vining .intro-vine-b,
 .hero-motion.intro-settling .intro-vine-b {
-  animation: intro-vine-draw 560ms var(--ease-editorial) 110ms forwards;
+  animation: intro-vine-draw 820ms var(--ease-editorial) 180ms forwards;
 }
 
 .hero-motion.intro-vining .intro-vine-c,
 .hero-motion.intro-settling .intro-vine-c {
-  animation: intro-vine-draw 590ms var(--ease-editorial) 190ms forwards;
+  animation: intro-vine-draw 760ms var(--ease-editorial) 360ms forwards;
 }
 
 .hero-motion.intro-vining .intro-vine-extension,
 .hero-motion.intro-settling .intro-vine-extension {
-  animation: intro-vine-draw 460ms var(--ease-editorial) 420ms forwards;
+  animation: intro-vine-draw 620ms var(--ease-editorial) 620ms forwards;
 }
 
 @keyframes intro-vine-draw {
@@ -175,7 +181,7 @@ body.botanical-intro-settling .nav-panel {
 
 .hero-motion.intro-vining .intro-leaf,
 .hero-motion.intro-settling .intro-leaf {
-  animation: intro-leaf-unfurl 380ms var(--ease-editorial) forwards;
+  animation: intro-leaf-unfurl 520ms var(--ease-editorial) forwards;
 }
 
 .hero-motion.intro-vining .intro-leaf-a,
@@ -187,7 +193,9 @@ body.botanical-intro-settling .nav-panel {
 .hero-motion.intro-vining .intro-leaf-d,
 .hero-motion.intro-settling .intro-leaf-d { animation-delay: 600ms; }
 .hero-motion.intro-vining .intro-leaf-e,
-.hero-motion.intro-settling .intro-leaf-e { animation-delay: 470ms; }
+.hero-motion.intro-settling .intro-leaf-e { animation-delay: 760ms; }
+.hero-motion.intro-vining .intro-leaf-f,
+.hero-motion.intro-settling .intro-leaf-f { animation-delay: 900ms; }
 
 @keyframes intro-leaf-unfurl {
   0% {
@@ -202,6 +210,77 @@ body.botanical-intro-settling .nav-panel {
     opacity: 0.78;
     transform: scale(1) rotate(0);
   }
+}
+
+.intro-particle,
+.intro-tip-glow {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.intro-particle {
+  fill: rgba(205, 221, 111, 0.72);
+  filter: drop-shadow(0 0 4px rgba(167, 179, 95, 0.34));
+}
+
+.hero-motion.intro-vining .intro-particle,
+.hero-motion.intro-settling .intro-particle {
+  animation: intro-particle-drift 980ms var(--ease-editorial) forwards;
+}
+
+.hero-motion.intro-vining .intro-particle-a,
+.hero-motion.intro-settling .intro-particle-a { animation-delay: 430ms; }
+.hero-motion.intro-vining .intro-particle-b,
+.hero-motion.intro-settling .intro-particle-b { animation-delay: 520ms; }
+.hero-motion.intro-vining .intro-particle-c,
+.hero-motion.intro-settling .intro-particle-c { animation-delay: 610ms; }
+.hero-motion.intro-vining .intro-particle-d,
+.hero-motion.intro-settling .intro-particle-d { animation-delay: 700ms; }
+.hero-motion.intro-vining .intro-particle-e,
+.hero-motion.intro-settling .intro-particle-e { animation-delay: 790ms; }
+.hero-motion.intro-vining .intro-particle-f,
+.hero-motion.intro-settling .intro-particle-f { animation-delay: 880ms; }
+.hero-motion.intro-vining .intro-particle-g,
+.hero-motion.intro-settling .intro-particle-g { animation-delay: 970ms; }
+.hero-motion.intro-vining .intro-particle-h,
+.hero-motion.intro-settling .intro-particle-h { animation-delay: 1060ms; }
+
+@keyframes intro-particle-drift {
+  0% {
+    opacity: 0;
+    transform: translateY(4px) scale(0.4);
+  }
+  45% {
+    opacity: 0.82;
+    transform: translateY(-2px) scale(1.15);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translateY(-7px) scale(0.72);
+  }
+}
+
+.intro-tip-glow {
+  fill: rgba(239, 233, 219, 0.9);
+  filter:
+    drop-shadow(0 0 4px rgba(239, 233, 219, 0.72))
+    drop-shadow(0 0 12px rgba(205, 221, 111, 0.46));
+}
+
+.hero-motion.intro-vining .intro-tip-glow,
+.hero-motion.intro-settling .intro-tip-glow {
+  animation: intro-tip-bloom 520ms var(--ease-editorial) 930ms forwards;
+}
+
+.intro-tip-glow-b {
+  animation-delay: 1080ms !important;
+}
+
+@keyframes intro-tip-bloom {
+  0% { opacity: 0; transform: scale(0.3); }
+  55% { opacity: 1; transform: scale(1.5); }
+  100% { opacity: 0.68; transform: scale(1); }
 }
 
 .intro-node {
