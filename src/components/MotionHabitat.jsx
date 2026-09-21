@@ -38,7 +38,7 @@ const STATION_META = [
 
 const MANUAL_SPEED = 260
 const AUTO_SPEED = 620
-const WAKE_RADIUS = 205
+const WAKE_RADIUS = 150
 const ACTIVATE_RADIUS = 82
 const CENTER_PERCH_RADIUS = 34
 
@@ -172,6 +172,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const worldRef = useRef(null)
   const characterRef = useRef(null)
   const energyPathRef = useRef(null)
+  const energyPulseRef = useRef(null)
   const positionRef = useRef({ ...DESKTOP_LAYOUT.start })
   const pressedKeysRef = useRef(new Set())
   const targetRef = useRef(null)
@@ -329,6 +330,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     setCenterPerchedState(false)
     setEnergyIndexState(null)
     energyPathRef.current?.removeAttribute('d')
+    energyPulseRef.current?.removeAttribute('d')
     setPerchDirectionState('right')
     syncCharacter(positionRef.current)
   }, [
@@ -368,6 +370,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       setCenterPerchedState(false)
       setEnergyIndexState(null)
       energyPathRef.current?.removeAttribute('d')
+    energyPulseRef.current?.removeAttribute('d')
       targetRef.current = null
       pressedKeysRef.current.clear()
       return undefined
@@ -492,6 +495,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       setEnergyIndexState(nextEnergyIndex)
 
       const energyPath = energyPathRef.current
+      const energyPulse = energyPulseRef.current
       if (energyPath && nextEnergyIndex !== null) {
         const energyStation = activeLayout.stations[nextEnergyIndex]
         const handDirection = facingRef.current === 'left' ? -1 : 1
@@ -499,9 +503,12 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           x: next.x + handDirection * 11,
           y: next.y - 16,
         }
-        energyPath.setAttribute('d', createEnergyPath(energyStation, hand))
+        const energyD = createEnergyPath(energyStation, hand)
+        energyPath.setAttribute('d', energyD)
+        energyPulse?.setAttribute('d', energyD)
       } else {
         energyPath?.removeAttribute('d')
+        energyPulse?.removeAttribute('d')
       }
 
       if (
@@ -532,6 +539,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       setCenterPerchedState(false)
       setEnergyIndexState(null)
       energyPathRef.current?.removeAttribute('d')
+    energyPulseRef.current?.removeAttribute('d')
     }
 
     if (!('IntersectionObserver' in window)) {
@@ -728,6 +736,13 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           <path
             ref={energyPathRef}
             className={`motion-habitat-energy ${energyMeta ? 'is-live' : ''}`}
+            style={{
+              '--energy-rgb': energyMeta?.rgb ?? '168, 188, 99',
+            }}
+          />
+          <path
+            ref={energyPulseRef}
+            className={`motion-habitat-energy-pulse ${energyMeta ? 'is-live' : ''}`}
             style={{
               '--energy-rgb': energyMeta?.rgb ?? '168, 188, 99',
             }}
