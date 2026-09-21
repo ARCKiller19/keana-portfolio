@@ -40,7 +40,7 @@ const MANUAL_SPEED = 260
 const AUTO_SPEED = 620
 const WAKE_RADIUS = 145
 const ACTIVATE_RADIUS = 82
-const CENTER_PERCH_RADIUS = 48
+const CENTER_PERCH_RADIUS = 34
 
 function useMediaQuery(query) {
   const [matches, setMatches] = useState(false)
@@ -158,6 +158,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const awakeIndexRef = useRef(null)
   const walkingRef = useRef(false)
   const centerPerchedRef = useRef(false)
+  const perchDirectionRef = useRef('right')
   const facingRef = useRef('right')
   const fallbackTimerRef = useRef(null)
   const suppressedStationRef = useRef(null)
@@ -172,6 +173,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const [targetedIndex, setTargetedIndex] = useState(null)
   const [isWalking, setIsWalking] = useState(false)
   const [isCenterPerched, setIsCenterPerched] = useState(false)
+  const [perchDirection, setPerchDirection] = useState('right')
   const [facing, setFacing] = useState('right')
   const [statusMessage, setStatusMessage] = useState(
     'Motion Habitat ready. Choose a station or move through the room.',
@@ -199,6 +201,12 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     if (centerPerchedRef.current === nextPerched) return
     centerPerchedRef.current = nextPerched
     setIsCenterPerched(nextPerched)
+  }, [])
+
+  const setPerchDirectionState = useCallback((nextDirection) => {
+    if (perchDirectionRef.current === nextDirection) return
+    perchDirectionRef.current = nextDirection
+    setPerchDirection(nextDirection)
   }, [])
 
   const setFacingState = useCallback((nextFacing) => {
@@ -289,8 +297,15 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     setTargetedIndex(null)
     setWalkingState(false)
     setCenterPerchedState(false)
+    setPerchDirectionState('right')
     syncCharacter(positionRef.current)
-  }, [isCompact, setCenterPerchedState, setWalkingState, syncCharacter])
+  }, [
+    isCompact,
+    setCenterPerchedState,
+    setPerchDirectionState,
+    setWalkingState,
+    syncCharacter,
+  ])
 
   useEffect(() => {
     const room = roomRef.current
@@ -385,6 +400,12 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         if (Math.abs(dx) > 0.01) {
           setFacingState(dx > 0 ? 'right' : 'left')
         }
+
+        if (Math.abs(dy) > Math.abs(dx)) {
+          setPerchDirectionState(dy < 0 ? 'up' : 'down')
+        } else if (Math.abs(dx) > 0.01) {
+          setPerchDirectionState(dx > 0 ? 'right' : 'left')
+        }
       }
 
       setWalkingState(moving)
@@ -470,6 +491,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     isCompact,
     reducedMotion,
     setCenterPerchedState,
+    setPerchDirectionState,
     setFacingState,
     setWalkingState,
     syncCharacter,
@@ -718,6 +740,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
             isCenterPerched ? 'is-center-perched' : ''
           }`}
           data-facing={facing}
+          data-perch-direction={perchDirection}
           aria-hidden="true"
         >
           <span className="motion-habitat-character-head" />
