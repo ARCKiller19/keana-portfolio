@@ -450,6 +450,8 @@
 }
 
 .motion-habitat .station-first-love .motion-habitat-machine-screen {
+  position: relative;
+  overflow: hidden;
   background: rgba(130, 104, 139, 0.018);
 }
 
