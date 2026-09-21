@@ -218,9 +218,6 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const suppressedStationRef = useRef(null)
 
   const isCompact = useMediaQuery('(max-width: 720px)')
-  const isTabletTouch = useMediaQuery(
-    '(min-width: 721px) and (max-width: 1400px) and (any-pointer: coarse)',
-  )
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
   const layout = isCompact ? COMPACT_LAYOUT : DESKTOP_LAYOUT
 
@@ -811,7 +808,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           <span className="motion-habitat-system" aria-hidden="true">
             GRID 07-B · SIGNAL READY
           </span>
-          {isTabletTouch && !reducedMotion && (
+          {!isCompact && !reducedMotion && (
             <button
               className={`motion-habitat-joystick-toggle ${
                 isJoystickEnabled ? 'is-active' : ''
@@ -990,7 +987,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           <span className="motion-habitat-character-leg leg-two" />
         </div>
 
-        {!isCompact && !reducedMotion && !isTabletTouch && (
+        {!isCompact && !reducedMotion && (
           <div className="motion-habitat-controls" aria-hidden="true">
             <span className="motion-habitat-keys">
               <b>W</b>
@@ -1002,7 +999,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           </div>
         )}
 
-        {isTabletTouch && isJoystickEnabled && !reducedMotion && (
+        {!isCompact && isJoystickEnabled && !reducedMotion && (
           <div
             ref={joystickPadRef}
             id="motion-habitat-joystick"
