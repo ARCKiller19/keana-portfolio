@@ -19,6 +19,7 @@ let habitatObserver = null
 let mountObserver = null
 let activeWorld = null
 let guideElement = null
+let restTimer = null
 
 function createKeyGrid(labels, className, keyTag = 'kbd') {
   const grid = document.createElement('span')
@@ -150,6 +151,13 @@ function hideGuide() {
 
   guideElement?.classList.remove('is-visible')
   activeWorld?.classList.remove('is-guide-visible')
+
+  if (restTimer) window.clearTimeout(restTimer)
+  restTimer = window.setTimeout(() => {
+    activeWorld?.classList.remove('is-character-resting')
+    restTimer = null
+  }, 1800)
+
   document.removeEventListener('pointerdown', handlePointerDown, true)
   document.removeEventListener('keydown', handleKeyDown, true)
   habitatObserver?.disconnect()
@@ -188,7 +196,7 @@ function showGuide(world) {
 
   activeWorld = world
   guideElement ??= createGuide(world)
-  world.classList.add('is-guide-visible')
+  world.classList.add('is-guide-visible', 'is-character-resting')
 
   requestAnimationFrame(() => {
     guideElement?.classList.add('is-visible')
@@ -248,7 +256,9 @@ window.addEventListener(
     mountObserver?.disconnect()
     document.removeEventListener('pointerdown', handlePointerDown, true)
     document.removeEventListener('keydown', handleKeyDown, true)
-    activeWorld?.classList.remove('is-guide-visible')
+    if (restTimer) window.clearTimeout(restTimer)
+    restTimer = null
+    activeWorld?.classList.remove('is-guide-visible', 'is-character-resting')
     guideElement?.remove()
     guideElement = null
     activeWorld = null

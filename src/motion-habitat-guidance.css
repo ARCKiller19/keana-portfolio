@@ -568,27 +568,27 @@
     transform 420ms var(--ease-editorial);
 }
 
-.motion-habitat .motion-habitat-world.is-guide-visible .motion-habitat-character-head {
+.motion-habitat .motion-habitat-world.is-character-resting .motion-habitat-character:not(.is-walking) .motion-habitat-character-head {
   top: 7px;
 }
 
-.motion-habitat .motion-habitat-world.is-guide-visible .motion-habitat-character-body {
+.motion-habitat .motion-habitat-world.is-character-resting .motion-habitat-character:not(.is-walking) .motion-habitat-character-body {
   top: 15px;
   width: 11px;
   height: 10px;
   transform: translateX(-50%) scaleY(0.94);
 }
 
-.motion-habitat .motion-habitat-world.is-guide-visible .motion-habitat-character-leg {
+.motion-habitat .motion-habitat-world.is-character-resting .motion-habitat-character:not(.is-walking) .motion-habitat-character-leg {
   top: 23px;
   height: 6px;
 }
 
-.motion-habitat .motion-habitat-world.is-guide-visible .motion-habitat-character-leg.leg-one {
+.motion-habitat .motion-habitat-world.is-character-resting .motion-habitat-character:not(.is-walking) .motion-habitat-character-leg.leg-one {
   transform: rotate(58deg);
 }
 
-.motion-habitat .motion-habitat-world.is-guide-visible .motion-habitat-character-leg.leg-two {
+.motion-habitat .motion-habitat-world.is-character-resting .motion-habitat-character:not(.is-walking) .motion-habitat-character-leg.leg-two {
   transform: rotate(-58deg);
 }
 
