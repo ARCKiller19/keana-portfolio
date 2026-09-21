@@ -752,15 +752,27 @@
   display: none;
 }
 
+.motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='down'] .motion-habitat-character-body::after {
+  display: none;
+}
+
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='down'] .motion-habitat-character-leg.leg-one {
-  top: 23px;
-  left: 8px;
+  top: 24px;
+  left: 6px;
+  right: auto;
   width: 2px;
-  height: 8px;
+  height: 4px;
+  transform: none;
 }
 
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='down'] .motion-habitat-character-leg.leg-two {
-  display: none;
+  display: block;
+  top: 24px;
+  right: 6px;
+  left: auto;
+  width: 2px;
+  height: 4px;
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
