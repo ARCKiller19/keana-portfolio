@@ -281,36 +281,36 @@
   text-transform: uppercase;
 }
 
-/* Roast — neutral silver field monitor / recorder. */
+/* Roast — warm silver / pewter field monitor / recorder. */
 .motion-habitat .station-roast {
-  border-left-color: rgba(166, 174, 174, 0.56);
-  box-shadow: inset 3px 0 0 rgba(166, 174, 174, 0.16);
+  border-left-color: rgba(184, 180, 168, 0.56);
+  box-shadow: inset 3px 0 0 rgba(184, 180, 168, 0.16);
 }
 
 .motion-habitat .station-roast::before {
   content: 'FIELD RECORDER';
-  color: rgba(205, 211, 211, 0.72);
+  color: rgba(215, 210, 198, 0.72);
 }
 
 .motion-habitat .station-roast .motion-habitat-machine {
-  border-color: rgba(166, 174, 174, 0.34);
+  border-color: rgba(184, 180, 168, 0.34);
 }
 
 .motion-habitat .station-roast .motion-habitat-machine-screen {
-  border-color: rgba(166, 174, 174, 0.42);
+  border-color: rgba(184, 180, 168, 0.42);
   background:
-    linear-gradient(90deg, transparent 49%, rgba(166, 174, 174, 0.18) 50%, transparent 51%),
-    linear-gradient(transparent 49%, rgba(166, 174, 174, 0.15) 50%, transparent 51%),
-    rgba(166, 174, 174, 0.03);
+    linear-gradient(90deg, transparent 49%, rgba(184, 180, 168, 0.18) 50%, transparent 51%),
+    linear-gradient(transparent 49%, rgba(184, 180, 168, 0.15) 50%, transparent 51%),
+    rgba(184, 180, 168, 0.03);
 }
 
 .motion-habitat .station-roast .motion-habitat-machine-screen::before {
   content: '';
   position: absolute;
   inset: 7px;
-  border: 1px solid rgba(166, 174, 174, 0.42);
-  background: rgba(166, 174, 174, 0.08);
-  box-shadow: inset 0 0 8px rgba(166, 174, 174, 0.04);
+  border: 1px solid rgba(184, 180, 168, 0.42);
+  background: rgba(184, 180, 168, 0.08);
+  box-shadow: inset 0 0 8px rgba(184, 180, 168, 0.04);
 }
 
 .motion-habitat .station-roast .motion-habitat-machine-screen::after {
@@ -318,36 +318,36 @@
   position: absolute;
   top: 4px;
   right: 5px;
-  color: rgba(205, 211, 211, 0.84);
+  color: rgba(215, 210, 198, 0.84);
   font-family: var(--font-mono);
   font-size: 4.5px;
   letter-spacing: 0.08em;
 }
 
-/* Kove — burnished orange cafe/friends monitor. */
+/* Kove — apricot / burnt amber cafe/friends monitor. */
 .motion-habitat .station-kove {
-  border-top-color: rgba(191, 119, 58, 0.58);
-  box-shadow: inset 0 3px 0 rgba(191, 119, 58, 0.16);
+  border-top-color: rgba(208, 138, 75, 0.58);
+  box-shadow: inset 0 3px 0 rgba(208, 138, 75, 0.16);
 }
 
 .motion-habitat .station-kove::before {
   content: 'CAFE MONITOR';
-  color: rgba(226, 159, 92, 0.76);
+  color: rgba(231, 173, 115, 0.76);
 }
 
 .motion-habitat .station-kove .motion-habitat-machine {
-  border-color: rgba(191, 119, 58, 0.38);
+  border-color: rgba(208, 138, 75, 0.38);
 }
 
 .motion-habitat .station-kove .motion-habitat-machine-screen {
-  border-color: rgba(191, 119, 58, 0.44);
+  border-color: rgba(208, 138, 75, 0.44);
   background:
-    radial-gradient(circle at 26% 30%, rgba(244, 199, 148, 0.8) 0 2px, transparent 2.4px),
-    radial-gradient(circle at 74% 30%, rgba(244, 199, 148, 0.8) 0 2px, transparent 2.4px),
-    radial-gradient(circle at 26% 70%, rgba(226, 159, 92, 0.62) 0 2px, transparent 2.4px),
-    radial-gradient(circle at 74% 70%, rgba(226, 159, 92, 0.62) 0 2px, transparent 2.4px),
-    linear-gradient(180deg, rgba(191, 119, 58, 0.08), transparent 62%),
-    rgba(191, 119, 58, 0.025);
+    radial-gradient(circle at 26% 30%, rgba(244, 208, 164, 0.8) 0 2px, transparent 2.4px),
+    radial-gradient(circle at 74% 30%, rgba(244, 208, 164, 0.8) 0 2px, transparent 2.4px),
+    radial-gradient(circle at 26% 70%, rgba(231, 173, 115, 0.62) 0 2px, transparent 2.4px),
+    radial-gradient(circle at 74% 70%, rgba(231, 173, 115, 0.62) 0 2px, transparent 2.4px),
+    linear-gradient(180deg, rgba(208, 138, 75, 0.08), transparent 62%),
+    rgba(208, 138, 75, 0.025);
 }
 
 .motion-habitat .station-kove .motion-habitat-machine-screen::before {
@@ -357,12 +357,12 @@
   right: 20px;
   bottom: 13px;
   left: 20px;
-  border: 1px solid rgba(191, 119, 58, 0.42);
+  border: 1px solid rgba(208, 138, 75, 0.42);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(226, 159, 92, 0.1) 0 36%, transparent 38%);
+  background: radial-gradient(circle, rgba(231, 173, 115, 0.1) 0 36%, transparent 38%);
   box-shadow:
-    inset 0 0 10px rgba(191, 119, 58, 0.06),
-    0 0 8px rgba(191, 119, 58, 0.04);
+    inset 0 0 10px rgba(208, 138, 75, 0.06),
+    0 0 8px rgba(208, 138, 75, 0.04);
 }
 
 .motion-habitat .station-kove .accent-ambient {
@@ -372,34 +372,34 @@
   background:
     linear-gradient(
       90deg,
-      rgba(226, 159, 92, 0.8) 0 4px,
+      rgba(231, 173, 115, 0.8) 0 4px,
       transparent 4px 7px,
-      rgba(191, 119, 58, 0.54) 7px 13px,
+      rgba(208, 138, 75, 0.54) 7px 13px,
       transparent 13px 16px,
-      rgba(226, 159, 92, 0.7) 16px 22px,
+      rgba(231, 173, 115, 0.7) 16px 22px,
       transparent 22px 25px,
-      rgba(191, 119, 58, 0.44) 25px 30px
+      rgba(208, 138, 75, 0.44) 25px 30px
     );
 }
 
 /* Special Singer — rhythm console. */
 .motion-habitat .station-special {
-  border-top-color: rgba(167, 179, 95, 0.42);
-  box-shadow: inset 0 3px 0 rgba(167, 179, 95, 0.1);
+  border-top-color: rgba(168, 188, 99, 0.42);
+  box-shadow: inset 0 3px 0 rgba(168, 188, 99, 0.1);
 }
 
 .motion-habitat .station-special::before {
   content: 'RHYTHM CONSOLE';
-  color: rgba(205, 221, 111, 0.58);
+  color: rgba(208, 223, 130, 0.58);
 }
 
 .motion-habitat .station-special .motion-habitat-machine {
-  border-color: rgba(167, 179, 95, 0.28);
+  border-color: rgba(168, 188, 99, 0.28);
 }
 
 .motion-habitat .station-special .motion-habitat-machine-screen {
   border-radius: 9px 2px 9px 2px;
-  background: rgba(167, 179, 95, 0.025);
+  background: rgba(168, 188, 99, 0.025);
 }
 
 .motion-habitat .station-special .motion-habitat-machine-screen::before {
@@ -409,13 +409,13 @@
   opacity: 0.68;
   background:
     linear-gradient(90deg,
-      transparent 0 4%, rgba(167, 179, 95, 0.26) 4% 9%, transparent 9% 16%,
-      rgba(167, 179, 95, 0.4) 16% 22%, transparent 22% 29%,
-      rgba(167, 179, 95, 0.2) 29% 34%, transparent 34% 42%,
-      rgba(205, 221, 111, 0.42) 42% 48%, transparent 48% 56%,
-      rgba(167, 179, 95, 0.26) 56% 61%, transparent 61% 70%,
-      rgba(205, 221, 111, 0.5) 70% 75%, transparent 75% 84%,
-      rgba(167, 179, 95, 0.24) 84% 89%, transparent 89% 100%);
+      transparent 0 4%, rgba(168, 188, 99, 0.26) 4% 9%, transparent 9% 16%,
+      rgba(168, 188, 99, 0.4) 16% 22%, transparent 22% 29%,
+      rgba(168, 188, 99, 0.2) 29% 34%, transparent 34% 42%,
+      rgba(208, 223, 130, 0.42) 42% 48%, transparent 48% 56%,
+      rgba(168, 188, 99, 0.26) 56% 61%, transparent 61% 70%,
+      rgba(208, 223, 130, 0.5) 70% 75%, transparent 75% 84%,
+      rgba(168, 188, 99, 0.24) 84% 89%, transparent 89% 100%);
   clip-path: polygon(0 46%, 6% 25%, 13% 67%, 21% 38%, 29% 57%, 38% 17%, 47% 72%, 57% 32%, 66% 61%, 75% 20%, 84% 68%, 92% 40%, 100% 52%, 100% 58%, 92% 46%, 84% 74%, 75% 26%, 66% 67%, 57% 38%, 47% 78%, 38% 23%, 29% 63%, 21% 44%, 13% 73%, 6% 31%, 0 52%);
 }
 
@@ -426,33 +426,33 @@
   right: 7px;
   top: 50%;
   height: 1px;
-  background: rgba(167, 179, 95, 0.15);
+  background: rgba(168, 188, 99, 0.15);
 }
 
 /* First Love — layered memory / color terminal. */
 .motion-habitat .station-first-love {
-  border-right-color: rgba(130, 104, 139, 0.42);
-  box-shadow: inset -3px 0 0 rgba(130, 104, 139, 0.1);
+  border-right-color: rgba(142, 120, 166, 0.42);
+  box-shadow: inset -3px 0 0 rgba(142, 120, 166, 0.1);
 }
 
 .motion-habitat .station-first-love::before {
   content: 'MEMORY TERMINAL';
-  color: rgba(176, 151, 183, 0.58);
+  color: rgba(188, 166, 208, 0.58);
 }
 
 .motion-habitat .station-first-love .motion-habitat-machine {
-  border-color: rgba(130, 104, 139, 0.28);
+  border-color: rgba(142, 120, 166, 0.28);
   box-shadow:
     5px -5px 0 -1px rgba(7, 9, 7, 1),
-    5px -5px 0 rgba(130, 104, 139, 0.12),
+    5px -5px 0 rgba(142, 120, 166, 0.12),
     10px -10px 0 -1px rgba(7, 9, 7, 1),
-    10px -10px 0 rgba(130, 104, 139, 0.07);
+    10px -10px 0 rgba(142, 120, 166, 0.07);
 }
 
 .motion-habitat .station-first-love .motion-habitat-machine-screen {
   position: relative;
   overflow: hidden;
-  background: rgba(130, 104, 139, 0.018);
+  background: rgba(142, 120, 166, 0.018);
 }
 
 .motion-habitat .motion-habitat-memory-slides {

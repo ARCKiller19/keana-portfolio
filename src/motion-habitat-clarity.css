@@ -26,15 +26,15 @@
 }
 
 .motion-habitat .station-roast {
-  --station-rgb: 166, 174, 174;
+  --station-rgb: 184, 180, 168;
 }
 
 .motion-habitat .station-special {
-  --station-rgb: 167, 179, 95;
+  --station-rgb: 168, 188, 99;
 }
 
 .motion-habitat .station-first-love {
-  --station-rgb: 148, 113, 157;
+  --station-rgb: 142, 120, 166;
 }
 
 .motion-habitat.is-online .motion-habitat-station {
@@ -191,13 +191,13 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: rgba(166, 174, 174, 0.56);
-  box-shadow: 0 0 0 3px rgba(166, 174, 174, 0.05);
+  background: rgba(184, 180, 168, 0.56);
+  box-shadow: 0 0 0 3px rgba(184, 180, 168, 0.05);
 }
 
 .motion-habitat .station-roast .accent-warm::after {
   content: 'REC';
-  color: rgba(205, 211, 211, 0.66);
+  color: rgba(215, 210, 198, 0.66);
   font-family: var(--font-mono);
   font-size: 5px;
   letter-spacing: 0.08em;
@@ -207,10 +207,10 @@
 .motion-habitat .station-roast:focus-visible .accent-warm::before,
 .motion-habitat .station-roast.is-awake .accent-warm::before,
 .motion-habitat .station-roast.is-open .accent-warm::before {
-  background: rgba(205, 211, 211, 0.98);
+  background: rgba(215, 210, 198, 0.98);
   box-shadow:
-    0 0 0 3px rgba(166, 174, 174, 0.08),
-    0 0 12px rgba(166, 174, 174, 0.24);
+    0 0 0 3px rgba(184, 180, 168, 0.08),
+    0 0 12px rgba(184, 180, 168, 0.24);
 }
 
 /* Roast: the inner viewfinder re-frames like a camera reacquiring focus. */
@@ -264,15 +264,15 @@
     transform: scale(0.88);
     opacity: 0.58;
     box-shadow:
-      inset 0 0 8px rgba(191, 119, 58, 0.04),
-      0 0 5px rgba(191, 119, 58, 0.03);
+      inset 0 0 8px rgba(208, 138, 75, 0.04),
+      0 0 5px rgba(208, 138, 75, 0.03);
   }
   to {
     transform: scale(1.06);
     opacity: 1;
     box-shadow:
-      inset 0 0 12px rgba(191, 119, 58, 0.1),
-      0 0 11px rgba(191, 119, 58, 0.12);
+      inset 0 0 12px rgba(208, 138, 75, 0.1),
+      0 0 11px rgba(208, 138, 75, 0.12);
   }
 }
 

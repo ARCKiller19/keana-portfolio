@@ -364,26 +364,26 @@
 .accent-warm {
   width: 12px;
   height: 2px;
-  background: rgba(166, 174, 174, 0.34);
+  background: rgba(184, 180, 168, 0.34);
 }
 
 .station-roast.is-awake .accent-warm,
 .station-roast.is-open .accent-warm {
-  background: rgba(166, 174, 174, 0.74);
-  box-shadow: 0 0 10px rgba(166, 174, 174, 0.2);
+  background: rgba(184, 180, 168, 0.74);
+  box-shadow: 0 0 10px rgba(184, 180, 168, 0.2);
 }
 
 .accent-pulse {
   width: 18px;
   height: 8px;
   background:
-    linear-gradient(90deg, rgba(167, 179, 95, 0.18) 0 2px, transparent 2px 5px, rgba(167, 179, 95, 0.12) 5px 8px, transparent 8px 11px, rgba(167, 179, 95, 0.2) 11px 14px, transparent 14px 16px, rgba(167, 179, 95, 0.1) 16px 18px);
+    linear-gradient(90deg, rgba(168, 188, 99, 0.18) 0 2px, transparent 2px 5px, rgba(168, 188, 99, 0.12) 5px 8px, transparent 8px 11px, rgba(168, 188, 99, 0.2) 11px 14px, transparent 14px 16px, rgba(168, 188, 99, 0.1) 16px 18px);
 }
 
 .station-special.is-awake .accent-pulse,
 .station-special.is-open .accent-pulse {
   background:
-    linear-gradient(90deg, rgba(205, 221, 111, 0.56) 0 2px, transparent 2px 5px, rgba(205, 221, 111, 0.34) 5px 8px, transparent 8px 11px, rgba(205, 221, 111, 0.62) 11px 14px, transparent 14px 16px, rgba(205, 221, 111, 0.28) 16px 18px);
+    linear-gradient(90deg, rgba(208, 223, 130, 0.56) 0 2px, transparent 2px 5px, rgba(208, 223, 130, 0.34) 5px 8px, transparent 8px 11px, rgba(208, 223, 130, 0.62) 11px 14px, transparent 14px 16px, rgba(208, 223, 130, 0.28) 16px 18px);
 }
 
 .accent-chapters {

@@ -30,10 +30,10 @@ const COMPACT_LAYOUT = {
 }
 
 const STATION_META = [
-  { slug: 'roast', system: 'LIVE / CAFE', accent: 'warm', rgb: '166, 174, 174' },
-  { slug: 'kove', system: 'LIVE / CAFE / FRIENDS', accent: 'ambient', rgb: '191, 119, 58' },
-  { slug: 'special', system: 'MOTION / RHYTHM', accent: 'pulse', rgb: '167, 179, 95' },
-  { slug: 'first-love', system: 'MEMORY / COLOR', accent: 'chapters', rgb: '148, 113, 157' },
+  { slug: 'roast', system: 'LIVE / CAFE', accent: 'warm', rgb: '184, 180, 168' },
+  { slug: 'kove', system: 'LIVE / CAFE / FRIENDS', accent: 'ambient', rgb: '208, 138, 75' },
+  { slug: 'special', system: 'MOTION / RHYTHM', accent: 'pulse', rgb: '168, 188, 99' },
+  { slug: 'first-love', system: 'MEMORY / COLOR', accent: 'chapters', rgb: '142, 120, 166' },
 ]
 
 const MANUAL_SPEED = 260
