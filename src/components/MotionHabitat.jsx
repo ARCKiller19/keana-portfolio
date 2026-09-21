@@ -147,7 +147,7 @@ function normalizeKey(key) {
   return null
 }
 
-function createEnergyPath(start, end) {
+function createEnergyPath(start, end, time) {
   const dx = end.x - start.x
   const dy = end.y - start.y
   const length = Math.hypot(dx, dy)
@@ -155,16 +155,43 @@ function createEnergyPath(start, end) {
 
   const normalX = -dy / length
   const normalY = dx / length
-  const stops = [0, 0.2, 0.38, 0.56, 0.74, 0.9, 1]
-  const offsets = [0, 4, -3, 5, -4, 2.5, 0]
+  const phase = time * 0.0022
+  const amplitude = Math.min(10, Math.max(4, length * 0.035))
+  const stops = [0, 0.16, 0.32, 0.48, 0.64, 0.8, 1]
 
-  return stops
-    .map((progress, index) => {
-      const x = start.x + dx * progress + normalX * offsets[index]
-      const y = start.y + dy * progress + normalY * offsets[index]
-      return `${index === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`
-    })
-    .join(' ')
+  const points = stops.map((progress) => {
+    const envelope = Math.sin(Math.PI * progress)
+    const primaryWave =
+      Math.sin(phase + progress * Math.PI * 2.2) * amplitude * envelope
+    const secondaryWave =
+      Math.sin(phase * 0.62 - progress * Math.PI * 3.2) *
+      amplitude *
+      0.32 *
+      envelope
+    const offset = primaryWave + secondaryWave
+
+    return {
+      x: start.x + dx * progress + normalX * offset,
+      y: start.y + dy * progress + normalY * offset,
+    }
+  })
+
+  let path = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`
+
+  for (let index = 1; index < points.length - 1; index += 1) {
+    const point = points[index]
+    const nextPoint = points[index + 1]
+    const midX = (point.x + nextPoint.x) / 2
+    const midY = (point.y + nextPoint.y) / 2
+
+    path += ` Q ${point.x.toFixed(1)} ${point.y.toFixed(1)} ${midX.toFixed(1)} ${midY.toFixed(1)}`
+  }
+
+  const penultimate = points[points.length - 2]
+  const last = points[points.length - 1]
+  path += ` Q ${penultimate.x.toFixed(1)} ${penultimate.y.toFixed(1)} ${last.x.toFixed(1)} ${last.y.toFixed(1)}`
+
+  return path
 }
 
 function MotionHabitat({ pieces, onOpenNotes }) {
@@ -503,7 +530,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           x: next.x + handDirection * 11,
           y: next.y - 16,
         }
-        const energyD = createEnergyPath(energyStation, hand)
+        const energyD = createEnergyPath(energyStation, hand, time)
         energyPath.setAttribute('d', energyD)
         energyPulse?.setAttribute('d', energyD)
       } else {
