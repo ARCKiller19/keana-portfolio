@@ -259,12 +259,6 @@
   animation: habitat-kove-monitor 1.8s ease-in-out infinite alternate;
 }
 
-.motion-habitat .station-kove:hover .accent-ambient,
-.motion-habitat .station-kove:focus-visible .accent-ambient,
-.motion-habitat .station-kove.is-open .accent-ambient {
-  animation: habitat-kove-signal 1.1s ease-in-out infinite alternate;
-}
-
 @keyframes habitat-kove-monitor {
   from {
     transform: scale(0.88);
@@ -280,11 +274,6 @@
       inset 0 0 12px rgba(214, 139, 66, 0.1),
       0 0 11px rgba(214, 139, 66, 0.12);
   }
-}
-
-@keyframes habitat-kove-signal {
-  from { transform: translateX(-2px); opacity: 0.62; }
-  to { transform: translateX(3px); opacity: 1; }
 }
 
 /* Special Singer: the machine behaves like a living rhythm monitor. */
@@ -325,27 +314,33 @@
   box-shadow: 0 0 9px currentColor;
 }
 
-/* First Love: the chapter strip drifts between memory channels. */
+/* First Love: chapter colors advance like presentation slides moving to the right. */
 .motion-habitat .station-first-love:hover .motion-habitat-machine-screen::before,
 .motion-habitat .station-first-love:focus-visible .motion-habitat-machine-screen::before,
-.motion-habitat .station-first-love.is-open .motion-habitat-machine-screen::before {
-  animation: habitat-first-love-chapters 1.9s ease-in-out infinite alternate;
-}
-
+.motion-habitat .station-first-love.is-open .motion-habitat-machine-screen::before,
 .motion-habitat .station-first-love:hover .motion-habitat-machine-screen::after,
 .motion-habitat .station-first-love:focus-visible .motion-habitat-machine-screen::after,
 .motion-habitat .station-first-love.is-open .motion-habitat-machine-screen::after {
-  animation: habitat-first-love-labels 1.9s ease-in-out infinite alternate;
+  animation: habitat-first-love-slides 4.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
 
-@keyframes habitat-first-love-chapters {
-  from { transform: translateX(-3px) scaleX(0.9); opacity: 0.5; }
-  to { transform: translateX(3px) scaleX(1.06); opacity: 0.88; }
-}
-
-@keyframes habitat-first-love-labels {
-  from { letter-spacing: 0.16em; opacity: 0.28; }
-  to { letter-spacing: 0.28em; opacity: 0.62; }
+@keyframes habitat-first-love-slides {
+  0%,
+  16% {
+    transform: translateX(0);
+  }
+  28%,
+  46% {
+    transform: translateX(16.5%);
+  }
+  58%,
+  76% {
+    transform: translateX(33%);
+  }
+  88%,
+  100% {
+    transform: translateX(50%);
+  }
 }
 
 /* ---------- Viewing-panel readability ---------- */
@@ -632,7 +627,6 @@
   .motion-habitat .station-special .motion-habitat-machine-screen::before,
   .motion-habitat .station-roast .motion-habitat-machine-screen::before,
   .motion-habitat .station-kove .motion-habitat-machine-screen::before,
-  .motion-habitat .station-kove .accent-ambient,
   .motion-habitat .station-first-love .motion-habitat-machine-screen::before,
   .motion-habitat .station-first-love .motion-habitat-machine-screen::after {
     animation: none !important;

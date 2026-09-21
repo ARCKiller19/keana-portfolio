@@ -365,19 +365,6 @@
     0 0 8px rgba(214, 139, 66, 0.04);
 }
 
-.motion-habitat .station-kove .motion-habitat-machine-screen::after {
-  content: 'CAFE / 04';
-  position: absolute;
-  right: 0;
-  bottom: 4px;
-  left: 0;
-  color: rgba(234, 174, 102, 0.82);
-  font-family: var(--font-mono);
-  font-size: 4px;
-  letter-spacing: 0.08em;
-  text-align: center;
-}
-
 .motion-habitat .station-kove .accent-ambient {
   width: 30px;
   height: 8px;
@@ -473,25 +460,41 @@
 .motion-habitat .station-first-love .motion-habitat-machine-screen::before {
   content: '';
   position: absolute;
-  left: 7px;
-  right: 7px;
+  left: calc(-100% + 7px);
   bottom: 6px;
-  height: 3px;
-  background: linear-gradient(90deg, #9b4545 0 30%, transparent 30% 35%, #6e557f 35% 65%, transparent 65% 70%, #9d8d48 70% 100%);
-  opacity: 0.58;
+  width: calc(200% - 14px);
+  height: 4px;
+  background:
+    linear-gradient(
+      90deg,
+      #9b4545 0 14%,
+      transparent 14% 17%,
+      #6e557f 17% 31%,
+      transparent 31% 34%,
+      #9d8d48 34% 48%,
+      transparent 48% 51%,
+      #9b4545 51% 65%,
+      transparent 65% 68%,
+      #6e557f 68% 82%,
+      transparent 82% 85%,
+      #9d8d48 85% 99%,
+      transparent 99% 100%
+    );
+  opacity: 0.7;
 }
 
 .motion-habitat .station-first-love .motion-habitat-machine-screen::after {
-  content: 'R  P  Y';
+  content: 'R   P   Y      R   P   Y';
   position: absolute;
-  left: 0;
-  right: 0;
   top: 7px;
-  color: rgba(239, 233, 219, 0.28);
+  left: -100%;
+  width: 200%;
+  color: rgba(239, 233, 219, 0.32);
   font-family: var(--font-mono);
   font-size: 4.5px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-align: center;
+  white-space: nowrap;
 }
 
 .motion-habitat .motion-habitat-station.is-awake,

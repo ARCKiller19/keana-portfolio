@@ -59,7 +59,7 @@ export const featuredMotion = [
   {
     id: 'kove',
     number: '02',
-    title: 'Kove',
+    title: 'Kove: Live Action Edit',
     category: 'Live Action · Video Editing',
     layout: 'portrait',
     src: '/videos/motion/kove.mp4',
