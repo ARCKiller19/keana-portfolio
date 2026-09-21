@@ -44,11 +44,7 @@
   box-shadow: inset 0 0 10px rgba(var(--station-rgb), 0.035);
 }
 
-/* Do not run the rhythm animation just because KEANA passes through its wake radius. */
-.motion-habitat .station-special.is-awake:not(.is-open):not(:hover):not(:focus-visible) .motion-habitat-machine-screen::before,
-.motion-habitat .station-special.is-targeted:not(.is-open):not(:hover):not(:focus-visible) .motion-habitat-machine-screen::before {
-  animation: none !important;
-}
+/* SIGNAL DETECTED now intentionally wakes the station's monitor animation. */
 
 /* Freshness markers for the two live-action works. */
 .motion-habitat .station-roast::after,

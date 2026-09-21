@@ -7,6 +7,24 @@
   }
 }
 
+/* Keep Motion Habitat preview panels away from the right edge and give the
+   reflection column a deliberate reading margin on desktop and iPad. */
+@media (min-width: 721px) {
+  .motion-habitat .motion-habitat-panel {
+    width: min(70%, 770px);
+  }
+
+  .motion-habitat .motion-habitat-panel-copy {
+    padding-inline-end: clamp(16px, 2vw, 28px);
+  }
+}
+
+@media (min-width: 721px) and (max-width: 1180px) {
+  .motion-habitat .motion-habitat-panel-copy {
+    padding-inline-end: clamp(20px, 2.6vw, 30px);
+  }
+}
+
 /* Selected Work should remain spatially stable while a specimen is inspected. */
 .specimen-card,
 .specimen-card-left.is-selected,

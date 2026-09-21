@@ -216,6 +216,7 @@
 /* Roast: the inner viewfinder re-frames like a camera reacquiring focus. */
 .motion-habitat .station-roast:hover .motion-habitat-machine-screen::before,
 .motion-habitat .station-roast:focus-visible .motion-habitat-machine-screen::before,
+.motion-habitat .station-roast.is-awake .motion-habitat-machine-screen::before,
 .motion-habitat .station-roast.is-open .motion-habitat-machine-screen::before {
   animation: habitat-roast-refocus 2.8s ease-in-out infinite;
 }
@@ -255,6 +256,7 @@
 /* Kove: the cafe table and friend nodes wake as one social signal. */
 .motion-habitat .station-kove:hover .motion-habitat-machine-screen::before,
 .motion-habitat .station-kove:focus-visible .motion-habitat-machine-screen::before,
+.motion-habitat .station-kove.is-awake .motion-habitat-machine-screen::before,
 .motion-habitat .station-kove.is-open .motion-habitat-machine-screen::before {
   animation: habitat-kove-monitor 1.8s ease-in-out infinite alternate;
 }
@@ -317,6 +319,7 @@
 /* First Love: the full color cards advance like presentation slides moving to the right. */
 .motion-habitat .station-first-love:hover .motion-habitat-memory-slides,
 .motion-habitat .station-first-love:focus-visible .motion-habitat-memory-slides,
+.motion-habitat .station-first-love.is-awake .motion-habitat-memory-slides,
 .motion-habitat .station-first-love.is-open .motion-habitat-memory-slides {
   animation: habitat-first-love-slides 4.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
