@@ -395,7 +395,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     pressedKeysRef.current.clear()
     suppressedStationRef.current = null
     resetJoystick()
-    setJoystickEnabled(false)
+    setIsJoystickEnabled(false)
     setTargetedIndex(null)
     setWalkingState(false)
     setCenterPerchedState(false)
