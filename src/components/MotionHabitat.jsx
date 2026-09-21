@@ -200,6 +200,10 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const characterRef = useRef(null)
   const energyPathRef = useRef(null)
   const energyPulseRef = useRef(null)
+  const joystickPadRef = useRef(null)
+  const joystickKnobRef = useRef(null)
+  const joystickPointerRef = useRef(null)
+  const joystickVectorRef = useRef({ x: 0, y: 0 })
   const positionRef = useRef({ ...DESKTOP_LAYOUT.start })
   const pressedKeysRef = useRef(new Set())
   const targetRef = useRef(null)
@@ -214,6 +218,9 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const suppressedStationRef = useRef(null)
 
   const isCompact = useMediaQuery('(max-width: 720px)')
+  const isTabletTouch = useMediaQuery(
+    '(min-width: 721px) and (max-width: 1400px) and (any-pointer: coarse)',
+  )
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
   const layout = isCompact ? COMPACT_LAYOUT : DESKTOP_LAYOUT
 
@@ -224,6 +231,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const [isWalking, setIsWalking] = useState(false)
   const [isCenterPerched, setIsCenterPerched] = useState(false)
   const [energyIndex, setEnergyIndex] = useState(null)
+  const [isJoystickEnabled, setIsJoystickEnabled] = useState(false)
   const [perchDirection, setPerchDirection] = useState('right')
   const [facing, setFacing] = useState('right')
   const [statusMessage, setStatusMessage] = useState(
@@ -272,6 +280,43 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     facingRef.current = nextFacing
     setFacing(nextFacing)
   }, [])
+
+  const resetJoystick = useCallback(() => {
+    joystickPointerRef.current = null
+    joystickVectorRef.current = { x: 0, y: 0 }
+
+    const knob = joystickKnobRef.current
+    if (knob) knob.style.transform = 'translate(-50%, -50%)'
+  }, [])
+
+  const updateJoystick = useCallback(
+    (event) => {
+      const pad = joystickPadRef.current
+      const knob = joystickKnobRef.current
+      if (!pad || !knob) return
+
+      const rect = pad.getBoundingClientRect()
+      const centerX = rect.left + rect.width / 2
+      const centerY = rect.top + rect.height / 2
+      const maxRadius = Math.max(28, Math.min(rect.width, rect.height) * 0.32)
+      const rawX = event.clientX - centerX
+      const rawY = event.clientY - centerY
+      const rawDistance = Math.hypot(rawX, rawY)
+      const scale = rawDistance > maxRadius ? maxRadius / rawDistance : 1
+      const clampedX = rawX * scale
+      const clampedY = rawY * scale
+      const normalizedX = clampedX / maxRadius
+      const normalizedY = clampedY / maxRadius
+      const magnitude = Math.hypot(normalizedX, normalizedY)
+
+      joystickVectorRef.current =
+        magnitude < 0.08 ? { x: 0, y: 0 } : { x: normalizedX, y: normalizedY }
+
+      knob.style.transform =
+        `translate(calc(-50% + ${clampedX.toFixed(1)}px), calc(-50% + ${clampedY.toFixed(1)}px))`
+    },
+    [],
+  )
 
   const activateStation = useCallback(
     (index) => {
@@ -352,6 +397,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     targetRef.current = null
     pressedKeysRef.current.clear()
     suppressedStationRef.current = null
+    resetJoystick()
+    setJoystickEnabled(false)
     setTargetedIndex(null)
     setWalkingState(false)
     setCenterPerchedState(false)
@@ -362,6 +409,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     syncCharacter(positionRef.current)
   }, [
     isCompact,
+    resetJoystick,
     setCenterPerchedState,
     setEnergyIndexState,
     setPerchDirectionState,
@@ -400,6 +448,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     energyPulseRef.current?.removeAttribute('d')
       targetRef.current = null
       pressedKeysRef.current.clear()
+      resetJoystick()
       return undefined
     }
 
@@ -442,15 +491,24 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           moving = true
         }
       } else if (!isCompact) {
-        const keys = pressedKeysRef.current
-        dx = (keys.has('right') ? 1 : 0) - (keys.has('left') ? 1 : 0)
-        dy = (keys.has('down') ? 1 : 0) - (keys.has('up') ? 1 : 0)
+        const joystick = joystickVectorRef.current
+        const joystickMagnitude = Math.hypot(joystick.x, joystick.y)
 
-        if (dx || dy) {
-          const magnitude = Math.hypot(dx, dy)
-          dx = (dx / magnitude) * MANUAL_SPEED * delta
-          dy = (dy / magnitude) * MANUAL_SPEED * delta
+        if (joystickMagnitude > 0.01) {
+          dx = joystick.x * MANUAL_SPEED * delta
+          dy = joystick.y * MANUAL_SPEED * delta
           moving = true
+        } else {
+          const keys = pressedKeysRef.current
+          dx = (keys.has('right') ? 1 : 0) - (keys.has('left') ? 1 : 0)
+          dy = (keys.has('down') ? 1 : 0) - (keys.has('up') ? 1 : 0)
+
+          if (dx || dy) {
+            const magnitude = Math.hypot(dx, dy)
+            dx = (dx / magnitude) * MANUAL_SPEED * delta
+            dy = (dy / magnitude) * MANUAL_SPEED * delta
+            moving = true
+          }
         }
       }
 
@@ -565,8 +623,9 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       setWalkingState(false)
       setCenterPerchedState(false)
       setEnergyIndexState(null)
+      resetJoystick()
       energyPathRef.current?.removeAttribute('d')
-    energyPulseRef.current?.removeAttribute('d')
+      energyPulseRef.current?.removeAttribute('d')
     }
 
     if (!('IntersectionObserver' in window)) {
@@ -592,6 +651,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     activateStation,
     isCompact,
     reducedMotion,
+    resetJoystick,
     setCenterPerchedState,
     setEnergyIndexState,
     setPerchDirectionState,
@@ -653,6 +713,53 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     worldRef.current?.focus({ preventScroll: true })
   }
 
+  const handleJoystickPointerDown = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    targetRef.current = null
+    setTargetedIndex(null)
+    pressedKeysRef.current.clear()
+
+    if (fallbackTimerRef.current) {
+      window.clearTimeout(fallbackTimerRef.current)
+      fallbackTimerRef.current = null
+    }
+
+    joystickPointerRef.current = event.pointerId
+    event.currentTarget.setPointerCapture?.(event.pointerId)
+    updateJoystick(event)
+    worldRef.current?.focus({ preventScroll: true })
+  }
+
+  const handleJoystickPointerMove = (event) => {
+    if (joystickPointerRef.current !== event.pointerId) return
+    event.preventDefault()
+    event.stopPropagation()
+    updateJoystick(event)
+  }
+
+  const handleJoystickPointerEnd = (event) => {
+    if (joystickPointerRef.current !== event.pointerId) return
+    event.preventDefault()
+    event.stopPropagation()
+    event.currentTarget.releasePointerCapture?.(event.pointerId)
+    resetJoystick()
+
+    if (!pressedKeysRef.current.size) setWalkingState(false)
+  }
+
+  const toggleJoystick = () => {
+    setIsJoystickEnabled((enabled) => {
+      const nextEnabled = !enabled
+      if (!nextEnabled) {
+        resetJoystick()
+        if (!pressedKeysRef.current.size) setWalkingState(false)
+      }
+      return nextEnabled
+    })
+  }
+
   const closePanel = () => {
     const closingIndex = openIndexRef.current
     if (closingIndex !== null) suppressedStationRef.current = closingIndex
@@ -700,9 +807,25 @@ function MotionHabitat({ pieces, onOpenNotes }) {
               : 'A quiet cyber-botanical lab for Keana\'s motion work.'}
           </p>
         </div>
-        <span className="motion-habitat-system" aria-hidden="true">
-          GRID 07-B · SIGNAL READY
-        </span>
+        <div className="motion-habitat-header-actions">
+          <span className="motion-habitat-system" aria-hidden="true">
+            GRID 07-B · SIGNAL READY
+          </span>
+          {isTabletTouch && !reducedMotion && (
+            <button
+              className={`motion-habitat-joystick-toggle ${
+                isJoystickEnabled ? 'is-active' : ''
+              }`}
+              type="button"
+              aria-pressed={isJoystickEnabled}
+              aria-controls="motion-habitat-joystick"
+              onClick={toggleJoystick}
+            >
+              <span aria-hidden="true">◉</span>
+              {isJoystickEnabled ? 'JOYSTICK ON' : 'JOYSTICK'}
+            </button>
+          )}
+        </div>
       </header>
 
       <div
@@ -867,7 +990,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           <span className="motion-habitat-character-leg leg-two" />
         </div>
 
-        {!isCompact && !reducedMotion && (
+        {!isCompact && !reducedMotion && !isTabletTouch && (
           <div className="motion-habitat-controls" aria-hidden="true">
             <span className="motion-habitat-keys">
               <b>W</b>
@@ -876,6 +999,27 @@ function MotionHabitat({ pieces, onOpenNotes }) {
               <b>D</b>
             </span>
             <span>MOVE · ARROWS ALSO WORK</span>
+          </div>
+        )}
+
+        {isTabletTouch && isJoystickEnabled && !reducedMotion && (
+          <div
+            ref={joystickPadRef}
+            id="motion-habitat-joystick"
+            className="motion-habitat-joystick"
+            role="group"
+            aria-label="Touch joystick. Drag in any direction to move Keana."
+            onPointerDown={handleJoystickPointerDown}
+            onPointerMove={handleJoystickPointerMove}
+            onPointerUp={handleJoystickPointerEnd}
+            onPointerCancel={handleJoystickPointerEnd}
+          >
+            <span className="motion-habitat-joystick-ring" aria-hidden="true" />
+            <span
+              ref={joystickKnobRef}
+              className="motion-habitat-joystick-knob"
+              aria-hidden="true"
+            />
           </div>
         )}
 
