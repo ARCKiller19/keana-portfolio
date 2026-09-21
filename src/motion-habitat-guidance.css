@@ -270,8 +270,8 @@
 .motion-habitat .motion-habitat-joystick {
   position: absolute;
   z-index: 19;
-  bottom: 14px;
-  left: 21%;
+  bottom: 18px;
+  left: 96px;
   width: 96px;
   height: 96px;
   transform: translateX(-50%);
@@ -907,6 +907,10 @@
 
 /* When moving upward across the cushion, the body is viewed from behind/top-down.
    Hiding the legs keeps the seated silhouette clean instead of implying a front view. */
+.motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='up'] .motion-habitat-character-body::after {
+  display: none;
+}
+
 .motion-habitat .motion-habitat-world:not(.is-guide-visible) .motion-habitat-character.is-center-perched[data-perch-direction='up'] .motion-habitat-character-leg {
   display: none;
 }
