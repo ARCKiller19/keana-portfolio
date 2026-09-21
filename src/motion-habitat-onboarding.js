@@ -106,7 +106,7 @@ function createGuide(world) {
 
   const stationCopy = document.createElement('span')
   stationCopy.className = 'motion-habitat-guide-path-copy'
-  stationCopy.textContent = 'The visitor will auto-walk there and open the work.'
+  stationCopy.textContent = 'KEANA will auto-walk there and open the work.'
 
   stationPath.append(stationTitle, stationDemo, stationCopy)
 
@@ -138,7 +138,7 @@ function createGuide(world) {
   const joystickCopy = document.createElement('span')
   joystickCopy.className = 'motion-habitat-guide-path-copy'
   joystickCopy.textContent =
-    'Toggle JOYSTICK beside SIGNAL READY, then drag the pad to move.'
+    'Toggle JOYSTICK at the top right beside SIGNAL READY, then drag the pad to move.'
 
   joystickPath.append(joystickTitle, joystickDemo, joystickCopy)
   paths.append(
