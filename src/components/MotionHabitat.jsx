@@ -391,7 +391,6 @@ function MotionHabitat({ pieces, onOpenNotes }) {
 
       const shouldPerchOnCenter =
         !isCompact &&
-        moving &&
         distance(next, activeLayout.dock) <= CENTER_PERCH_RADIUS
       setCenterPerchedState(shouldPerchOnCenter)
 
