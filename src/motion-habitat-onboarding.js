@@ -106,7 +106,7 @@ function createGuide(world) {
 
   const stationCopy = document.createElement('span')
   stationCopy.className = 'motion-habitat-guide-path-copy'
-  stationCopy.textContent = 'KEANA will auto-walk there and open the work.'
+  stationCopy.textContent = 'The character will auto-walk there and open the work.'
 
   stationPath.append(stationTitle, stationDemo, stationCopy)
 
