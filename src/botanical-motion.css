@@ -496,13 +496,18 @@ body.botanical-intro-settling .nav-panel {
 .scroll-stem-growth-segment,
 .scroll-stem-growth-tail {
   vector-effect: non-scaling-stroke;
-  stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1;
 }
 
 .scroll-stem-track {
   stroke: rgba(239, 233, 219, 0.08);
+  stroke-linecap: round;
+}
+
+.scroll-stem-growth-segment,
+.scroll-stem-growth-tail {
+  stroke-linecap: butt;
 }
 
 .scroll-stem-growth-segment,
