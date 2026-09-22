@@ -61,12 +61,19 @@ function ScrollStem({ active }) {
       const atPageEnd =
         scrollY + window.innerHeight >= scrollHeight - 2
 
-      const activationScrolls = sections.map((section) =>
+      const sectionTops = sections.map(
+        (section) => scrollY + section.getBoundingClientRect().top,
+      )
+      const activationScrolls = sectionTops.map((sectionTop) =>
         Math.min(
-          Math.max(
-            scrollY + section.getBoundingClientRect().top - activationLine,
-            0,
-          ),
+          Math.max(sectionTop - activationLine, 0),
+          scrollRange,
+        ),
+      )
+      const entryLine = window.innerHeight * 0.94
+      const entryScrolls = sectionTops.map((sectionTop) =>
+        Math.min(
+          Math.max(sectionTop - entryLine, 0),
           scrollRange,
         ),
       )
@@ -86,13 +93,14 @@ function ScrollStem({ active }) {
 
       segments.forEach((segment, index) => {
         const start =
-          index === 0 ? 0 : activationScrolls[index - 1] ?? scrollRange
+          index === 0 ? 0 : entryScrolls[index] ?? scrollRange
         const end = activationScrolls[index] ?? scrollRange
         const progress = rangeProgress(scrollY, start, end)
 
-        // The illuminated path is a direct representation of the user's scroll
-        // position between section thresholds. At the exact scroll position where
-        // the next section becomes active, progress reaches 1 and that node lights.
+        // Grow only while the destination section is physically entering the
+        // viewport. This keeps the line tied to what the user can actually see:
+        // it starts when that section approaches from below and reaches the node
+        // exactly when the same section becomes active.
         segment.style.setProperty(
           '--segment-progress',
           progress.toFixed(4),
