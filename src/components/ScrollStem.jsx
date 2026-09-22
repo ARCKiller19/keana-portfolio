@@ -42,7 +42,7 @@ function ScrollStem({ active }) {
       return clamp((value - start) / span, 0, 1)
     }
 
-    const paceProgress = (progress) => Math.pow(progress, 2.5)
+    const paceProgress = (progress) => Math.pow(progress, 3)
 
     const updateStem = () => {
       frameId = null
