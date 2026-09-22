@@ -88,10 +88,15 @@ function ScrollStem({ active }) {
         const start =
           index === 0 ? 0 : activationScrolls[index - 1] ?? scrollRange
         const end = activationScrolls[index] ?? scrollRange
-        const progress =
-          atPageEnd && index === segments.length - 1
-            ? 1
-            : rangeProgress(scrollY, start, end)
+        const rawProgress = rangeProgress(scrollY, start, end)
+        const nodeReached = index <= currentIndex
+
+        // Follow scroll continuously, but keep a visible gap before an upcoming
+        // node. The final few percent complete only in the same frame that the
+        // node itself becomes reached, so the line can never visually arrive first.
+        const progress = nodeReached
+          ? 1
+          : Math.min(rawProgress * 0.92, 0.92)
 
         segment.style.setProperty(
           '--segment-progress',
