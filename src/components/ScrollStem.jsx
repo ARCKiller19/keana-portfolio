@@ -42,6 +42,8 @@ function ScrollStem({ active }) {
       return clamp((value - start) / span, 0, 1)
     }
 
+    const paceProgress = (progress) => Math.pow(progress, 1.7)
+
     const updateStem = () => {
       frameId = null
 
@@ -89,12 +91,12 @@ function ScrollStem({ active }) {
             ? 0
             : activationScrolls[index - 1] ?? scrollRange
         const end = activationScrolls[index] ?? scrollRange
-        const progress = rangeProgress(scrollY, start, end)
+        const rawProgress = rangeProgress(scrollY, start, end)
+        const progress = paceProgress(rawProgress)
 
-        // The line uses the exact same section thresholds as the nodes:
-        // first segment starts with the first scroll from Hero;
-        // every later segment starts when the previous node lights;
-        // each segment reaches 100% exactly when its destination node lights.
+        // Keep the same node thresholds, but pace the line more slowly through
+        // the first part of each interval. It still reaches 100% on the exact
+        // same scroll position that lights the destination node.
         segment.style.setProperty(
           '--segment-progress',
           progress.toFixed(4),
@@ -110,7 +112,9 @@ function ScrollStem({ active }) {
             ? 0
             : atPageEnd
               ? 1
-              : rangeProgress(scrollY, lastActivation, scrollRange)
+              : paceProgress(
+                  rangeProgress(scrollY, lastActivation, scrollRange),
+                )
 
         tail.style.setProperty(
           '--segment-progress',
