@@ -36,6 +36,15 @@ const STATION_META = [
   { slug: 'first-love', system: 'MEMORY / COLOR', accent: 'chapters', rgb: '142, 120, 166' },
 ]
 
+const HOLOGRAM_POSITIONS = [
+  { x: 332, y: 278, tilt: '-2deg' },
+  { x: 668, y: 278, tilt: '2deg' },
+  { x: 338, y: 302, tilt: '-1deg' },
+  { x: 662, y: 302, tilt: '1deg' },
+]
+
+const HOLOGRAM_PREVIEW_SECONDS = 5
+
 const MANUAL_SPEED = 260
 const AUTO_SPEED = 620
 const WAKE_RADIUS = 150
@@ -130,6 +139,121 @@ function HabitatCutPlayer({ piece }) {
         </div>
       )}
     </>
+  )
+}
+
+function HabitatHologramPreview({ piece, meta, position, onPlay }) {
+  const videoRef = useRef(null)
+  const previewEndRef = useRef(0)
+  const hasStartedRef = useRef(false)
+  const [phase, setPhase] = useState('loading')
+
+  useEffect(() => {
+    const video = videoRef.current
+
+    return () => {
+      video?.pause()
+    }
+  }, [])
+
+  const startPreview = useCallback(async () => {
+    const video = videoRef.current
+    if (!video || hasStartedRef.current) return
+
+    hasStartedRef.current = true
+
+    const duration = Number.isFinite(video.duration) ? video.duration : 0
+    const maxStart = Math.max(0, duration - HOLOGRAM_PREVIEW_SECONDS)
+    const requestedStart = piece.previewStart ?? 0
+    const previewStart = clamp(requestedStart, 0, maxStart)
+    const previewEnd = Math.min(
+      previewStart + HOLOGRAM_PREVIEW_SECONDS,
+      duration || previewStart + HOLOGRAM_PREVIEW_SECONDS,
+    )
+
+    previewEndRef.current = previewEnd
+    video.muted = true
+
+    try {
+      video.currentTime = previewStart
+    } catch {
+      // Some browsers defer seeking until media data is available.
+    }
+
+    setPhase('playing')
+
+    try {
+      await video.play()
+    } catch {
+      setPhase('cta')
+    }
+  }, [piece.previewStart])
+
+  const finishPreview = useCallback(() => {
+    const video = videoRef.current
+    video?.pause()
+    setPhase('cta')
+  }, [])
+
+  const handleTimeUpdate = () => {
+    const video = videoRef.current
+    if (!video || phase !== 'playing') return
+
+    if (video.currentTime >= previewEndRef.current - 0.04) {
+      finishPreview()
+    }
+  }
+
+  return (
+    <button
+      className={`motion-habitat-hologram station-${meta.slug} is-${phase}`}
+      type="button"
+      style={{
+        '--hologram-x': `${position.x}%`,
+        '--hologram-y': `${position.y}%`,
+        '--hologram-tilt': position.tilt,
+        '--station-rgb': meta.rgb,
+      }}
+      aria-label={`Play full ${piece.title}`}
+      onClick={onPlay}
+    >
+      <span className="motion-habitat-hologram-beam" aria-hidden="true" />
+      <span className="motion-habitat-hologram-emitter" aria-hidden="true" />
+
+      <span className="motion-habitat-hologram-shell">
+        <video
+          ref={videoRef}
+          className="motion-habitat-hologram-video"
+          src={piece.src}
+          muted
+          playsInline
+          preload="metadata"
+          tabIndex={-1}
+          aria-hidden="true"
+          onLoadedMetadata={startPreview}
+          onCanPlay={startPreview}
+          onTimeUpdate={handleTimeUpdate}
+          onEnded={finishPreview}
+          onError={() => setPhase('cta')}
+        />
+
+        <span className="motion-habitat-hologram-scan" aria-hidden="true" />
+        <span className="motion-habitat-hologram-noise" aria-hidden="true" />
+
+        <span className="motion-habitat-hologram-meta" aria-hidden="true">
+          SIGNAL {piece.number} · 05 SEC PREVIEW
+        </span>
+
+        <span className="motion-habitat-hologram-cta">
+          <strong>
+            {phase === 'loading' ? 'ACQUIRING SIGNAL' : 'CLICK TO PLAY'}
+          </strong>
+          <small>
+            {phase === 'cta' ? 'OPEN FULL TRANSMISSION' : piece.title}
+          </small>
+        </span>
+      </span>
+    </button>
   )
 }
 
@@ -342,6 +466,30 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     [pieces, setWalkingState],
   )
 
+  const arriveAtStation = useCallback(
+    (index) => {
+      if (index < 0 || index >= pieces.length) return
+
+      targetRef.current = null
+      pressedKeysRef.current.clear()
+      awakeIndexRef.current = index
+      suppressedStationRef.current = null
+
+      setAwakeIndex(index)
+      setTargetedIndex(null)
+      setWalkingState(false)
+      setStatusMessage(
+        `${pieces[index].title} signal detected. Hologram preview transmitting.`,
+      )
+
+      if (fallbackTimerRef.current) {
+        window.clearTimeout(fallbackTimerRef.current)
+        fallbackTimerRef.current = null
+      }
+    },
+    [pieces, setWalkingState],
+  )
+
   const beginAutoWalk = useCallback(
     (index) => {
       if (index < 0 || index >= pieces.length) return
@@ -384,11 +532,21 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       }
 
       fallbackTimerRef.current = window.setTimeout(
-        () => activateStation(index),
+        () => {
+          if (isCompact) activateStation(index)
+          else arriveAtStation(index)
+        },
         isCompact ? 900 : 1250,
       )
     },
-    [activateStation, isCompact, pieces, reducedMotion, setWalkingState],
+    [
+      activateStation,
+      arriveAtStation,
+      isCompact,
+      pieces,
+      reducedMotion,
+      setWalkingState,
+    ],
   )
 
   useEffect(() => {
@@ -483,7 +641,9 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           next = { x: target.x, y: target.y }
           positionRef.current = next
           syncCharacter(next)
-          activateStation(target.stationIndex)
+
+          if (isCompact) activateStation(target.stationIndex)
+          else arriveAtStation(target.stationIndex)
         } else if (delta > 0) {
           const step = Math.min(AUTO_SPEED * delta, remaining)
           dx = (remainingX / remaining) * step
@@ -570,10 +730,21 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       }
 
       const nextAwake =
-        nearestSignalDistance <= WAKE_RADIUS ? nearestSignalIndex : null
+        nearestSignalDistance <= WAKE_RADIUS &&
+        suppressedStationRef.current !== nearestSignalIndex
+          ? nearestSignalIndex
+          : null
       if (awakeIndexRef.current !== nextAwake) {
         awakeIndexRef.current = nextAwake
         setAwakeIndex(nextAwake)
+
+        if (openIndexRef.current === null) {
+          setStatusMessage(
+            nextAwake === null
+              ? 'Signal lost. Continue exploring the Motion Habitat.'
+              : `${pieces[nextAwake].title} signal detected. Hologram preview transmitting.`,
+          )
+        }
       }
 
       const nextEnergyIndex = !isCompact ? nextAwake : null
@@ -609,6 +780,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       }
 
       if (
+        isCompact &&
         nearestIndex >= 0 &&
         nearestDistance <= ACTIVATE_RADIUS &&
         openIndexRef.current !== nearestIndex &&
@@ -661,7 +833,9 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     }
   }, [
     activateStation,
+    arriveAtStation,
     isCompact,
+    pieces,
     reducedMotion,
     resetJoystick,
     setCenterPerchedState,
@@ -988,6 +1162,32 @@ function MotionHabitat({ pieces, onOpenNotes }) {
             </button>
           )
         })}
+
+        {!isCompact &&
+          !reducedMotion &&
+          awakeIndex !== null &&
+          openIndex === null &&
+          pieces[awakeIndex] &&
+          STATION_META[awakeIndex] &&
+          HOLOGRAM_POSITIONS[awakeIndex] && (
+            <HabitatHologramPreview
+              key={pieces[awakeIndex].id}
+              piece={pieces[awakeIndex]}
+              meta={STATION_META[awakeIndex]}
+              position={{
+                x:
+                  (HOLOGRAM_POSITIONS[awakeIndex].x /
+                    DESKTOP_LAYOUT.width) *
+                  100,
+                y:
+                  (HOLOGRAM_POSITIONS[awakeIndex].y /
+                    DESKTOP_LAYOUT.height) *
+                  100,
+                tilt: HOLOGRAM_POSITIONS[awakeIndex].tilt,
+              }}
+              onPlay={() => activateStation(awakeIndex)}
+            />
+          )}
 
         <div
           ref={characterRef}

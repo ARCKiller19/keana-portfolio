@@ -9,6 +9,7 @@ export const featuredMotion = [
     dateLabel: 'Sep 2026',
     credit: 'Filmed & Edited by Patricia Keana Roma',
     src: '/videos/motion/roast-live-action-edit.mp4',
+    previewStart: 8.5,
     reflection:
       'A recent live-action piece I filmed and edited around the atmosphere, movement, and personality of a café setting. It begins with quieter location details, then shifts into a more playful performance-led rhythm with repeated split-frame compositions.',
     creationNotes: {
@@ -63,6 +64,7 @@ export const featuredMotion = [
     category: 'Live Action · Video Editing',
     layout: 'portrait',
     src: '/videos/motion/kove.mp4',
+    previewStart: 5.5,
     reflection:
       'This was filmed after my friends and I played pickleball and ended up hanging out at the café around 1–2 AM. I thought the place had such a beautiful late-night aesthetic that I wanted to turn the moment into a video too, capturing the atmosphere, the little details, and the feeling of spending time there with friends.',
   },
@@ -72,6 +74,7 @@ export const featuredMotion = [
     title: 'Special Singer Cover Animation Edit',
     category: 'Motion Design · Animation',
     src: '/videos/motion/cover-animation-edit-for-special-singer.mp4',
+    previewStart: 2.5,
     reflection:
       'I approached this edit as a rhythm exercise. I wanted the cover artwork to feel alive without crowding it, so I focused on movement that supports the mood and lets each beat breathe.',
   },
@@ -82,6 +85,7 @@ export const featuredMotion = [
     category: 'Animation · Video Editing',
     layout: 'portrait',
     src: '/videos/motion/first-love-animation-edit.mp4',
+    previewStart: 7.5,
     reflection:
       'I built this edit as a story told through memory, color, and perspective. What started from a familiar feeling in the song became a sequence about first love, shared memories, imagined reunions, and eventually moving on.',
     creationNotes: {
