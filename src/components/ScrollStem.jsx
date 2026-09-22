@@ -113,7 +113,10 @@ function ScrollStem({ active }) {
           needsAnotherFrame = true
         }
 
-        if (visualProgress[index] >= 0.9999) {
+        if (
+          targetProgress[index] >= 0.9999 &&
+          visualProgress[index] >= 0.9999
+        ) {
           visitedNodes.add(index)
         }
 
@@ -190,10 +193,6 @@ function ScrollStem({ active }) {
       })
 
       if (atPageEnd) currentIndex = stops.length - 1
-
-      stops.forEach((_, index) => {
-        if (index <= currentIndex) visitedNodes.add(index)
-      })
 
       targetProgress.forEach((_, index) => {
         let start =
