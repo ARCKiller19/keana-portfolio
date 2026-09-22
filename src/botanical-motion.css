@@ -148,23 +148,14 @@ body.botanical-intro-settling .nav-panel {
 }
 
 .hero-motion.intro-vining .intro-vine-a,
-.hero-motion.intro-settling .intro-vine-a {
-  animation: intro-vine-draw 1120ms var(--ease-editorial) forwards;
-}
-
 .hero-motion.intro-vining .intro-vine-b,
-.hero-motion.intro-settling .intro-vine-b {
-  animation: intro-vine-draw 820ms var(--ease-editorial) 180ms forwards;
-}
-
 .hero-motion.intro-vining .intro-vine-c,
-.hero-motion.intro-settling .intro-vine-c {
-  animation: intro-vine-draw 760ms var(--ease-editorial) 360ms forwards;
+.hero-motion.intro-vining .intro-vine-extension {
+  animation: intro-vine-draw 1050ms var(--ease-editorial) forwards;
 }
 
-.hero-motion.intro-vining .intro-vine-extension,
-.hero-motion.intro-settling .intro-vine-extension {
-  animation: intro-vine-draw 620ms var(--ease-editorial) 620ms forwards;
+.hero-motion.intro-settling .intro-vine {
+  stroke-dashoffset: 1;
 }
 
 @keyframes intro-vine-draw {
@@ -182,22 +173,14 @@ body.botanical-intro-settling .nav-panel {
 }
 
 .hero-motion.intro-vining .intro-leaf,
-.hero-motion.intro-settling .intro-leaf {
+.hero-motion.intro-vining .intro-leaf {
   animation: intro-leaf-unfurl 520ms var(--ease-editorial) forwards;
 }
 
 .hero-motion.intro-vining .intro-leaf-a,
-.hero-motion.intro-settling .intro-leaf-a { animation-delay: 330ms; }
-.hero-motion.intro-vining .intro-leaf-b,
-.hero-motion.intro-settling .intro-leaf-b { animation-delay: 420ms; }
+.hero-motion.intro-vining .intro-leaf-b { animation-delay: 520ms; }
 .hero-motion.intro-vining .intro-leaf-c,
-.hero-motion.intro-settling .intro-leaf-c { animation-delay: 510ms; }
-.hero-motion.intro-vining .intro-leaf-d,
-.hero-motion.intro-settling .intro-leaf-d { animation-delay: 600ms; }
-.hero-motion.intro-vining .intro-leaf-e,
-.hero-motion.intro-settling .intro-leaf-e { animation-delay: 760ms; }
-.hero-motion.intro-vining .intro-leaf-f,
-.hero-motion.intro-settling .intro-leaf-f { animation-delay: 900ms; }
+.hero-motion.intro-vining .intro-leaf-d { animation-delay: 640ms; }
 
 @keyframes intro-leaf-unfurl {
   0% {
@@ -227,26 +210,14 @@ body.botanical-intro-settling .nav-panel {
 }
 
 .hero-motion.intro-vining .intro-particle,
-.hero-motion.intro-settling .intro-particle {
+.hero-motion.intro-vining .intro-particle {
   animation: intro-particle-drift 980ms var(--ease-editorial) forwards;
 }
 
 .hero-motion.intro-vining .intro-particle-a,
-.hero-motion.intro-settling .intro-particle-a { animation-delay: 430ms; }
-.hero-motion.intro-vining .intro-particle-b,
-.hero-motion.intro-settling .intro-particle-b { animation-delay: 520ms; }
+.hero-motion.intro-vining .intro-particle-b { animation-delay: 620ms; }
 .hero-motion.intro-vining .intro-particle-c,
-.hero-motion.intro-settling .intro-particle-c { animation-delay: 610ms; }
-.hero-motion.intro-vining .intro-particle-d,
-.hero-motion.intro-settling .intro-particle-d { animation-delay: 700ms; }
-.hero-motion.intro-vining .intro-particle-e,
-.hero-motion.intro-settling .intro-particle-e { animation-delay: 790ms; }
-.hero-motion.intro-vining .intro-particle-f,
-.hero-motion.intro-settling .intro-particle-f { animation-delay: 880ms; }
-.hero-motion.intro-vining .intro-particle-g,
-.hero-motion.intro-settling .intro-particle-g { animation-delay: 970ms; }
-.hero-motion.intro-vining .intro-particle-h,
-.hero-motion.intro-settling .intro-particle-h { animation-delay: 1060ms; }
+.hero-motion.intro-vining .intro-particle-d { animation-delay: 760ms; }
 
 @keyframes intro-particle-drift {
   0% {
@@ -271,7 +242,7 @@ body.botanical-intro-settling .nav-panel {
 }
 
 .hero-motion.intro-vining .intro-tip-glow,
-.hero-motion.intro-settling .intro-tip-glow {
+.hero-motion.intro-vining .intro-tip-glow {
   animation: intro-tip-bloom 520ms var(--ease-editorial) 930ms forwards;
 }
 
@@ -293,7 +264,7 @@ body.botanical-intro-settling .nav-panel {
 }
 
 .hero-motion.intro-vining .intro-node,
-.hero-motion.intro-settling .intro-node {
+.hero-motion.intro-vining .intro-node {
   animation: intro-node-bloom 420ms var(--ease-editorial) 620ms forwards;
 }
 
@@ -312,7 +283,7 @@ body.botanical-intro-settling .nav-panel {
 }
 
 .hero-motion.intro-vining .intro-cross,
-.hero-motion.intro-settling .intro-cross {
+.hero-motion.intro-vining .intro-cross {
   animation: intro-cross-arrive 420ms var(--ease-editorial) 680ms forwards;
 }
 
@@ -516,7 +487,8 @@ body.botanical-intro-settling .nav-panel {
 }
 
 .scroll-stem-track,
-.scroll-stem-growth {
+.scroll-stem-growth-segment,
+.scroll-stem-growth-tail {
   vector-effect: non-scaling-stroke;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -527,12 +499,18 @@ body.botanical-intro-settling .nav-panel {
   stroke: rgba(239, 233, 219, 0.08);
 }
 
-.scroll-stem-growth {
+.scroll-stem-growth-segment,
+.scroll-stem-growth-tail {
   stroke: rgba(167, 179, 95, 0.9);
   stroke-dasharray: 1;
-  stroke-dashoffset: calc(1 - var(--stem-progress));
+  stroke-dashoffset: 1;
   filter: drop-shadow(0 0 4px rgba(167, 179, 95, 0.18));
-  transition: stroke-dashoffset 560ms var(--ease-editorial);
+  transition: stroke-dashoffset 520ms var(--ease-editorial);
+}
+
+.scroll-stem-growth-segment.is-reached,
+.scroll-stem-growth-tail.is-reached {
+  stroke-dashoffset: 0;
 }
 
 .scroll-stem-node {

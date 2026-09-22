@@ -581,60 +581,23 @@ function MotionHabitat({ pieces, onOpenNotes }) {
 
       const energyPath = energyPathRef.current
       const energyPulse = energyPulseRef.current
-      const character = characterRef.current
 
       if (energyPath && nextEnergyIndex !== null) {
         const energyStation = activeLayout.stations[nextEnergyIndex]
-        const perchDirection = perchDirectionRef.current
-        const connectToBody =
-          shouldPerchOnCenter &&
-          (perchDirection === 'up' || perchDirection === 'down')
+        const bodyCenter = {
+          x: next.x,
+          y: next.y - (shouldPerchOnCenter ? 10 : 15),
+        }
+        const signalX = energyStation.x - bodyCenter.x
+        const signalY = energyStation.y - bodyCenter.y
+        const signalLength = Math.max(1, Math.hypot(signalX, signalY))
 
-        let connectionPoint
-
-        if (connectToBody) {
-          // Up/down seated poses intentionally have no visible arm. End the
-          // signal on the torso instead of leaving it attached to an invisible hand.
-          connectionPoint = {
-            x: next.x,
-            y: next.y - 10,
-          }
-
-          if (character) {
-            character.style.removeProperty('--energy-arm-rotation')
-            delete character.dataset.energySide
-          }
-        } else {
-          // Treat the arm as free rather than a fixed diagonal. Its shoulder side,
-          // angle, and signal endpoint all follow the incoming station direction.
-          const armSide = energyStation.x >= next.x ? 'right' : 'left'
-          const sideSign = armSide === 'right' ? 1 : -1
-          const armOrigin = {
-            x: next.x + sideSign * 5,
-            y: next.y - (shouldPerchOnCenter ? 10 : 17),
-          }
-          const signalX = energyStation.x - armOrigin.x
-          const signalY = energyStation.y - armOrigin.y
-          const signalLength = Math.max(1, Math.hypot(signalX, signalY))
-          const unitX = signalX / signalLength
-          const unitY = signalY / signalLength
-          const globalAngle = (Math.atan2(signalY, signalX) * 180) / Math.PI
-          const rawRotation =
-            armSide === 'right' ? globalAngle : globalAngle - 180
-          const armRotation = ((rawRotation + 180) % 360 + 360) % 360 - 180
-
-          connectionPoint = {
-            x: armOrigin.x + unitX * 1.5,
-            y: armOrigin.y + unitY * 1.5,
-          }
-
-          if (character) {
-            character.dataset.energySide = armSide
-            character.style.setProperty(
-              '--energy-arm-rotation',
-              `${armRotation.toFixed(1)}deg`,
-            )
-          }
+        // With no drawn arm, let the signal meet the torso itself. Offset the
+        // endpoint only slightly toward the station so the glowing line appears
+        // to touch the body's outline instead of passing through its center.
+        const connectionPoint = {
+          x: bodyCenter.x + (signalX / signalLength) * 4.5,
+          y: bodyCenter.y + (signalY / signalLength) * 4.5,
         }
 
         const energyD = createEnergyPath(energyStation, connectionPoint, time)
@@ -643,11 +606,6 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       } else {
         energyPath?.removeAttribute('d')
         energyPulse?.removeAttribute('d')
-
-        if (character) {
-          character.style.removeProperty('--energy-arm-rotation')
-          delete character.dataset.energySide
-        }
       }
 
       if (
@@ -680,8 +638,6 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       resetJoystick()
       energyPathRef.current?.removeAttribute('d')
       energyPulseRef.current?.removeAttribute('d')
-      characterRef.current?.style.removeProperty('--energy-arm-rotation')
-      if (characterRef.current) delete characterRef.current.dataset.energySide
     }
 
     if (!('IntersectionObserver' in window)) {

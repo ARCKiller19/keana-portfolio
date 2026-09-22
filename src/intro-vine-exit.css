@@ -40,7 +40,7 @@
 
 .hero-motion.intro-unfurling .hero-mark {
   opacity: 1;
-  transform: translate(0, 0) scale(1);
+  transform: translate(var(--intro-x), var(--intro-y)) scale(1.08);
   filter: blur(0);
 }
 
@@ -80,25 +80,9 @@
   animation: intro-vine-furl 720ms var(--ease-editorial) forwards;
 }
 
-.hero-motion.intro-unfurling .intro-vine-extension {
-  animation-delay: 0ms;
-}
-
-.hero-motion.intro-unfurling .intro-vine-c {
-  animation-delay: 70ms;
-}
-
-.hero-motion.intro-unfurling .intro-vine-b {
-  animation-delay: 125ms;
-}
-
-.hero-motion.intro-unfurling .intro-vine-a {
-  animation-delay: 185ms;
-}
-
 @keyframes intro-vine-furl {
   from { stroke-dashoffset: 0; }
-  to { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: -1; }
 }
 
 .hero-motion.intro-unfurling .intro-leaf {
@@ -107,11 +91,10 @@
   animation: intro-leaf-furl 560ms var(--ease-editorial) forwards;
 }
 
-.hero-motion.intro-unfurling .intro-leaf-d { animation-delay: 20ms; }
-.hero-motion.intro-unfurling .intro-leaf-c { animation-delay: 65ms; }
-.hero-motion.intro-unfurling .intro-leaf-e { animation-delay: 105ms; }
-.hero-motion.intro-unfurling .intro-leaf-b { animation-delay: 145ms; }
-.hero-motion.intro-unfurling .intro-leaf-a { animation-delay: 185ms; }
+.hero-motion.intro-unfurling .intro-leaf-a,
+.hero-motion.intro-unfurling .intro-leaf-b { animation-delay: 60ms; }
+.hero-motion.intro-unfurling .intro-leaf-c,
+.hero-motion.intro-unfurling .intro-leaf-d { animation-delay: 120ms; }
 
 @keyframes intro-leaf-furl {
   0% {

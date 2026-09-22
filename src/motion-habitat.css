@@ -508,24 +508,6 @@
   transform: translateX(-50%);
 }
 
-.motion-habitat-character-body::after {
-  content: '';
-  position: absolute;
-  top: 4px;
-  right: -5px;
-  width: 6px;
-  height: 1px;
-  background: rgba(239, 233, 219, 0.46);
-  transform-origin: left center;
-  transform: rotate(22deg);
-}
-
-.motion-habitat-character[data-facing='left'] .motion-habitat-character-body::after {
-  right: auto;
-  left: -5px;
-  transform-origin: right center;
-  transform: rotate(-22deg);
-}
 
 .motion-habitat-character-leg {
   position: absolute;
