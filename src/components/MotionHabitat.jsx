@@ -30,10 +30,34 @@ const COMPACT_LAYOUT = {
 }
 
 const STATION_META = [
-  { slug: 'roast', system: 'LIVE / CAFE', accent: 'warm', rgb: '184, 180, 168' },
-  { slug: 'kove', system: 'LIVE / CAFE / FRIENDS', accent: 'ambient', rgb: '208, 138, 75' },
-  { slug: 'special', system: 'MOTION / RHYTHM', accent: 'pulse', rgb: '168, 188, 99' },
-  { slug: 'first-love', system: 'MEMORY / COLOR', accent: 'chapters', rgb: '142, 120, 166' },
+  {
+    slug: 'roast',
+    label: 'FIELD RECORDER',
+    system: 'LIVE / CAFE',
+    accent: 'warm',
+    rgb: '184, 180, 168',
+  },
+  {
+    slug: 'kove',
+    label: 'CAFE MONITOR',
+    system: 'LIVE / CAFE / FRIENDS',
+    accent: 'ambient',
+    rgb: '208, 138, 75',
+  },
+  {
+    slug: 'special',
+    label: 'RHYTHM CONSOLE',
+    system: 'MOTION / RHYTHM',
+    accent: 'pulse',
+    rgb: '168, 188, 99',
+  },
+  {
+    slug: 'first-love',
+    label: 'MEMORY TERMINAL',
+    system: 'MEMORY / COLOR',
+    accent: 'chapters',
+    rgb: '142, 120, 166',
+  },
 ]
 
 const MANUAL_SPEED = 260
@@ -174,6 +198,10 @@ function HabitatHologramPreview({ piece, meta }) {
       }`}
       aria-hidden="true"
     >
+      <span className="motion-habitat-hologram-title">{meta.label}</span>
+      <span className="motion-habitat-hologram-beam" />
+      <span className="motion-habitat-hologram-emitter" />
+
       <span className="motion-habitat-hologram-shell">
         <video
           ref={videoRef}
