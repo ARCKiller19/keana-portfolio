@@ -624,8 +624,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           const armRotation = ((rawRotation + 180) % 360 + 360) % 360 - 180
 
           connectionPoint = {
-            x: armOrigin.x + unitX * 8,
-            y: armOrigin.y + unitY * 8,
+            x: armOrigin.x + unitX * 1.5,
+            y: armOrigin.y + unitY * 1.5,
           }
 
           if (character) {

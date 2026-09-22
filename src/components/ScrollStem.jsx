@@ -70,40 +70,12 @@ function ScrollStem({ active }) {
 
       let progress = 0
 
-      if (currentIndex < 0) {
-        const firstActivation = Math.max(activationScrolls[0] ?? scrollRange, 1)
+      if (currentIndex >= 0) {
         progress =
-          nodeProgress[0] * clamp(scrollY / firstActivation, 0, 1)
-      } else if (currentIndex >= sections.length - 1) {
-        const lastIndex = sections.length - 1
-        const lastActivation = activationScrolls[lastIndex] ?? scrollY
-        const remaining = Math.max(scrollRange - lastActivation, 1)
-        const localProgress = clamp(
-          (scrollY - lastActivation) / remaining,
-          0,
-          1,
-        )
-
-        progress =
-          nodeProgress[lastIndex] +
-          (1 - nodeProgress[lastIndex]) * localProgress
-      } else {
-        const startScroll = activationScrolls[currentIndex]
-        const endScroll = activationScrolls[currentIndex + 1]
-        const span = Math.max(endScroll - startScroll, 1)
-        const localProgress = clamp(
-          (scrollY - startScroll) / span,
-          0,
-          1,
-        )
-
-        progress =
-          nodeProgress[currentIndex] +
-          (nodeProgress[currentIndex + 1] - nodeProgress[currentIndex]) *
-            localProgress
+          currentIndex === sections.length - 1
+            ? 1
+            : nodeProgress[currentIndex]
       }
-
-      if (atPageEnd) progress = 1
 
       stem.style.setProperty(
         '--stem-progress',

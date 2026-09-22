@@ -51,7 +51,8 @@ body.botanical-intro-settling .nav-panel {
 }
 
 .hero-motion.intro-holding .hero-mark,
-.hero-motion.intro-vining .hero-mark {
+.hero-motion.intro-vining .hero-mark,
+.hero-motion.intro-unfurling .hero-mark {
   transform: translate(var(--intro-x), var(--intro-y)) scale(1.08);
 }
 
@@ -59,7 +60,8 @@ body.botanical-intro-settling .nav-panel {
   animation: intro-keana-awaken 460ms var(--ease-editorial) both;
 }
 
-.hero-motion.intro-vining .hero-mark {
+.hero-motion.intro-vining .hero-mark,
+.hero-motion.intro-unfurling .hero-mark {
   opacity: 1;
   filter: blur(0);
   text-shadow:
@@ -530,6 +532,7 @@ body.botanical-intro-settling .nav-panel {
   stroke-dasharray: 1;
   stroke-dashoffset: calc(1 - var(--stem-progress));
   filter: drop-shadow(0 0 4px rgba(167, 179, 95, 0.18));
+  transition: stroke-dashoffset 560ms var(--ease-editorial);
 }
 
 .scroll-stem-node {

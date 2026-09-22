@@ -13,34 +13,32 @@
 .hero-motion.intro-waiting .hero-mark,
 .hero-motion.intro-holding .hero-mark,
 .hero-motion.intro-vining .hero-mark,
-.hero-motion.intro-settling .hero-mark,
-.hero-motion.intro-furling .hero-mark {
+.hero-motion.intro-unfurling .hero-mark,
+.hero-motion.intro-settling .hero-mark {
   width: max-content;
   max-width: none;
 }
 
-.hero-motion.intro-settling .hero-intro-botanical,
-.hero-motion.intro-furling .hero-intro-botanical {
+.hero-motion.intro-unfurling .hero-intro-botanical {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  transition: none;
+}
+
+.hero-motion.intro-settling .hero-intro-botanical {
+  opacity: 0;
   transform:
     translate(
       calc(-50% + var(--intro-vine-x)),
       calc(-50% + var(--intro-vine-y))
     )
     scale(var(--intro-vine-settle-scale));
-}
-
-.hero-motion.intro-settling .hero-intro-botanical {
-  opacity: 0.64;
-}
-
-.hero-motion.intro-furling .hero-intro-botanical {
-  opacity: 0;
   transition:
     transform 820ms var(--ease-editorial),
-    opacity 760ms var(--ease-editorial);
+    opacity 260ms linear;
 }
 
-.hero-motion.intro-furling .hero-mark {
+.hero-motion.intro-unfurling .hero-mark {
   opacity: 1;
   transform: translate(0, 0) scale(1);
   filter: blur(0);
@@ -49,56 +47,52 @@
 /* Hold the fully unfurled drawing while it travels into the hero. */
 .hero-motion.intro-settling .intro-vine {
   animation: none;
-  stroke-dashoffset: 0;
+  stroke-dashoffset: 1;
 }
 
 .hero-motion.intro-settling .intro-leaf {
   animation: none;
-  opacity: 0.78;
-  transform: scale(1) rotate(0);
+  opacity: 0;
+  transform: scale(0.28) rotate(9deg);
 }
 
 .hero-motion.intro-settling .intro-node {
   animation: none;
-  opacity: 0.9;
-  transform: scale(1);
+  opacity: 0;
+  transform: scale(0.3);
 }
 
 .hero-motion.intro-settling .intro-cross {
   animation: none;
-  opacity: 0.7;
-  transform: rotate(45deg) scale(1);
+  opacity: 0;
+  transform: rotate(75deg) scale(0.45);
 }
 
-.hero-motion.intro-settling .intro-particle {
-  animation: none;
-  opacity: 0.2;
-}
-
+.hero-motion.intro-settling .intro-particle,
 .hero-motion.intro-settling .intro-tip-glow {
   animation: none;
-  opacity: 0.4;
+  opacity: 0;
 }
 
 /* Then reverse the growth instead of snapping the drawing away. */
-.hero-motion.intro-furling .intro-vine {
+.hero-motion.intro-unfurling .intro-vine {
   stroke-dashoffset: 0;
-  animation: intro-vine-furl 560ms var(--ease-editorial) forwards;
+  animation: intro-vine-furl 720ms var(--ease-editorial) forwards;
 }
 
-.hero-motion.intro-furling .intro-vine-extension {
+.hero-motion.intro-unfurling .intro-vine-extension {
   animation-delay: 0ms;
 }
 
-.hero-motion.intro-furling .intro-vine-c {
+.hero-motion.intro-unfurling .intro-vine-c {
   animation-delay: 70ms;
 }
 
-.hero-motion.intro-furling .intro-vine-b {
+.hero-motion.intro-unfurling .intro-vine-b {
   animation-delay: 125ms;
 }
 
-.hero-motion.intro-furling .intro-vine-a {
+.hero-motion.intro-unfurling .intro-vine-a {
   animation-delay: 185ms;
 }
 
@@ -107,17 +101,17 @@
   to { stroke-dashoffset: 1; }
 }
 
-.hero-motion.intro-furling .intro-leaf {
+.hero-motion.intro-unfurling .intro-leaf {
   opacity: 0.78;
   transform: scale(1) rotate(0);
-  animation: intro-leaf-furl 430ms var(--ease-editorial) forwards;
+  animation: intro-leaf-furl 560ms var(--ease-editorial) forwards;
 }
 
-.hero-motion.intro-furling .intro-leaf-d { animation-delay: 20ms; }
-.hero-motion.intro-furling .intro-leaf-c { animation-delay: 65ms; }
-.hero-motion.intro-furling .intro-leaf-e { animation-delay: 105ms; }
-.hero-motion.intro-furling .intro-leaf-b { animation-delay: 145ms; }
-.hero-motion.intro-furling .intro-leaf-a { animation-delay: 185ms; }
+.hero-motion.intro-unfurling .intro-leaf-d { animation-delay: 20ms; }
+.hero-motion.intro-unfurling .intro-leaf-c { animation-delay: 65ms; }
+.hero-motion.intro-unfurling .intro-leaf-e { animation-delay: 105ms; }
+.hero-motion.intro-unfurling .intro-leaf-b { animation-delay: 145ms; }
+.hero-motion.intro-unfurling .intro-leaf-a { animation-delay: 185ms; }
 
 @keyframes intro-leaf-furl {
   0% {
@@ -134,7 +128,7 @@
   }
 }
 
-.hero-motion.intro-furling .intro-node {
+.hero-motion.intro-unfurling .intro-node {
   opacity: 0.9;
   transform: scale(1);
   animation: intro-node-furl 360ms var(--ease-editorial) 120ms forwards;
@@ -145,14 +139,14 @@
   to { opacity: 0; transform: scale(0.3); }
 }
 
-.hero-motion.intro-furling .intro-cross {
+.hero-motion.intro-unfurling .intro-cross {
   opacity: 0.7;
   transform: rotate(45deg) scale(1);
   animation: intro-cross-furl 380ms var(--ease-editorial) 90ms forwards;
 }
 
-.hero-motion.intro-furling .intro-particle,
-.hero-motion.intro-furling .intro-tip-glow {
+.hero-motion.intro-unfurling .intro-particle,
+.hero-motion.intro-unfurling .intro-tip-glow {
   opacity: 0.32;
   animation: intro-atmosphere-furl 420ms var(--ease-editorial) forwards;
 }
@@ -176,13 +170,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-motion.intro-furling .hero-intro-botanical,
-  .hero-motion.intro-furling .intro-vine,
-  .hero-motion.intro-furling .intro-leaf,
-  .hero-motion.intro-furling .intro-node,
-  .hero-motion.intro-furling .intro-cross,
-  .hero-motion.intro-furling .intro-particle,
-  .hero-motion.intro-furling .intro-tip-glow {
+  .hero-motion.intro-unfurling .hero-intro-botanical,
+  .hero-motion.intro-unfurling .intro-vine,
+  .hero-motion.intro-unfurling .intro-leaf,
+  .hero-motion.intro-unfurling .intro-node,
+  .hero-motion.intro-unfurling .intro-cross,
+  .hero-motion.intro-unfurling .intro-particle,
+  .hero-motion.intro-unfurling .intro-tip-glow {
     animation: none;
     transition: none;
   }

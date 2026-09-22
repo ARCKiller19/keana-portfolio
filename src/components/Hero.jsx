@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { handleSectionNavigation } from '../utils/sectionNavigation.js'
 
-const INTRO_SESSION_KEY = 'keana-botanical-intro-v5-seen'
+const INTRO_SESSION_KEY = 'keana-botanical-intro-v6-seen'
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max)
@@ -128,13 +128,13 @@ function Hero({ motionReady = false, onIntroComplete }) {
       timers.push(
         window.setTimeout(() => setIntroPhase('vining'), 300),
         window.setTimeout(() => {
+          setIntroPhase('unfurling')
+        }, 1700),
+        window.setTimeout(() => {
           body.classList.add('botanical-intro-settling')
           setIntroPhase('settling')
           onIntroCompleteRef.current?.()
-        }, 1650),
-        window.setTimeout(() => {
-          setIntroPhase('furling')
-        }, 2450),
+        }, 2550),
         window.setTimeout(() => {
           try {
             window.sessionStorage.setItem(INTRO_SESSION_KEY, 'true')
@@ -148,7 +148,7 @@ function Hero({ motionReady = false, onIntroComplete }) {
           )
           releaseScrollLock()
           setIntroPhase('ready')
-        }, 3300),
+        }, 3350),
       )
     }
 
@@ -245,48 +245,48 @@ function Hero({ motionReady = false, onIntroComplete }) {
           <path
             className="intro-vine intro-vine-a"
             pathLength="1"
-            d="M18 194C82 158 139 150 199 181C261 213 331 217 377 178C417 144 426 102 396 79C366 56 312 60 289 88C264 118 284 157 328 174C377 194 438 176 477 147C526 111 568 108 612 119C657 130 684 127 731 101"
+            d="M18 105C104 64 195 53 283 65C367 76 433 79 514 61C598 42 671 51 742 88"
           />
           <path
             className="intro-vine intro-vine-b"
             pathLength="1"
-            d="M54 116C122 82 177 84 225 112C267 137 292 147 326 149"
+            d="M24 211C116 180 210 188 294 207C381 227 472 224 557 203C626 186 684 180 741 193"
           />
           <path
             className="intro-vine intro-vine-c"
             pathLength="1"
-            d="M734 191C680 219 623 215 580 183C545 157 539 127 560 105C584 80 622 83 647 105"
+            d="M126 170C88 156 69 129 77 103C84 80 108 70 133 82C151 91 159 107 156 124"
           />
           <path
             className="intro-vine intro-vine-extension"
             pathLength="1"
-            d="M386 181C469 196 557 222 744 199"
+            d="M635 101C660 78 694 78 716 95C738 112 738 139 719 156C704 169 684 173 667 164"
           />
         </g>
 
         <path
           className="intro-leaf intro-leaf-a"
-          d="M121 159C135 141 153 143 161 155C149 168 134 173 121 159Z"
+          d="M112 83C126 66 144 68 151 80C140 92 126 97 112 83Z"
         />
         <path
           className="intro-leaf intro-leaf-b"
-          d="M286 91C298 73 315 75 322 87C312 100 298 105 286 91Z"
+          d="M276 64C289 47 306 49 313 61C302 73 289 77 276 64Z"
         />
         <path
           className="intro-leaf intro-leaf-c"
-          d="M425 170C438 151 456 153 464 166C452 180 437 184 425 170Z"
+          d="M421 214C434 196 452 198 459 211C448 224 433 228 421 214Z"
         />
         <path
           className="intro-leaf intro-leaf-d"
-          d="M563 113C575 95 592 97 600 109C589 122 575 127 563 113Z"
+          d="M557 61C570 44 588 46 595 58C584 71 570 75 557 61Z"
         />
         <path
           className="intro-leaf intro-leaf-e"
-          d="M634 110C647 92 664 95 671 108C660 121 646 124 634 110Z"
+          d="M651 184C664 166 681 169 688 181C677 194 663 198 651 184Z"
         />
         <path
           className="intro-leaf intro-leaf-f"
-          d="M606 190C594 172 578 174 571 186C581 199 595 203 606 190Z"
+          d="M161 201C149 183 133 185 126 197C136 210 150 214 161 201Z"
         />
 
         <g className="intro-particles">
