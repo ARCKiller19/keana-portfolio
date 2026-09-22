@@ -526,10 +526,6 @@ body.botanical-intro-settling .nav-panel {
   vector-effect: non-scaling-stroke;
   transform-box: fill-box;
   transform-origin: center;
-  transition:
-    fill var(--motion-medium) var(--ease-editorial),
-    stroke var(--motion-medium) var(--ease-editorial),
-    filter var(--motion-medium) var(--ease-editorial);
 }
 
 .scroll-stem-node.is-reached {
@@ -544,21 +540,21 @@ body.botanical-intro-settling .nav-panel {
   stroke: var(--led);
   transform: scale(1.28);
   filter: drop-shadow(0 0 6px rgba(167, 179, 95, 0.48));
-  animation: stem-node-arrive 520ms var(--ease-editorial) both;
+  animation: stem-node-pulse 360ms var(--ease-editorial) both;
 }
 
-@keyframes stem-node-arrive {
+@keyframes stem-node-pulse {
   0% {
-    transform: scale(0.84);
-    filter: drop-shadow(0 0 0 rgba(167, 179, 95, 0));
+    transform: scale(1.28);
+    filter: drop-shadow(0 0 6px rgba(167, 179, 95, 0.48));
   }
   55% {
-    transform: scale(1.58);
-    filter: drop-shadow(0 0 8px rgba(167, 179, 95, 0.55));
+    transform: scale(1.48);
+    filter: drop-shadow(0 0 8px rgba(167, 179, 95, 0.58));
   }
   100% {
-    transform: scale(1.22);
-    filter: drop-shadow(0 0 5px rgba(167, 179, 95, 0.42));
+    transform: scale(1.28);
+    filter: drop-shadow(0 0 6px rgba(167, 179, 95, 0.48));
   }
 }
 
