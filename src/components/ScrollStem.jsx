@@ -1,7 +1,17 @@
 import { useEffect, useRef } from 'react'
 import { getSectionActivationLine } from '../utils/sectionNavigation.js'
 
-const sectionIds = ['about', 'work', 'motion', 'playground', 'contact']
+const sectionStops = [
+  { id: 'about' },
+  { id: 'work' },
+  {
+    id: 'motion',
+    selector: '#motion .motion-featured-section',
+    progressStartSelector: '#motion .automotive-showcase-first',
+  },
+  { id: 'playground' },
+  { id: 'contact' },
+]
 
 const growthSegments = [
   'M18 0V120H29V180',
@@ -11,8 +21,16 @@ const growthSegments = [
   'M10 700V735H27V875H18V920',
 ]
 
+const LINE_PACING_CURVE = 3
+const LINE_FOLLOW_SPEED = 3.3
+
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max)
+}
+
+function moveToward(value, target, maxDelta) {
+  if (Math.abs(target - value) <= maxDelta) return target
+  return value + Math.sign(target - value) * maxDelta
 }
 
 function ScrollStem({ active }) {
@@ -35,23 +53,116 @@ function ScrollStem({ active }) {
       stem.querySelectorAll('.scroll-stem-growth-segment'),
     )
     const tail = stem.querySelector('.scroll-stem-growth-tail')
-    let frameId = null
+
+    const visualProgress = growthSegments.map(() => 0)
+    const targetProgress = growthSegments.map(() => 0)
+    const visitedNodes = new Set()
+    let tailVisualProgress = 0
+    let tailTargetProgress = 0
+    let currentIndex = -1
+    let targetFrameId = null
+    let animationFrameId = null
+    let lastAnimationTime = null
 
     const rangeProgress = (value, start, end) => {
       const span = Math.max(end - start, 1)
       return clamp((value - start) / span, 0, 1)
     }
 
-    const paceProgress = (progress) => Math.pow(progress, 5)
+    const paceProgress = (progress) =>
+      Math.pow(progress, LINE_PACING_CURVE)
 
-    const updateStem = () => {
-      frameId = null
+    const resolveStopElement = (stop) =>
+      (stop.selector ? document.querySelector(stop.selector) : null) ??
+      document.getElementById(stop.id)
 
-      const sections = sectionIds
-        .map((id) => document.getElementById(id))
-        .filter(Boolean)
+    const updateNodeState = () => {
+      nodes.forEach((node, index) => {
+        const isReached = visitedNodes.has(index)
+        node.classList.toggle('is-reached', isReached)
+        node.classList.toggle(
+          'is-current',
+          isReached && index === currentIndex,
+        )
+      })
+    }
 
-      if (!sections.length) return
+    const animateLine = (time) => {
+      animationFrameId = null
+
+      const deltaSeconds =
+        lastAnimationTime === null
+          ? 1 / 60
+          : Math.min((time - lastAnimationTime) / 1000, 0.05)
+      lastAnimationTime = time
+
+      const maxDelta = LINE_FOLLOW_SPEED * deltaSeconds
+      let needsAnotherFrame = false
+
+      segments.forEach((segment, index) => {
+        visualProgress[index] = moveToward(
+          visualProgress[index],
+          targetProgress[index],
+          maxDelta,
+        )
+
+        if (
+          Math.abs(visualProgress[index] - targetProgress[index]) >
+          0.0001
+        ) {
+          needsAnotherFrame = true
+        }
+
+        if (visualProgress[index] >= 0.9999) {
+          visitedNodes.add(index)
+        }
+
+        segment.style.setProperty(
+          '--segment-progress',
+          visualProgress[index].toFixed(4),
+        )
+      })
+
+      tailVisualProgress = moveToward(
+        tailVisualProgress,
+        tailTargetProgress,
+        maxDelta,
+      )
+
+      if (Math.abs(tailVisualProgress - tailTargetProgress) > 0.0001) {
+        needsAnotherFrame = true
+      }
+
+      tail?.style.setProperty(
+        '--segment-progress',
+        tailVisualProgress.toFixed(4),
+      )
+
+      updateNodeState()
+
+      if (needsAnotherFrame) {
+        animationFrameId = window.requestAnimationFrame(animateLine)
+      } else {
+        lastAnimationTime = null
+      }
+    }
+
+    const ensureLineAnimation = () => {
+      if (animationFrameId !== null) return
+      animationFrameId = window.requestAnimationFrame(animateLine)
+    }
+
+    const updateTargets = () => {
+      targetFrameId = null
+
+      const stops = sectionStops
+        .map((stop) => ({
+          ...stop,
+          element: resolveStopElement(stop),
+        }))
+        .filter((stop) => stop.element)
+
+      if (stops.length !== sectionStops.length) return
 
       const scrollY = window.scrollY
       const scrollHeight = document.documentElement.scrollHeight
@@ -63,81 +174,91 @@ function ScrollStem({ active }) {
       const atPageEnd =
         scrollY + window.innerHeight >= scrollHeight - 2
 
-      const sectionTops = sections.map(
-        (section) => scrollY + section.getBoundingClientRect().top,
-      )
-      const activationScrolls = sectionTops.map((sectionTop) =>
-        Math.min(
-          Math.max(sectionTop - activationLine, 0),
-          scrollRange,
-        ),
-      )
-      let currentIndex = -1
+      const activationScrolls = stops.map(({ element }) => {
+        const elementTop =
+          scrollY + element.getBoundingClientRect().top
 
+        return Math.min(
+          Math.max(elementTop - activationLine, 0),
+          scrollRange,
+        )
+      })
+
+      currentIndex = -1
       activationScrolls.forEach((activationScroll, index) => {
         if (scrollY + 1 >= activationScroll) currentIndex = index
       })
 
-      if (atPageEnd) currentIndex = sections.length - 1
+      if (atPageEnd) currentIndex = stops.length - 1
 
-      nodes.forEach((node, index) => {
-        node.classList.toggle('is-reached', index <= currentIndex)
-        node.classList.toggle('is-current', index === currentIndex)
+      stops.forEach((_, index) => {
+        if (index <= currentIndex) visitedNodes.add(index)
       })
 
-      segments.forEach((segment, index) => {
-        const start =
+      targetProgress.forEach((_, index) => {
+        let start =
           index === 0
             ? 0
             : activationScrolls[index - 1] ?? scrollRange
+
+        const customStartSelector =
+          sectionStops[index]?.progressStartSelector
+
+        if (customStartSelector) {
+          const startElement = document.querySelector(customStartSelector)
+
+          if (startElement) {
+            const startTop =
+              scrollY + startElement.getBoundingClientRect().top
+            start = Math.min(
+              Math.max(startTop - activationLine, 0),
+              scrollRange,
+            )
+          }
+        }
+
         const end = activationScrolls[index] ?? scrollRange
         const rawProgress = rangeProgress(scrollY, start, end)
-        const progress = paceProgress(rawProgress)
 
-        // Keep the same node thresholds, but pace the line more slowly through
-        // the first part of each interval. It still reaches 100% on the exact
-        // same scroll position that lights the destination node.
-        segment.style.setProperty(
-          '--segment-progress',
-          progress.toFixed(4),
-        )
+        targetProgress[index] = paceProgress(rawProgress)
       })
 
-      if (tail) {
-        const lastIndex = sections.length - 1
-        const lastActivation =
-          activationScrolls[lastIndex] ?? scrollRange
-        const tailProgress =
-          currentIndex < lastIndex
-            ? 0
-            : atPageEnd
-              ? 1
-              : paceProgress(
-                  rangeProgress(scrollY, lastActivation, scrollRange),
-                )
+      const lastIndex = stops.length - 1
+      const lastActivation =
+        activationScrolls[lastIndex] ?? scrollRange
 
-        tail.style.setProperty(
-          '--segment-progress',
-          tailProgress.toFixed(4),
-        )
-      }
+      tailTargetProgress =
+        currentIndex < lastIndex
+          ? 0
+          : atPageEnd
+            ? 1
+            : paceProgress(
+                rangeProgress(scrollY, lastActivation, scrollRange),
+              )
+
+      updateNodeState()
+      ensureLineAnimation()
     }
 
-    const requestStemUpdate = () => {
-      if (frameId !== null) return
-      frameId = window.requestAnimationFrame(updateStem)
+    const requestTargetUpdate = () => {
+      if (targetFrameId !== null) return
+      targetFrameId = window.requestAnimationFrame(updateTargets)
     }
 
-    updateStem()
-    window.addEventListener('scroll', requestStemUpdate, { passive: true })
-    window.addEventListener('resize', requestStemUpdate)
+    updateTargets()
+    window.addEventListener('scroll', requestTargetUpdate, { passive: true })
+    window.addEventListener('resize', requestTargetUpdate)
 
     return () => {
-      window.removeEventListener('scroll', requestStemUpdate)
-      window.removeEventListener('resize', requestStemUpdate)
+      window.removeEventListener('scroll', requestTargetUpdate)
+      window.removeEventListener('resize', requestTargetUpdate)
 
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId)
+      if (targetFrameId !== null) {
+        window.cancelAnimationFrame(targetFrameId)
+      }
+
+      if (animationFrameId !== null) {
+        window.cancelAnimationFrame(animationFrameId)
       }
     }
   }, [active])
