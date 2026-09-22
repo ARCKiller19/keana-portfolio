@@ -70,12 +70,6 @@ function ScrollStem({ active }) {
           scrollRange,
         ),
       )
-      const approachDistance = clamp(
-        window.innerHeight * 0.26,
-        180,
-        300,
-      )
-
       let currentIndex = -1
 
       activationScrolls.forEach((activationScroll, index) => {
@@ -90,28 +84,17 @@ function ScrollStem({ active }) {
       })
 
       segments.forEach((segment, index) => {
-        const activationScroll = activationScrolls[index] ?? scrollRange
-        let progress = 0
+        const start =
+          index === 0
+            ? 0
+            : activationScrolls[index - 1] ?? scrollRange
+        const end = activationScrolls[index] ?? scrollRange
+        const progress = rangeProgress(scrollY, start, end)
 
-        if (index <= currentIndex) {
-          progress = 1
-        } else if (index === currentIndex + 1) {
-          const approachStart = Math.max(
-            0,
-            activationScroll - approachDistance,
-          )
-
-          progress = rangeProgress(
-            scrollY,
-            approachStart,
-            activationScroll,
-          )
-        }
-
-        // Only the line to the next destination is allowed to move.
-        // It begins its approach shortly before that section activates,
-        // stays in transit while the node is still dark, and reaches 100%
-        // on the exact same scroll threshold that lights the node.
+        // The line uses the exact same section thresholds as the nodes:
+        // first segment starts with the first scroll from Hero;
+        // every later segment starts when the previous node lights;
+        // each segment reaches 100% exactly when its destination node lights.
         segment.style.setProperty(
           '--segment-progress',
           progress.toFixed(4),
