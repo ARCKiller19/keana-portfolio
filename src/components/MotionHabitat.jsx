@@ -36,15 +36,6 @@ const STATION_META = [
   { slug: 'first-love', system: 'MEMORY / COLOR', accent: 'chapters', rgb: '142, 120, 166' },
 ]
 
-const HOLOGRAM_POSITIONS = [
-  { x: 332, y: 278, tilt: '-2deg' },
-  { x: 668, y: 278, tilt: '2deg' },
-  { x: 338, y: 302, tilt: '-1deg' },
-  { x: 662, y: 302, tilt: '1deg' },
-]
-
-const HOLOGRAM_PREVIEW_SECONDS = 5
-
 const MANUAL_SPEED = 260
 const AUTO_SPEED = 620
 const WAKE_RADIUS = 150
@@ -142,11 +133,9 @@ function HabitatCutPlayer({ piece }) {
   )
 }
 
-function HabitatHologramPreview({ piece, meta, position, onPlay }) {
+function HabitatHologramPreview({ piece, meta }) {
   const videoRef = useRef(null)
-  const previewEndRef = useRef(0)
-  const hasStartedRef = useRef(false)
-  const [phase, setPhase] = useState('loading')
+  const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
     const video = videoRef.current
@@ -156,70 +145,35 @@ function HabitatHologramPreview({ piece, meta, position, onPlay }) {
     }
   }, [])
 
-  const startPreview = useCallback(async () => {
+  const prepareThumbnail = useCallback(() => {
     const video = videoRef.current
-    if (!video || hasStartedRef.current) return
-
-    hasStartedRef.current = true
+    if (!video) return
 
     const duration = Number.isFinite(video.duration) ? video.duration : 0
-    const maxStart = Math.max(0, duration - HOLOGRAM_PREVIEW_SECONDS)
-    const requestedStart = piece.previewStart ?? 0
-    const previewStart = clamp(requestedStart, 0, maxStart)
-    const previewEnd = Math.min(
-      previewStart + HOLOGRAM_PREVIEW_SECONDS,
-      duration || previewStart + HOLOGRAM_PREVIEW_SECONDS,
-    )
+    const maxFrameTime = Math.max(0, duration - 0.2)
+    const frameTime = clamp(piece.previewStart ?? 0, 0, maxFrameTime)
 
-    previewEndRef.current = previewEnd
     video.muted = true
+    video.pause()
 
     try {
-      video.currentTime = previewStart
+      if (Math.abs(video.currentTime - frameTime) > 0.05) {
+        video.currentTime = frameTime
+      }
     } catch {
-      // Some browsers defer seeking until media data is available.
+      // If seeking is deferred, the browser will still show the available frame.
     }
 
-    setPhase('playing')
-
-    try {
-      await video.play()
-    } catch {
-      setPhase('cta')
-    }
+    setIsReady(true)
   }, [piece.previewStart])
 
-  const finishPreview = useCallback(() => {
-    const video = videoRef.current
-    video?.pause()
-    setPhase('cta')
-  }, [])
-
-  const handleTimeUpdate = () => {
-    const video = videoRef.current
-    if (!video || phase !== 'playing') return
-
-    if (video.currentTime >= previewEndRef.current - 0.04) {
-      finishPreview()
-    }
-  }
-
   return (
-    <button
-      className={`motion-habitat-hologram station-${meta.slug} is-${phase}`}
-      type="button"
-      style={{
-        '--hologram-x': `${position.x}%`,
-        '--hologram-y': `${position.y}%`,
-        '--hologram-tilt': position.tilt,
-        '--station-rgb': meta.rgb,
-      }}
-      aria-label={`Play full ${piece.title}`}
-      onClick={onPlay}
+    <span
+      className={`motion-habitat-hologram station-${meta.slug} ${
+        isReady ? 'is-ready' : 'is-loading'
+      }`}
+      aria-hidden="true"
     >
-      <span className="motion-habitat-hologram-beam" aria-hidden="true" />
-      <span className="motion-habitat-hologram-emitter" aria-hidden="true" />
-
       <span className="motion-habitat-hologram-shell">
         <video
           ref={videoRef}
@@ -229,31 +183,27 @@ function HabitatHologramPreview({ piece, meta, position, onPlay }) {
           playsInline
           preload="metadata"
           tabIndex={-1}
-          aria-hidden="true"
-          onLoadedMetadata={startPreview}
-          onCanPlay={startPreview}
-          onTimeUpdate={handleTimeUpdate}
-          onEnded={finishPreview}
-          onError={() => setPhase('cta')}
+          onLoadedMetadata={prepareThumbnail}
+          onSeeked={() => {
+            videoRef.current?.pause()
+            setIsReady(true)
+          }}
+          onError={() => setIsReady(true)}
         />
 
-        <span className="motion-habitat-hologram-scan" aria-hidden="true" />
-        <span className="motion-habitat-hologram-noise" aria-hidden="true" />
+        <span className="motion-habitat-hologram-scan" />
+        <span className="motion-habitat-hologram-noise" />
 
-        <span className="motion-habitat-hologram-meta" aria-hidden="true">
-          SIGNAL {piece.number} · 05 SEC PREVIEW
+        <span className="motion-habitat-hologram-meta">
+          SIGNAL {piece.number} · PREVIEW
         </span>
 
         <span className="motion-habitat-hologram-cta">
-          <strong>
-            {phase === 'loading' ? 'ACQUIRING SIGNAL' : 'CLICK TO PLAY'}
-          </strong>
-          <small>
-            {phase === 'cta' ? 'OPEN FULL TRANSMISSION' : piece.title}
-          </small>
+          <strong>{isReady ? 'CLICK TO PLAY' : 'ACQUIRING SIGNAL'}</strong>
+          <small>{piece.title}</small>
         </span>
       </span>
-    </button>
+    </span>
   )
 }
 
@@ -479,7 +429,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       setTargetedIndex(null)
       setWalkingState(false)
       setStatusMessage(
-        `${pieces[index].title} signal detected. Hologram preview transmitting.`,
+        `${pieces[index].title} signal detected. Hologram preview ready.`,
       )
 
       if (fallbackTimerRef.current) {
@@ -742,7 +692,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           setStatusMessage(
             nextAwake === null
               ? 'Signal lost. Continue exploring the Motion Habitat.'
-              : `${pieces[nextAwake].title} signal detected. Hologram preview transmitting.`,
+              : `${pieces[nextAwake].title} signal detected. Hologram preview ready.`,
           )
         }
       }
@@ -1108,8 +1058,14 @@ function MotionHabitat({ pieces, onOpenNotes }) {
                 '--station-rgb': meta.rgb,
               }}
               aria-pressed={isOpen}
-              aria-label={`Open ${piece.title}`}
-              onClick={() => beginAutoWalk(index)}
+              aria-label={
+                isAwake
+                  ? `Play full ${piece.title}`
+                  : `Approach ${piece.title}`
+              }
+              onClick={() =>
+                isAwake ? activateStation(index) : beginAutoWalk(index)
+              }
             >
               <span className="motion-habitat-station-number">{piece.number}</span>
               <span className="motion-habitat-machine" aria-hidden="true">
@@ -1141,6 +1097,11 @@ function MotionHabitat({ pieces, onOpenNotes }) {
                   )}
                 </span>
               </span>
+
+              {!isCompact && !reducedMotion && isAwake && !isOpen && (
+                <HabitatHologramPreview piece={piece} meta={meta} />
+              )}
+
               <span className="motion-habitat-station-copy">
                 <span>{meta.system}</span>
                 <strong>{piece.title}</strong>
@@ -1162,32 +1123,6 @@ function MotionHabitat({ pieces, onOpenNotes }) {
             </button>
           )
         })}
-
-        {!isCompact &&
-          !reducedMotion &&
-          awakeIndex !== null &&
-          openIndex === null &&
-          pieces[awakeIndex] &&
-          STATION_META[awakeIndex] &&
-          HOLOGRAM_POSITIONS[awakeIndex] && (
-            <HabitatHologramPreview
-              key={pieces[awakeIndex].id}
-              piece={pieces[awakeIndex]}
-              meta={STATION_META[awakeIndex]}
-              position={{
-                x:
-                  (HOLOGRAM_POSITIONS[awakeIndex].x /
-                    DESKTOP_LAYOUT.width) *
-                  100,
-                y:
-                  (HOLOGRAM_POSITIONS[awakeIndex].y /
-                    DESKTOP_LAYOUT.height) *
-                  100,
-                tilt: HOLOGRAM_POSITIONS[awakeIndex].tilt,
-              }}
-              onPlay={() => activateStation(awakeIndex)}
-            />
-          )}
 
         <div
           ref={characterRef}
