@@ -70,12 +70,10 @@ function ScrollStem({ active }) {
           scrollRange,
         ),
       )
-      const entryLine = window.innerHeight * 0.94
-      const entryScrolls = sectionTops.map((sectionTop) =>
-        Math.min(
-          Math.max(sectionTop - entryLine, 0),
-          scrollRange,
-        ),
+      const approachDistance = clamp(
+        window.innerHeight * 0.26,
+        180,
+        300,
       )
 
       let currentIndex = -1
@@ -92,15 +90,28 @@ function ScrollStem({ active }) {
       })
 
       segments.forEach((segment, index) => {
-        const start =
-          index === 0 ? 0 : entryScrolls[index] ?? scrollRange
-        const end = activationScrolls[index] ?? scrollRange
-        const progress = rangeProgress(scrollY, start, end)
+        const activationScroll = activationScrolls[index] ?? scrollRange
+        let progress = 0
 
-        // Grow only while the destination section is physically entering the
-        // viewport. This keeps the line tied to what the user can actually see:
-        // it starts when that section approaches from below and reaches the node
-        // exactly when the same section becomes active.
+        if (index <= currentIndex) {
+          progress = 1
+        } else if (index === currentIndex + 1) {
+          const approachStart = Math.max(
+            0,
+            activationScroll - approachDistance,
+          )
+
+          progress = rangeProgress(
+            scrollY,
+            approachStart,
+            activationScroll,
+          )
+        }
+
+        // Only the line to the next destination is allowed to move.
+        // It begins its approach shortly before that section activates,
+        // stays in transit while the node is still dark, and reaches 100%
+        // on the exact same scroll threshold that lights the node.
         segment.style.setProperty(
           '--segment-progress',
           progress.toFixed(4),
@@ -108,11 +119,15 @@ function ScrollStem({ active }) {
       })
 
       if (tail) {
+        const lastIndex = sections.length - 1
         const lastActivation =
-          activationScrolls[activationScrolls.length - 1] ?? scrollRange
-        const tailProgress = atPageEnd
-          ? 1
-          : rangeProgress(scrollY, lastActivation, scrollRange)
+          activationScrolls[lastIndex] ?? scrollRange
+        const tailProgress =
+          currentIndex < lastIndex
+            ? 0
+            : atPageEnd
+              ? 1
+              : rangeProgress(scrollY, lastActivation, scrollRange)
 
         tail.style.setProperty(
           '--segment-progress',
