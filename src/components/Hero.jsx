@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { handleSectionNavigation } from '../utils/sectionNavigation.js'
 
-const INTRO_SESSION_KEY = 'keana-botanical-intro-v7-seen'
+const INTRO_SESSION_KEY = 'keana-botanical-intro-v8-seen'
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max)
@@ -245,53 +245,65 @@ function Hero({ motionReady = false, onIntroComplete }) {
           <path
             className="intro-vine intro-vine-a"
             pathLength="1"
-            d="M380 58C326 43 273 43 220 53C154 66 96 65 28 96"
+            d="M380 62C357 41 329 41 314 57C301 72 311 88 330 84C348 80 352 61 339 49C317 29 281 37 254 52C222 70 203 82 174 77C143 72 126 52 99 58C71 64 49 84 28 105"
           />
           <path
             className="intro-vine intro-vine-b"
             pathLength="1"
-            d="M380 58C434 43 487 43 540 53C606 66 664 65 732 96"
+            d="M380 62C403 41 431 41 446 57C459 72 449 88 430 84C412 80 408 61 421 49C443 29 479 37 506 52C538 70 557 82 586 77C617 72 634 52 661 58C689 64 711 84 732 105"
           />
           <path
             className="intro-vine intro-vine-c"
             pathLength="1"
-            d="M380 222C326 237 273 237 220 227C154 214 96 215 28 184"
+            d="M380 218C357 239 329 239 314 223C301 208 311 192 330 196C348 200 352 219 339 231C317 251 281 243 254 228C222 210 203 198 174 203C143 208 126 228 99 222C71 216 49 196 28 175"
           />
           <path
             className="intro-vine intro-vine-extension"
             pathLength="1"
-            d="M380 222C434 237 487 237 540 227C606 214 664 215 732 184"
+            d="M380 218C403 239 431 239 446 223C459 208 449 192 430 196C412 200 408 219 421 231C443 251 479 243 506 228C538 210 557 198 586 203C617 208 634 228 661 222C689 216 711 196 732 175"
           />
         </g>
 
-        <path
-          className="intro-leaf intro-leaf-a"
-          d="M112 70C126 53 144 55 151 67C140 79 126 84 112 70Z"
-        />
-        <path
-          className="intro-leaf intro-leaf-b"
-          d="M628 68C642 51 660 53 667 65C656 77 642 82 628 68Z"
-        />
-        <path
-          className="intro-leaf intro-leaf-c"
-          d="M132 212C119 194 102 196 95 208C106 221 120 225 132 212Z"
-        />
-        <path
-          className="intro-leaf intro-leaf-d"
-          d="M610 213C623 195 640 197 647 209C636 222 622 226 610 213Z"
-        />
-
-        <g className="intro-particles">
-          <circle className="intro-particle intro-particle-a" cx="184" cy="62" r="1.3" />
-          <circle className="intro-particle intro-particle-b" cx="575" cy="61" r="1.2" />
-          <circle className="intro-particle intro-particle-c" cx="193" cy="222" r="1.1" />
-          <circle className="intro-particle intro-particle-d" cx="566" cy="220" r="1.25" />
+        <g transform="translate(295 48) rotate(155)">
+          <path className="intro-leaf intro-leaf-a" d="M0 0C9 -8 17 -6 19 1C12 8 5 9 0 0Z" />
+        </g>
+        <g transform="translate(154 66) rotate(188)">
+          <path className="intro-leaf intro-leaf-b" d="M0 0C9 -8 17 -6 19 1C12 8 5 9 0 0Z" />
+        </g>
+        <g transform="translate(465 48) rotate(25)">
+          <path className="intro-leaf intro-leaf-c" d="M0 0C9 -8 17 -6 19 1C12 8 5 9 0 0Z" />
+        </g>
+        <g transform="translate(606 66) rotate(-8)">
+          <path className="intro-leaf intro-leaf-d" d="M0 0C9 -8 17 -6 19 1C12 8 5 9 0 0Z" />
+        </g>
+        <g transform="translate(295 232) rotate(205)">
+          <path className="intro-leaf intro-leaf-e" d="M0 0C9 -8 17 -6 19 1C12 8 5 9 0 0Z" />
+        </g>
+        <g transform="translate(154 214) rotate(172)">
+          <path className="intro-leaf intro-leaf-f" d="M0 0C9 -8 17 -6 19 1C12 8 5 9 0 0Z" />
+        </g>
+        <g transform="translate(465 232) rotate(-25)">
+          <path className="intro-leaf intro-leaf-g" d="M0 0C9 -8 17 -6 19 1C12 8 5 9 0 0Z" />
+        </g>
+        <g transform="translate(606 214) rotate(8)">
+          <path className="intro-leaf intro-leaf-h" d="M0 0C9 -8 17 -6 19 1C12 8 5 9 0 0Z" />
         </g>
 
-        <circle className="intro-node intro-node-a" cx="380" cy="58" r="2.3" />
-        <circle className="intro-node intro-node-b" cx="380" cy="222" r="2.3" />
-        <circle className="intro-tip-glow intro-tip-glow-a" cx="28" cy="96" r="2.8" />
-        <circle className="intro-tip-glow intro-tip-glow-b" cx="732" cy="96" r="2.8" />
+        <g className="intro-particles">
+          <circle className="intro-particle intro-particle-a" cx="255" cy="47" r="1.25" />
+          <circle className="intro-particle intro-particle-b" cx="505" cy="47" r="1.2" />
+          <circle className="intro-particle intro-particle-c" cx="194" cy="80" r="1.05" />
+          <circle className="intro-particle intro-particle-d" cx="566" cy="80" r="1.1" />
+          <circle className="intro-particle intro-particle-e" cx="255" cy="233" r="1.15" />
+          <circle className="intro-particle intro-particle-f" cx="505" cy="233" r="1.2" />
+        </g>
+
+        <circle className="intro-node intro-node-a" cx="380" cy="62" r="2.3" />
+        <circle className="intro-node intro-node-b" cx="380" cy="218" r="2.3" />
+        <circle className="intro-tip-glow intro-tip-glow-a" cx="28" cy="105" r="2.8" />
+        <circle className="intro-tip-glow intro-tip-glow-b" cx="732" cy="105" r="2.8" />
+        <circle className="intro-tip-glow intro-tip-glow-c" cx="28" cy="175" r="2.5" />
+        <circle className="intro-tip-glow intro-tip-glow-d" cx="732" cy="175" r="2.5" />
       </svg>
 
       <div className="hero-text">

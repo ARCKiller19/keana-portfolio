@@ -91,10 +91,14 @@
   animation: intro-leaf-furl 560ms var(--ease-editorial) forwards;
 }
 
+.hero-motion.intro-unfurling .intro-leaf-b,
+.hero-motion.intro-unfurling .intro-leaf-d,
+.hero-motion.intro-unfurling .intro-leaf-f,
+.hero-motion.intro-unfurling .intro-leaf-h { animation-delay: 40ms; }
 .hero-motion.intro-unfurling .intro-leaf-a,
-.hero-motion.intro-unfurling .intro-leaf-b { animation-delay: 60ms; }
 .hero-motion.intro-unfurling .intro-leaf-c,
-.hero-motion.intro-unfurling .intro-leaf-d { animation-delay: 120ms; }
+.hero-motion.intro-unfurling .intro-leaf-e,
+.hero-motion.intro-unfurling .intro-leaf-g { animation-delay: 120ms; }
 
 @keyframes intro-leaf-furl {
   0% {

@@ -11,6 +11,10 @@ const growthSegments = [
   'M10 700V735H27V875H18V920',
 ]
 
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max)
+}
+
 function ScrollStem({ active }) {
   const stemRef = useRef(null)
 
@@ -33,6 +37,11 @@ function ScrollStem({ active }) {
     const tail = stem.querySelector('.scroll-stem-growth-tail')
     let frameId = null
 
+    const rangeProgress = (value, start, end) => {
+      const span = Math.max(end - start, 1)
+      return clamp((value - start) / span, 0, 1)
+    }
+
     const updateStem = () => {
       frameId = null
 
@@ -44,6 +53,7 @@ function ScrollStem({ active }) {
 
       const scrollY = window.scrollY
       const scrollHeight = document.documentElement.scrollHeight
+      const scrollRange = Math.max(scrollHeight - window.innerHeight, 1)
       const activationLine = Math.max(
         getSectionActivationLine() + 24,
         window.innerHeight * 0.42,
@@ -51,15 +61,20 @@ function ScrollStem({ active }) {
       const atPageEnd =
         scrollY + window.innerHeight >= scrollHeight - 2
 
+      const activationScrolls = sections.map((section) =>
+        Math.min(
+          Math.max(
+            scrollY + section.getBoundingClientRect().top - activationLine,
+            0,
+          ),
+          scrollRange,
+        ),
+      )
+
       let currentIndex = -1
 
-      sections.forEach((section, index) => {
-        const sectionTop =
-          scrollY + section.getBoundingClientRect().top - activationLine
-
-        if (scrollY + 1 >= Math.max(sectionTop, 0)) {
-          currentIndex = index
-        }
+      activationScrolls.forEach((activationScroll, index) => {
+        if (scrollY + 1 >= activationScroll) currentIndex = index
       })
 
       if (atPageEnd) currentIndex = sections.length - 1
@@ -70,13 +85,32 @@ function ScrollStem({ active }) {
       })
 
       segments.forEach((segment, index) => {
-        segment.classList.toggle('is-reached', index <= currentIndex)
+        const start =
+          index === 0 ? 0 : activationScrolls[index - 1] ?? scrollRange
+        const end = activationScrolls[index] ?? scrollRange
+        const progress =
+          atPageEnd && index === segments.length - 1
+            ? 1
+            : rangeProgress(scrollY, start, end)
+
+        segment.style.setProperty(
+          '--segment-progress',
+          progress.toFixed(4),
+        )
       })
 
-      tail?.classList.toggle(
-        'is-reached',
-        currentIndex === sections.length - 1,
-      )
+      if (tail) {
+        const lastActivation =
+          activationScrolls[activationScrolls.length - 1] ?? scrollRange
+        const tailProgress = atPageEnd
+          ? 1
+          : rangeProgress(scrollY, lastActivation, scrollRange)
+
+        tail.style.setProperty(
+          '--segment-progress',
+          tailProgress.toFixed(4),
+        )
+      }
     }
 
     const requestStemUpdate = () => {
