@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { motionAlternateCuts } from '../data/motion-cuts.js'
 import useDeferredVideoMetadata from '../hooks/useDeferredVideoMetadata.js'
 import '../motion-habitat.css'
@@ -6,43 +6,145 @@ import '../motion-habitat.css'
 const DESKTOP_LAYOUT = {
   width: 1000,
   height: 560,
-  start: { x: 500, y: 360 },
-  projection: { x: 500, y: 270 },
-  dock: { x: 500, y: 360 },
-  stations: [
-    { x: 170, y: 145, standX: 330, standY: 218 },
-    { x: 830, y: 145, standX: 670, standY: 218 },
-    { x: 170, y: 415, standX: 330, standY: 392 },
-    { x: 830, y: 415, standX: 670, standY: 392 },
-  ],
+  start: { x: 500, y: 395 },
+  projection: { x: 500, y: 212 },
+  dock: { x: 500, y: 395 },
 }
 
 const COMPACT_LAYOUT = {
   width: 420,
-  height: 680,
-  start: { x: 210, y: 650 },
   projection: { x: 210, y: 340 },
   dock: { x: 210, y: 340 },
-  stations: [
-    { x: 210, y: 82, standX: 210, standY: 150 },
-    { x: 210, y: 230, standX: 210, standY: 298 },
-    { x: 210, y: 378, standX: 210, standY: 446 },
-    { x: 210, y: 526, standX: 210, standY: 594 },
-  ],
 }
 
-const STATION_META = [
-  { slug: 'roast', system: 'LIVE / CAFE', accent: 'warm', rgb: '184, 180, 168' },
-  { slug: 'kove', system: 'LIVE / CAFE / FRIENDS', accent: 'ambient', rgb: '208, 138, 75' },
-  { slug: 'special', system: 'MOTION / RHYTHM', accent: 'pulse', rgb: '168, 188, 99' },
-  { slug: 'first-love', system: 'MEMORY / COLOR', accent: 'chapters', rgb: '142, 120, 166' },
-]
+const STATION_PRESETS = {
+  'roast-live-action': {
+    slug: 'roast',
+    system: 'LIVE / CAFE',
+    accent: 'warm',
+    rgb: '184, 180, 168',
+  },
+  kove: {
+    slug: 'kove',
+    system: 'LIVE / CAFE / FRIENDS',
+    accent: 'ambient',
+    rgb: '208, 138, 75',
+  },
+  'cover-animation': {
+    slug: 'special',
+    system: 'MOTION / RHYTHM',
+    accent: 'pulse',
+    rgb: '168, 188, 99',
+  },
+  'first-love': {
+    slug: 'first-love',
+    system: 'MEMORY / COLOR',
+    accent: 'chapters',
+    rgb: '142, 120, 166',
+  },
+}
 
 const MANUAL_SPEED = 260
 const AUTO_SPEED = 620
-const WAKE_RADIUS = 150
-const ACTIVATE_RADIUS = 82
+const WAKE_RADIUS = 138
+const ACTIVATE_RADIUS = 76
 const CENTER_PERCH_RADIUS = 34
+
+function resolveHabitatGroup(piece) {
+  if (piece.habitatGroup) return piece.habitatGroup
+
+  const category = piece.category?.toLowerCase() ?? ''
+  return category.includes('animation') || category.includes('motion design')
+    ? 'animation-motion'
+    : 'live-action'
+}
+
+function getStationMeta(piece) {
+  const preset = STATION_PRESETS[piece.id]
+  if (preset) return preset
+
+  const group = resolveHabitatGroup(piece)
+  return {
+    slug: piece.id.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase(),
+    system: group === 'live-action' ? 'LIVE / ARCHIVE' : 'MOTION / ARCHIVE',
+    accent: 'signal',
+    rgb: group === 'live-action' ? '184, 180, 168' : '168, 188, 99',
+  }
+}
+
+function buildDesktopLayout(pieces) {
+  const stations = new Array(pieces.length)
+  const groups = {
+    'live-action': [],
+    'animation-motion': [],
+  }
+
+  pieces.forEach((piece, index) => {
+    const group = resolveHabitatGroup(piece)
+    ;(groups[group] ?? groups['animation-motion']).push(index)
+  })
+
+  const placeGroup = (indices, side) => {
+    const count = indices.length
+    if (!count) return
+
+    const edgeX = count <= 2 ? 250 : count === 3 ? 190 : 135
+    const span = 1000 - edgeX * 2
+
+    indices.forEach((pieceIndex, order) => {
+      const progress = count === 1 ? 0.5 : order / (count - 1)
+      const x = edgeX + span * progress
+      const normalized = Math.abs((x - 500) / Math.max(1, 500 - edgeX))
+      const arcDepth = (1 - Math.min(1, normalized ** 2)) * 34
+      const y = side === 'top' ? 155 - arcDepth : 405 + arcDepth
+      const inwardX = x + (500 - x) * 0.23
+      const standY = side === 'top' ? y + 78 : y - 78
+      const nodeWidth = Math.max(98, 200 - count * 12)
+
+      stations[pieceIndex] = {
+        x,
+        y,
+        standX: inwardX,
+        standY,
+        nodeWidth,
+        group: side === 'top' ? 'live-action' : 'animation-motion',
+        groupCount: count,
+      }
+    })
+  }
+
+  placeGroup(groups['live-action'], 'top')
+  placeGroup(groups['animation-motion'], 'bottom')
+
+  return {
+    ...DESKTOP_LAYOUT,
+    stations,
+  }
+}
+
+function buildCompactLayout(pieces) {
+  const verticalStep = 148
+  const height = Math.max(680, 94 + pieces.length * verticalStep)
+  const stations = pieces.map((piece, index) => {
+    const y = 82 + index * verticalStep
+    return {
+      x: 210,
+      y,
+      standX: 210,
+      standY: y + 68,
+      nodeWidth: 300,
+      group: resolveHabitatGroup(piece),
+      groupCount: 1,
+    }
+  })
+
+  return {
+    ...COMPACT_LAYOUT,
+    height,
+    start: { x: 210, y: height - 30 },
+    stations,
+  }
+}
 
 function useMediaQuery(query) {
   const [matches, setMatches] = useState(false)
