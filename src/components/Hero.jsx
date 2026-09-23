@@ -28,15 +28,22 @@ function Hero({ motionReady = false, onIntroComplete }) {
   const heroRef = useRef(null)
   const markRef = useRef(null)
   const onIntroCompleteRef = useRef(onIntroComplete)
+  const introCompleteNotifiedRef = useRef(false)
   const [skipIntro] = useState(shouldSkipIntro)
   const [introPhase, setIntroPhase] = useState(skipIntro ? 'ready' : 'waiting')
 
   onIntroCompleteRef.current = onIntroComplete
 
+  const notifyIntroComplete = () => {
+    if (introCompleteNotifiedRef.current) return
+    introCompleteNotifiedRef.current = true
+    onIntroCompleteRef.current?.()
+  }
+
   useEffect(() => {
     if (skipIntro) {
       const frameId = window.requestAnimationFrame(() => {
-        onIntroCompleteRef.current?.()
+        notifyIntroComplete()
       })
 
       return () => window.cancelAnimationFrame(frameId)
@@ -102,6 +109,14 @@ function Hero({ motionReady = false, onIntroComplete }) {
     }
 
     const startIntro = async () => {
+      // Claim this session before the choreography starts. If the Hero is ever
+      // remounted or the page is refreshed mid-intro, it must not replay.
+      try {
+        window.sessionStorage.setItem(INTRO_SESSION_KEY, 'true')
+      } catch {
+        // The intro can still run when session storage is unavailable.
+      }
+
       body.classList.add('botanical-intro-active')
       lockScrollWithoutReflow()
 
@@ -133,15 +148,9 @@ function Hero({ motionReady = false, onIntroComplete }) {
         window.setTimeout(() => {
           body.classList.add('botanical-intro-settling')
           setIntroPhase('settling')
-          onIntroCompleteRef.current?.()
+          notifyIntroComplete()
         }, 2550),
         window.setTimeout(() => {
-          try {
-            window.sessionStorage.setItem(INTRO_SESSION_KEY, 'true')
-          } catch {
-            // The intro can finish even when session storage is unavailable.
-          }
-
           body.classList.remove(
             'botanical-intro-active',
             'botanical-intro-settling',
