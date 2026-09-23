@@ -540,10 +540,10 @@
 
 .motion-habitat .motion-habitat-easter-aura {
   position: absolute;
-  top: 22px;
+  top: 29px;
   left: 50%;
-  width: 94px;
-  height: 72px;
+  width: 100px;
+  height: 64px;
   border: 1px solid rgba(167, 179, 95, 0.1);
   border-radius: 50%;
   opacity: 0;
@@ -556,7 +556,7 @@
 .motion-habitat .motion-habitat-easter-bloom {
   position: absolute;
   z-index: 1;
-  top: 57px;
+  top: 64px;
   left: 50%;
   width: 92px;
   height: 72px;
@@ -639,10 +639,10 @@
 
 .motion-habitat .motion-habitat-easter-bloom .petal-four {
   --petal-x: 0px;
-  --petal-y: 18px;
+  --petal-y: 15px;
   --petal-r: 180deg;
   --petal-w: 20px;
-  --petal-h: 27px;
+  --petal-h: 23px;
 }
 
 .motion-habitat .motion-habitat-easter-bloom .petal-five {
