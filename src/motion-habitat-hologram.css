@@ -39,7 +39,7 @@
   width: 118px;
   height: 70px;
   pointer-events: none;
-  clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 56% 100%, 44% 100%);
   background:
     linear-gradient(
       180deg,
