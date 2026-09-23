@@ -409,7 +409,23 @@ function MotionHabitat({ pieces, onOpenNotes }) {
 
   const isCompact = useMediaQuery('(max-width: 720px)')
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
-  const layout = isCompact ? COMPACT_LAYOUT : DESKTOP_LAYOUT
+  const layout = useMemo(
+    () => (isCompact ? buildCompactLayout(pieces) : buildDesktopLayout(pieces)),
+    [isCompact, pieces],
+  )
+  const stationMeta = useMemo(() => pieces.map(getStationMeta), [pieces])
+  const groupCounts = useMemo(
+    () =>
+      pieces.reduce(
+        (counts, piece) => {
+          const group = resolveHabitatGroup(piece)
+          counts[group] = (counts[group] ?? 0) + 1
+          return counts
+        },
+        { 'live-action': 0, 'animation-motion': 0 },
+      ),
+    [pieces],
+  )
 
   const [isOnline, setIsOnline] = useState(false)
   const [openIndex, setOpenIndex] = useState(null)
@@ -426,17 +442,19 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   )
 
   const activePiece = openIndex === null ? null : pieces[openIndex]
-  const activeMeta = openIndex === null ? null : STATION_META[openIndex]
-  const energyMeta = energyIndex === null ? null : STATION_META[energyIndex]
+  const activeMeta = openIndex === null ? null : stationMeta[openIndex]
+  const energyMeta = energyIndex === null ? null : stationMeta[energyIndex]
 
-  const syncCharacter = useCallback((position) => {
-    const character = characterRef.current
-    if (!character) return
+  const syncCharacter = useCallback(
+    (position) => {
+      const character = characterRef.current
+      if (!character) return
 
-    const activeLayout = isCompact ? COMPACT_LAYOUT : DESKTOP_LAYOUT
-    character.style.left = `${(position.x / activeLayout.width) * 100}%`
-    character.style.top = `${(position.y / activeLayout.height) * 100}%`
-  }, [isCompact])
+      character.style.left = `${(position.x / layout.width) * 100}%`
+      character.style.top = `${(position.y / layout.height) * 100}%`
+    },
+    [layout],
+  )
 
   const setWalkingState = useCallback((nextWalking) => {
     if (walkingRef.current === nextWalking) return
@@ -597,7 +615,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         setOpenIndex(null)
       }
 
-      const activeLayout = isCompact ? COMPACT_LAYOUT : DESKTOP_LAYOUT
+      const activeLayout = layout
       const station = activeLayout.stations[index]
 
       pressedKeysRef.current.clear()
@@ -638,7 +656,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   )
 
   useEffect(() => {
-    const nextLayout = isCompact ? COMPACT_LAYOUT : DESKTOP_LAYOUT
+    const nextLayout = layout
     positionRef.current = { ...nextLayout.start }
     targetRef.current = null
     pressedKeysRef.current.clear()
@@ -708,7 +726,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     const frame = (time) => {
       if (!running) return
 
-      const activeLayout = isCompact ? COMPACT_LAYOUT : DESKTOP_LAYOUT
+      const activeLayout = layout
       const delta = lastTime ? Math.min((time - lastTime) / 1000, 0.04) : 0
       lastTime = time
 
@@ -1230,7 +1248,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
 
         {pieces.map((piece, index) => {
           const station = layout.stations[index]
-          const meta = STATION_META[index]
+          const meta = stationMeta[index]
           const isAwake = awakeIndex === index
           const isTargeted = targetedIndex === index
           const isOpen = openIndex === index
@@ -1315,11 +1333,11 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           awakeIndex !== null &&
           openIndex === null &&
           pieces[awakeIndex] &&
-          STATION_META[awakeIndex] && (
+          stationMeta[awakeIndex] && (
             <HabitatHologramPreview
               key={pieces[awakeIndex].id}
               piece={pieces[awakeIndex]}
-              meta={STATION_META[awakeIndex]}
+              meta={stationMeta[awakeIndex]}
               anchor={{
                 x: (projection.x / layout.width) * 100,
                 y: (projection.y / layout.height) * 100,
