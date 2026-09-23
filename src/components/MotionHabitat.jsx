@@ -434,6 +434,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const energyPulseRef = useRef(null)
   const projectorEmitterRef = useRef(null)
   const signalPathRefs = useRef([])
+  const signalGradientRefs = useRef([])
   const joystickPadRef = useRef(null)
   const joystickKnobRef = useRef(null)
   const joystickPointerRef = useRef(null)
@@ -932,7 +933,10 @@ function MotionHabitat({ pieces, onOpenNotes }) {
             y: bodyCenter.y + (signalY / signalLength) * 4.5,
           }
 
-          const energyD = createEnergyPath(energyStation, connectionPoint, time)
+          // The proximity energy belongs to KEANA -> station activation.
+          // Reverse the path direction so the traveling pulse is absorbed by the
+          // station instead of visually flowing into the character.
+          const energyD = createEnergyPath(connectionPoint, energyStation, time)
           energyPath.setAttribute('d', energyD)
           energyPulse?.setAttribute('d', energyD)
         }
@@ -1055,6 +1059,15 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         'd',
         createProjectorSignalPath(station, emitterPoint),
       )
+
+      const signalGradient = signalGradientRefs.current[awakeIndex]
+      if (signalGradient) {
+        signalGradient.setAttribute('x1', station.x.toFixed(1))
+        signalGradient.setAttribute('y1', station.y.toFixed(1))
+        signalGradient.setAttribute('x2', emitterPoint.x.toFixed(1))
+        signalGradient.setAttribute('y2', emitterPoint.y.toFixed(1))
+      }
+
       signalPath.setAttribute('data-projector-linked', 'true')
 
       const hologram = emitter.closest('.motion-habitat-hologram')
@@ -1360,6 +1373,33 @@ function MotionHabitat({ pieces, onOpenNotes }) {
             </>
           )}
 
+          <defs>
+            {paths.map(({ index }) => {
+              const stationRgb = stationMeta[index]?.rgb ?? '168, 188, 99'
+              const gradientId = `motion-habitat-signal-gradient-${index}`
+
+              return (
+                <linearGradient
+                  key={gradientId}
+                  id={gradientId}
+                  ref={(node) => {
+                    signalGradientRefs.current[index] = node
+                  }}
+                  gradientUnits="userSpaceOnUse"
+                  x1={layout.stations[index]?.x ?? 0}
+                  y1={layout.stations[index]?.y ?? 0}
+                  x2={projection.x}
+                  y2={projection.y}
+                >
+                  <stop offset="0%" stopColor={`rgb(${stationRgb})`} />
+                  <stop offset="38%" stopColor={`rgb(${stationRgb})`} />
+                  <stop offset="62%" stopColor="rgb(118, 226, 238)" />
+                  <stop offset="100%" stopColor="rgb(118, 226, 238)" />
+                </linearGradient>
+              )
+            })}
+          </defs>
+
           {paths.map(({ index, d }) => {
             const isProjectorFeed =
               awakeIndex === index && openIndex === null && !isCompact
@@ -1375,6 +1415,9 @@ function MotionHabitat({ pieces, onOpenNotes }) {
                 }`}
                 style={{
                   '--signal-rgb': stationMeta[index]?.rgb ?? '168, 188, 99',
+                  stroke: isProjectorFeed
+                    ? `url(#motion-habitat-signal-gradient-${index})`
+                    : undefined,
                 }}
                 d={d}
               />
