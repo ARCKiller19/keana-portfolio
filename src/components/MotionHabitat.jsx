@@ -274,17 +274,21 @@ function HabitatHologramPreview({ piece, meta, anchor, onPlay }) {
   return (
     <button
       className={`motion-habitat-hologram station-${meta.slug} ${
-        isReady ? 'is-ready' : 'is-loading'
-      }`}
+        piece.layout === 'portrait' ? 'is-portrait' : 'is-landscape'
+      } ${isReady ? 'is-ready' : 'is-loading'}`}
       type="button"
       style={{
         '--hologram-x': `${anchor.x}%`,
         '--hologram-y': `${anchor.y}%`,
+        '--hologram-aspect': piece.layout === 'portrait' ? '9 / 16' : '16 / 9',
         '--station-rgb': meta.rgb,
       }}
       aria-label={`Play full ${piece.title}`}
       onClick={onPlay}
     >
+      <span className="motion-habitat-hologram-title" aria-hidden="true">
+        {piece.habitatLabel ?? 'SIGNAL PREVIEW'}
+      </span>
       <span className="motion-habitat-hologram-beam" aria-hidden="true" />
       <span className="motion-habitat-hologram-emitter" aria-hidden="true" />
 
@@ -649,6 +653,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       activateStation,
       arriveAtStation,
       isCompact,
+      layout,
       pieces,
       reducedMotion,
       setWalkingState,
@@ -672,7 +677,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     setPerchDirectionState('right')
     syncCharacter(positionRef.current)
   }, [
-    isCompact,
+    layout,
     resetJoystick,
     setCenterPerchedState,
     setEnergyIndexState,
@@ -949,6 +954,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     activateStation,
     arriveAtStation,
     isCompact,
+    layout,
     pieces,
     reducedMotion,
     resetJoystick,
@@ -1155,6 +1161,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         onKeyUp={handleKeyUp}
         onBlur={handleWorldBlur}
         onPointerDown={isCompact || reducedMotion ? undefined : handleWorldPointerDown}
+        style={isCompact ? { minHeight: `${layout.height}px`, height: `${layout.height}px` } : undefined}
       >
         <div className="motion-habitat-grid" aria-hidden="true" />
 
@@ -1165,7 +1172,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
               aria-hidden="true"
             >
               <span>LIVE ACTION</span>
-              <small>02 STATIONS</small>
+              <small>{String(groupCounts['live-action']).padStart(2, '0')} SIGNALS</small>
             </div>
 
             <div
@@ -1173,7 +1180,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
               aria-hidden="true"
             >
               <span>ANIMATION / MOTION</span>
-              <small>02 STATIONS</small>
+              <small>{String(groupCounts['animation-motion']).padStart(2, '0')} SIGNALS</small>
             </div>
 
             <div
@@ -1252,18 +1259,22 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           const isAwake = awakeIndex === index
           const isTargeted = targetedIndex === index
           const isOpen = openIndex === index
+          const habitatGroup = resolveHabitatGroup(piece)
 
           return (
             <button
               className={`motion-habitat-station station-${meta.slug} ${
                 isAwake ? 'is-awake' : ''
               } ${isTargeted ? 'is-targeted' : ''} ${isOpen ? 'is-open' : ''}`}
+              data-habitat-group={habitatGroup}
               type="button"
               key={piece.id}
               style={{
                 '--station-x': `${(station.x / layout.width) * 100}%`,
                 '--station-y': `${(station.y / layout.height) * 100}%`,
                 '--station-rgb': meta.rgb,
+                '--node-width': `${station.nodeWidth ?? 176}px`,
+                '--group-count': station.groupCount ?? 1,
               }}
               aria-pressed={isOpen}
               aria-label={
