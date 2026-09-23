@@ -410,19 +410,21 @@
 }
 
 
-/* Hidden resting-node easter egg: after KEANA stays seated at center, the
-   existing character briefly gains botanical wings while a tiny butterfly visits. */
+/* Hidden resting-node easter egg: after KEANA stays seated at center,
+   the resting node briefly blooms into a small flower around her. Because the
+   flower belongs to the node rather than KEANA's body, it reads correctly from
+   every facing direction. */
 .motion-habitat .motion-habitat-rest-easter {
   position: absolute;
   z-index: 13;
   top: var(--dock-y);
   left: var(--dock-x);
-  width: 158px;
-  height: 118px;
+  width: 174px;
+  height: 126px;
   pointer-events: none;
   opacity: 0;
-  transform: translate(-50%, -66%) scale(0.94);
-  transform-origin: 50% 78%;
+  transform: translate(-50%, -63%) scale(0.94);
+  transform-origin: 50% 72%;
 }
 
 .motion-habitat .motion-habitat-rest-easter.is-visible {
@@ -433,12 +435,12 @@
   animation: habitat-easter-aura 3.2s ease-in-out both;
 }
 
-.motion-habitat .motion-habitat-rest-easter.is-visible .motion-habitat-easter-wing.wing-left {
-  animation: habitat-easter-wing-left 3.2s var(--ease-editorial) both;
+.motion-habitat .motion-habitat-rest-easter.is-visible .motion-habitat-easter-bloom {
+  animation: habitat-easter-bloom 3.2s var(--ease-editorial) both;
 }
 
-.motion-habitat .motion-habitat-rest-easter.is-visible .motion-habitat-easter-wing.wing-right {
-  animation: habitat-easter-wing-right 3.2s var(--ease-editorial) both;
+.motion-habitat .motion-habitat-rest-easter.is-visible .motion-habitat-easter-bloom .petal {
+  animation: habitat-easter-petal 3.2s var(--ease-editorial) both;
 }
 
 .motion-habitat .motion-habitat-rest-easter.is-visible .motion-habitat-easter-butterfly {
@@ -455,76 +457,126 @@
 
 .motion-habitat .motion-habitat-easter-aura {
   position: absolute;
-  inset: 22px 18px 18px;
-  border: 1px solid rgba(167, 179, 95, 0.14);
+  top: 22px;
+  left: 50%;
+  width: 112px;
+  height: 82px;
+  border: 1px solid rgba(167, 179, 95, 0.12);
   border-radius: 50%;
   opacity: 0;
+  transform: translateX(-50%) scale(0.86);
   box-shadow:
-    inset 0 0 22px rgba(167, 179, 95, 0.045),
-    0 0 20px rgba(167, 179, 95, 0.07);
+    inset 0 0 22px rgba(167, 179, 95, 0.04),
+    0 0 18px rgba(167, 179, 95, 0.06);
 }
 
-.motion-habitat .motion-habitat-easter-wing {
+.motion-habitat .motion-habitat-easter-bloom {
   position: absolute;
-  top: 47px;
+  top: 55px;
   left: 50%;
-  width: 48px;
-  height: 48px;
-  transform-origin: 100% 70%;
+  width: 112px;
+  height: 84px;
   opacity: 0;
+  transform: translate(-50%, -50%) scale(0.72);
+  transform-origin: 50% 50%;
   filter:
     drop-shadow(0 0 3px rgba(167, 179, 95, 0.18))
-    drop-shadow(0 0 8px rgba(167, 179, 95, 0.08));
+    drop-shadow(0 0 9px rgba(167, 179, 95, 0.07));
 }
 
-.motion-habitat .motion-habitat-easter-wing.wing-left {
-  transform: translateX(-96%) rotate(-8deg) scale(0.82);
-}
-
-.motion-habitat .motion-habitat-easter-wing.wing-right {
-  transform-origin: 0 70%;
-  transform: translateX(-4%) scaleX(-1) rotate(-8deg) scale(0.82);
-}
-
-.motion-habitat .motion-habitat-easter-wing i {
+.motion-habitat .motion-habitat-easter-bloom .petal {
   position: absolute;
-  right: 1px;
-  width: 31px;
-  height: 14px;
-  border: 1px solid rgba(205, 221, 111, 0.48);
-  border-radius: 85% 14% 85% 14%;
+  top: 50%;
+  left: 50%;
+  width: 19px;
+  height: 39px;
+  margin: -19.5px 0 0 -9.5px;
+  border: 1px solid rgba(205, 221, 111, 0.5);
+  border-radius: 72% 20% 72% 20%;
   background:
-    linear-gradient(
-      135deg,
-      rgba(205, 221, 111, 0.22),
-      rgba(107, 125, 82, 0.08) 68%,
-      transparent
+    radial-gradient(
+      ellipse at 62% 35%,
+      rgba(205, 221, 111, 0.2),
+      rgba(107, 125, 82, 0.07) 60%,
+      transparent 82%
     );
-  box-shadow: inset -5px -2px 10px rgba(10, 11, 9, 0.35);
-  transform-origin: 100% 50%;
+  box-shadow:
+    inset -4px -3px 8px rgba(10, 11, 9, 0.38),
+    inset 2px 2px 7px rgba(205, 221, 111, 0.035);
+  opacity: 0;
+  transform-origin: 50% 100%;
 }
 
-.motion-habitat .motion-habitat-easter-wing i:nth-child(1) {
-  top: 1px;
-  transform: rotate(-23deg) scale(0.98);
+.motion-habitat .motion-habitat-easter-bloom .petal::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 3px;
+  width: 1px;
+  height: 27px;
+  background: linear-gradient(
+    to top,
+    rgba(205, 221, 111, 0.28),
+    rgba(205, 221, 111, 0.035)
+  );
+  transform: translateX(-50%);
 }
 
-.motion-habitat .motion-habitat-easter-wing i:nth-child(2) {
-  top: 16px;
-  right: 6px;
-  transform: rotate(-2deg) scale(0.9);
+.motion-habitat .motion-habitat-easter-bloom .petal-one {
+  transform: translateY(-30px) rotate(0deg);
 }
 
-.motion-habitat .motion-habitat-easter-wing i:nth-child(3) {
-  top: 29px;
-  right: 13px;
-  transform: rotate(18deg) scale(0.72);
+.motion-habitat .motion-habitat-easter-bloom .petal-two {
+  transform: translate(23px, -21px) rotate(45deg);
+}
+
+.motion-habitat .motion-habitat-easter-bloom .petal-three {
+  transform: translate(32px, 0) rotate(90deg);
+}
+
+.motion-habitat .motion-habitat-easter-bloom .petal-four {
+  transform: translate(22px, 23px) rotate(135deg);
+}
+
+.motion-habitat .motion-habitat-easter-bloom .petal-five {
+  transform: translateY(31px) rotate(180deg);
+}
+
+.motion-habitat .motion-habitat-easter-bloom .petal-six {
+  transform: translate(-23px, 22px) rotate(225deg);
+}
+
+.motion-habitat .motion-habitat-easter-bloom .petal-seven {
+  transform: translate(-32px, 0) rotate(270deg);
+}
+
+.motion-habitat .motion-habitat-easter-bloom .petal-eight {
+  transform: translate(-23px, -22px) rotate(315deg);
+}
+
+.motion-habitat .motion-habitat-easter-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 31px;
+  height: 31px;
+  border: 1px solid rgba(205, 221, 111, 0.2);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(205, 221, 111, 0.16) 0 2px, transparent 2.5px)
+      50% 18% / 8px 8px repeat,
+    radial-gradient(circle at center, rgba(167, 179, 95, 0.08), transparent 66%);
+  opacity: 0.68;
+  transform: translate(-50%, -50%);
+  box-shadow:
+    inset 0 0 10px rgba(167, 179, 95, 0.07),
+    0 0 10px rgba(167, 179, 95, 0.06);
 }
 
 .motion-habitat .motion-habitat-easter-butterfly {
   position: absolute;
-  top: 14px;
-  right: 24px;
+  top: 13px;
+  right: 28px;
   width: 5px;
   height: 12px;
   border-radius: 50%;
@@ -558,8 +610,8 @@
 
 .motion-habitat .motion-habitat-easter-spark {
   position: absolute;
-  top: 18px;
-  left: 39px;
+  top: 20px;
+  left: 36px;
   width: 1px;
   height: 13px;
   background: rgba(239, 233, 219, 0.5);
@@ -595,45 +647,45 @@
 @keyframes habitat-rest-easter-reveal {
   0%, 8% {
     opacity: 0;
-    transform: translate(-50%, -62%) scale(0.9);
+    transform: translate(-50%, -60%) scale(0.92);
   }
   18%, 74% {
     opacity: 1;
-    transform: translate(-50%, -66%) scale(1);
+    transform: translate(-50%, -63%) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -69%) scale(0.985);
+    transform: translate(-50%, -66%) scale(0.985);
   }
 }
 
-@keyframes habitat-easter-wing-left {
+@keyframes habitat-easter-bloom {
   0%, 10% {
     opacity: 0;
-    transform: translateX(-88%) rotate(10deg) scale(0.56);
+    transform: translate(-50%, -50%) scale(0.58) rotate(-8deg);
   }
-  24%, 72% {
-    opacity: 0.92;
-    transform: translateX(-96%) rotate(-8deg) scale(1);
+  26%, 72% {
+    opacity: 0.96;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
   }
   100% {
     opacity: 0;
-    transform: translateX(-99%) rotate(-15deg) scale(0.9);
+    transform: translate(-50%, -50%) scale(0.9) rotate(5deg);
   }
 }
 
-@keyframes habitat-easter-wing-right {
+@keyframes habitat-easter-petal {
   0%, 10% {
     opacity: 0;
-    transform: translateX(-12%) scaleX(-1) rotate(10deg) scale(0.56);
+    filter: brightness(0.76);
   }
-  24%, 72% {
-    opacity: 0.92;
-    transform: translateX(-4%) scaleX(-1) rotate(-8deg) scale(1);
+  28%, 70% {
+    opacity: 0.9;
+    filter: brightness(1);
   }
   100% {
     opacity: 0;
-    transform: translateX(-1%) scaleX(-1) rotate(-15deg) scale(0.9);
+    filter: brightness(0.86);
   }
 }
 
@@ -660,8 +712,14 @@
 }
 
 @keyframes habitat-easter-aura {
-  0%, 14%, 100% { opacity: 0; transform: scale(0.86); }
-  28%, 70% { opacity: 1; transform: scale(1); }
+  0%, 14%, 100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.86);
+  }
+  28%, 70% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
 }
 
 @keyframes habitat-easter-spark {
