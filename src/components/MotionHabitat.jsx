@@ -293,6 +293,9 @@ function HabitatHologramPreview({ piece, meta, anchor, onPlay }) {
       aria-label={`Play full ${piece.title}`}
       onClick={onPlay}
     >
+      <span className="motion-habitat-hologram-title" aria-hidden="true">
+        {piece.habitatLabel ?? 'SIGNAL PREVIEW'}
+      </span>
       <span className="motion-habitat-hologram-beam" aria-hidden="true" />
       <span className="motion-habitat-hologram-emitter" aria-hidden="true" />
 
