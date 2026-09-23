@@ -501,12 +501,11 @@
   --petal-x: 0px;
   --petal-y: 0px;
   --petal-r: 0deg;
-  --petal-scale: 1;
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 18px;
-  height: 34px;
+  width: var(--petal-w, 18px);
+  height: var(--petal-h, 34px);
   margin: -17px 0 0 -9px;
   border: 1px solid rgba(205, 221, 111, 0.46);
   border-radius: 76% 24% 72% 24%;
@@ -525,7 +524,7 @@
   transform:
     translate(var(--petal-x), var(--petal-y))
     rotate(var(--petal-r))
-    scale(var(--petal-scale));
+    scale(1);
 }
 
 .motion-habitat .motion-habitat-easter-bloom .petal::after {
@@ -547,42 +546,48 @@
   --petal-x: 0px;
   --petal-y: -21px;
   --petal-r: 0deg;
-  --petal-scale: 1;
+  --petal-w: 18px;
+  --petal-h: 35px;
 }
 
 .motion-habitat .motion-habitat-easter-bloom .petal-two {
   --petal-x: 18px;
   --petal-y: -10px;
   --petal-r: 54deg;
-  --petal-scale: 0.96;
+  --petal-w: 18px;
+  --petal-h: 33px;
 }
 
 .motion-habitat .motion-habitat-easter-bloom .petal-three {
   --petal-x: 17px;
   --petal-y: 13px;
   --petal-r: 116deg;
-  --petal-scale: 0.86;
+  --petal-w: 19px;
+  --petal-h: 29px;
 }
 
 .motion-habitat .motion-habitat-easter-bloom .petal-four {
   --petal-x: 0px;
   --petal-y: 18px;
   --petal-r: 180deg;
-  --petal-scale: 0.8;
+  --petal-w: 20px;
+  --petal-h: 27px;
 }
 
 .motion-habitat .motion-habitat-easter-bloom .petal-five {
   --petal-x: -17px;
   --petal-y: 13px;
   --petal-r: 244deg;
-  --petal-scale: 0.86;
+  --petal-w: 19px;
+  --petal-h: 29px;
 }
 
 .motion-habitat .motion-habitat-easter-bloom .petal-six {
   --petal-x: -18px;
   --petal-y: -10px;
   --petal-r: 306deg;
-  --petal-scale: 0.96;
+  --petal-w: 18px;
+  --petal-h: 33px;
 }
 
 .motion-habitat .motion-habitat-easter-core {
@@ -722,7 +727,7 @@
     transform:
       translate(0, 2px)
       rotate(var(--petal-r))
-      scale(calc(var(--petal-scale) * 0.48));
+      scale(0.48);
     filter: brightness(0.72);
   }
   14%, 30% {
@@ -730,7 +735,7 @@
     transform:
       translate(0, 0)
       rotate(var(--petal-r))
-      scale(calc(var(--petal-scale) * 0.72));
+      scale(0.72);
     filter: brightness(0.9);
   }
   48%, 78% {
@@ -738,7 +743,7 @@
     transform:
       translate(var(--petal-x), var(--petal-y))
       rotate(var(--petal-r))
-      scale(var(--petal-scale));
+      scale(1);
     filter: brightness(1);
   }
   100% {
@@ -749,7 +754,7 @@
         calc(var(--petal-y) * 1.08)
       )
       rotate(var(--petal-r))
-      scale(calc(var(--petal-scale) * 0.88));
+      scale(0.88);
     filter: brightness(0.84);
   }
 }
