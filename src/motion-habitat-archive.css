@@ -429,6 +429,30 @@
   animation: habitat-rest-easter-reveal 3.2s var(--ease-editorial) both;
 }
 
+.motion-habitat .motion-habitat-rest-easter.is-visible .motion-habitat-easter-aura {
+  animation: habitat-easter-aura 3.2s ease-in-out both;
+}
+
+.motion-habitat .motion-habitat-rest-easter.is-visible .motion-habitat-easter-wing.wing-left {
+  animation: habitat-easter-wing-left 3.2s var(--ease-editorial) both;
+}
+
+.motion-habitat .motion-habitat-rest-easter.is-visible .motion-habitat-easter-wing.wing-right {
+  animation: habitat-easter-wing-right 3.2s var(--ease-editorial) both;
+}
+
+.motion-habitat .motion-habitat-rest-easter.is-visible .motion-habitat-easter-butterfly {
+  animation: habitat-easter-butterfly 3.2s ease-in-out both;
+}
+
+.motion-habitat .motion-habitat-rest-easter.is-visible .motion-habitat-easter-spark {
+  animation: habitat-easter-spark 3.2s ease-in-out both;
+}
+
+.motion-habitat .motion-habitat-rest-easter.is-visible .motion-habitat-easter-copy {
+  animation: habitat-easter-copy 3.2s ease-in-out both;
+}
+
 .motion-habitat .motion-habitat-easter-aura {
   position: absolute;
   inset: 22px 18px 18px;
@@ -438,7 +462,6 @@
   box-shadow:
     inset 0 0 22px rgba(167, 179, 95, 0.045),
     0 0 20px rgba(167, 179, 95, 0.07);
-  animation: habitat-easter-aura 3.2s ease-in-out both;
 }
 
 .motion-habitat .motion-habitat-easter-wing {
@@ -456,13 +479,11 @@
 
 .motion-habitat .motion-habitat-easter-wing.wing-left {
   transform: translateX(-96%) rotate(-8deg) scale(0.82);
-  animation: habitat-easter-wing-left 3.2s var(--ease-editorial) both;
 }
 
 .motion-habitat .motion-habitat-easter-wing.wing-right {
   transform-origin: 0 70%;
   transform: translateX(-4%) scaleX(-1) rotate(-8deg) scale(0.82);
-  animation: habitat-easter-wing-right 3.2s var(--ease-editorial) both;
 }
 
 .motion-habitat .motion-habitat-easter-wing i {
@@ -511,7 +532,6 @@
   opacity: 0;
   transform: rotate(26deg);
   filter: drop-shadow(0 0 5px rgba(205, 221, 111, 0.26));
-  animation: habitat-easter-butterfly 3.2s ease-in-out both;
 }
 
 .motion-habitat .motion-habitat-easter-butterfly::before,
@@ -544,7 +564,6 @@
   height: 13px;
   background: rgba(239, 233, 219, 0.5);
   opacity: 0;
-  animation: habitat-easter-spark 3.2s ease-in-out both;
 }
 
 .motion-habitat .motion-habitat-easter-spark::after {
@@ -571,7 +590,6 @@
   color: rgba(205, 221, 111, 0.58);
   opacity: 0;
   text-shadow: 0 0 6px rgba(167, 179, 95, 0.15);
-  animation: habitat-easter-copy 3.2s ease-in-out both;
 }
 
 @keyframes habitat-rest-easter-reveal {
