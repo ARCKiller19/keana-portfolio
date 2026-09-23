@@ -201,6 +201,24 @@
     bottom: 4%;
   }
 
+  .motion-habitat .motion-habitat-archive-rail {
+    fill: none;
+    stroke: rgba(167, 179, 95, 0.12);
+    stroke-width: 1;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    pointer-events: none;
+  }
+
+  .motion-habitat .motion-habitat-archive-rail.is-live-action {
+    stroke-dasharray: 3 10;
+  }
+
+  .motion-habitat .motion-habitat-archive-rail.is-animation-motion {
+    stroke: rgba(167, 179, 95, 0.09);
+    stroke-dasharray: 9 12;
+  }
+
   /* The projection field is independent from KEANA's lower resting node. */
   .motion-habitat-projection-field {
     z-index: 3;
@@ -258,12 +276,25 @@
     aspect-ratio: var(--hologram-aspect, 16 / 9);
   }
 
-  .motion-habitat-hologram-video {
+  .motion-habitat-hologram-video,
+  .motion-habitat-hologram-image {
+    position: absolute;
     inset: 0;
+    z-index: 1;
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0.68;
+    filter:
+      saturate(0.7)
+      contrast(1.14)
+      brightness(0.82);
     transform: translate3d(0, 0, 0);
+  }
+
+  .motion-habitat-hologram-image {
+    pointer-events: none;
   }
 
   .motion-habitat-hologram-title {
