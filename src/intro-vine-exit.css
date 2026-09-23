@@ -152,63 +152,20 @@
 
 @media (hover: none) and (pointer: coarse) {
   /*
-   * iPad/touch fallback: WebKit can skip the visible reverse
-   * stroke-dashoffset phase when a desktop-sized page is requested. Keep the
-   * same choreography, but make the furl use compositor-friendly opacity and
-   * transform motion so the middle phase remains visible.
+   * iPad/touch: keep the same visible vine furl as desktop. WebKit already
+   * renders the 1 -> 0 draw reliably, so reverse that exact range (0 -> 1)
+   * instead of replacing the linework with a scale/fade fallback.
    */
   .hero-motion.intro-unfurling .intro-vine {
-    animation: none;
+    stroke-dasharray: 1;
     stroke-dashoffset: 0;
-  }
-
-  .hero-motion.intro-unfurling .hero-intro-vine-lines {
-    transform-box: fill-box;
-    transform-origin: center;
+    will-change: stroke-dashoffset;
     animation: intro-touch-vine-furl 720ms var(--ease-editorial) forwards;
   }
 
-  .hero-motion.intro-unfurling .intro-leaf {
-    animation-name: intro-touch-leaf-furl;
-    animation-duration: 560ms;
-    animation-timing-function: var(--ease-editorial);
-    animation-fill-mode: forwards;
-  }
-
-  .hero-motion.intro-unfurling .intro-node,
-  .hero-motion.intro-unfurling .intro-particle,
-  .hero-motion.intro-unfurling .intro-tip-glow {
-    animation-timing-function: var(--ease-editorial);
-  }
-
   @keyframes intro-touch-vine-furl {
-    0% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    58% {
-      opacity: 0.48;
-      transform: scale(0.92);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(0.82);
-    }
-  }
-
-  @keyframes intro-touch-leaf-furl {
-    0% {
-      opacity: 0.78;
-      transform: scale(1) rotate(0);
-    }
-    55% {
-      opacity: 0.4;
-      transform: scale(0.72) rotate(3deg);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(0.38) rotate(6deg);
-    }
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: 1; }
   }
 }
 
