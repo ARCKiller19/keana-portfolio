@@ -69,6 +69,8 @@
   font-family: var(--font-mono);
   pointer-events: none;
   opacity: 0;
+  contain: layout paint;
+  will-change: opacity, transform;
   transform: translate(-50%, -46%) scale(0.985);
   transition:
     opacity 260ms var(--ease-editorial),
