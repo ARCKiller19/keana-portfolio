@@ -453,6 +453,9 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const facingRef = useRef('right')
   const fallbackTimerRef = useRef(null)
   const suppressedStationRef = useRef(null)
+  const easterEggTimerRef = useRef(null)
+  const easterEggHideTimerRef = useRef(null)
+  const easterEggShownRef = useRef(false)
 
   const isCompact = useMediaQuery('(max-width: 720px)')
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
@@ -484,6 +487,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const [isJoystickEnabled, setIsJoystickEnabled] = useState(false)
   const [perchDirection, setPerchDirection] = useState('right')
   const [facing, setFacing] = useState('right')
+  const [isEasterEggVisible, setIsEasterEggVisible] = useState(false)
   const [statusMessage, setStatusMessage] = useState(
     'Motion Habitat ready. Choose a station or move through the room.',
   )
@@ -726,6 +730,82 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     setWalkingState,
     syncCharacter,
   ])
+
+  useEffect(() => {
+    const clearArmTimer = () => {
+      if (easterEggTimerRef.current) {
+        window.clearTimeout(easterEggTimerRef.current)
+        easterEggTimerRef.current = null
+      }
+    }
+
+    const clearHideTimer = () => {
+      if (easterEggHideTimerRef.current) {
+        window.clearTimeout(easterEggHideTimerRef.current)
+        easterEggHideTimerRef.current = null
+      }
+    }
+
+    const canReveal =
+      !isCompact &&
+      !reducedMotion &&
+      isCenterPerched &&
+      !isWalking &&
+      awakeIndex === null &&
+      openIndex === null &&
+      energyIndex === null &&
+      targetedIndex === null &&
+      !easterEggShownRef.current
+
+    clearArmTimer()
+
+    if (!canReveal) {
+      if (!isCenterPerched || isWalking || awakeIndex !== null || openIndex !== null) {
+        setIsEasterEggVisible(false)
+        clearHideTimer()
+      }
+
+      return () => {
+        clearArmTimer()
+      }
+    }
+
+    easterEggTimerRef.current = window.setTimeout(() => {
+      easterEggShownRef.current = true
+      easterEggTimerRef.current = null
+      setIsEasterEggVisible(true)
+
+      easterEggHideTimerRef.current = window.setTimeout(() => {
+        easterEggHideTimerRef.current = null
+        setIsEasterEggVisible(false)
+      }, 3200)
+    }, 5500)
+
+    return () => {
+      clearArmTimer()
+    }
+  }, [
+    awakeIndex,
+    energyIndex,
+    isCenterPerched,
+    isCompact,
+    isWalking,
+    openIndex,
+    reducedMotion,
+    targetedIndex,
+  ])
+
+  useEffect(
+    () => () => {
+      if (easterEggTimerRef.current) {
+        window.clearTimeout(easterEggTimerRef.current)
+      }
+      if (easterEggHideTimerRef.current) {
+        window.clearTimeout(easterEggHideTimerRef.current)
+      }
+    },
+    [],
+  )
 
   useEffect(() => {
     const room = roomRef.current
@@ -1352,6 +1432,36 @@ function MotionHabitat({ pieces, onOpenNotes }) {
               '--dock-y': `${(layout.dock.y / layout.height) * 100}%`,
             }}
           />
+        )}
+
+        {!isCompact && (
+          <div
+            className={`motion-habitat-rest-easter ${
+              isEasterEggVisible ? 'is-visible' : ''
+            }`}
+            aria-hidden="true"
+            style={{
+              '--dock-x': `${(layout.dock.x / layout.width) * 100}%`,
+              '--dock-y': `${(layout.dock.y / layout.height) * 100}%`,
+            }}
+          >
+            <span className="motion-habitat-easter-aura" />
+            <span className="motion-habitat-easter-wing wing-left">
+              <i />
+              <i />
+              <i />
+            </span>
+            <span className="motion-habitat-easter-wing wing-right">
+              <i />
+              <i />
+              <i />
+            </span>
+            <span className="motion-habitat-easter-butterfly" />
+            <span className="motion-habitat-easter-spark" />
+            <span className="motion-habitat-easter-copy">
+              small things keep worlds alive
+            </span>
+          </div>
         )}
 
         <svg
