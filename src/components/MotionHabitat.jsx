@@ -455,6 +455,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const suppressedStationRef = useRef(null)
   const easterEggTimerRef = useRef(null)
   const easterEggHideTimerRef = useRef(null)
+  const easterEggCenterFrameRef = useRef(null)
+  const easterEggCenteringRef = useRef(false)
   const easterEggShownRef = useRef(false)
 
   const isCompact = useMediaQuery('(max-width: 720px)')
@@ -487,6 +489,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const [isJoystickEnabled, setIsJoystickEnabled] = useState(false)
   const [perchDirection, setPerchDirection] = useState('right')
   const [facing, setFacing] = useState('right')
+  const [isEasterEggCentering, setIsEasterEggCentering] = useState(false)
   const [isEasterEggVisible, setIsEasterEggVisible] = useState(false)
   const [statusMessage, setStatusMessage] = useState(
     'Motion Habitat ready. Choose a station or move through the room.',
@@ -746,8 +749,24 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       }
     }
 
+    const cancelCentering = ({ allowRetry = false } = {}) => {
+      if (easterEggCenterFrameRef.current !== null) {
+        window.cancelAnimationFrame(easterEggCenterFrameRef.current)
+        easterEggCenterFrameRef.current = null
+      }
+
+      easterEggCenteringRef.current = false
+      setIsEasterEggCentering(false)
+      setIsEasterEggVisible(false)
+
+      if (allowRetry) {
+        easterEggShownRef.current = false
+      }
+    }
+
     if (!isCenterPerched) {
       easterEggShownRef.current = false
+      cancelCentering({ allowRetry: true })
     }
 
     const canReveal =
@@ -759,7 +778,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       openIndex === null &&
       energyIndex === null &&
       targetedIndex === null &&
-      !easterEggShownRef.current
+      !easterEggShownRef.current &&
+      !easterEggCenteringRef.current
 
     clearArmTimer()
 
@@ -775,14 +795,61 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     }
 
     easterEggTimerRef.current = window.setTimeout(() => {
-      easterEggShownRef.current = true
       easterEggTimerRef.current = null
-      setIsEasterEggVisible(true)
+      easterEggShownRef.current = true
+      easterEggCenteringRef.current = true
+      setIsEasterEggCentering(true)
 
-      easterEggHideTimerRef.current = window.setTimeout(() => {
-        easterEggHideTimerRef.current = null
-        setIsEasterEggVisible(false)
-      }, 3200)
+      const start = { ...positionRef.current }
+      const destination = { ...layout.dock }
+      const startedAt = performance.now()
+      const duration = 420
+
+      const centerCharacter = (time) => {
+        const joystick = joystickVectorRef.current
+        const userInterrupted =
+          pressedKeysRef.current.size > 0 ||
+          targetRef.current !== null ||
+          walkingRef.current ||
+          Math.hypot(joystick.x, joystick.y) > 0.01
+
+        if (userInterrupted || !centerPerchedRef.current) {
+          cancelCentering({ allowRetry: true })
+          return
+        }
+
+        const progress = Math.min(1, (time - startedAt) / duration)
+        const eased = 1 - Math.pow(1 - progress, 3)
+        const next = {
+          x: start.x + (destination.x - start.x) * eased,
+          y: start.y + (destination.y - start.y) * eased,
+        }
+
+        positionRef.current = next
+        syncCharacter(next)
+
+        if (progress < 1) {
+          easterEggCenterFrameRef.current =
+            window.requestAnimationFrame(centerCharacter)
+          return
+        }
+
+        easterEggCenterFrameRef.current = null
+        easterEggCenteringRef.current = false
+        positionRef.current = destination
+        syncCharacter(destination)
+        setCenterPerchedState(true)
+        setIsEasterEggCentering(false)
+        setIsEasterEggVisible(true)
+
+        easterEggHideTimerRef.current = window.setTimeout(() => {
+          easterEggHideTimerRef.current = null
+          setIsEasterEggVisible(false)
+        }, 3600)
+      }
+
+      easterEggCenterFrameRef.current =
+        window.requestAnimationFrame(centerCharacter)
     }, 5500)
 
     return () => {
@@ -794,8 +861,11 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     isCenterPerched,
     isCompact,
     isWalking,
+    layout,
     openIndex,
     reducedMotion,
+    setCenterPerchedState,
+    syncCharacter,
     targetedIndex,
   ])
 
@@ -806,6 +876,9 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       }
       if (easterEggHideTimerRef.current) {
         window.clearTimeout(easterEggHideTimerRef.current)
+      }
+      if (easterEggCenterFrameRef.current !== null) {
+        window.cancelAnimationFrame(easterEggCenterFrameRef.current)
       }
     },
     [],
@@ -1457,8 +1530,6 @@ function MotionHabitat({ pieces, onOpenNotes }) {
               <i className="petal petal-four" />
               <i className="petal petal-five" />
               <i className="petal petal-six" />
-              <i className="petal petal-seven" />
-              <i className="petal petal-eight" />
               <i className="motion-habitat-easter-core" />
             </span>
             <span className="motion-habitat-easter-butterfly" />
@@ -1669,6 +1740,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           ref={characterRef}
           className={`motion-habitat-character ${isWalking ? 'is-walking' : ''} ${
             isCenterPerched ? 'is-center-perched' : ''
+          } ${isEasterEggCentering ? 'is-easter-centering' : ''} ${
+            isEasterEggVisible ? 'is-easter-blooming' : ''
           } ${energyMeta ? 'has-station-energy' : ''}`}
           style={energyMeta ? { '--energy-rgb': energyMeta.rgb } : undefined}
           data-facing={facing}
