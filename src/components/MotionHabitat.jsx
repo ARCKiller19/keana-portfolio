@@ -685,15 +685,13 @@ function MotionHabitat({ pieces, onOpenNotes }) {
 
       fallbackTimerRef.current = window.setTimeout(
         () => {
-          if (isCompact) activateStation(index)
-          else arriveAtStation(index)
+          activateStation(index)
         },
         isCompact ? 900 : 1250,
       )
     },
     [
       activateStation,
-      arriveAtStation,
       isCompact,
       layout,
       pieces,
@@ -795,8 +793,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           positionRef.current = next
           syncCharacter(next)
 
-          if (isCompact) activateStation(target.stationIndex)
-          else arriveAtStation(target.stationIndex)
+          activateStation(target.stationIndex)
         } else if (delta > 0) {
           const step = Math.min(AUTO_SPEED * delta, remaining)
           dx = (remainingX / remaining) * step
