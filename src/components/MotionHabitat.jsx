@@ -51,7 +51,12 @@ const ACTIVATE_RADIUS = 76
 const CENTER_PERCH_RADIUS = 34
 
 function resolveHabitatGroup(piece) {
-  if (piece.habitatGroup) return piece.habitatGroup
+  if (
+    piece.habitatGroup === 'live-action' ||
+    piece.habitatGroup === 'animation-motion'
+  ) {
+    return piece.habitatGroup
+  }
 
   const category = piece.category?.toLowerCase() ?? ''
   return category.includes('animation') || category.includes('motion design')
@@ -95,7 +100,7 @@ function buildDesktopLayout(pieces) {
       const progress = count === 1 ? 0.5 : order / (count - 1)
       const x = edgeX + span * progress
       const normalized = Math.abs((x - 500) / Math.max(1, 500 - edgeX))
-      const arcDepth = (1 - Math.min(1, normalized ** 2)) * 34
+      const arcDepth = (1 - Math.min(1, normalized ** 2)) * 74
       const y = side === 'top' ? 155 - arcDepth : 405 + arcDepth
       const inwardX = x + (500 - x) * 0.23
       const standY = side === 'top' ? y + 78 : y - 78
@@ -124,7 +129,8 @@ function buildDesktopLayout(pieces) {
 
 function buildCompactLayout(pieces) {
   const verticalStep = 148
-  const height = Math.max(680, 94 + pieces.length * verticalStep)
+  const extraStations = Math.max(0, pieces.length - 4)
+  const height = 680 + extraStations * verticalStep
   const stations = pieces.map((piece, index) => {
     const y = 82 + index * verticalStep
     return {
@@ -141,7 +147,8 @@ function buildCompactLayout(pieces) {
   return {
     ...COMPACT_LAYOUT,
     height,
-    start: { x: 210, y: height - 30 },
+    start: { x: 210, y: 650 + extraStations * verticalStep },
+    worldHeight: extraStations > 0 ? 570 + extraStations * 124 : null,
     stations,
   }
 }
@@ -1172,7 +1179,11 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         onKeyUp={handleKeyUp}
         onBlur={handleWorldBlur}
         onPointerDown={isCompact || reducedMotion ? undefined : handleWorldPointerDown}
-        style={isCompact ? { minHeight: `${layout.height}px`, height: `${layout.height}px` } : undefined}
+        style={
+          isCompact && layout.worldHeight
+            ? { minHeight: `${layout.worldHeight}px`, height: `${layout.worldHeight}px` }
+            : undefined
+        }
       >
         <div className="motion-habitat-grid" aria-hidden="true" />
 
