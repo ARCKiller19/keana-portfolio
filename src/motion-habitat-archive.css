@@ -177,6 +177,28 @@
     stroke-dasharray: 9 12;
   }
 
+  /* Keep the center open at rest: no targeting ellipse, dock circle, or
+     decorative dotted routes. The projection label and active signal behavior remain. */
+  .motion-habitat-projection-field {
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .motion-habitat-projection-field::before,
+  .motion-habitat-projection-field::after {
+    display: none;
+  }
+
+  .motion-habitat .motion-habitat-dock,
+  .motion-habitat .motion-habitat-archive-rail {
+    display: none;
+  }
+
+  .motion-habitat .motion-habitat-signal:not(.is-live):not(.is-open) {
+    opacity: 0;
+    stroke: transparent;
+  }
+
   /* The projection field is independent from KEANA's lower resting node. */
   .motion-habitat-projection-field {
     z-index: 3;
@@ -255,6 +277,36 @@
     pointer-events: none;
   }
 
+  .motion-habitat-hologram-title {
+    position: absolute;
+    z-index: 18;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    width: max-content;
+    max-width: 28ch;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: rgba(215, 253, 255, 0.72);
+    font-family: var(--font-mono);
+    font-size: 7px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-align: center;
+    text-shadow:
+      0 0 7px rgba(var(--hologram-rgb), 0.54),
+      0 0 18px rgba(var(--station-rgb), 0.2);
+    text-transform: uppercase;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .motion-habitat-hologram.is-ready .motion-habitat-hologram-title {
+    animation: habitat-hologram-title-breathe 2.8s ease-in-out infinite alternate;
+  }
+
   .motion-habitat-hologram-beam {
     bottom: -42px;
     height: 64px;
@@ -262,6 +314,19 @@
 
   .motion-habitat-hologram-emitter {
     bottom: -44px;
+  }
+
+  @keyframes habitat-hologram-title-breathe {
+    from {
+      opacity: 0.68;
+      text-shadow: 0 0 6px rgba(var(--hologram-rgb), 0.4);
+    }
+    to {
+      opacity: 0.96;
+      text-shadow:
+        0 0 8px rgba(var(--hologram-rgb), 0.72),
+        0 0 18px rgba(var(--station-rgb), 0.24);
+    }
   }
 
   @media (min-width: 981px) {
@@ -317,3 +382,9 @@
   }
 }
 
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-habitat-hologram-title {
+    animation: none !important;
+  }
+}
