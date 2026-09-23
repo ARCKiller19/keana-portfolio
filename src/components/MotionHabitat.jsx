@@ -93,7 +93,7 @@ function buildDesktopLayout(pieces) {
     const count = indices.length
     if (!count) return
 
-    const edgeX = count <= 2 ? 250 : count === 3 ? 190 : 135
+    const edgeX = count <= 2 ? 190 : count === 3 ? 160 : 135
     const span = 1000 - edgeX * 2
 
     indices.forEach((pieceIndex, order) => {
@@ -104,7 +104,7 @@ function buildDesktopLayout(pieces) {
       const y = side === 'top' ? 155 - arcDepth : 405 + arcDepth
       const inwardX = x + (500 - x) * 0.23
       const standY = side === 'top' ? y + 78 : y - 78
-      const nodeWidth = Math.max(98, 200 - count * 12)
+      const nodeWidth = count <= 2 ? 354 : count === 3 ? 282 : 250
 
       stations[pieceIndex] = {
         x,
