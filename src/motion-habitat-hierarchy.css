@@ -32,10 +32,7 @@
 }
 
 /* When the visitor engages a station, let the environment recede another step. */
-.motion-habitat:has(.motion-habitat-station:hover) .motion-habitat-grid,
-.motion-habitat:has(.motion-habitat-station:focus-visible) .motion-habitat-grid,
-.motion-habitat:has(.motion-habitat-station.is-awake) .motion-habitat-grid,
-.motion-habitat:has(.motion-habitat-station.is-targeted) .motion-habitat-grid {
+.motion-habitat.has-active-station .motion-habitat-grid {
   opacity: 0.17;
 }
 
