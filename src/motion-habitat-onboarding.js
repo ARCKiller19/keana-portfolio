@@ -196,16 +196,13 @@ function hideGuide() {
     restTimer = null
   }, 1800)
 
-  document.removeEventListener('pointerdown', handlePointerDown, true)
+  activeWorld?.removeEventListener('pointerdown', handlePointerDown)
   document.removeEventListener('keydown', handleKeyDown, true)
   habitatObserver?.disconnect()
 }
 
-function handlePointerDown(event) {
-  if (!activeWorld?.contains(event.target)) return
-
+function handlePointerDown() {
   hideGuide()
-  activeWorld.focus({ preventScroll: true })
 }
 
 function handleKeyDown(event) {
@@ -226,7 +223,11 @@ function handleKeyDown(event) {
   if (movementKeys.has(key)) event.preventDefault()
 
   hideGuide()
-  activeWorld?.focus({ preventScroll: true })
+  window.requestAnimationFrame(() => {
+    window.setTimeout(() => {
+      activeWorld?.focus({ preventScroll: true })
+    }, 0)
+  })
 }
 
 function showGuide(world) {
@@ -240,7 +241,7 @@ function showGuide(world) {
     guideElement?.classList.add('is-visible')
   })
 
-  document.addEventListener('pointerdown', handlePointerDown, true)
+  activeWorld.addEventListener('pointerdown', handlePointerDown, { passive: true })
   document.addEventListener('keydown', handleKeyDown, true)
 }
 
@@ -292,7 +293,7 @@ window.addEventListener(
   () => {
     habitatObserver?.disconnect()
     mountObserver?.disconnect()
-    document.removeEventListener('pointerdown', handlePointerDown, true)
+    activeWorld?.removeEventListener('pointerdown', handlePointerDown)
     document.removeEventListener('keydown', handleKeyDown, true)
     if (restTimer) window.clearTimeout(restTimer)
     restTimer = null
