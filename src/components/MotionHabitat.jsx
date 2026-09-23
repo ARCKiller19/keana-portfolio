@@ -244,7 +244,7 @@ function HabitatCutPlayer({ piece }) {
   )
 }
 
-function HabitatHologramPreview({ piece, meta, anchor, onPlay }) {
+function HabitatHologramPreview({ piece, meta, anchor, onPlay, emitterRef }) {
   const videoRef = useRef(null)
   const [isReady, setIsReady] = useState(Boolean(piece.previewImage))
 
@@ -297,7 +297,11 @@ function HabitatHologramPreview({ piece, meta, anchor, onPlay }) {
         {piece.habitatLabel ?? 'SIGNAL PREVIEW'}
       </span>
       <span className="motion-habitat-hologram-beam" aria-hidden="true" />
-      <span className="motion-habitat-hologram-emitter" aria-hidden="true" />
+      <span
+        ref={emitterRef}
+        className="motion-habitat-hologram-emitter"
+        aria-hidden="true"
+      />
 
       <span className="motion-habitat-hologram-shell">
         {piece.previewImage ? (
@@ -357,6 +361,23 @@ function normalizeKey(key) {
   return null
 }
 
+function createProjectorSignalPath(start, end) {
+  const dx = end.x - start.x
+  const dy = end.y - start.y
+  const approachDirection = dx >= 0 ? 1 : -1
+
+  const controlOne = {
+    x: start.x + dx * 0.34,
+    y: start.y + dy * 0.18,
+  }
+  const controlTwo = {
+    x: end.x - approachDirection * Math.min(56, Math.max(30, Math.abs(dx) * 0.16)),
+    y: end.y,
+  }
+
+  return `M ${start.x.toFixed(1)} ${start.y.toFixed(1)} C ${controlOne.x.toFixed(1)} ${controlOne.y.toFixed(1)} ${controlTwo.x.toFixed(1)} ${controlTwo.y.toFixed(1)} ${end.x.toFixed(1)} ${end.y.toFixed(1)}`
+}
+
 function createEnergyPath(start, end, time) {
   const dx = end.x - start.x
   const dy = end.y - start.y
@@ -410,6 +431,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const characterRef = useRef(null)
   const energyPathRef = useRef(null)
   const energyPulseRef = useRef(null)
+  const projectorEmitterRef = useRef(null)
+  const signalPathRefs = useRef([])
   const joystickPadRef = useRef(null)
   const joystickKnobRef = useRef(null)
   const joystickPointerRef = useRef(null)
@@ -984,6 +1007,79 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     syncCharacter,
   ])
 
+  useEffect(() => {
+    if (
+      isCompact ||
+      reducedMotion ||
+      awakeIndex === null ||
+      openIndex !== null
+    ) {
+      signalPathRefs.current.forEach((path) => {
+        path?.removeAttribute('data-projector-linked')
+      })
+      return undefined
+    }
+
+    const signalPath = signalPathRefs.current[awakeIndex]
+    const emitter = projectorEmitterRef.current
+    const world = worldRef.current
+    const station = layout.stations[awakeIndex]
+
+    if (!signalPath || !emitter || !world || !station) return undefined
+
+    let frameId = 0
+    let settledFrames = 0
+    const startedAt = performance.now()
+
+    const syncSignalToEmitter = (time) => {
+      const worldRect = world.getBoundingClientRect()
+      const emitterRect = emitter.getBoundingClientRect()
+
+      if (worldRect.width <= 0 || worldRect.height <= 0) return
+
+      const enterFromLeft = station.x < layout.width / 2
+      const emitterClientX = enterFromLeft
+        ? emitterRect.left + emitterRect.width * 0.16
+        : emitterRect.right - emitterRect.width * 0.16
+      const emitterClientY = emitterRect.top + emitterRect.height * 0.5
+
+      const emitterPoint = {
+        x: ((emitterClientX - worldRect.left) / worldRect.width) * layout.width,
+        y: ((emitterClientY - worldRect.top) / worldRect.height) * layout.height,
+      }
+
+      signalPath.setAttribute(
+        'd',
+        createProjectorSignalPath(station, emitterPoint),
+      )
+      signalPath.setAttribute('data-projector-linked', 'true')
+
+      const hologram = emitter.closest('.motion-habitat-hologram')
+      const bloomStillRunning = hologram
+        ?.getAnimations()
+        .some((animation) => animation.playState === 'running')
+
+      if (bloomStillRunning || time - startedAt < 520) {
+        settledFrames = 0
+        frameId = window.requestAnimationFrame(syncSignalToEmitter)
+        return
+      }
+
+      // Two final frames keep the endpoint locked after compositing settles.
+      if (settledFrames < 2) {
+        settledFrames += 1
+        frameId = window.requestAnimationFrame(syncSignalToEmitter)
+      }
+    }
+
+    frameId = window.requestAnimationFrame(syncSignalToEmitter)
+
+    return () => {
+      if (frameId) window.cancelAnimationFrame(frameId)
+      signalPath.removeAttribute('data-projector-linked')
+    }
+  }, [awakeIndex, isCompact, layout, openIndex, reducedMotion])
+
   useEffect(
     () => () => {
       if (fallbackTimerRef.current) {
@@ -1261,17 +1357,26 @@ function MotionHabitat({ pieces, onOpenNotes }) {
             </>
           )}
 
-          {paths.map(({ index, d }) => (
-            <path
-              key={pieces[index].id}
-              className={`motion-habitat-signal ${
-                awakeIndex === index || targetedIndex === index || openIndex === index
-                  ? 'is-live'
-                  : ''
-              } ${openIndex === index ? 'is-open' : ''}`}
-              d={d}
-            />
-          ))}
+          {paths.map(({ index, d }) => {
+            const isProjectorFeed =
+              awakeIndex === index && openIndex === null && !isCompact
+
+            return (
+              <path
+                key={pieces[index].id}
+                ref={(node) => {
+                  signalPathRefs.current[index] = node
+                }}
+                className={`motion-habitat-signal ${
+                  isProjectorFeed ? 'is-live is-projector-feed' : ''
+                }`}
+                style={{
+                  '--signal-rgb': stationMeta[index]?.rgb ?? '168, 188, 99',
+                }}
+                d={d}
+              />
+            )
+          })}
           <circle
             className={`motion-habitat-dock ${activePiece ? 'is-live' : ''}`}
             cx={projection.x}
@@ -1395,6 +1500,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
                 y: (projection.y / layout.height) * 100,
               }}
               onPlay={() => activateStation(awakeIndex)}
+              emitterRef={projectorEmitterRef}
             />
           )}
 
