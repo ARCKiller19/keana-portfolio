@@ -1,5 +1,5 @@
 /* Motion Habitat archive layout.
-   Desktop only: projects become scalable signal nodes arranged on two arcs. */
+   Desktop: keep the established full-size stations, but place them on scalable arcs. */
 
 @media (min-width: 721px) {
   .motion-habitat .motion-habitat-world {
@@ -14,21 +14,24 @@
     background-position: center;
   }
 
-  /* Project nodes are compact archive terminals. Their positions and widths come
-     from the data-driven arc layout in MotionHabitat.jsx. */
+  /* Keep the original readable station scale. The archive system now changes
+     placement, not the established monitor/card proportions. */
   .motion-habitat .motion-habitat-station {
-    grid-template-columns: 52px minmax(0, 1fr);
-    gap: 9px;
-    width: var(--node-width, 176px);
-    min-height: 72px;
-    padding: 8px 9px;
-    border: 1px solid rgba(var(--station-rgb), 0.12);
+    grid-template-columns: 120px minmax(0, 170px);
+    gap: 16px;
+    width: var(--node-width, 324px);
+    min-height: 128px;
+    padding: 15px;
+    border-color: rgba(var(--station-rgb), 0.2);
     background:
-      linear-gradient(180deg, rgba(var(--station-rgb), 0.025), transparent 54%),
-      rgba(5, 7, 5, 0.9);
+      linear-gradient(rgba(var(--station-rgb), 0.42), rgba(var(--station-rgb), 0.42)) 9px 9px / 18px 1px no-repeat,
+      linear-gradient(rgba(var(--station-rgb), 0.42), rgba(var(--station-rgb), 0.42)) 9px 9px / 1px 18px no-repeat,
+      linear-gradient(rgba(var(--station-rgb), 0.28), rgba(var(--station-rgb), 0.28)) calc(100% - 27px) calc(100% - 10px) / 18px 1px no-repeat,
+      linear-gradient(rgba(var(--station-rgb), 0.28), rgba(var(--station-rgb), 0.28)) calc(100% - 10px) calc(100% - 27px) / 1px 18px no-repeat,
+      rgba(6, 8, 6, 0.91);
     box-shadow:
-      0 9px 22px rgba(0, 0, 0, 0.16),
-      inset 0 0 0 1px rgba(239, 233, 219, 0.012);
+      inset 0 0 0 1px rgba(239, 233, 219, 0.018),
+      0 14px 34px rgba(0, 0, 0, 0.14);
   }
 
   .motion-habitat .motion-habitat-station::before {
@@ -41,18 +44,23 @@
   .motion-habitat .motion-habitat-station.is-targeted,
   .motion-habitat .motion-habitat-station.is-open {
     z-index: 14;
-    border-color: rgba(var(--station-rgb), 0.42);
+    opacity: 1;
+    border-color: rgba(var(--station-rgb), 0.62);
     background:
-      linear-gradient(180deg, rgba(var(--station-rgb), 0.055), transparent 58%),
-      rgba(6, 8, 6, 0.96);
+      linear-gradient(rgba(var(--station-rgb), 0.82), rgba(var(--station-rgb), 0.82)) 9px 9px / 24px 1px no-repeat,
+      linear-gradient(rgba(var(--station-rgb), 0.82), rgba(var(--station-rgb), 0.82)) 9px 9px / 1px 24px no-repeat,
+      linear-gradient(rgba(var(--station-rgb), 0.58), rgba(var(--station-rgb), 0.58)) calc(100% - 33px) calc(100% - 10px) / 24px 1px no-repeat,
+      linear-gradient(rgba(var(--station-rgb), 0.58), rgba(var(--station-rgb), 0.58)) calc(100% - 10px) calc(100% - 33px) / 1px 24px no-repeat,
+      rgba(7, 9, 7, 0.98);
     box-shadow:
-      0 14px 30px rgba(0, 0, 0, 0.22),
-      0 0 22px rgba(var(--station-rgb), 0.045);
+      inset 0 0 0 1px rgba(var(--station-rgb), 0.055),
+      0 22px 48px rgba(0, 0, 0, 0.26),
+      0 0 34px rgba(var(--station-rgb), 0.075);
   }
 
   .motion-habitat .motion-habitat-station:hover,
   .motion-habitat .motion-habitat-station:focus-visible {
-    transform: translate(-50%, -50%) translateY(-2px) scale(1.025);
+    transform: translate(-50%, -50%) translateY(-4px) scale(1.025);
   }
 
   .motion-habitat .motion-habitat-station.is-targeted,
@@ -62,102 +70,52 @@
   }
 
   .motion-habitat .motion-habitat-machine {
-    width: 52px;
-    height: 48px;
-    border-color: rgba(var(--station-rgb), 0.24);
-    box-shadow: inset 0 0 9px rgba(var(--station-rgb), 0.02);
-  }
-
-  .motion-habitat .motion-habitat-machine::before {
-    inset: 4px;
-  }
-
-  .motion-habitat .motion-habitat-machine::after {
-    bottom: -6px;
-    width: 15px;
-    height: 5px;
+    width: 120px;
+    height: 96px;
   }
 
   .motion-habitat .motion-habitat-machine-screen {
-    width: 34px;
-    height: 22px;
-  }
-
-  .motion-habitat .station-roast .motion-habitat-machine-screen::before {
-    inset: 4px;
-  }
-
-  .motion-habitat .station-roast .motion-habitat-machine-screen::after {
-    top: 2px;
-    right: 2px;
-    font-size: 3px;
-  }
-
-  .motion-habitat .station-kove .motion-habitat-machine-screen::before {
-    top: 7px;
-    right: 8px;
-    bottom: 6px;
-    left: 8px;
-  }
-
-  .motion-habitat .station-special .motion-habitat-machine-screen::before {
-    inset: 5px 4px;
-  }
-
-  .motion-habitat .motion-habitat-machine-node {
-    top: 5px;
-    right: 5px;
-    width: 4px;
-    height: 4px;
-  }
-
-  .motion-habitat .motion-habitat-machine-accent {
-    right: 5px;
-    bottom: 4px;
+    width: 82px;
+    height: 50px;
   }
 
   .motion-habitat .motion-habitat-station-copy {
-    gap: 3px;
+    gap: 6px;
     min-width: 0;
   }
 
   .motion-habitat .motion-habitat-station-copy span,
+  .motion-habitat .motion-habitat-station-copy small,
   .motion-habitat .motion-habitat-station-copy em {
-    font-size: 5.5px;
-    line-height: 1.2;
-    letter-spacing: 0.07em;
-  }
-
-  .motion-habitat .motion-habitat-station-copy small {
-    display: none;
+    display: block;
+    font-size: 8.5px;
+    line-height: 1.35;
   }
 
   .motion-habitat .motion-habitat-station-copy strong {
-    display: -webkit-box;
-    overflow: hidden;
-    font-size: 12.5px;
+    display: block;
+    overflow: visible;
+    font-size: 20px;
     line-height: 0.98;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: unset;
   }
 
   .motion-habitat .motion-habitat-station-copy::after {
-    content: '> APPROACH';
-    margin-top: 2px;
-    padding-top: 4px;
-    border-top-color: rgba(var(--station-rgb), 0.12);
-    font-size: 5.5px;
-    letter-spacing: 0.08em;
+    content: '> CLICK TO APPROACH';
+    margin-top: 5px;
+    padding-top: 6px;
+    border-top-color: rgba(var(--station-rgb), 0.18);
+    font-size: 8px;
+    letter-spacing: 0.1em;
   }
 
   .motion-habitat .motion-habitat-station:hover .motion-habitat-station-copy::after,
   .motion-habitat .motion-habitat-station:focus-visible .motion-habitat-station-copy::after {
-    content: '> APPROACH';
-    letter-spacing: 0.1em;
+    content: '> APPROACH STATION';
   }
 
   .motion-habitat .motion-habitat-station.is-targeted .motion-habitat-station-copy::after {
-    content: '> WALKING';
+    content: '> AUTO-WALKING';
   }
 
   .motion-habitat .motion-habitat-station.is-awake:not(.is-open):not(.is-targeted) .motion-habitat-station-copy::after {
@@ -169,9 +127,9 @@
   }
 
   .motion-habitat .motion-habitat-station-number {
-    top: 5px;
-    right: 6px;
-    font-size: 6px;
+    top: 8px;
+    right: 9px;
+    font-size: 9px;
   }
 
   /* Sector names belong to the room, not to individual cards. */
@@ -348,28 +306,48 @@
         0 0 18px rgba(var(--station-rgb), 0.24);
     }
   }
+  @media (min-width: 981px) {
+    .motion-habitat .motion-habitat-station {
+      grid-template-columns: 130px minmax(0, 178px);
+      gap: 17px;
+      min-height: 138px;
+      padding: 16px;
+    }
+
+    .motion-habitat .motion-habitat-machine {
+      width: 130px;
+      height: 104px;
+    }
+
+    .motion-habitat .motion-habitat-machine-screen {
+      width: 90px;
+      height: 55px;
+    }
+  }
+
 }
 
 @media (min-width: 721px) and (max-width: 980px) {
   .motion-habitat .motion-habitat-station {
-    grid-template-columns: 46px minmax(0, 1fr);
-    gap: 7px;
-    min-height: 66px;
-    padding: 7px;
+    grid-template-columns: 100px minmax(0, 148px);
+    gap: 12px;
+    width: min(var(--node-width, 282px), 282px);
+    min-height: 116px;
+    padding: 12px;
   }
 
   .motion-habitat .motion-habitat-machine {
-    width: 46px;
-    height: 42px;
+    width: 100px;
+    height: 80px;
   }
 
   .motion-habitat .motion-habitat-machine-screen {
-    width: 30px;
-    height: 19px;
+    width: 68px;
+    height: 41px;
   }
 
   .motion-habitat .motion-habitat-station-copy strong {
-    font-size: 11px;
+    font-size: 18px;
   }
 
   .motion-habitat-hologram.is-landscape {
