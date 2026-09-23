@@ -239,7 +239,7 @@ function HabitatCutPlayer({ piece }) {
 
 function HabitatHologramPreview({ piece, meta, anchor, onPlay }) {
   const videoRef = useRef(null)
-  const [isReady, setIsReady] = useState(false)
+  const [isReady, setIsReady] = useState(Boolean(piece.previewImage))
 
   useEffect(() => {
     const video = videoRef.current
@@ -293,21 +293,32 @@ function HabitatHologramPreview({ piece, meta, anchor, onPlay }) {
       <span className="motion-habitat-hologram-emitter" aria-hidden="true" />
 
       <span className="motion-habitat-hologram-shell">
-        <video
-          ref={videoRef}
-          className="motion-habitat-hologram-video"
-          src={piece.src}
-          muted
-          playsInline
-          preload="metadata"
-          tabIndex={-1}
-          onLoadedMetadata={prepareThumbnail}
-          onSeeked={() => {
-            videoRef.current?.pause()
-            setIsReady(true)
-          }}
-          onError={() => setIsReady(true)}
-        />
+        {piece.previewImage ? (
+          <img
+            className="motion-habitat-hologram-image"
+            src={piece.previewImage}
+            alt=""
+            aria-hidden="true"
+            onLoad={() => setIsReady(true)}
+            onError={() => setIsReady(true)}
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            className="motion-habitat-hologram-video"
+            src={piece.src}
+            muted
+            playsInline
+            preload="metadata"
+            tabIndex={-1}
+            onLoadedMetadata={prepareThumbnail}
+            onSeeked={() => {
+              videoRef.current?.pause()
+              setIsReady(true)
+            }}
+            onError={() => setIsReady(true)}
+          />
+        )}
 
         <span className="motion-habitat-hologram-scan" />
         <span className="motion-habitat-hologram-noise" />
@@ -1220,6 +1231,19 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           preserveAspectRatio="none"
           aria-hidden="true"
         >
+          {!isCompact && (
+            <>
+              <path
+                className="motion-habitat-archive-rail is-live-action"
+                d="M 135 158 Q 500 62 865 158"
+              />
+              <path
+                className="motion-habitat-archive-rail is-animation-motion"
+                d="M 135 407 Q 500 500 865 407"
+              />
+            </>
+          )}
+
           {paths.map(({ index, d }) => (
             <path
               key={pieces[index].id}
