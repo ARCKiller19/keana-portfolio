@@ -199,6 +199,29 @@
     stroke: transparent;
   }
 
+
+  /* Once a station is detected, its dotted data feed terminates at the physical
+     projector emitter. Keep it hidden until JS has measured the animated emitter
+     so there is no one-frame flash toward the old hologram center. */
+  .motion-habitat .motion-habitat-signal.is-projector-feed {
+    stroke: rgba(var(--signal-rgb), 0.72);
+    stroke-width: 1.45;
+    stroke-dasharray: 5 10;
+    opacity: 1;
+    filter: drop-shadow(0 0 3px rgba(var(--signal-rgb), 0.2));
+    animation: habitat-projector-feed-flow 900ms linear infinite;
+  }
+
+  .motion-habitat .motion-habitat-signal.is-projector-feed:not([data-projector-linked='true']) {
+    opacity: 0;
+  }
+
+  @keyframes habitat-projector-feed-flow {
+    to {
+      stroke-dashoffset: -30;
+    }
+  }
+
   /* The projection field is independent from KEANA's lower resting node. */
   .motion-habitat-projection-field {
     z-index: 3;
@@ -384,7 +407,8 @@
 
 
 @media (prefers-reduced-motion: reduce) {
-  .motion-habitat-hologram-title {
+  .motion-habitat-hologram-title,
+  .motion-habitat .motion-habitat-signal.is-projector-feed {
     animation: none !important;
   }
 }
