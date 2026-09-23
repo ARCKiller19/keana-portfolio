@@ -439,17 +439,22 @@
   animation: habitat-easter-character-reveal 3.6s var(--ease-editorial) both;
 }
 
+.motion-habitat .motion-habitat-character.is-easter-blooming .motion-habitat-character-head,
+.motion-habitat .motion-habitat-character.is-easter-blooming .motion-habitat-character-body {
+  z-index: 2;
+}
+
 .motion-habitat .motion-habitat-character-arm {
   position: absolute;
-  z-index: -1;
-  top: 12px;
+  z-index: 1;
+  top: 17px;
   width: 1px;
   height: 5px;
   border-radius: 999px;
-  background: rgba(239, 233, 219, 0.5);
+  background: rgba(239, 233, 219, 0.46);
   opacity: 0;
   transform-origin: 50% 1px;
-  box-shadow: 0 0 3px rgba(205, 221, 111, 0.07);
+  box-shadow: 0 0 2px rgba(205, 221, 111, 0.06);
 }
 
 .motion-habitat .motion-habitat-character-arm::after {
@@ -458,7 +463,7 @@
   top: 4px;
   left: 0;
   width: 1px;
-  height: 4px;
+  height: 3px;
   border-radius: inherit;
   background: inherit;
   transform-origin: 50% 1px;
@@ -466,21 +471,21 @@
 }
 
 .motion-habitat .motion-habitat-character-arm.arm-one {
-  left: 2px;
-  transform: rotate(38deg);
+  left: 4px;
+  transform: rotate(34deg);
 }
 
 .motion-habitat .motion-habitat-character-arm.arm-one::after {
-  transform: rotate(14deg);
+  transform: rotate(22deg);
 }
 
 .motion-habitat .motion-habitat-character-arm.arm-two {
-  right: 2px;
-  transform: rotate(-38deg);
+  right: 4px;
+  transform: rotate(-34deg);
 }
 
 .motion-habitat .motion-habitat-character-arm.arm-two::after {
-  transform: rotate(-14deg);
+  transform: rotate(-22deg);
 }
 
 .motion-habitat .motion-habitat-character.is-easter-blooming .motion-habitat-character-arm.arm-one {
@@ -792,64 +797,64 @@
 }
 
 @keyframes habitat-easter-arm-left {
-  0%, 48% {
+  0%, 51% {
     opacity: 0;
+    transform: rotate(34deg);
+  }
+  54% {
+    opacity: 0.7;
     transform: rotate(38deg);
   }
-  52% {
-    opacity: 0.72;
-    transform: rotate(38deg);
+  60% {
+    opacity: 0.78;
+    transform: rotate(82deg);
   }
-  58% {
-    opacity: 0.8;
-    transform: rotate(76deg);
+  66% {
+    opacity: 0.74;
+    transform: rotate(44deg);
   }
-  64% {
-    opacity: 0.76;
-    transform: rotate(40deg);
-  }
-  70% {
-    opacity: 0.8;
-    transform: rotate(74deg);
+  72% {
+    opacity: 0.78;
+    transform: rotate(80deg);
   }
   76% {
-    opacity: 0.66;
-    transform: rotate(38deg);
+    opacity: 0.5;
+    transform: rotate(42deg);
   }
-  79%, 100% {
+  78%, 100% {
     opacity: 0;
-    transform: rotate(38deg);
+    transform: rotate(34deg);
   }
 }
 
 @keyframes habitat-easter-arm-right {
-  0%, 49% {
+  0%, 52% {
     opacity: 0;
+    transform: rotate(-34deg);
+  }
+  55% {
+    opacity: 0.7;
     transform: rotate(-38deg);
   }
-  53% {
-    opacity: 0.72;
-    transform: rotate(-38deg);
+  61% {
+    opacity: 0.78;
+    transform: rotate(-82deg);
   }
-  59% {
-    opacity: 0.8;
-    transform: rotate(-75deg);
+  67% {
+    opacity: 0.74;
+    transform: rotate(-44deg);
   }
-  65% {
-    opacity: 0.76;
-    transform: rotate(-40deg);
-  }
-  71% {
-    opacity: 0.8;
-    transform: rotate(-73deg);
+  73% {
+    opacity: 0.78;
+    transform: rotate(-80deg);
   }
   76% {
-    opacity: 0.64;
-    transform: rotate(-38deg);
+    opacity: 0.48;
+    transform: rotate(-42deg);
   }
-  79%, 100% {
+  78%, 100% {
     opacity: 0;
-    transform: rotate(-38deg);
+    transform: rotate(-34deg);
   }
 }
 
