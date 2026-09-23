@@ -6,8 +6,9 @@ import '../motion-habitat.css'
 const DESKTOP_LAYOUT = {
   width: 1000,
   height: 560,
-  start: { x: 500, y: 282 },
-  dock: { x: 500, y: 282 },
+  start: { x: 500, y: 360 },
+  projection: { x: 500, y: 270 },
+  dock: { x: 500, y: 360 },
   stations: [
     { x: 170, y: 145, standX: 330, standY: 218 },
     { x: 830, y: 145, standX: 670, standY: 218 },
@@ -20,6 +21,7 @@ const COMPACT_LAYOUT = {
   width: 420,
   height: 680,
   start: { x: 210, y: 650 },
+  projection: { x: 210, y: 340 },
   dock: { x: 210, y: 340 },
   stations: [
     { x: 210, y: 82, standX: 210, standY: 150 },
@@ -964,13 +966,14 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     }
   }
 
+  const projection = layout.projection ?? layout.dock
   const paths = layout.stations.map((station, index) => {
-    const bendX = (station.x + layout.dock.x) / 2
-    const bendY = station.y < layout.dock.y ? station.y + 70 : station.y - 70
+    const bendX = (station.x + projection.x) / 2
+    const bendY = station.y < projection.y ? station.y + 70 : station.y - 70
 
     return {
       index,
-      d: `M ${station.x} ${station.y} Q ${bendX} ${bendY} ${layout.dock.x} ${layout.dock.y}`,
+      d: `M ${station.x} ${station.y} Q ${bendX} ${bendY} ${projection.x} ${projection.y}`,
     }
   })
 
@@ -1036,6 +1039,42 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         <div className="motion-habitat-grid" aria-hidden="true" />
 
         {!isCompact && (
+          <>
+            <div
+              className="motion-habitat-sector-label is-live-action"
+              aria-hidden="true"
+            >
+              <span>LIVE ACTION</span>
+              <small>02 STATIONS</small>
+            </div>
+
+            <div
+              className="motion-habitat-sector-label is-animation"
+              aria-hidden="true"
+            >
+              <span>ANIMATION / MOTION</span>
+              <small>02 STATIONS</small>
+            </div>
+
+            <div
+              className={`motion-habitat-projection-field ${
+                awakeIndex !== null && openIndex === null ? 'is-active' : ''
+              }`}
+              aria-hidden="true"
+              style={{
+                '--projection-x': `${(projection.x / layout.width) * 100}%`,
+                '--projection-y': `${(projection.y / layout.height) * 100}%`,
+              }}
+            >
+              <span>
+                PROJECTION FIELD //{' '}
+                {awakeIndex !== null && openIndex === null ? 'SIGNAL' : 'STANDBY'}
+              </span>
+            </div>
+          </>
+        )}
+
+        {!isCompact && (
           <img
             className="motion-habitat-center-flower"
             src="/images/motion-habitat/center-flower.png"
@@ -1067,8 +1106,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
           ))}
           <circle
             className={`motion-habitat-dock ${activePiece ? 'is-live' : ''}`}
-            cx={layout.dock.x}
-            cy={layout.dock.y}
+            cx={projection.x}
+            cy={projection.y}
             r="8"
           />
           <path
@@ -1180,8 +1219,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
               piece={pieces[awakeIndex]}
               meta={STATION_META[awakeIndex]}
               anchor={{
-                x: (layout.dock.x / layout.width) * 100,
-                y: (layout.dock.y / layout.height) * 100,
+                x: (projection.x / layout.width) * 100,
+                y: (projection.y / layout.height) * 100,
               }}
               onPlay={() => activateStation(awakeIndex)}
             />
