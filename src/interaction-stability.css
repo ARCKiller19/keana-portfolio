@@ -1,12 +1,5 @@
 /* Final interaction stability pass: keep touch/hover feedback from moving targets. */
 
-/* Give the left Motion Habitat station the same breathing room as the right-side stations. */
-@media (min-width: 721px) {
-  .motion-habitat .station-roast {
-    left: calc(var(--station-x) + clamp(24px, 2.2vw, 36px));
-  }
-}
-
 /* Keep Motion Habitat preview panels away from the right edge and give the
    reflection column a deliberate reading margin on desktop and iPad. */
 @media (min-width: 721px) {

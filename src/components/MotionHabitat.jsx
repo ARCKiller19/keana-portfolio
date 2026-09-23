@@ -9,10 +9,10 @@ const DESKTOP_LAYOUT = {
   start: { x: 500, y: 282 },
   dock: { x: 500, y: 282 },
   stations: [
-    { x: 190, y: 150, standX: 340, standY: 220 },
-    { x: 790, y: 150, standX: 660, standY: 220 },
-    { x: 210, y: 400, standX: 340, standY: 392 },
-    { x: 790, y: 400, standX: 660, standY: 392 },
+    { x: 170, y: 145, standX: 330, standY: 218 },
+    { x: 830, y: 145, standX: 670, standY: 218 },
+    { x: 170, y: 415, standX: 330, standY: 392 },
+    { x: 830, y: 415, standX: 670, standY: 392 },
   ],
 }
 
@@ -288,6 +288,8 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const joystickKnobRef = useRef(null)
   const joystickPointerRef = useRef(null)
   const joystickVectorRef = useRef({ x: 0, y: 0 })
+  const joystickGeometryRef = useRef(null)
+  const energyRenderTimeRef = useRef(0)
   const positionRef = useRef({ ...DESKTOP_LAYOUT.start })
   const pressedKeysRef = useRef(new Set())
   const targetRef = useRef(null)
@@ -365,6 +367,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
   const resetJoystick = useCallback(() => {
     joystickPointerRef.current = null
     joystickVectorRef.current = { x: 0, y: 0 }
+    joystickGeometryRef.current = null
 
     joystickPadRef.current?.classList.remove('is-engaged')
     worldRef.current?.classList.remove('is-joystick-dragging')
@@ -373,16 +376,37 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     if (knob) knob.style.transform = 'translate(-50%, -50%)'
   }, [])
 
+  const focusWorldAfterPaint = useCallback(() => {
+    window.requestAnimationFrame(() => {
+      window.setTimeout(() => {
+        worldRef.current?.focus({ preventScroll: true })
+      }, 0)
+    })
+  }, [])
+
   const updateJoystick = useCallback(
     (event) => {
       const pad = joystickPadRef.current
       const knob = joystickKnobRef.current
       if (!pad || !knob) return
 
-      const rect = pad.getBoundingClientRect()
-      const centerX = rect.left + rect.width / 2
-      const centerY = rect.top + rect.height / 2
-      const maxRadius = Math.max(28, Math.min(rect.width, rect.height) * 0.32)
+      const geometry =
+        joystickGeometryRef.current ??
+        (() => {
+          const rect = pad.getBoundingClientRect()
+          const measured = {
+            centerX: rect.left + rect.width / 2,
+            centerY: rect.top + rect.height / 2,
+            maxRadius: Math.max(
+              28,
+              Math.min(rect.width, rect.height) * 0.32,
+            ),
+          }
+          joystickGeometryRef.current = measured
+          return measured
+        })()
+
+      const { centerX, centerY, maxRadius } = geometry
       const rawX = event.clientX - centerX
       const rawY = event.clientY - centerY
       const rawDistance = Math.hypot(rawX, rawY)
@@ -714,27 +738,35 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       const energyPulse = energyPulseRef.current
 
       if (energyPath && nextEnergyIndex !== null) {
-        const energyStation = activeLayout.stations[nextEnergyIndex]
-        const bodyCenter = {
-          x: next.x,
-          y: next.y - (shouldPerchOnCenter ? 10 : 15),
-        }
-        const signalX = energyStation.x - bodyCenter.x
-        const signalY = energyStation.y - bodyCenter.y
-        const signalLength = Math.max(1, Math.hypot(signalX, signalY))
+        const shouldRefreshEnergyPath =
+          !energyPath.hasAttribute('d') ||
+          time - energyRenderTimeRef.current >= 32
 
-        // With no drawn arm, let the signal meet the torso itself. Offset the
-        // endpoint only slightly toward the station so the glowing line appears
-        // to touch the body's outline instead of passing through its center.
-        const connectionPoint = {
-          x: bodyCenter.x + (signalX / signalLength) * 4.5,
-          y: bodyCenter.y + (signalY / signalLength) * 4.5,
-        }
+        if (shouldRefreshEnergyPath) {
+          energyRenderTimeRef.current = time
+          const energyStation = activeLayout.stations[nextEnergyIndex]
+          const bodyCenter = {
+            x: next.x,
+            y: next.y - (shouldPerchOnCenter ? 10 : 15),
+          }
+          const signalX = energyStation.x - bodyCenter.x
+          const signalY = energyStation.y - bodyCenter.y
+          const signalLength = Math.max(1, Math.hypot(signalX, signalY))
 
-        const energyD = createEnergyPath(energyStation, connectionPoint, time)
-        energyPath.setAttribute('d', energyD)
-        energyPulse?.setAttribute('d', energyD)
+          // With no drawn arm, let the signal meet the torso itself. Offset the
+          // endpoint only slightly toward the station so the glowing line appears
+          // to touch the body's outline instead of passing through its center.
+          const connectionPoint = {
+            x: bodyCenter.x + (signalX / signalLength) * 4.5,
+            y: bodyCenter.y + (signalY / signalLength) * 4.5,
+          }
+
+          const energyD = createEnergyPath(energyStation, connectionPoint, time)
+          energyPath.setAttribute('d', energyD)
+          energyPulse?.setAttribute('d', energyD)
+        }
       } else {
+        energyRenderTimeRef.current = 0
         energyPath?.removeAttribute('d')
         energyPulse?.removeAttribute('d')
       }
@@ -856,7 +888,7 @@ function MotionHabitat({ pieces, onOpenNotes }) {
 
   const handleWorldPointerDown = (event) => {
     if (event.target.closest('button, video, a')) return
-    worldRef.current?.focus({ preventScroll: true })
+    focusWorldAfterPaint()
   }
 
   const handleJoystickPointerDown = (event) => {
@@ -875,10 +907,17 @@ function MotionHabitat({ pieces, onOpenNotes }) {
     joystickPointerRef.current = event.pointerId
     event.currentTarget.classList.add('is-engaged')
     worldRef.current?.classList.add('is-joystick-dragging')
-    window.getSelection?.()?.removeAllRanges()
     event.currentTarget.setPointerCapture?.(event.pointerId)
+
+    const rect = event.currentTarget.getBoundingClientRect()
+    joystickGeometryRef.current = {
+      centerX: rect.left + rect.width / 2,
+      centerY: rect.top + rect.height / 2,
+      maxRadius: Math.max(28, Math.min(rect.width, rect.height) * 0.32),
+    }
+
     updateJoystick(event)
-    worldRef.current?.focus({ preventScroll: true })
+    focusWorldAfterPaint()
   }
 
   const handleJoystickPointerMove = (event) => {

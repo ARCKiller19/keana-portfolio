@@ -246,7 +246,7 @@
 
 /* Equipment labels are plain text with breathing room, not colored tabs. */
 .motion-habitat .motion-habitat-station::before {
-  top: -18px;
+  top: -24px;
   left: 18px;
   padding: 0;
   border: 0;
@@ -386,7 +386,7 @@
   }
 
   .motion-habitat .motion-habitat-station::before {
-    top: -16px;
+    top: -21px;
     left: 14px;
     padding: 0;
     border: 0;
