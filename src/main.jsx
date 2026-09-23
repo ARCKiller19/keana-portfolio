@@ -1,4 +1,3 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { getSectionActivationLine } from './utils/sectionNavigation.js'
 import './styles.css'
@@ -90,8 +89,4 @@ const handleWordoriaPlaygroundJump = (event) => {
 
 document.addEventListener('click', handleWordoriaPlaygroundJump, true)
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+createRoot(document.getElementById('root')).render(<App />)
