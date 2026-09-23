@@ -83,9 +83,6 @@ function Navbar() {
   )
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const navRef = useRef(null)
-  const [connectorProgress, setConnectorProgress] = useState(() =>
-    navItems.slice(0, -1).map(() => 0),
-  )
 
   useEffect(() => {
     const sections = navItems
@@ -96,23 +93,50 @@ function Navbar() {
 
     let frameId = null
 
+    const writeConnectorProgress = (values) => {
+      const connectors = navRef.current?.querySelectorAll('.nav-connector')
+      if (!connectors) return
+
+      connectors.forEach((connector, index) => {
+        const nextValue = values[index] ?? 0
+        const previousValue = Number(
+          connector.style.getPropertyValue('--connector-progress'),
+        )
+
+        if (
+          !Number.isFinite(previousValue) ||
+          Math.abs(previousValue - nextValue) > 0.002
+        ) {
+          connector.style.setProperty(
+            '--connector-progress',
+            nextValue.toFixed(4),
+          )
+        }
+      })
+    }
+
     const updateNavigationState = () => {
       frameId = null
 
       if (sections.length === 0) {
         setActiveSection(null)
         setIsCompact(false)
-        setConnectorProgress(navItems.slice(0, -1).map(() => 0))
+        writeConnectorProgress(navItems.slice(0, -1).map(() => 0))
         return
       }
 
+      const sectionRects = sections.map((section) =>
+        section.getBoundingClientRect(),
+      )
       const activationLine = getSectionActivationLine()
       const activationY = window.scrollY + activationLine
       const atPageEnd =
         window.scrollY + window.innerHeight >=
         document.documentElement.scrollHeight - 2
       const heroBottom = hero?.getBoundingClientRect().bottom ?? 0
-      const aboutTop = aboutSection?.getBoundingClientRect().top ?? Infinity
+      const aboutIndex = aboutSection ? sections.indexOf(aboutSection) : -1
+      const aboutTop =
+        aboutIndex >= 0 ? sectionRects[aboutIndex].top : Infinity
       const aboutActivationThreshold = Math.max(
         activationLine + 96,
         window.innerHeight * 0.32,
@@ -130,7 +154,7 @@ function Navbar() {
       if (atPageEnd) {
         setActiveSection(navItems[navItems.length - 1].id)
         setIsCompact(true)
-        setConnectorProgress(navItems.slice(0, -1).map(() => 1))
+        writeConnectorProgress(navItems.slice(0, -1).map(() => 1))
         return
       }
 
@@ -140,32 +164,32 @@ function Navbar() {
           (!aboutSection && heroBottom > activationLine))
       ) {
         setActiveSection(null)
-        setConnectorProgress(navItems.slice(0, -1).map(() => 0))
+        writeConnectorProgress(navItems.slice(0, -1).map(() => 0))
         return
       }
 
       let currentSection = sections[0].id
 
-      sections.forEach((section) => {
-        if (section.getBoundingClientRect().top <= activationLine + 1) {
+      sections.forEach((section, index) => {
+        if (sectionRects[index].top <= activationLine + 1) {
           currentSection = section.id
         }
       })
 
       const nextConnectorProgress = navItems.slice(0, -1).map((_, index) => {
-        const current = sections[index]
-        const next = sections[index + 1]
-        if (!current || !next) return 0
+        const currentRect = sectionRects[index]
+        const nextRect = sectionRects[index + 1]
+        if (!currentRect || !nextRect) return 0
 
-        const start = current.offsetTop
-        const end = next.offsetTop
+        const start = window.scrollY + currentRect.top
+        const end = window.scrollY + nextRect.top
         if (end <= start) return activationY >= end ? 1 : 0
 
         return Math.min(Math.max((activationY - start) / (end - start), 0), 1)
       })
 
       setActiveSection(currentSection)
-      setConnectorProgress(nextConnectorProgress)
+      writeConnectorProgress(nextConnectorProgress)
     }
 
     const requestNavigationUpdate = () => {
@@ -315,7 +339,6 @@ function Navbar() {
               <span
                 className="nav-connector"
                 aria-hidden="true"
-                style={{ '--connector-progress': connectorProgress[index] ?? 0 }}
               >
                 <span className="nav-connector-dot nav-connector-dot-start" />
                 <span className="nav-connector-track">
