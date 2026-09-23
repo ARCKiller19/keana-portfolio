@@ -410,7 +410,255 @@
 }
 
 
+/* Hidden resting-node easter egg: after KEANA stays seated at center, the
+   existing character briefly gains botanical wings while a tiny butterfly visits. */
+.motion-habitat .motion-habitat-rest-easter {
+  position: absolute;
+  z-index: 13;
+  top: var(--dock-y);
+  left: var(--dock-x);
+  width: 158px;
+  height: 118px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -66%) scale(0.94);
+  transform-origin: 50% 78%;
+}
+
+.motion-habitat .motion-habitat-rest-easter.is-visible {
+  animation: habitat-rest-easter-reveal 3.2s var(--ease-editorial) both;
+}
+
+.motion-habitat .motion-habitat-easter-aura {
+  position: absolute;
+  inset: 22px 18px 18px;
+  border: 1px solid rgba(167, 179, 95, 0.14);
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow:
+    inset 0 0 22px rgba(167, 179, 95, 0.045),
+    0 0 20px rgba(167, 179, 95, 0.07);
+  animation: habitat-easter-aura 3.2s ease-in-out both;
+}
+
+.motion-habitat .motion-habitat-easter-wing {
+  position: absolute;
+  top: 47px;
+  left: 50%;
+  width: 48px;
+  height: 48px;
+  transform-origin: 100% 70%;
+  opacity: 0;
+  filter:
+    drop-shadow(0 0 3px rgba(167, 179, 95, 0.18))
+    drop-shadow(0 0 8px rgba(167, 179, 95, 0.08));
+}
+
+.motion-habitat .motion-habitat-easter-wing.wing-left {
+  transform: translateX(-96%) rotate(-8deg) scale(0.82);
+  animation: habitat-easter-wing-left 3.2s var(--ease-editorial) both;
+}
+
+.motion-habitat .motion-habitat-easter-wing.wing-right {
+  transform-origin: 0 70%;
+  transform: translateX(-4%) scaleX(-1) rotate(-8deg) scale(0.82);
+  animation: habitat-easter-wing-right 3.2s var(--ease-editorial) both;
+}
+
+.motion-habitat .motion-habitat-easter-wing i {
+  position: absolute;
+  right: 1px;
+  width: 31px;
+  height: 14px;
+  border: 1px solid rgba(205, 221, 111, 0.48);
+  border-radius: 85% 14% 85% 14%;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(205, 221, 111, 0.22),
+      rgba(107, 125, 82, 0.08) 68%,
+      transparent
+    );
+  box-shadow: inset -5px -2px 10px rgba(10, 11, 9, 0.35);
+  transform-origin: 100% 50%;
+}
+
+.motion-habitat .motion-habitat-easter-wing i:nth-child(1) {
+  top: 1px;
+  transform: rotate(-23deg) scale(0.98);
+}
+
+.motion-habitat .motion-habitat-easter-wing i:nth-child(2) {
+  top: 16px;
+  right: 6px;
+  transform: rotate(-2deg) scale(0.9);
+}
+
+.motion-habitat .motion-habitat-easter-wing i:nth-child(3) {
+  top: 29px;
+  right: 13px;
+  transform: rotate(18deg) scale(0.72);
+}
+
+.motion-habitat .motion-habitat-easter-butterfly {
+  position: absolute;
+  top: 14px;
+  right: 24px;
+  width: 5px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(239, 233, 219, 0.62);
+  opacity: 0;
+  transform: rotate(26deg);
+  filter: drop-shadow(0 0 5px rgba(205, 221, 111, 0.26));
+  animation: habitat-easter-butterfly 3.2s ease-in-out both;
+}
+
+.motion-habitat .motion-habitat-easter-butterfly::before,
+.motion-habitat .motion-habitat-easter-butterfly::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 11px;
+  height: 8px;
+  border: 1px solid rgba(205, 221, 111, 0.54);
+  background: rgba(167, 179, 95, 0.13);
+  border-radius: 80% 18% 80% 18%;
+}
+
+.motion-habitat .motion-habitat-easter-butterfly::before {
+  right: 3px;
+  transform: rotate(-28deg);
+}
+
+.motion-habitat .motion-habitat-easter-butterfly::after {
+  left: 3px;
+  transform: scaleX(-1) rotate(-28deg);
+}
+
+.motion-habitat .motion-habitat-easter-spark {
+  position: absolute;
+  top: 18px;
+  left: 39px;
+  width: 1px;
+  height: 13px;
+  background: rgba(239, 233, 219, 0.5);
+  opacity: 0;
+  animation: habitat-easter-spark 3.2s ease-in-out both;
+}
+
+.motion-habitat .motion-habitat-easter-spark::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: -6px;
+  width: 13px;
+  height: 1px;
+  background: inherit;
+}
+
+.motion-habitat .motion-habitat-easter-copy {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: 6px;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(205, 221, 111, 0.58);
+  opacity: 0;
+  text-shadow: 0 0 6px rgba(167, 179, 95, 0.15);
+  animation: habitat-easter-copy 3.2s ease-in-out both;
+}
+
+@keyframes habitat-rest-easter-reveal {
+  0%, 8% {
+    opacity: 0;
+    transform: translate(-50%, -62%) scale(0.9);
+  }
+  18%, 74% {
+    opacity: 1;
+    transform: translate(-50%, -66%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -69%) scale(0.985);
+  }
+}
+
+@keyframes habitat-easter-wing-left {
+  0%, 10% {
+    opacity: 0;
+    transform: translateX(-88%) rotate(10deg) scale(0.56);
+  }
+  24%, 72% {
+    opacity: 0.92;
+    transform: translateX(-96%) rotate(-8deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-99%) rotate(-15deg) scale(0.9);
+  }
+}
+
+@keyframes habitat-easter-wing-right {
+  0%, 10% {
+    opacity: 0;
+    transform: translateX(-12%) scaleX(-1) rotate(10deg) scale(0.56);
+  }
+  24%, 72% {
+    opacity: 0.92;
+    transform: translateX(-4%) scaleX(-1) rotate(-8deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-1%) scaleX(-1) rotate(-15deg) scale(0.9);
+  }
+}
+
+@keyframes habitat-easter-butterfly {
+  0%, 16% {
+    opacity: 0;
+    transform: translate(-8px, 7px) rotate(18deg) scale(0.72);
+  }
+  32% {
+    opacity: 0.88;
+    transform: translate(0, -2px) rotate(28deg) scale(1);
+  }
+  48% {
+    transform: translate(5px, -6px) rotate(18deg) scale(0.94);
+  }
+  68% {
+    opacity: 0.82;
+    transform: translate(-2px, -10px) rotate(32deg) scale(1.02);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(11px, -18px) rotate(20deg) scale(0.8);
+  }
+}
+
+@keyframes habitat-easter-aura {
+  0%, 14%, 100% { opacity: 0; transform: scale(0.86); }
+  28%, 70% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes habitat-easter-spark {
+  0%, 23%, 100% { opacity: 0; transform: rotate(45deg) scale(0.4); }
+  35%, 66% { opacity: 0.72; transform: rotate(45deg) scale(1); }
+}
+
+@keyframes habitat-easter-copy {
+  0%, 30%, 100% { opacity: 0; transform: translateY(3px); }
+  42%, 75% { opacity: 1; transform: translateY(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .motion-habitat-rest-easter,
+  .motion-habitat-rest-easter *,
   .motion-habitat-hologram-title,
   .motion-habitat .motion-habitat-signal.is-projector-feed {
     animation: none !important;
