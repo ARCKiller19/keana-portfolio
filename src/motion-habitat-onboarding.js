@@ -224,9 +224,9 @@ function handleKeyDown(event) {
 
   hideGuide()
   window.requestAnimationFrame(() => {
-    window.setTimeout(() => {
+    window.requestAnimationFrame(() => {
       activeWorld?.focus({ preventScroll: true })
-    }, 0)
+    })
   })
 }
 
