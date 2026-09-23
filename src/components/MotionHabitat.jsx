@@ -46,6 +46,7 @@ const STATION_PRESETS = {
 
 const MANUAL_SPEED = 260
 const AUTO_SPEED = 620
+const ENERGY_RADIUS = 225
 const WAKE_RADIUS = 138
 const ACTIVATE_RADIUS = 76
 const CENTER_PERCH_RADIUS = 34
@@ -899,7 +900,12 @@ function MotionHabitat({ pieces, onOpenNotes }) {
         }
       }
 
-      const nextEnergyIndex = !isCompact ? nextAwake : null
+      const nextEnergyIndex =
+        !isCompact &&
+        nearestSignalDistance <= ENERGY_RADIUS &&
+        suppressedStationRef.current !== nearestSignalIndex
+          ? nearestSignalIndex
+          : null
       setEnergyIndexState(nextEnergyIndex)
 
       const energyPath = energyPathRef.current
