@@ -1,3 +1,9 @@
+/* Isolate Motion Habitat layout/paint work from the rest of the page. */
+.motion-habitat .motion-habitat-world {
+  contain: layout paint;
+  isolation: isolate;
+}
+
 /* Motion Habitat performance guardrails: keep movement readable without repaint-heavy glow. */
 
 /* Isolate the moving avatar as much as possible while the current movement loop updates its position. */
