@@ -522,9 +522,9 @@ function MotionHabitat({ pieces, onOpenNotes }) {
 
   const focusWorldAfterPaint = useCallback(() => {
     window.requestAnimationFrame(() => {
-      window.setTimeout(() => {
+      window.requestAnimationFrame(() => {
         worldRef.current?.focus({ preventScroll: true })
-      }, 0)
+      })
     })
   }, [])
 
@@ -1105,7 +1105,9 @@ function MotionHabitat({ pieces, onOpenNotes }) {
 
     if (!isCompact && !reducedMotion) {
       window.requestAnimationFrame(() => {
-        worldRef.current?.focus({ preventScroll: true })
+        window.requestAnimationFrame(() => {
+          worldRef.current?.focus({ preventScroll: true })
+        })
       })
     }
   }
@@ -1126,7 +1128,11 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       ref={roomRef}
       className={`motion-habitat ${isOnline ? 'is-online' : ''} ${
         reducedMotion ? 'is-reduced' : ''
-      } ${activePiece ? 'has-open-panel' : ''}`}
+      } ${activePiece ? 'has-open-panel' : ''} ${
+        awakeIndex !== null || targetedIndex !== null || openIndex !== null
+          ? 'has-active-station'
+          : ''
+      }`}
       aria-label="Motion Habitat interactive project archive"
     >
       <header className="motion-habitat-header">
