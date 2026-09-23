@@ -1,0 +1,357 @@
+/* Motion Habitat archive layout.
+   Desktop only: projects become scalable signal nodes arranged on two arcs. */
+
+@media (min-width: 721px) {
+  .motion-habitat .motion-habitat-world {
+    background:
+      radial-gradient(ellipse at 50% 38%, rgba(167, 179, 95, 0.026), transparent 22%),
+      linear-gradient(rgba(167, 179, 95, 0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(167, 179, 95, 0.012) 1px, transparent 1px),
+      linear-gradient(rgba(239, 233, 219, 0.007) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(239, 233, 219, 0.007) 1px, transparent 1px),
+      #050705;
+    background-size: auto, 64px 64px, 64px 64px, 16px 16px, 16px 16px, auto;
+    background-position: center;
+  }
+
+  /* Project nodes are compact archive terminals. Their positions and widths come
+     from the data-driven arc layout in MotionHabitat.jsx. */
+  .motion-habitat .motion-habitat-station {
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 9px;
+    width: var(--node-width, 176px);
+    min-height: 72px;
+    padding: 8px 9px;
+    border: 1px solid rgba(var(--station-rgb), 0.12);
+    background:
+      linear-gradient(180deg, rgba(var(--station-rgb), 0.025), transparent 54%),
+      rgba(5, 7, 5, 0.9);
+    box-shadow:
+      0 9px 22px rgba(0, 0, 0, 0.16),
+      inset 0 0 0 1px rgba(239, 233, 219, 0.012);
+  }
+
+  .motion-habitat .motion-habitat-station::before {
+    display: none;
+  }
+
+  .motion-habitat .motion-habitat-station:hover,
+  .motion-habitat .motion-habitat-station:focus-visible,
+  .motion-habitat .motion-habitat-station.is-awake,
+  .motion-habitat .motion-habitat-station.is-targeted,
+  .motion-habitat .motion-habitat-station.is-open {
+    z-index: 14;
+    border-color: rgba(var(--station-rgb), 0.42);
+    background:
+      linear-gradient(180deg, rgba(var(--station-rgb), 0.055), transparent 58%),
+      rgba(6, 8, 6, 0.96);
+    box-shadow:
+      0 14px 30px rgba(0, 0, 0, 0.22),
+      0 0 22px rgba(var(--station-rgb), 0.045);
+  }
+
+  .motion-habitat .motion-habitat-station:hover,
+  .motion-habitat .motion-habitat-station:focus-visible {
+    transform: translate(-50%, -50%) translateY(-2px) scale(1.025);
+  }
+
+  .motion-habitat .motion-habitat-station.is-targeted,
+  .motion-habitat .motion-habitat-station.is-awake,
+  .motion-habitat .motion-habitat-station.is-open {
+    transform: translate(-50%, -50%) scale(1.018);
+  }
+
+  .motion-habitat .motion-habitat-machine {
+    width: 52px;
+    height: 48px;
+    border-color: rgba(var(--station-rgb), 0.24);
+    box-shadow: inset 0 0 9px rgba(var(--station-rgb), 0.02);
+  }
+
+  .motion-habitat .motion-habitat-machine::before {
+    inset: 4px;
+  }
+
+  .motion-habitat .motion-habitat-machine::after {
+    bottom: -6px;
+    width: 15px;
+    height: 5px;
+  }
+
+  .motion-habitat .motion-habitat-machine-screen {
+    width: 34px;
+    height: 22px;
+  }
+
+  .motion-habitat .station-roast .motion-habitat-machine-screen::before {
+    inset: 4px;
+  }
+
+  .motion-habitat .station-roast .motion-habitat-machine-screen::after {
+    top: 2px;
+    right: 2px;
+    font-size: 3px;
+  }
+
+  .motion-habitat .station-kove .motion-habitat-machine-screen::before {
+    top: 7px;
+    right: 8px;
+    bottom: 6px;
+    left: 8px;
+  }
+
+  .motion-habitat .station-special .motion-habitat-machine-screen::before {
+    inset: 5px 4px;
+  }
+
+  .motion-habitat .motion-habitat-machine-node {
+    top: 5px;
+    right: 5px;
+    width: 4px;
+    height: 4px;
+  }
+
+  .motion-habitat .motion-habitat-machine-accent {
+    right: 5px;
+    bottom: 4px;
+  }
+
+  .motion-habitat .motion-habitat-station-copy {
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .motion-habitat .motion-habitat-station-copy span,
+  .motion-habitat .motion-habitat-station-copy em {
+    font-size: 5.5px;
+    line-height: 1.2;
+    letter-spacing: 0.07em;
+  }
+
+  .motion-habitat .motion-habitat-station-copy small {
+    display: none;
+  }
+
+  .motion-habitat .motion-habitat-station-copy strong {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 12.5px;
+    line-height: 0.98;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .motion-habitat .motion-habitat-station-copy::after {
+    content: '> APPROACH';
+    margin-top: 2px;
+    padding-top: 4px;
+    border-top-color: rgba(var(--station-rgb), 0.12);
+    font-size: 5.5px;
+    letter-spacing: 0.08em;
+  }
+
+  .motion-habitat .motion-habitat-station:hover .motion-habitat-station-copy::after,
+  .motion-habitat .motion-habitat-station:focus-visible .motion-habitat-station-copy::after {
+    content: '> APPROACH';
+    letter-spacing: 0.1em;
+  }
+
+  .motion-habitat .motion-habitat-station.is-targeted .motion-habitat-station-copy::after {
+    content: '> WALKING';
+  }
+
+  .motion-habitat .motion-habitat-station.is-awake:not(.is-open):not(.is-targeted) .motion-habitat-station-copy::after {
+    content: '> SIGNAL READY';
+  }
+
+  .motion-habitat .motion-habitat-station.is-open .motion-habitat-station-copy::after {
+    content: '> PANEL OPEN';
+  }
+
+  .motion-habitat .motion-habitat-station-number {
+    top: 5px;
+    right: 6px;
+    font-size: 6px;
+  }
+
+  /* Sector names belong to the room, not to individual cards. */
+  .motion-habitat-sector-label {
+    z-index: 5;
+    gap: 4px;
+    color: rgba(205, 221, 111, 0.52);
+  }
+
+  .motion-habitat-sector-label span {
+    font-size: 7.5px;
+    letter-spacing: 0.16em;
+  }
+
+  .motion-habitat-sector-label small {
+    font-size: 5.5px;
+    color: rgba(239, 233, 219, 0.26);
+  }
+
+  .motion-habitat-sector-label.is-live-action {
+    top: 4.5%;
+    left: 4.2%;
+  }
+
+  .motion-habitat-sector-label.is-animation {
+    right: 4.2%;
+    bottom: 4%;
+  }
+
+  /* The projection field is independent from KEANA's lower resting node. */
+  .motion-habitat-projection-field {
+    z-index: 3;
+    width: clamp(210px, 22vw, 278px);
+    aspect-ratio: 1.86 / 1;
+    border-color: rgba(167, 179, 95, 0.075);
+    opacity: 0.78;
+  }
+
+  .motion-habitat-projection-field::before {
+    inset: 15%;
+    border-color: rgba(167, 179, 95, 0.06);
+  }
+
+  .motion-habitat-projection-field > span {
+    top: calc(100% + 8px);
+    font-size: 5.25px;
+    color: rgba(239, 233, 219, 0.22);
+  }
+
+  .motion-habitat-projection-field.is-active {
+    border-color: rgba(167, 179, 95, 0.16);
+    box-shadow:
+      inset 0 0 28px rgba(167, 179, 95, 0.03),
+      0 0 30px rgba(167, 179, 95, 0.025);
+  }
+
+  .motion-habitat .motion-habitat-center-flower {
+    z-index: 7;
+    width: clamp(78px, 8.2vw, 100px);
+    opacity: 0.66;
+  }
+
+  /* KEANA can move through the room, but the active projection remains in front
+     when she crosses its footprint. */
+  .motion-habitat .motion-habitat-character {
+    z-index: 10;
+  }
+
+  .motion-habitat-hologram {
+    z-index: 16;
+  }
+
+  /* Holograms preserve the source family's aspect ratio instead of forcing one
+     shared rectangle. */
+  .motion-habitat-hologram.is-landscape {
+    width: clamp(228px, 23vw, 286px);
+  }
+
+  .motion-habitat-hologram.is-portrait {
+    width: clamp(118px, 11.5vw, 150px);
+  }
+
+  .motion-habitat-hologram-shell {
+    aspect-ratio: var(--hologram-aspect, 16 / 9);
+  }
+
+  .motion-habitat-hologram-video {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .motion-habitat-hologram-title {
+    position: absolute;
+    z-index: 18;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    width: max-content;
+    max-width: 28ch;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: rgba(215, 253, 255, 0.72);
+    font-family: var(--font-mono);
+    font-size: 7px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-align: center;
+    text-shadow:
+      0 0 7px rgba(var(--hologram-rgb), 0.54),
+      0 0 18px rgba(var(--station-rgb), 0.2);
+    text-transform: uppercase;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .motion-habitat-hologram.is-ready .motion-habitat-hologram-title {
+    animation: habitat-hologram-title-breathe 2.8s ease-in-out infinite alternate;
+  }
+
+  .motion-habitat-hologram-beam {
+    bottom: -42px;
+    height: 64px;
+  }
+
+  .motion-habitat-hologram-emitter {
+    bottom: -44px;
+  }
+
+  @keyframes habitat-hologram-title-breathe {
+    from {
+      opacity: 0.68;
+      text-shadow: 0 0 6px rgba(var(--hologram-rgb), 0.4);
+    }
+    to {
+      opacity: 0.96;
+      text-shadow:
+        0 0 8px rgba(var(--hologram-rgb), 0.72),
+        0 0 18px rgba(var(--station-rgb), 0.24);
+    }
+  }
+}
+
+@media (min-width: 721px) and (max-width: 980px) {
+  .motion-habitat .motion-habitat-station {
+    grid-template-columns: 46px minmax(0, 1fr);
+    gap: 7px;
+    min-height: 66px;
+    padding: 7px;
+  }
+
+  .motion-habitat .motion-habitat-machine {
+    width: 46px;
+    height: 42px;
+  }
+
+  .motion-habitat .motion-habitat-machine-screen {
+    width: 30px;
+    height: 19px;
+  }
+
+  .motion-habitat .motion-habitat-station-copy strong {
+    font-size: 11px;
+  }
+
+  .motion-habitat-hologram.is-landscape {
+    width: 214px;
+  }
+
+  .motion-habitat-hologram.is-portrait {
+    width: 112px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-habitat-hologram-title {
+    animation: none !important;
+  }
+}
