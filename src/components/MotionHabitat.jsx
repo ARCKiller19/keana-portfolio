@@ -746,6 +746,10 @@ function MotionHabitat({ pieces, onOpenNotes }) {
       }
     }
 
+    if (!isCenterPerched) {
+      easterEggShownRef.current = false
+    }
+
     const canReveal =
       !isCompact &&
       !reducedMotion &&
@@ -1446,15 +1450,16 @@ function MotionHabitat({ pieces, onOpenNotes }) {
             }}
           >
             <span className="motion-habitat-easter-aura" />
-            <span className="motion-habitat-easter-wing wing-left">
-              <i />
-              <i />
-              <i />
-            </span>
-            <span className="motion-habitat-easter-wing wing-right">
-              <i />
-              <i />
-              <i />
+            <span className="motion-habitat-easter-bloom">
+              <i className="petal petal-one" />
+              <i className="petal petal-two" />
+              <i className="petal petal-three" />
+              <i className="petal petal-four" />
+              <i className="petal petal-five" />
+              <i className="petal petal-six" />
+              <i className="petal petal-seven" />
+              <i className="petal petal-eight" />
+              <i className="motion-habitat-easter-core" />
             </span>
             <span className="motion-habitat-easter-butterfly" />
             <span className="motion-habitat-easter-spark" />
