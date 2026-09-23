@@ -244,16 +244,15 @@
   opacity: 0.68;
 }
 
-/* Station device labels should read like floating equipment names, not cramped
-   bordered tabs. */
+/* Equipment labels are plain text with breathing room, not colored tabs. */
 .motion-habitat .motion-habitat-station::before {
-  top: -10px;
-  left: 16px;
-  padding: 3px 9px;
+  top: -18px;
+  left: 18px;
+  padding: 0;
   border: 0;
-  background: rgba(7, 9, 7, 0.94);
+  background: transparent;
   letter-spacing: 0.13em;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 /* A live monitor gets a small cyan bloom underneath the station-specific color. */
@@ -333,6 +332,50 @@
   }
 }
 
+
+/* Desktop spatial scale: reduce station footprint so the Habitat reads as a room,
+   not four oversized cards. The entire card remains the interactive target. */
+@media (min-width: 981px) {
+  .motion-habitat .motion-habitat-station {
+    grid-template-columns: 104px minmax(0, 150px);
+    gap: 14px;
+    width: 296px;
+    min-height: 116px;
+    padding: 13px;
+  }
+
+  .motion-habitat .motion-habitat-machine {
+    width: 104px;
+    height: 84px;
+  }
+
+  .motion-habitat .motion-habitat-machine-screen {
+    width: 72px;
+    height: 44px;
+  }
+
+  .motion-habitat .motion-habitat-station-copy {
+    gap: 5px;
+  }
+
+  .motion-habitat .motion-habitat-station-copy strong {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .motion-habitat .motion-habitat-station-copy span,
+  .motion-habitat .motion-habitat-station-copy small,
+  .motion-habitat .motion-habitat-station-copy em {
+    font-size: 6.75px;
+  }
+
+  .motion-habitat .motion-habitat-station-number {
+    top: 7px;
+    right: 8px;
+    font-size: 7px;
+  }
+}
+
 @media (max-width: 980px) and (min-width: 721px) {
   .motion-habitat-hologram {
     width: 206px;
@@ -343,8 +386,11 @@
   }
 
   .motion-habitat .motion-habitat-station::before {
-    left: 13px;
-    padding-inline: 8px;
+    top: -16px;
+    left: 14px;
+    padding: 0;
+    border: 0;
+    background: transparent;
   }
 }
 
