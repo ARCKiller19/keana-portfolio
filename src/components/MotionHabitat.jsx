@@ -1744,14 +1744,16 @@ function MotionHabitat({ pieces, onOpenNotes }) {
             isEasterEggVisible ? 'is-easter-blooming' : ''
           } ${energyMeta ? 'has-station-energy' : ''}`}
           style={energyMeta ? { '--energy-rgb': energyMeta.rgb } : undefined}
-          data-facing={facing}
-          data-perch-direction={perchDirection}
+          data-facing={isEasterEggVisible ? 'down' : facing}
+          data-perch-direction={isEasterEggVisible ? 'down' : perchDirection}
           aria-hidden="true"
         >
           <span className="motion-habitat-character-head" />
           <span className="motion-habitat-character-body" />
           <span className="motion-habitat-character-leg leg-one" />
           <span className="motion-habitat-character-leg leg-two" />
+          <span className="motion-habitat-character-arm arm-one" />
+          <span className="motion-habitat-character-arm arm-two" />
         </div>
 
         {!isCompact && !reducedMotion && (
