@@ -1,52 +1,34 @@
 /* Motion Habitat hologram previews.
-   Desktop only. The station monitor itself blooms into a larger projected still. */
+   Desktop only. An active station sends its preview to the center resting dock. */
 
 .motion-habitat-hologram {
   --hologram-rgb: 118, 226, 238;
   position: absolute;
-  z-index: 16;
-  top: 50%;
-  left: 81px;
-  width: clamp(210px, 20vw, 242px);
+  z-index: 11;
+  top: var(--hologram-y);
+  left: var(--hologram-x);
+  width: clamp(214px, 21vw, 248px);
   padding: 0;
   border: 0;
+  appearance: none;
   background: transparent;
   color: rgba(226, 252, 255, 0.92);
-  pointer-events: none;
+  cursor: pointer;
   transform:
-    translate(-50%, -50%)
+    translate(-50%, calc(-100% - 30px))
     perspective(760px)
-    rotateY(-1.4deg);
-  transform-origin: center;
+    rotateY(-1deg);
+  transform-origin: 50% 100%;
   isolation: isolate;
   filter:
     drop-shadow(0 0 13px rgba(var(--hologram-rgb), 0.17))
     drop-shadow(0 0 34px rgba(var(--station-rgb), 0.09));
-  animation: habitat-hologram-monitor-bloom 420ms cubic-bezier(0.2, 0.78, 0.2, 1) both;
+  animation: habitat-hologram-center-bloom 420ms cubic-bezier(0.2, 0.78, 0.2, 1) both;
 }
 
-.motion-habitat-hologram-title {
-  position: absolute;
-  z-index: 18;
-  top: -18px;
-  left: 50%;
-  width: max-content;
-  max-width: calc(100% - 12px);
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: rgba(224, 249, 251, 0.76);
-  font-family: var(--font-mono);
-  font-size: 7px;
-  line-height: 1;
-  letter-spacing: 0.13em;
-  text-align: center;
-  text-transform: uppercase;
-  text-shadow:
-    0 0 7px rgba(var(--hologram-rgb), 0.52),
-    0 0 16px rgba(var(--station-rgb), 0.18);
-  transform: translateX(-50%);
-  white-space: nowrap;
+.motion-habitat-hologram:focus-visible {
+  outline: 1px solid rgba(var(--hologram-rgb), 0.74);
+  outline-offset: 5px;
 }
 
 .motion-habitat-hologram-beam {
@@ -262,18 +244,6 @@
   opacity: 0.68;
 }
 
-/* The preview is now physically tied to each station monitor.
-   Hide freshness badges while the hologram is active so they never read as
-   hologram UI. */
-.motion-habitat .station-roast.is-awake:not(.is-open)::after,
-.motion-habitat .station-kove.is-awake:not(.is-open)::after {
-  opacity: 0;
-}
-
-.motion-habitat .motion-habitat-station.is-awake:not(.is-open)::before {
-  opacity: 0;
-}
-
 /* Station device labels should read like floating equipment names, not cramped
    bordered tabs. */
 .motion-habitat .motion-habitat-station::before {
@@ -299,14 +269,14 @@
     0 0 11px rgba(118, 226, 238, 0.42);
 }
 
-@keyframes habitat-hologram-monitor-bloom {
+@keyframes habitat-hologram-center-bloom {
   0% {
     opacity: 0;
     transform:
-      translate(-50%, -50%)
+      translate(-50%, calc(-100% - 12px))
       perspective(760px)
-      rotateY(-1.4deg)
-      scale(0.28, 0.08);
+      rotateY(-1deg)
+      scale(0.26, 0.06);
     filter:
       blur(3px)
       drop-shadow(0 0 3px rgba(var(--hologram-rgb), 0));
@@ -314,17 +284,17 @@
   48% {
     opacity: 0.88;
     transform:
-      translate(-50%, -50%)
+      translate(-50%, calc(-100% - 30px))
       perspective(760px)
-      rotateY(-1.4deg)
+      rotateY(-1deg)
       scale(1.04, 0.76);
   }
   100% {
     opacity: 1;
     transform:
-      translate(-50%, -50%)
+      translate(-50%, calc(-100% - 30px))
       perspective(760px)
-      rotateY(-1.4deg)
+      rotateY(-1deg)
       scale(1);
     filter:
       drop-shadow(0 0 13px rgba(var(--hologram-rgb), 0.17))
@@ -365,13 +335,11 @@
 
 @media (max-width: 980px) and (min-width: 721px) {
   .motion-habitat-hologram {
-    left: 62px;
-    width: 200px;
-  }
-
-  .motion-habitat-hologram-title {
-    top: -17px;
-    font-size: 6.5px;
+    width: 206px;
+    transform:
+      translate(-50%, calc(-100% - 26px))
+      perspective(760px)
+      rotateY(-1deg);
   }
 
   .motion-habitat .motion-habitat-station::before {

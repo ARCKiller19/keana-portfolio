@@ -30,34 +30,10 @@ const COMPACT_LAYOUT = {
 }
 
 const STATION_META = [
-  {
-    slug: 'roast',
-    label: 'FIELD RECORDER',
-    system: 'LIVE / CAFE',
-    accent: 'warm',
-    rgb: '184, 180, 168',
-  },
-  {
-    slug: 'kove',
-    label: 'CAFE MONITOR',
-    system: 'LIVE / CAFE / FRIENDS',
-    accent: 'ambient',
-    rgb: '208, 138, 75',
-  },
-  {
-    slug: 'special',
-    label: 'RHYTHM CONSOLE',
-    system: 'MOTION / RHYTHM',
-    accent: 'pulse',
-    rgb: '168, 188, 99',
-  },
-  {
-    slug: 'first-love',
-    label: 'MEMORY TERMINAL',
-    system: 'MEMORY / COLOR',
-    accent: 'chapters',
-    rgb: '142, 120, 166',
-  },
+  { slug: 'roast', system: 'LIVE / CAFE', accent: 'warm', rgb: '184, 180, 168' },
+  { slug: 'kove', system: 'LIVE / CAFE / FRIENDS', accent: 'ambient', rgb: '208, 138, 75' },
+  { slug: 'special', system: 'MOTION / RHYTHM', accent: 'pulse', rgb: '168, 188, 99' },
+  { slug: 'first-love', system: 'MEMORY / COLOR', accent: 'chapters', rgb: '142, 120, 166' },
 ]
 
 const MANUAL_SPEED = 260
@@ -157,7 +133,7 @@ function HabitatCutPlayer({ piece }) {
   )
 }
 
-function HabitatHologramPreview({ piece, meta }) {
+function HabitatHologramPreview({ piece, meta, anchor, onPlay }) {
   const videoRef = useRef(null)
   const [isReady, setIsReady] = useState(false)
 
@@ -192,15 +168,21 @@ function HabitatHologramPreview({ piece, meta }) {
   }, [piece.previewStart])
 
   return (
-    <span
+    <button
       className={`motion-habitat-hologram station-${meta.slug} ${
         isReady ? 'is-ready' : 'is-loading'
       }`}
-      aria-hidden="true"
+      type="button"
+      style={{
+        '--hologram-x': `${anchor.x}%`,
+        '--hologram-y': `${anchor.y}%`,
+        '--station-rgb': meta.rgb,
+      }}
+      aria-label={`Play full ${piece.title}`}
+      onClick={onPlay}
     >
-      <span className="motion-habitat-hologram-title">{meta.label}</span>
-      <span className="motion-habitat-hologram-beam" />
-      <span className="motion-habitat-hologram-emitter" />
+      <span className="motion-habitat-hologram-beam" aria-hidden="true" />
+      <span className="motion-habitat-hologram-emitter" aria-hidden="true" />
 
       <span className="motion-habitat-hologram-shell">
         <video
@@ -231,7 +213,7 @@ function HabitatHologramPreview({ piece, meta }) {
           <small>{piece.title}</small>
         </span>
       </span>
-    </span>
+    </button>
   )
 }
 
@@ -1126,10 +1108,6 @@ function MotionHabitat({ pieces, onOpenNotes }) {
                 </span>
               </span>
 
-              {!isCompact && !reducedMotion && isAwake && !isOpen && (
-                <HabitatHologramPreview piece={piece} meta={meta} />
-              )}
-
               <span className="motion-habitat-station-copy">
                 <span>{meta.system}</span>
                 <strong>{piece.title}</strong>
@@ -1151,6 +1129,24 @@ function MotionHabitat({ pieces, onOpenNotes }) {
             </button>
           )
         })}
+
+        {!isCompact &&
+          !reducedMotion &&
+          awakeIndex !== null &&
+          openIndex === null &&
+          pieces[awakeIndex] &&
+          STATION_META[awakeIndex] && (
+            <HabitatHologramPreview
+              key={pieces[awakeIndex].id}
+              piece={pieces[awakeIndex]}
+              meta={STATION_META[awakeIndex]}
+              anchor={{
+                x: (layout.dock.x / layout.width) * 100,
+                y: (layout.dock.y / layout.height) * 100,
+              }}
+              onPlay={() => activateStation(awakeIndex)}
+            />
+          )}
 
         <div
           ref={characterRef}
